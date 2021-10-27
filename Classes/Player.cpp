@@ -50,7 +50,7 @@ void Player::jump() {
 	if (getPosition().y - jumpBegin >= PLAYER_JUMP_HEIGHT) {
 		setJumpState(jumpState::fall);
 	}
-	if (getJumpState() == jumpState::fall && getBody()->GetLinearVelocity().y == 0) {
+	if (getJumpState() == jumpState::fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
 		setJumpState(jumpState::none);
 		jumpBegin = 0;
 	}

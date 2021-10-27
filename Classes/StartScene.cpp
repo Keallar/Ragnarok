@@ -57,6 +57,7 @@ bool StartScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();    
+    schedule(schedule_selector(StartScene::createSomePlayer), 0.5f);
 
     return true;
 }
@@ -99,12 +100,10 @@ void StartScene::update(float dt) {
 }
 
 void StartScene::createSomePlayer(float dt) {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
     Player* somePlayer = Player::createPlayer();
+    World->addChild(somePlayer);
     Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
-    somePlayer->setPosition(playerOrigin);
-    somePlayer->setScale(0.5f);
-    somePlayer->getPhysicsBody()->setCategoryBitmask(static_cast<int>(PhysicsCategory::player));
-    somePlayer->getPhysicsBody()->setContactTestBitmask(static_cast<int>(PhysicsCategory::platform));
-    somePlayer->getPhysicsBody()->setDynamic(true);
-    addChild(somePlayer);
+    somePlayer->getBody()->SetFixedRotation(true);
+    somePlayer->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 }
