@@ -1,5 +1,6 @@
 #pragma once
 #include "cocos2d.h"
+#include "box2d/b2dSprite.h"
 
 enum class runState {
 	left,
@@ -13,12 +14,26 @@ enum class jumpState {
 	none
 };
 
-class Player : public cocos2d::Sprite
+class Player : public b2Sprite
 {
 private:
 	runState playerRunState;
 	jumpState playerJumpState;
 public:
+	
+	Player() {
+		speed = 0;
+		jumpSpeed = 0;
+		playerJumpState = jumpState::none;
+		playerRunState = runState::none;
+		jumpBegin = 0;
+	};
+
+	~Player() {
+
+	}
+
+	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
 
 	void setRunState(runState state);
 	void setJumpState(jumpState state);
@@ -29,8 +44,8 @@ public:
 	float jumpSpeed;
 	int jumpBegin;
 
-	static const int PLAYER_SPEED = 200;
-	static const int PLAYER_JUMP_SPEED = 200;
+	static const int PLAYER_SPEED = 20;
+	static const int PLAYER_JUMP_SPEED = 20;
 	static const int PLAYER_JUMP_HEIGHT = 150;
 
 	static Player* createPlayer();
@@ -40,6 +55,6 @@ public:
 
 	void jump();
 
-	CREATE_FUNC(Player);
+	//CREATE_FUNC(Player);
 };
 

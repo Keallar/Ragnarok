@@ -120,18 +120,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
 
-
-
-    auto physics = Scene::createWithPhysics();
-    physics->getPhysicsWorld()->setGravity(Vec2(0, -1000));
-    physics->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    physics->getPhysicsWorld()->setAutoStep(true);
-    physics->getPhysicsWorld()->setSubsteps(9);
-
     auto scene = StartScene::createScene();
-    physics->addChild(scene);
     // run
-    director->runWithScene(physics);
+    director->runWithScene(scene);
 
     return true;
 }

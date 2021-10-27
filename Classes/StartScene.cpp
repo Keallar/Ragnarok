@@ -13,50 +13,50 @@ bool StartScene::init() {
         return false;
     }    
 
+    GameVars::initVars();
+
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
-    auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PHYSICSBODY_MATERIAL_DEFAULT, 45);
-    edgeBody->setCategoryBitmask(static_cast<int>(PhysicsCategory::platform));
-    //edgeBody->setContactTestBitmask(static_cast<int>(PhysicsCategory::all));
-    edgeBody->setContactTestBitmask(static_cast<int>(PhysicsCategory::player));
-
-    Node* edgeNode = Node::create();
-    edgeNode->setPosition(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y);
-    edgeNode->setPhysicsBody(edgeBody);
-    addChild(edgeNode);
 
     DrawNode* background = DrawNode::create();
     background->drawSolidRect(origin, Director::getInstance()->getVisibleSize() + Size(origin), Color4F(1, 1, 1, 1));
     addChild(background);
 
+    World = b2WorldNode::create(0, -98, 20);
+    addChild(World);
+    
+    auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
+    auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
+    auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
+    auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
+
+    World->addChild(floor);
+    World->addChild(wallL);
+    World->addChild(wallR);
+    World->addChild(ceil);
+
+    floor->setPosition((visibleSize.width) / 2 + origin.x, 2 + origin.y);
+    wallL->setPosition(2 + origin.x, (visibleSize.height + origin.y) / 2);
+    wallR->setPosition(visibleSize.width + origin.x - 2, (visibleSize.height + origin.y) / 2);
+    ceil->setPosition((visibleSize.width) / 2 + origin.x, visibleSize.height + origin.y - 2);
+
     _player = Player::createPlayer();
-    _player->setScale(0.5);
+    //_player->setScale(0.5);
 
     Vec2 playerOrigin(Director::getInstance()->getWinSize()/2);
-    _player->setPosition(playerOrigin);
-    _player->getPhysicsBody()->setCategoryBitmask(static_cast<int>(PhysicsCategory::player));
-    _player->getPhysicsBody()->setContactTestBitmask(static_cast<int>(PhysicsCategory::platform));
-    _player->getPhysicsBody()->setContactTestBitmask(static_cast<int>(PhysicsCategory::platform));
 
+    World->addChild(_player);
 
-    addChild(_player);
+    _player->getBody()->SetFixedRotation(true);
+
+    _player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_2(StartScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(StartScene::onKeyPressed, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-    scheduleUpdate(); 
-    schedule(schedule_selector(StartScene::createSomePlayer), 1.5f);
-
-    /*createSomePlayer(0);*/
-
-     
-
-    auto contactListener = EventListenerPhysicsContact::create();
-    contactListener->onContactPreSolve = CC_CALLBACK_2(StartScene::onContactPreSolve, this);
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+    scheduleUpdate();    
 
     return true;
 }
@@ -70,7 +70,7 @@ void StartScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
         _player->setRunState(runState::left);
         break;
     case EventKeyboard::KeyCode::KEY_SPACE:
-        if (_player->getJumpState() == jumpState::none || true) {
+        if (_player->getJumpState() == jumpState::none) {
             _player->setJumpState(jumpState::jump);
         }
         break;
@@ -95,6 +95,7 @@ void StartScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 void StartScene::update(float dt) {
     _player->move();
     _player->jump();
+    World->update(dt);
 }
 
 void StartScene::createSomePlayer(float dt) {
@@ -106,45 +107,4 @@ void StartScene::createSomePlayer(float dt) {
     somePlayer->getPhysicsBody()->setContactTestBitmask(static_cast<int>(PhysicsCategory::platform));
     somePlayer->getPhysicsBody()->setDynamic(true);
     addChild(somePlayer);
-}
-
-/*bool StartScene::onContactPreSolve(PhysicsContact& contact,
-    PhysicsContactPreSolve& solve) {
-
-
-   /* auto nodeA = contact.getShapeA()->getBody();
-    auto nodeB = contact.getShapeB()->getBody();
-
-    Vec2 A = nodeA->getVelocity();
-    A.normalize();
-
-    Vec2 B = nodeB->getVelocity();
-    B.normalize();
-    
-    
-
-    if (nodeA->isDynamic()) {
-        nodeA->setVelocity(Vec2(20*A.x,20*A.y));
-    }
-    if (nodeB->isDynamic()) {
-        nodeB->setVelocity(Vec2(-20*B.x, -20*B.y));
-    }*/
-
-    //nodeA->setVelocity(-nodeA->getVelocity());
-    //nodeB->setVelocity(-nodeB->getVelocity());
-
-    /*return true;
-}*/
-
-bool StartScene::onContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve)
-{
-    /*auto nodeA = contact.getShapeA()->getBody();
-    auto nodeB = contact.getShapeB()->getBody();
-
-    nodeA->setVelocity(Vec2(0, 0));
-    nodeB->setVelocity(Vec2(0, 0));*/
-
-    solve.setSurfaceVelocity(Vec2(0, 0));
-
-    return true;
 }
