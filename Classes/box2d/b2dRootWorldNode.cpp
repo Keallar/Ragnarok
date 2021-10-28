@@ -165,6 +165,39 @@ bool b2WorldNode::addChildBody(Node* child)
 	}
 	
 }
+//for project, test remove obj 
+//WTF
+
+void b2WorldNode::removeChild(Node* child, bool cleanup)
+{
+	if (b2Sprite* B2Dchild = dynamic_cast<b2Sprite*>(child)) 
+	{
+		if (B2Dchild->getBody()->GetType() == b2_dynamicBody || B2Dchild->getBody()->GetType() == b2_kinematicBody)
+		{
+			removeDynamicChild(B2Dchild->getBody());
+		}
+		_world->DestroyBody(B2Dchild->getBody());
+	}
+	Node::removeChild(child, cleanup);
+
+	//child->release();
+
+	//CC_SAFE_DELETE(child);
+}
+
+void b2WorldNode::setOnRemoveList(b2Sprite* sprite)
+{
+	_onRemoveList.push_back(sprite);
+}
+
+void b2WorldNode::removeIsDeletingChildren()
+{
+	for (auto body= _onRemoveList.begin(); body != _onRemoveList.end(); body++)
+	{
+		removeChild(*body);
+	}
+	_onRemoveList.clear();
+}
 
 void b2WorldNode::addDynamicChild(b2Body* child)
 {

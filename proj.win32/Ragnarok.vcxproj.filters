@@ -45,6 +45,9 @@
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp">
       <Filter>src\box2d</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ContactListener.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h">
       <Filter>src\box2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ContactListener.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

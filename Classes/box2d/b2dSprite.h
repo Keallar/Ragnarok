@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 
 #include <Box2D\Box2D.h>
-#include "b2dRootWorldNode.h"
+//#include "b2dRootWorldNode.h"
 #include "GameVars.h"
 
 
@@ -97,6 +97,11 @@ public:
 
 	void setWorldNode(b2WorldNode* world);
 	b2WorldNode* getWorldNode();
+
+	//WTF
+	//modification for deleting element after contact for project
+	void setOnRemove();
+	//bool isDeleting();
 	
 	virtual void setBody(b2Body* body, b2WorldNode* world);
 	/**
@@ -116,6 +121,7 @@ protected:
 	b2Fixture * _B2Fixture;
 	b2FixtureDef _B2FixtureDef;
 	b2PolygonShape _B2Shape;
+	//bool _isDeleting;
 
 private:
 
