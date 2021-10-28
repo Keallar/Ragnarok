@@ -59,6 +59,14 @@ public:
 	using Node::addChild;
 	void addChild(Node* child, int localZOrder, const std::string &name) override;
 
+	//WTF
+	//for project
+	using Node::removeChild;
+	void removeChild(Node* child, bool cleanup = true) override;
+	void setOnRemoveList(b2Sprite* sprite);
+
+	void removeIsDeletingChildren(); //remove all children with flag isDeleting
+
 	//delta functions
 	void update(float dt)override;
 
@@ -82,6 +90,8 @@ private:
 	CustomCommand *_customCommand;
 	GLESDebugDraw * _debugDrawInst;
 #endif
+	//list of sprites that wait remove
+	std::vector <b2Sprite*> _onRemoveList; // WTF
 	std::vector <b2Body*> _dynamicChild;	//stores dynamic and kinematic bodies
 
 	float _PTM_Ratio;	//Pixel to Meter ratio

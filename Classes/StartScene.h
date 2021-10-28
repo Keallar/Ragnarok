@@ -19,7 +19,9 @@ public:
     void createSomePlayer(float dt);
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void StartScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-    
+
+    void removeSomePlayer(float dt);
+
     // implement the "static create()" method manually
     CREATE_FUNC(StartScene);
 private:

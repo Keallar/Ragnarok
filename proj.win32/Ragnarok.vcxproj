@@ -155,6 +155,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\box2d\b2dSprite.cpp" />
     <ClCompile Include="..\Classes\box2d\GameVars.cpp" />
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp" />
+    <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\MainLocation.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
@@ -167,6 +168,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\box2d\b2dSprite.h" />
     <ClInclude Include="..\Classes\box2d\GameVars.h" />
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h" />
+    <ClInclude Include="..\Classes\ContactListener.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\MainLocation.h" />
     <ClInclude Include="..\Classes\Player.h" />

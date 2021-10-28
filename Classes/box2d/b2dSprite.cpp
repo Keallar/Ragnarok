@@ -1,4 +1,7 @@
 #include "b2dSprite.h"
+//added struct for user data
+
+#include "b2dRootWorldNode.h"
 
 //		***	INSTANTIATION	***
 
@@ -8,7 +11,8 @@ b2Sprite::b2Sprite()
 	_B2Body = nullptr;
 	_B2Fixture = nullptr;
 	_parentWorldNode = nullptr;
-
+	//WTF
+	//_isDeleting = false;
 }
 
 b2Sprite::~b2Sprite()
@@ -220,6 +224,19 @@ void b2Sprite::setBody(b2Body* body, b2WorldNode* world)
 	_B2Fixture = _B2Body->CreateFixture(&_B2FixtureDef);
 
 }
+
+//WTF
+
+void b2Sprite::setOnRemove()
+{
+	//_isDeleting = true;
+	getWorldNode()->setOnRemoveList(this);
+}
+
+//bool b2Sprite::isDeleting()
+//{
+//	return _isDeleting;
+//}
 
 b2Body* b2Sprite::getBody()
 {
