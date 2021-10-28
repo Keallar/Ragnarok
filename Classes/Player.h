@@ -2,59 +2,46 @@
 #include "cocos2d.h"
 #include "box2d/b2dSprite.h"
 
-enum class runState {
-	left,
-	none,
-	right
+enum class eRunState {
+	None,
+	Left,
+	Right
 };
 
-enum class jumpState {
-	jump,
-	fall,
-	none
+enum class eJumpState {
+	None,
+	Jump,
+	Fall
 };
 
 class Player : public b2Sprite
 {
-private:
-	runState playerRunState;
-	jumpState playerJumpState;
 public:
-	
-	Player() {
-		speed = 0;
-		jumpSpeed = 0;
-		playerJumpState = jumpState::none;
-		playerRunState = runState::none;
-		jumpBegin = 0;
-	};
-
-	~Player() {
-
-	}
-
+	Player();
+	~Player();
 	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
+	static Player* createPlayer();
 
-	void setRunState(runState state);
-	void setJumpState(jumpState state);
-	runState getRunState();
-	jumpState getJumpState();
+	void setRunState(eRunState state);
+	void setJumpState(eJumpState state);
+	eRunState getRunState();
+	eJumpState getJumpState();
+
+	void move();
+	void changePos(int delta);
+	void jump();
+
+	//CREATE_FUNC(Player);
+private:
+	static const int PLAYER_SPEED = 20;
+	static const int PLAYER_JUMP_SPEED = 20;
+	static const int PLAYER_JUMP_HEIGHT = 150;
 
 	int speed;
 	float jumpSpeed;
 	int jumpBegin;
 
-	static const int PLAYER_SPEED = 20;
-	static const int PLAYER_JUMP_SPEED = 20;
-	static const int PLAYER_JUMP_HEIGHT = 150;
-
-	static Player* createPlayer();
-
-	void move();
-	void changePos(int delta);
-
-	void jump();
-
-	//CREATE_FUNC(Player);
+	eRunState playerRunState;
+	eJumpState playerJumpState;
 };
 

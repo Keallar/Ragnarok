@@ -1,8 +1,20 @@
 #include "Player.h"
 
 USING_NS_CC;
-Player* Player::createPlayer() {
 
+Player::Player() {
+	speed = 0;
+	jumpSpeed = 0;
+	playerJumpState = eJumpState::None;
+	playerRunState = eRunState::None;
+	jumpBegin = 0;
+};
+
+Player::~Player() {
+
+}
+
+Player* Player::createPlayer() {
 	auto ptr = Player::create("test.png", b2BodyType::b2_dynamicBody, 0.0, 0);
 	return ptr;
 }
@@ -23,13 +35,13 @@ Player* Player::create(const std::string& filename, b2BodyType type, float32 fri
 
 void Player::move() {
 	switch (playerRunState) {
-	case runState::left:
+	case eRunState::Left:
 		changePos(-PLAYER_SPEED);
 		break;
-	case runState::right:
+	case eRunState::Right:
 		changePos(PLAYER_SPEED);
 		break;
-	case runState::none:
+	case eRunState::None:
 		changePos(0);
 		break;
 	}
@@ -43,40 +55,40 @@ void Player::changePos(int delta) {
 void Player::jump() {
 	//getPhysicsBody()->setVelocity(getPhysicsBody()->getVelocity() + Vec2(0, jumpSpeed));
 
-	if (playerJumpState == jumpState::jump) {
+	if (playerJumpState == eJumpState::Jump) {
 		//getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, PLAYER_JUMP_SPEED));
 		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
 	}
 	if (getPosition().y - jumpBegin >= PLAYER_JUMP_HEIGHT) {
-		setJumpState(jumpState::fall);
+		setJumpState(eJumpState::Fall);
 	}
-	if (getJumpState() == jumpState::fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
-		setJumpState(jumpState::none);
+	if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
+		setJumpState(eJumpState::None);
 		jumpBegin = 0;
 	}
 }
 
-void Player::setRunState(runState state) {
-	if (state == runState::left && playerRunState == runState::right ||
-		state == runState::right && playerRunState == runState::left) {
-		playerRunState = runState::none;
+void Player::setRunState(eRunState state) {
+	if (state == eRunState::Left && playerRunState == eRunState::Right ||
+		state == eRunState::Right && playerRunState == eRunState::Left) {
+		playerRunState = eRunState::None;
 	}
 	else {
 		playerRunState = state;
 	}
 }
 
-void Player::setJumpState(jumpState state) {
-	if (state == jumpState::jump) {
+void Player::setJumpState(eJumpState state) {
+	if (state == eJumpState::Jump) {
 		jumpBegin = getPosition().y;
 	}
 	playerJumpState = state;
 }
 
-runState Player::getRunState() {
+eRunState Player::getRunState() {
 	return playerRunState;
 }
 
-jumpState Player::getJumpState() {
+eJumpState Player::getJumpState() {
 	return playerJumpState;
 }

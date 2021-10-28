@@ -65,14 +65,14 @@ bool StartScene::init() {
 void StartScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
     case EventKeyboard::KeyCode::KEY_D:
-        _player->setRunState(runState::right);
+        _player->setRunState(eRunState::Right);
         break;
     case EventKeyboard::KeyCode::KEY_A:
-        _player->setRunState(runState::left);
+        _player->setRunState(eRunState::Left);
         break;
     case EventKeyboard::KeyCode::KEY_SPACE:
-        if (_player->getJumpState() == jumpState::none) {
-            _player->setJumpState(jumpState::jump);
+        if (_player->getJumpState() == eJumpState::None) {
+            _player->setJumpState(eJumpState::Jump);
         }
         break;
     }
@@ -81,13 +81,13 @@ void StartScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 void StartScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
     case EventKeyboard::KeyCode::KEY_D:
-        _player->setRunState(runState::left);
+        _player->setRunState(eRunState::Left);
         break;
     case EventKeyboard::KeyCode::KEY_A:
-        _player->setRunState(runState::right);
+        _player->setRunState(eRunState::Right);
         break;
     case EventKeyboard::KeyCode::KEY_SPACE:
-        _player->setJumpState(jumpState::fall);
+        _player->setJumpState(eJumpState::Fall);
         break;
     }
         
