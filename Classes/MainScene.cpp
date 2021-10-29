@@ -1,14 +1,14 @@
-#include "StartScene.h"
+#include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
 
 USING_NS_CC;
 
-Scene* StartScene::createScene() {
-    return StartScene::create();
+Scene* MainScene::createScene() {
+    return MainScene::create();
 }
 
-bool StartScene::init() {
+bool MainScene::init() {
     if (!Scene::init()) {
         return false;
     }    
@@ -62,18 +62,18 @@ bool StartScene::init() {
     _player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 
     auto keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyReleased = CC_CALLBACK_2(StartScene::onKeyReleased, this);
-    keyboardListener->onKeyPressed = CC_CALLBACK_2(StartScene::onKeyPressed, this);
+    keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
+    keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();
-    //schedule(schedule_selector(StartScene::removeSomePlayer), 2.5f);
-    schedule(schedule_selector(StartScene::createSomePlayer), 0.5f);
+    //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
+    schedule(schedule_selector(MainScene::createSomePlayer), 0.5f);
 
     return true;
 }
 
-void StartScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+void MainScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
     case EventKeyboard::KeyCode::KEY_D:
         _player->setRunState(eRunState::Right);
@@ -89,7 +89,7 @@ void StartScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     }
 }
 
-void StartScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
     case EventKeyboard::KeyCode::KEY_D:
         _player->setRunState(eRunState::Left);
@@ -104,14 +104,14 @@ void StartScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
         
 }
 
-void StartScene::update(float dt) {
+void MainScene::update(float dt) {
     _player->move();
     _player->jump();
     World->update(dt);
     World->removeIsDeletingChildren();
 }
 
-void StartScene::createSomePlayer(float dt) {
+void MainScene::createSomePlayer(float dt) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Player* somePlayer = Player::createPlayer();
     World->addChild(somePlayer);

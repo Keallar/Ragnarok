@@ -9,7 +9,7 @@ enum class ePhysicsCategory {
     All = 3
 };
 
-class StartScene : public cocos2d::Scene
+class MainScene : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -18,12 +18,12 @@ public:
     void update(float dt) override;
     void createSomePlayer(float dt);
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-    void StartScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
     void removeSomePlayer(float dt);
 
     // implement the "static create()" method manually
-    CREATE_FUNC(StartScene);
+    CREATE_FUNC(MainScene);
 private:
     Player* _player;
     b2WorldNode* World;

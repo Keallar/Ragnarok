@@ -12,7 +12,7 @@ Player::~Player() {
 }
 
 Player* Player::createPlayer() {
-	auto ptr = Player::create("test.png", b2BodyType::b2_dynamicBody, 0.0, 0);
+	auto ptr = Player::create("hero.png", b2BodyType::b2_dynamicBody, 0.0, 0);
 	return ptr;
 }
 

@@ -24,7 +24,7 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\StartScene.cpp">
+    <ClCompile Include="..\Classes\MainScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\box2d\b2dRootWorldNode.cpp">
@@ -56,7 +56,7 @@
     <ClInclude Include="..\Classes\Player.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\StartScene.h">
+    <ClInclude Include="..\Classes\MainScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\box2d\b2dRootWorldNode.h">
