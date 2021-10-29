@@ -11,13 +11,13 @@ Player::~Player() {
 }
 
 Player* Player::createPlayer() {
-	auto playerObj = Player::create("Tur_64.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+	auto playerObj = Player::create("Tur_64.png", Rect(0, 0, 29, 29), b2BodyType::b2_dynamicBody, 0.f, 0);
 	return playerObj;
 }
 
-Player* Player::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
+Player* Player::create(const std::string& filename, const Rect& rect, b2BodyType type, float32 friction, float32 restitution) {
 	Player* sprite = new (std::nothrow) Player();
-	if (sprite && sprite->initWithFile(filename))
+	if (sprite && sprite->initWithFile(filename, rect))
 	{
 		sprite->initBody(type, friction, restitution);
 		sprite->autorelease();

@@ -8,13 +8,15 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL && contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
-
 		SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
 		auto spriteAName = SpriteA->getName();
 		auto spriteBName = SpriteB->getName();
 
-		if (/*spriteAName != spriteBName &&*/ spriteAName != "platform" && spriteBName != "platform") {
+		//UNDONE 
+		//Удаление через имена пока не лучшая идея
+		if (/*spriteAName != spriteBName &&*/ spriteAName != "platform" && spriteBName != "platform" &&
+				spriteAName != "player" && spriteBName != "player") {
 			SpriteA->setOnRemove();
 			SpriteB->setOnRemove();
 		}
