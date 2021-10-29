@@ -2,18 +2,17 @@
 
 USING_NS_CC;
 
-Player::Player() : speed(0), jumpSpeed(0), jumpBegin(0), 
-	playerJumpState(eJumpState::None), playerRunState(eRunState::None) {
-
-};
+Player::Player() {
+	init();
+}
 
 Player::~Player() {
 
 }
 
 Player* Player::createPlayer() {
-	auto ptr = Player::create("hero.png", b2BodyType::b2_dynamicBody, 0.0, 0);
-	return ptr;
+	auto playerObj = Player::create("test.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+	return playerObj;
 }
 
 Player* Player::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
@@ -26,6 +25,15 @@ Player* Player::create(const std::string& filename, b2BodyType type, float32 fri
 	}
 	CC_SAFE_DELETE(sprite);
 	return nullptr;
+}
+
+bool Player::init() {
+	if (!b2Sprite::init()) {
+		return false;
+	}
+
+
+	return true;
 }
 
 void Player::move() {

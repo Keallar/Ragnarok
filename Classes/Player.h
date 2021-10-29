@@ -22,6 +22,8 @@ public:
 	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
 	static Player* createPlayer();
 
+	virtual bool init();
+
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	eRunState getRunState();

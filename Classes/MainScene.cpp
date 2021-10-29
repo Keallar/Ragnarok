@@ -22,10 +22,10 @@ bool MainScene::init() {
     background->drawSolidRect(origin, Director::getInstance()->getVisibleSize() + Size(origin), Color4F(1, 1, 1, 1));
     addChild(background);
 
-    World = b2WorldNode::create(0, -98, 20);
-    addChild(World);
+    _world = b2WorldNode::create(0, -98, 20);
+    addChild(_world);
 
-    World->getb2World()->SetContactListener(new ContactListener);
+    _world->getb2World()->SetContactListener(new ContactListener);
 
     //World->debugDraw();
     
@@ -34,10 +34,10 @@ bool MainScene::init() {
     auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
     auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
 
-    World->addChild(floor);
-    World->addChild(wallL);
-    World->addChild(wallR);
-    World->addChild(ceil);
+    _world->addChild(floor);
+    _world->addChild(wallL);
+    _world->addChild(wallR);
+    _world->addChild(ceil);
 
     floor->setPosition((visibleSize.width) / 2 + origin.x, 2 + origin.y);
     wallL->setPosition(2 + origin.x, (visibleSize.height + origin.y) / 2);
@@ -52,9 +52,9 @@ bool MainScene::init() {
     _player = Player::createPlayer();
     //_player->setScale(0.5);
 
-    Vec2 playerOrigin(Director::getInstance()->getWinSize()/2);
+    Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
 
-    World->addChild(_player);
+    _world->addChild(_player);
 
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
@@ -68,7 +68,7 @@ bool MainScene::init() {
 
     scheduleUpdate();
     //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
-    schedule(schedule_selector(MainScene::createSomePlayer), 0.5f);
+    schedule(schedule_selector(MainScene::removeSomeEnemy), 0.5f);
 
     return true;
 }
@@ -107,16 +107,19 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 void MainScene::update(float dt) {
     _player->move();
     _player->jump();
-    World->update(dt);
-    World->removeIsDeletingChildren();
+    _world->update(dt);
+    _world->removeIsDeletingChildren();
 }
 
-void MainScene::createSomePlayer(float dt) {
+//UNDONE
+//Убрать! Тестовая переменная
+static int id = 0;
+void MainScene::removeSomeEnemy(float dt) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    Player* somePlayer = Player::createPlayer();
-    World->addChild(somePlayer);
-    somePlayer->setName("somePlayer");
+    SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
+    _world->addChild(enemy);
+    enemy->setName("somePlayer" + std::to_string(id));
     Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
-    somePlayer->getBody()->SetFixedRotation(true);
-    somePlayer->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+    enemy->getBody()->SetFixedRotation(true);
+    enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 }

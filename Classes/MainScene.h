@@ -1,6 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Player.h"
+#include "SimpleEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
 
 enum class ePhysicsCategory {
@@ -20,12 +21,12 @@ public:
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
-    void removeSomePlayer(float dt);
+    void removeSomeEnemy(float dt);
 
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 private:
     Player* _player;
-    b2WorldNode* World;
+    b2WorldNode* _world;
 };
 
