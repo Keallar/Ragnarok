@@ -2,12 +2,9 @@
 
 USING_NS_CC;
 
-Player::Player() {
-	speed = 0;
-	jumpSpeed = 0;
-	playerJumpState = eJumpState::None;
-	playerRunState = eRunState::None;
-	jumpBegin = 0;
+Player::Player() : speed(0), jumpSpeed(0), jumpBegin(0), 
+	playerJumpState(eJumpState::None), playerRunState(eRunState::None) {
+
 };
 
 Player::~Player() {
@@ -19,8 +16,7 @@ Player* Player::createPlayer() {
 	return ptr;
 }
 
-Player* Player::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution)
-{
+Player* Player::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
 	Player* sprite = new (std::nothrow) Player();
 	if (sprite && sprite->initWithFile(filename))
 	{
@@ -30,7 +26,6 @@ Player* Player::create(const std::string& filename, b2BodyType type, float32 fri
 	}
 	CC_SAFE_DELETE(sprite);
 	return nullptr;
-
 }
 
 void Player::move() {

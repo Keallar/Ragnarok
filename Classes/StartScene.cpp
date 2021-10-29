@@ -4,8 +4,7 @@
 
 USING_NS_CC;
 
-Scene* StartScene::createScene()
-{
+Scene* StartScene::createScene() {
     return StartScene::create();
 }
 
@@ -71,8 +70,6 @@ bool StartScene::init() {
     //schedule(schedule_selector(StartScene::removeSomePlayer), 2.5f);
     schedule(schedule_selector(StartScene::createSomePlayer), 0.5f);
 
-
-
     return true;
 }
 
@@ -112,7 +109,6 @@ void StartScene::update(float dt) {
     _player->jump();
     World->update(dt);
     World->removeIsDeletingChildren();
-
 }
 
 void StartScene::createSomePlayer(float dt) {

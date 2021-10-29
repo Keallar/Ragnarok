@@ -16,5 +16,4 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			SpriteB->setOnRemove();
 		}
 	}
-
 }

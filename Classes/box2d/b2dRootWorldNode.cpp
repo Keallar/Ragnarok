@@ -192,7 +192,7 @@ void b2WorldNode::setOnRemoveList(b2Sprite* sprite)
 
 void b2WorldNode::removeIsDeletingChildren()
 {
-	for (auto body= _onRemoveList.begin(); body != _onRemoveList.end(); body++)
+	for (auto body = _onRemoveList.begin(); body != _onRemoveList.end(); body++)
 	{
 		removeChild(*body);
 	}
