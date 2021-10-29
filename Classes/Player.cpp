@@ -11,7 +11,7 @@ Player::~Player() {
 }
 
 Player* Player::createPlayer() {
-	auto playerObj = Player::create("test.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+	auto playerObj = Player::create("Tur_64.png", b2BodyType::b2_dynamicBody, 0.f, 0);
 	return playerObj;
 }
 

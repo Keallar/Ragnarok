@@ -8,8 +8,8 @@ public:
 	static EnemyFactory* getInstance();
 	static SimpleEnemy* createSimpleEnemy();
 private:
-	EnemyFactory();
-	~EnemyFactory() {};
+	//EnemyFactory() = delete;
+	//~EnemyFactory() {};
 	static EnemyFactory* instance;
 };
 

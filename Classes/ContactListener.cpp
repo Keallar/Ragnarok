@@ -11,9 +11,21 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 		SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
-		if (SpriteA->getName() == "somePlayer" && SpriteB->getName() == "somePlayer") {
+		auto spriteAName = SpriteA->getName();
+		auto spriteBName = SpriteB->getName();
+
+		if (/*spriteAName != spriteBName &&*/ spriteAName != "platform" && spriteBName != "platform") {
 			SpriteA->setOnRemove();
 			SpriteB->setOnRemove();
 		}
 	}
+}
+
+void ContactListener::EndContact(b2Contact* contact) {
+}
+
+void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
+}
+
+void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
 }
