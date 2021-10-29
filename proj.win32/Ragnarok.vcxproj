@@ -156,6 +156,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\box2d\GameVars.cpp" />
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
+    <ClCompile Include="..\Classes\EnemyFactory.cpp" />
     <ClCompile Include="..\Classes\IEnemy.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
@@ -169,6 +170,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\box2d\GameVars.h" />
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
+    <ClInclude Include="..\Classes\EnemyFactory.h" />
     <ClInclude Include="..\Classes\IEnemy.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\MainScene.h" />

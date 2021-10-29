@@ -1,6 +1,7 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
+#include "EnemyFactory.h"
 
 USING_NS_CC;
 
@@ -118,7 +119,7 @@ void MainScene::removeSomeEnemy(float dt) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
     _world->addChild(enemy);
-    enemy->setName("somePlayer" + std::to_string(id));
+    enemy->setName("simpleEnemy_" + std::to_string(id));
     Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
     enemy->getBody()->SetFixedRotation(true);
     enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
