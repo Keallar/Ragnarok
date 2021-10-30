@@ -26,7 +26,7 @@ bool MainScene::init() {
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
-    _world->getb2World()->SetContactListener(new ContactListener);
+    //_world->getb2World()->SetContactListener(new ContactListener);
 
     //World->debugDraw();
     
@@ -45,10 +45,10 @@ bool MainScene::init() {
     //wallR->setPosition(visibleSize.width + origin.x - 2, (visibleSize.height + origin.y) / 2);
     //ceil->setPosition((visibleSize.width) / 2 + origin.x, visibleSize.height + origin.y - 2);
 
-    floor->setName("platform");
+    /*floor->setName("platform");
     wallL->setName("platform");
     wallR->setName("platform");
-    ceil->setName("platform");
+    ceil->setName("platform");*/
     _player = Player::createPlayer();
     //_player->setScale(0.5);
 
@@ -124,9 +124,9 @@ void MainScene::removeSomeEnemy(float dt) {
     enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 }
 
-void StartScene::tileMapInit() {
+void MainScene::tileMapInit() {
     _tiledMap = new CCTMXTiledMap();
-     _tiledMap->initWithTMXFile("last.tmx");
+    _tiledMap->initWithTMXFile("last.tmx");
     _background = _tiledMap->layerNamed("TileLayer1");
     _walls = _tiledMap->layerNamed("TileLayer2");
     Sprite* tile = new Sprite;
@@ -137,7 +137,7 @@ void StartScene::tileMapInit() {
                 auto _b2test = b2Sprite::create();
                 _b2test->initWithSprite(_walls->getTileAt({ i, j }));
                 _b2test->initBody(b2BodyType::b2_staticBody);
-                World->addChild(_b2test);
+                _world->addChild(_b2test);
                 _b2test->setPosition(i * _walls->getTileAt({ i, j })->getTextureRect().size.width, (_tiledMap->getMapSize().height-j )* _walls->getTileAt({ i, j })->getTextureRect().size.height);
             }
         }
