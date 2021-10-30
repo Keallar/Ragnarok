@@ -30,26 +30,25 @@ bool MainScene::init() {
 
     //World->debugDraw();
     
-    auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
-    auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
-    auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
-    auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
+    tileMapInit();
+    //World->addChild(floor);
+    //World->addChild(wallL);
+    //World->addChild(wallR);
+    //World->addChild(ceil);
 
-    _world->addChild(floor);
-    _world->addChild(wallL);
-    _world->addChild(wallR);
-    _world->addChild(ceil);
-
-    floor->setPosition((visibleSize.width) / 2 + origin.x, 2 + origin.y);
-    wallL->setPosition(2 + origin.x, (visibleSize.height + origin.y) / 2);
-    wallR->setPosition(visibleSize.width + origin.x - 2, (visibleSize.height + origin.y) / 2);
-    ceil->setPosition((visibleSize.width) / 2 + origin.x, visibleSize.height + origin.y - 2);
+    //floor->setPosition((visibleSize.width) / 2 + origin.x, 2 + origin.y);
+    //wallL->setPosition(2 + origin.x, (visibleSize.height + origin.y) / 2);
+    //wallR->setPosition(visibleSize.width + origin.x - 2, (visibleSize.height + origin.y) / 2);
+    //ceil->setPosition((visibleSize.width) / 2 + origin.x, visibleSize.height + origin.y - 2);
 
     floor->setName("platform");
     wallL->setName("platform");
     wallR->setName("platform");
     ceil->setName("platform");
-
     _player = Player::createPlayer();
     //_player->setScale(0.5);
 
@@ -113,7 +112,7 @@ void MainScene::update(float dt) {
 }
 
 //UNDONE
-//Убрать! Тестовая переменная
+//пїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 static int id = 0;
 void MainScene::removeSomeEnemy(float dt) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -124,3 +123,24 @@ void MainScene::removeSomeEnemy(float dt) {
     enemy->getBody()->SetFixedRotation(true);
     enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 }
+
+void StartScene::tileMapInit() {
+    _tiledMap = new CCTMXTiledMap();
+     _tiledMap->initWithTMXFile("last.tmx");
+    _background = _tiledMap->layerNamed("TileLayer1");
+    _walls = _tiledMap->layerNamed("TileLayer2");
+    Sprite* tile = new Sprite;
+    for (float i = 0; i < _walls->getLayerSize().width; i++) {
+        for (float j = 0; j < _walls->getLayerSize().height; j++) 
+        {
+            if (_walls->getTileAt({ i, j })) {
+                auto _b2test = b2Sprite::create();
+                _b2test->initWithSprite(_walls->getTileAt({ i, j }));
+                _b2test->initBody(b2BodyType::b2_staticBody);
+                World->addChild(_b2test);
+                _b2test->setPosition(i * _walls->getTileAt({ i, j })->getTextureRect().size.width, (_tiledMap->getMapSize().height-j )* _walls->getTileAt({ i, j })->getTextureRect().size.height);
+            }
+        }
+    }
+}
+

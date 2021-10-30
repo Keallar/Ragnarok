@@ -23,9 +23,13 @@ public:
 
     void removeSomeEnemy(float dt);
 
+    void tileMapInit();
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 private:
+    CCTMXTiledMap* _tiledMap;
+    CCTMXLayer* _background;
+    CCTMXLayer* _walls;
     Player* _player;
     b2WorldNode* _world;
 };

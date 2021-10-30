@@ -25,7 +25,7 @@ public:
 	bool initBody(b2BodyType type);
 	bool initBody(float32 friction, float32 restitution);
 	bool initBody(b2BodyType type, float32 friction, float32 restitution);
-
+	void initWithSprite(Sprite *sprite);
 	static b2Sprite* create();
 	/**
 	* Creates a b2Sprite with sane defaults.
