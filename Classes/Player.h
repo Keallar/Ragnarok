@@ -1,17 +1,49 @@
 #pragma once
 #include "cocos2d.h"
+#include "box2d/b2dSprite.h"
 
-using namespace cocos2d;
+enum class eRunState {
+	None,
+	Left,
+	Right
+};
 
-class Player : public Sprite {
+enum class eJumpState {
+	None,
+	Jump,
+	Fall
+};
+
+class Player : public b2Sprite
+{
 public:
-	Player* createPlayer();
-	bool init();
+	Player();
+	~Player();
+	static Player* create(const std::string& filename, const Rect& rect, b2BodyType type, float32 friction, float32 restitution);
+	static Player* createPlayer();
+
+	virtual bool init();
+
+	void setRunState(eRunState state);
+	void setJumpState(eJumpState state);
+	eRunState getRunState();
+	eJumpState getJumpState();
+
 	void move();
+	void changePos(int delta);
 	void jump();
 
-	CREATE_FUNC(Player);
+	//CREATE_FUNC(Player);
 private:
+	static const int PLAYER_SPEED = 20;
+	static const int PLAYER_JUMP_SPEED = 20;
+	static const int PLAYER_JUMP_HEIGHT = 150;
+
 	int speed;
+	float jumpSpeed;
+	int jumpBegin;
+
+	eRunState playerRunState;
+	eJumpState playerJumpState;
 };
 
