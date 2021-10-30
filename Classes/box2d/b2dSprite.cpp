@@ -56,6 +56,11 @@ bool b2Sprite::initBody(b2BodyType type, float32 friction, float32 restitution)
 	return true;
 }
 
+void b2Sprite::initWithSprite(Sprite* sprite) 
+{
+	setTexture(sprite->getTexture());
+	setTextureRect(sprite->getTextureRect());
+}
 
 b2Sprite* b2Sprite::create()
 {
