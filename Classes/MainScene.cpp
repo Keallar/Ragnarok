@@ -20,7 +20,8 @@ bool MainScene::init() {
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     DrawNode* background = DrawNode::create();
-    background->drawSolidRect(origin, Director::getInstance()->getVisibleSize() + Size(origin), Color4F(1, 1, 1, 1));
+    Vec2 backSize{ 5000, 5000 };
+    background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     addChild(background);
 
     _world = b2WorldNode::create(0, -98, 20);
@@ -61,6 +62,9 @@ bool MainScene::init() {
 
     _player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
 
+    //camera setup
+    _cameraTarget = getDefaultCamera();
+
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
@@ -86,6 +90,7 @@ void MainScene::update(float dt) {
     _player->jump();
     _world->update(dt);
     _world->removeIsDeletingChildren();
+    _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height/2);
 }
 
 //UNDONE

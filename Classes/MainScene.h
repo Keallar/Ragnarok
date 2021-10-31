@@ -32,5 +32,6 @@ private:
     CCTMXLayer* _walls;
     Player* _player;
     b2WorldNode* _world;
+    cocos2d::Camera* _cameraTarget;
 };
 
