@@ -19,11 +19,13 @@ class Player : public b2Sprite
 public:
 	Player();
 	~Player();
-	static Player* create(const std::string& filename, const Rect& rect, b2BodyType type, float32 friction, float32 restitution);
+	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
 	static Player* createPlayer();
 
 	virtual bool init();
 
+	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	eRunState getRunState();

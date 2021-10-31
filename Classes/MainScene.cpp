@@ -74,34 +74,11 @@ bool MainScene::init() {
 }
 
 void MainScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-    switch (keyCode) {
-    case EventKeyboard::KeyCode::KEY_D:
-        _player->setRunState(eRunState::Right);
-        break;
-    case EventKeyboard::KeyCode::KEY_A:
-        _player->setRunState(eRunState::Left);
-        break;
-    case EventKeyboard::KeyCode::KEY_SPACE:
-        if (_player->getJumpState() == eJumpState::None) {
-            _player->setJumpState(eJumpState::Jump);
-        }
-        break;
-    }
+    _player->keyPressed(keyCode, event);
 }
 
 void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-    switch (keyCode) {
-    case EventKeyboard::KeyCode::KEY_D:
-        _player->setRunState(eRunState::Left);
-        break;
-    case EventKeyboard::KeyCode::KEY_A:
-        _player->setRunState(eRunState::Right);
-        break;
-    case EventKeyboard::KeyCode::KEY_SPACE:
-        _player->setJumpState(eJumpState::Fall);
-        break;
-    }
-        
+    _player->KeyReleased(keyCode, event);
 }
 
 void MainScene::update(float dt) {

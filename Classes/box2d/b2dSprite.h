@@ -129,9 +129,4 @@ private:
 
 };
 
-
-
-
-
-
 #endif //  __B2D_SPRITE_H__
