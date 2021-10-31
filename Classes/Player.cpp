@@ -37,7 +37,7 @@ bool Player::init() {
 }
 
 void Player::move() {
-	switch (playerRunState) {
+	switch (getRunState()) {
 	case eRunState::Left:
 		changePos(-PLAYER_SPEED);
 		break;
@@ -58,7 +58,7 @@ void Player::changePos(int delta) {
 void Player::jump() {
 	//getPhysicsBody()->setVelocity(getPhysicsBody()->getVelocity() + Vec2(0, jumpSpeed));
 
-	if (playerJumpState == eJumpState::Jump) {
+	if (getJumpState() == eJumpState::Jump) {
 		//getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, PLAYER_JUMP_SPEED));
 		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
 	}
@@ -72,8 +72,8 @@ void Player::jump() {
 }
 
 void Player::setRunState(eRunState state) {
-	if (state == eRunState::Left && playerRunState == eRunState::Right ||
-		state == eRunState::Right && playerRunState == eRunState::Left) {
+	if (state == eRunState::Left && getRunState() == eRunState::Right ||
+		state == eRunState::Right && getRunState() == eRunState::Left) {
 		playerRunState = eRunState::None;
 	}
 	else {
