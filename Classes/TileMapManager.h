@@ -3,7 +3,7 @@
 class TileMapManager : public b2Sprite
 {
 private:
-    CCTMXTiledMap* _tiledMap = new CCTMXTiledMap();
+    CCTMXTiledMap* _tiledMap;
     CCTMXLayer* _background;
     CCTMXLayer* _foreground;
     CCTMXLayer* _collidableObj;

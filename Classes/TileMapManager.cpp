@@ -1,7 +1,7 @@
 #include "TileMapManager.h"
 
 TileMapManager::TileMapManager() {
-
+	CCTMXTiledMap* _tiledMap = new CCTMXTiledMap();
 }
 
 TileMapManager::~TileMapManager() {
@@ -37,7 +37,7 @@ CCTMXTiledMap* TileMapManager::getTiledMap() {
 }
 
 void TileMapManager::setTiledMap(const std::string& filename) {
-	_tiledMap->initWithTMXFile("last.tmx");
+	_tiledMap->initWithTMXFile(filename);
 }
 
 void TileMapManager::setLayer(CCTMXLayer* layer, const std::string& filename) {
