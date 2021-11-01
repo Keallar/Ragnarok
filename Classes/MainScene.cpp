@@ -35,7 +35,7 @@ bool MainScene::init() {
     _firstTileMap->setTiledMap("last.tmx");
     _firstTileMap->addLayer("Background", "TileLayer1");
     _firstTileMap->addLayer("Foreground", "TileLayer2");
-    _firstTileMap->TileMapLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
+    _firstTileMap->TileMapLayerInit(_world, _firstTileMap->getLayerByName("Foreground"), b2BodyType::b2_staticBody);
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
