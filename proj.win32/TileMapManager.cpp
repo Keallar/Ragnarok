@@ -6,10 +6,6 @@ TileMapManager::TileMapManager() {
 
 TileMapManager::~TileMapManager() {
 	delete _tiledMap;
-	delete _background;
-	delete _foreground;
-	delete _collidableObj;
-	delete _objects;
 }
 
 TileMapManager* TileMapManager::createTileMap() {
@@ -17,18 +13,11 @@ TileMapManager* TileMapManager::createTileMap() {
 	return TileMapObj;
 }
 
-CCTMXLayer* TileMapManager::getLayer(const std::string& layerName) {
-	if (layerName == "BG")
-		return _background;
-
-	else if (layerName == "FG")
-		return _foreground;
-
-	else if (layerName == "CO")
-		return _collidableObj;
-
-	else if (layerName == "OB")
-		return _objects;
+CCTMXLayer* TileMapManager::getLayerByName(const std::string& layerName) {
+	for (std::pair<std::string, CCTMXLayer*> _pair : _layers) {
+		if (_pair.first == layerName)
+			return _pair.second;
+	}
 	return nullptr;
 }
 
@@ -37,13 +26,12 @@ CCTMXTiledMap* TileMapManager::getTiledMap() {
 }
 
 void TileMapManager::setTiledMap(const std::string& filename) {
-	_tiledMap->initWithTMXFile("last.tmx");
+	_tiledMap->initWithTMXFile(filename);
 }
 
-void TileMapManager::setLayer(CCTMXLayer* layer, const std::string& filename) {
-	CCASSERT(!layer, "Nullptr layer");
-	if (layer) {
-		layer = _tiledMap->getLayer(filename);
+void TileMapManager::addLayer(std::string installableName, const std::string& layerNameInMap) {
+	if (_tiledMap->getLayer(layerNameInMap)) {
+		_layers.push_back(std::make_pair(installableName, _tiledMap->layerNamed(layerNameInMap)));
 	}
 }
 
