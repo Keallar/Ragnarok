@@ -51,6 +51,9 @@
     <ClCompile Include="..\Classes\EnemyFactory.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="TileMapManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -87,6 +90,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\EnemyFactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapManager.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
