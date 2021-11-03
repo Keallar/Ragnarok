@@ -28,20 +28,21 @@ public:
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
-	eRunState getRunState();
-	eJumpState getJumpState();
+	eRunState getRunState() noexcept;
+	eJumpState getJumpState() noexcept;
+	float getHp() noexcept;
 
 	void move();
 	void changePos(int delta);
 	void jump();
-
-	//CREATE_FUNC(Player);
+	void changeHp(float difHp) noexcept;
 private:
 	static const int PLAYER_SPEED = 20;
 	static const int PLAYER_JUMP_SPEED = 20;
 	static const int PLAYER_JUMP_HEIGHT = 150;
 
-	int speed;
+	float hp;
+	float speed;
 	float jumpSpeed;
 	int jumpBegin;
 

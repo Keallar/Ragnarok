@@ -1,6 +1,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include "ContactListener.h"
+#include "EnemyContactListener.h"
 #include "EnemyFactory.h"
 
 USING_NS_CC;
@@ -27,7 +27,7 @@ bool MainScene::init() {
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
-    //_world->getb2World()->SetContactListener(new ContactListener);
+    _world->getb2World()->SetContactListener(new EnemyContactListener);
 
     //World->debugDraw();
     
@@ -119,6 +119,7 @@ void MainScene::tileMapInit() {
                 auto _b2test = b2Sprite::create();
                 _b2test->initWithSprite(_walls->getTileAt({ i, j }));
                 _b2test->initBody(b2BodyType::b2_staticBody);
+                _b2test->setName("platform");
                 _world->addChild(_b2test);
                 _b2test->setPosition(i * _walls->getTileAt({ i, j })->getTextureRect().size.width, (_tiledMap->getMapSize().height-j )* _walls->getTileAt({ i, j })->getTextureRect().size.height);
             }

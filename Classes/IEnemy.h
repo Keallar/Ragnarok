@@ -12,7 +12,7 @@ public:
 	virtual bool isDamaged() const;
 private:
 	float _hp;
-	int _speed;
+	float _speed;
 	bool _destroyed;
 	bool _damaged;
 };
