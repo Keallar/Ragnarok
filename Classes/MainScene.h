@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "SimpleEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
+#include "bullet.h"
 
 enum class ePhysicsCategory {
     Player = 1,
@@ -18,8 +19,10 @@ public:
     virtual bool init();
     void update(float dt) override;
     void createSomePlayer(float dt);
+
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-    void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void mousePressed(cocos2d::Event* event);
 
     void removeSomeEnemy(float dt);
 
@@ -33,5 +36,8 @@ private:
     Player* _player;
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
+
+    std::vector<Bullet*> bullets;
+
 };
 

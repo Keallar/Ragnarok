@@ -2,6 +2,13 @@
 
 USING_NS_CC;
 
+const float Player::ATTACK_COOLDOWN = 2.0f;
+
+const int Player::PLAYER_SPEED = 20;
+const int Player::PLAYER_JUMP_SPEED = 20;
+const int Player::PLAYER_JUMP_HEIGHT = 150;
+const int Player::BULLET_SPEED = 10;
+
 Player::Player() {
 	init();
 }
@@ -31,7 +38,11 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-
+	playerRunState = eRunState::None;
+	playerJumpState = eJumpState::None;
+	playerAnimState = eAnimState::None;
+	attackCooldown = 0;
+	jumpBegin = 0;
 
 	return true;
 }
@@ -81,15 +92,13 @@ void Player::move() {
 }
 
 void Player::changePos(int delta) {
-	//getPhysicsBody()->setVelocity(Vec2(delta, getPhysicsBody()->getVelocity().y));
 	getBody()->SetLinearVelocity(b2Vec2(delta, getBody()->GetLinearVelocity().y));
 }
 
 void Player::jump() {
-	//getPhysicsBody()->setVelocity(getPhysicsBody()->getVelocity() + Vec2(0, jumpSpeed));
 
 	if (getJumpState() == eJumpState::Jump) {
-		//getPhysicsBody()->setVelocity(Vec2(getPhysicsBody()->getVelocity().x, PLAYER_JUMP_SPEED));
+
 		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
 	}
 	if (getPosition().y - jumpBegin >= PLAYER_JUMP_HEIGHT) {
@@ -99,6 +108,20 @@ void Player::jump() {
 		setJumpState(eJumpState::None);
 		jumpBegin = 0;
 	}
+}
+
+bool Player::canAttack(float dt) {
+	if (attackCooldown > 0) {
+		attackCooldown -= dt;
+	}
+	else if (attackCooldown <= 0) {
+		return true;
+	}
+	return false;
+}
+
+void Player::resetAttackColldown() {
+	attackCooldown = ATTACK_COOLDOWN;
 }
 
 void Player::setRunState(eRunState state) {
@@ -118,6 +141,10 @@ void Player::setJumpState(eJumpState state) {
 	playerJumpState = state;
 }
 
+void Player::setAnimState(eAnimState state) {
+	playerAnimState = state;
+}
+
 eRunState Player::getRunState() {
 	return playerRunState;
 }
@@ -125,3 +152,8 @@ eRunState Player::getRunState() {
 eJumpState Player::getJumpState() {
 	return playerJumpState;
 }
+
+eAnimState Player::getAnimState() {
+	return playerAnimState;
+}
+
