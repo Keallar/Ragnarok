@@ -1,6 +1,7 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "EnemyContactListener.h"
+#include "PlayerContactListener.h"
 #include "EnemyFactory.h"
 
 USING_NS_CC;
@@ -28,6 +29,7 @@ bool MainScene::init() {
     addChild(_world);
 
     _world->getb2World()->SetContactListener(new EnemyContactListener);
+    _world->getb2World()->SetContactListener(new PlayerContactListener);
 
     //World->debugDraw();
     
@@ -97,6 +99,7 @@ void MainScene::update(float dt) {
 //������! �������� ����������
 static int id = 0;
 void MainScene::removeSomeEnemy(float dt) {
+    id++;
     auto visibleSize = Director::getInstance()->getVisibleSize();
     SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
     _world->addChild(enemy);

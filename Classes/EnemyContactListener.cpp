@@ -3,25 +3,15 @@
 #include "IEnemy.h"
 
 void EnemyContactListener::BeginContact(b2Contact* contact) {
-
-	b2Sprite* SpriteA; 
-	b2Sprite* SpriteB;
-
-	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL && 
-			contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
-		SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
-		SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
-
+	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL &&
+		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
+		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
 		auto spriteAName = SpriteA->getName();
 		auto spriteBName = SpriteB->getName();
 
-		//UNDONE 
-		//Удаление через имена пока не лучшая идея
-		if (spriteAName != "platform" && spriteBName != "platform" &&
-				spriteAName != "player" && spriteBName != "player") {
-			CCLOG("%s CONTACT WITH %s \n", spriteAName.c_str(), spriteBName.c_str());
-			SpriteA->setOnRemove();
-			SpriteB->setOnRemove();
+		if (spriteAName == "platform" || spriteBName == "platform") {
+			return;
 		}
 	}
 }
