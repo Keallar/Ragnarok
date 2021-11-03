@@ -80,7 +80,15 @@ void MainScene::mousePressed(cocos2d::Event* event) {
             Vec2 pos = _player->getPosition();
 
             auto click = mouse->getLocation();
-            Vec2 dest =  click - pos;
+
+            auto director = Director::getInstance();
+
+            Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+            clickPos += click;
+
+            clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+
+            Vec2 dest =  clickPos - pos;
             dest.normalize();
             dest *= _player->BULLET_SPEED;
 

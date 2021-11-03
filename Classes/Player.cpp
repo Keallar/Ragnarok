@@ -2,7 +2,7 @@
 
 USING_NS_CC;
 
-const float Player::ATTACK_COOLDOWN = 2.0f;
+const float Player::ATTACK_COOLDOWN = 0.2f;
 
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
