@@ -7,6 +7,19 @@
 //#include "b2dRootWorldNode.h"
 #include "GameVars.h"
 
+enum class eColCategory {
+	player = 0x0001,
+	enemy = 0x0002,
+	bullet = 0x0004,
+	platform = 0x0008
+};
+
+enum class eColMask {
+	player =   static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy)    | static_cast<int>(eColCategory::platform),
+	enemy =    static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy)    | static_cast<int>(eColCategory::platform) | static_cast<int>(eColCategory::bullet),
+	bullet =   static_cast<int>(eColCategory::enemy)  | static_cast<int>(eColCategory::platform),
+	platform = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy)    | static_cast<int>(eColCategory::bullet)
+};
 
 USING_NS_CC;
 
@@ -111,6 +124,14 @@ public:
 	* @param   world The parent/world.
 	*/
 	b2Body* getBody();
+
+	//WTF added func to get fixture because we need to change collision filter. We can do this with getFixtufeDef & change filter
+	//we can do this only before addChild because b2Body is creating in func addChild & we cant change b2Body without creating new &
+	//deleting old b2Body. Also b2Fixture dont exist before addChild() func. Fixture creating using FixtureDef
+
+	b2Fixture* getFixture();
+
+	b2FixtureDef* getFixtureDef();
 
 	b2BodyDef* getBodyDef();
 
