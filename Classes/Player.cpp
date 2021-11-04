@@ -2,6 +2,13 @@
 
 USING_NS_CC;
 
+const float Player::ATTACK_COOLDOWN = 0.2f;
+
+const int Player::PLAYER_SPEED = 20;
+const int Player::PLAYER_JUMP_SPEED = 20;
+const int Player::PLAYER_JUMP_HEIGHT = 150;
+const int Player::BULLET_SPEED = 10;
+
 Player::Player() {
 	init();
 }
@@ -32,6 +39,11 @@ bool Player::init() {
 	}
 	hp = 100.f;
 	speed = 0.f;
+	jumpBegin = 0;
+	playerRunState = eRunState::None;
+	playerJumpState = eJumpState::None;
+	playerAnimState = eAnimState::None;
+	attackCooldown = 0;
 	jumpBegin = 0;
 
 	return true;
@@ -103,6 +115,20 @@ void Player::jump() {
 	}
 }
 
+bool Player::canAttack(float dt) {
+	if (attackCooldown > 0) {
+		attackCooldown -= dt;
+	}
+	else if (attackCooldown <= 0) {
+		return true;
+	}
+	return false;
+}
+
+void Player::resetAttackColldown() {
+	attackCooldown = ATTACK_COOLDOWN;
+}
+
 void Player::setRunState(eRunState state) {
 	if (state == eRunState::Left && getRunState() == eRunState::Right ||
 		state == eRunState::Right && getRunState() == eRunState::Left) {
@@ -119,7 +145,11 @@ void Player::setJumpState(eJumpState state) {
 	playerJumpState = state;
 }
 
-eRunState Player::getRunState() noexcept {
+void Player::setAnimState(eAnimState state) {
+	playerAnimState = state;
+}
+
+eRunState Player::getRunState() {
 	return playerRunState;
 }
 

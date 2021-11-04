@@ -13,6 +13,9 @@
     <Filter Include="src\box2d">
       <UniqueIdentifier>{5df969be-e813-4ff3-8b60-7dbeb5868456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\bullet">
+      <UniqueIdentifier>{6133e245-1fea-4716-b6af-d2054ad6b448}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\EnemyFactory.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Bullet.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletFactory.cpp">
+      <Filter>src\bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PlayerContactListener.cpp">
       <Filter>src</Filter>
@@ -91,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\EnemyFactory.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Bullet.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletFactory.h">
+      <Filter>src\bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerContactListener.h">
       <Filter>src</Filter>

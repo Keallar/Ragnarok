@@ -14,6 +14,13 @@ enum class eJumpState {
 	Fall
 };
 
+enum class eAnimState {
+	None,
+	Run,
+	Jump,
+	Attack
+};
+
 class Player : public b2Sprite
 {
 public:
@@ -24,22 +31,40 @@ public:
 
 	virtual bool init();
 
-	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	bool canAttack(float dt); 	//bool func that rerturns players willigness to attack
+	void resetAttackColldown();
+
+	eRunState getRunState();
+	eJumpState getJumpState();
+	eAnimState getAnimState();
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
+	void setAnimState(eAnimState state);
 	eRunState getRunState() noexcept;
 	eJumpState getJumpState() noexcept;
 	float getHp() noexcept;
 
+	//key callbacks
+
+	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+
 	void move();
 	void changePos(int delta);
 	void jump();
+
+	//CREATE_FUNC(Player);
+
+	static const float ATTACK_COOLDOWN;
+
+	//get from private because they are const & i need bullet speed at scene
+	static const int PLAYER_SPEED;
+	static const int PLAYER_JUMP_SPEED;
+	static const int PLAYER_JUMP_HEIGHT;
+	static const int BULLET_SPEED;
 	void changeHp(float difHp) noexcept;
 private:
-	static const int PLAYER_SPEED = 20;
-	static const int PLAYER_JUMP_SPEED = 20;
-	static const int PLAYER_JUMP_HEIGHT = 150;
+	float attackCooldown;
 
 	float hp;
 	float speed;
@@ -48,5 +73,6 @@ private:
 
 	eRunState playerRunState;
 	eJumpState playerJumpState;
+	eAnimState playerAnimState;
 };
 

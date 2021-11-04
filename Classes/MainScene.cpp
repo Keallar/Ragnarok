@@ -3,8 +3,10 @@
 #include "EnemyContactListener.h"
 #include "PlayerContactListener.h"
 #include "EnemyFactory.h"
+#include "BulletFactory.h"
 
 USING_NS_CC;
+
 
 Scene* MainScene::createScene() {
     return MainScene::create();
@@ -38,24 +40,15 @@ bool MainScene::init() {
     //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     tileMapInit();
-    //World->addChild(floor);
-    //World->addChild(wallL);
-    //World->addChild(wallR);
-    //World->addChild(ceil);
 
-    //floor->setPosition((visibleSize.width) / 2 + origin.x, 2 + origin.y);
-    //wallL->setPosition(2 + origin.x, (visibleSize.height + origin.y) / 2);
-    //wallR->setPosition(visibleSize.width + origin.x - 2, (visibleSize.height + origin.y) / 2);
-    //ceil->setPosition((visibleSize.width) / 2 + origin.x, visibleSize.height + origin.y - 2);
-
-    /*floor->setName("platform");
-    wallL->setName("platform");
-    wallR->setName("platform");
-    ceil->setName("platform");*/
     _player = Player::createPlayer();
-    //_player->setScale(0.5);
 
     Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
+
+    b2Filter filter;
+    filter.categoryBits = static_cast<uint16>(eColCategory::player);
+    filter.maskBits = static_cast<uint16>(eColMask::player);
+    _player->getFixtureDef()->filter = filter;
 
     _world->addChild(_player);
 
@@ -63,13 +56,18 @@ bool MainScene::init() {
     _player->setName("player");
 
     _player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-
+    _player->getBody()->SetBullet(true);
     //camera setup
     _cameraTarget = getDefaultCamera();
 
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
+
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseDown = CC_CALLBACK_1(MainScene::mousePressed, this);
+
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();
@@ -77,6 +75,38 @@ bool MainScene::init() {
     schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
 
     return true;
+}
+
+void MainScene::mousePressed(cocos2d::Event* event) {
+    EventMouse* mouse = dynamic_cast<EventMouse*>(event);
+
+    if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
+
+        _player->setAnimState(eAnimState::Attack);
+        if (_player->canAttack(0)) {
+
+            _player->resetAttackColldown();
+
+            Vec2 pos = _player->getPosition();
+
+            auto click = mouse->getLocation();
+
+            auto director = Director::getInstance();
+
+            Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+            clickPos += click;
+
+            clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+
+            Vec2 dest =  clickPos - pos;
+            dest.normalize();
+            dest *= _player->BULLET_SPEED;
+
+            auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, _world, pos, dest);
+
+            bullets.push_back(bullet);
+        }
+    }
 }
 
 void MainScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
@@ -88,8 +118,21 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 }
 
 void MainScene::update(float dt) {
+    _player->canAttack(dt);
     _player->move();
     _player->jump();
+
+    for (auto i : bullets) {
+        i->update(dt);
+        if (i->getMoveTime() <= 0) {
+            _world->removeChild(i);
+        }
+    }
+
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
+        bullets.end());
+
     _world->update(dt);
     _world->removeIsDeletingChildren();
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height/2);
@@ -123,6 +166,10 @@ void MainScene::tileMapInit() {
                 _b2test->initWithSprite(_walls->getTileAt({ i, j }));
                 _b2test->initBody(b2BodyType::b2_staticBody);
                 _b2test->setName("platform");
+                b2Filter filter;
+                filter.categoryBits = static_cast<uint16>(eColCategory::platform);
+                filter.maskBits = static_cast<uint16>(eColMask::platform);
+                _b2test->getFixtureDef()->filter = filter;
                 _world->addChild(_b2test);
                 _b2test->setPosition(i * _walls->getTileAt({ i, j })->getTextureRect().size.width, (_tiledMap->getMapSize().height-j )* _walls->getTileAt({ i, j })->getTextureRect().size.height);
             }
