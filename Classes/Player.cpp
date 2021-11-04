@@ -149,8 +149,12 @@ void Player::setAnimState(eAnimState state) {
 	playerAnimState = state;
 }
 
-eRunState Player::getRunState() {
+eRunState Player::getRunState() noexcept {
 	return playerRunState;
+}
+
+eAnimState Player::getAnimState() noexcept {
+	return playerAnimState;
 }
 
 eJumpState Player::getJumpState() noexcept {

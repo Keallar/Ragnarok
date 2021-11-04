@@ -34,14 +34,13 @@ public:
 	bool canAttack(float dt); 	//bool func that rerturns players willigness to attack
 	void resetAttackColldown();
 
-	eRunState getRunState();
-	eJumpState getJumpState();
-	eAnimState getAnimState();
+
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	void setAnimState(eAnimState state);
 	eRunState getRunState() noexcept;
 	eJumpState getJumpState() noexcept;
+	eAnimState getAnimState() noexcept;
 	float getHp() noexcept;
 
 	//key callbacks
