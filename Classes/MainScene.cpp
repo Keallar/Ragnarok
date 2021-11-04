@@ -74,7 +74,7 @@ bool MainScene::init() {
 
     scheduleUpdate();
     //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
-    schedule(schedule_selector(MainScene::removeSomeEnemy), 0.5f);
+    schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
 
     return true;
 }
@@ -98,7 +98,7 @@ void MainScene::update(float dt) {
 //UNDONE
 //������! �������� ����������
 static int id = 0;
-void MainScene::removeSomeEnemy(float dt) {
+void MainScene::createSomeEnemy(float dt) {
     id++;
     auto visibleSize = Director::getInstance()->getVisibleSize();
     SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();

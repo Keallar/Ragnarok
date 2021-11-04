@@ -4,15 +4,17 @@
 
 class IEnemy : public b2Sprite {
 public:
-	virtual void setHp(float& hp);
+	virtual void setHp(float hp) noexcept;
+	virtual void changeHp(float difHp) noexcept;
 	virtual float getHp() const ;
-	virtual void setDestroyed(bool& state);
+	virtual void setDestroyed(bool& state) noexcept;
 	virtual bool isDestroyed() const ;
-	virtual void setDamaged(bool& state);
+	virtual void setDamaged(bool& state) noexcept;
 	virtual bool isDamaged() const;
+protected:
+	float _speed;
 private:
 	float _hp;
-	float _speed;
 	bool _destroyed;
 	bool _damaged;
 };

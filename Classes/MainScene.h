@@ -17,11 +17,9 @@ public:
 
     virtual bool init();
     void update(float dt) override;
-    void createSomePlayer(float dt);
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-
-    void removeSomeEnemy(float dt);
+    void createSomeEnemy(float dt);
 
     void tileMapInit();
     // implement the "static create()" method manually

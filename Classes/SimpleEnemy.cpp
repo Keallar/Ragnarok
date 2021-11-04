@@ -31,6 +31,8 @@ bool SimpleEnemy::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
+	
+	setHp(100.f);
 	speed = 0;
 	return true;
 }
