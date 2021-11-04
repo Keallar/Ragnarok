@@ -7,12 +7,14 @@ void EnemyContactListener::BeginContact(b2Contact* contact) {
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
 		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
-		auto spriteAName = SpriteA->getName();
-		auto spriteBName = SpriteB->getName();
-
-		if (spriteAName == "platform" || spriteBName == "platform") {
-			return;
+		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
+			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
+			SpriteA->setOnRemove();
 		}
+		//if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
+		//	SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
+		//	SpriteB->setOnRemove();
+		//}
 	}
 }
 

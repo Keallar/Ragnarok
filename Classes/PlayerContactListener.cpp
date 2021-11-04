@@ -8,16 +8,6 @@ void PlayerContactListener::BeginContact(b2Contact* contact) {
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
 		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
-		auto spriteAName = SpriteA->getName();
-		auto spriteBName = SpriteB->getName();
-
-		if (spriteAName == "platform" || spriteBName == "platform") {
-			return;
-		}
-		if (spriteAName == "player" && spriteBName.find("simpleEnemy") == 0) {
-			CCLOG("%s CONTACT WITH %s \n", spriteAName.c_str(), spriteBName.c_str());
-			SpriteB->setOnRemove();
-		}
 	}
 }
 

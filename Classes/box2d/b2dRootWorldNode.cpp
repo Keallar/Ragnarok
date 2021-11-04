@@ -170,7 +170,10 @@ bool b2WorldNode::addChildBody(Node* child)
 
 void b2WorldNode::removeChild(Node* child, bool cleanup)
 {
-	if (b2Sprite* B2Dchild = dynamic_cast<b2Sprite*>(child)) 
+	if (!child) {
+		return;
+	}
+	if (auto B2Dchild = dynamic_cast<b2Sprite*>(child)) 
 	{
 		if (B2Dchild->getBody()->GetType() == b2_dynamicBody || B2Dchild->getBody()->GetType() == b2_kinematicBody)
 		{

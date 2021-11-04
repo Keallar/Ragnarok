@@ -3,13 +3,16 @@
 #include "IEnemy.h"
 #include "SimpleEnemy.h"
 
+enum class eEnemyType {
+	simpleEnemy,
+	boss
+};
+
 class EnemyFactory {
 public:
 	static EnemyFactory* getInstance();
 	static SimpleEnemy* createSimpleEnemy();
 private:
-	//EnemyFactory() = delete;
-	//~EnemyFactory() {};
 	static EnemyFactory* instance;
 };
 

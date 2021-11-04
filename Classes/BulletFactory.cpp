@@ -15,15 +15,17 @@ Bullet* BulletFactory::createBullet(eBulletType type, b2WorldNode* world, Vec2 p
 	switch (type) {
 	case eBulletType::playerOrdinary:
 		return createPlayerOrdinaryBullet(world, pos, dest);
+	default:
+		break;
 	}
 }
 
 Bullet* BulletFactory::createPlayerOrdinaryBullet(b2WorldNode* world, Vec2 pos, Vec2 dest) {
 	auto bullet = Bullet::createBullet(pos, dest);
-	bullet->setName("playerOrdinary");
+	bullet->setName("bulletPlayerOrdinary");
 	b2Filter filter;
 	filter.categoryBits = static_cast<uint16>(eColCategory::bullet);
-	filter.maskBits = static_cast<uint16>(eColMask::bullet);
+	filter.maskBits = static_cast<uint16>(eColMask::playerBullet);
 	bullet->getFixtureDef()->filter = filter;
 	world->addChild(bullet);
 	bullet->setPosition(pos);

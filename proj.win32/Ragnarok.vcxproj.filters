@@ -16,6 +16,9 @@
     <Filter Include="src\bullet">
       <UniqueIdentifier>{6133e245-1fea-4716-b6af-d2054ad6b448}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\enemy">
+      <UniqueIdentifier>{ce474e65-510c-4b87-902c-8eedfa18495c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,15 +48,6 @@
     <ClCompile Include="..\Classes\EnemyContactListener.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\IEnemy.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SimpleEnemy.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\EnemyFactory.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Bullet.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
@@ -62,6 +56,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PlayerContactListener.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EnemyFactory.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IEnemy.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SimpleEnemy.cpp">
+      <Filter>src\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,15 +95,6 @@
     <ClInclude Include="..\Classes\EnemyContactListener.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\IEnemy.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SimpleEnemy.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\EnemyFactory.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Bullet.h">
       <Filter>src\bullet</Filter>
     </ClInclude>
@@ -109,6 +103,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PlayerContactListener.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EnemyFactory.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IEnemy.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SimpleEnemy.h">
+      <Filter>src\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

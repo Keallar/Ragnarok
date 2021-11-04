@@ -115,7 +115,7 @@ void Player::jump() {
 	}
 }
 
-bool Player::canAttack(float dt) {
+bool Player::canAttack(float dt) noexcept {
 	if (attackCooldown > 0) {
 		attackCooldown -= dt;
 	}
@@ -125,7 +125,7 @@ bool Player::canAttack(float dt) {
 	return false;
 }
 
-void Player::resetAttackColldown() {
+void Player::resetAttackColldown() noexcept {
 	attackCooldown = ATTACK_COOLDOWN;
 }
 
@@ -161,7 +161,7 @@ eJumpState Player::getJumpState() noexcept {
 	return playerJumpState;
 }
 
-void Player::changeHp(float difHp) noexcept  {
+void Player::changeHp(float difHp) noexcept {
 	if (hp <= 0) {
 		return;
 	}

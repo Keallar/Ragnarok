@@ -31,7 +31,7 @@ bool MainScene::init() {
     addChild(_world);
 
     _world->getb2World()->SetContactListener(new EnemyContactListener);
-    _world->getb2World()->SetContactListener(new PlayerContactListener);
+    //_world->getb2World()->SetContactListener(new PlayerContactListener);
 
     //World->debugDraw();
     
@@ -77,6 +77,27 @@ bool MainScene::init() {
     return true;
 }
 
+void MainScene::update(float dt) {
+    _player->canAttack(dt);
+    _player->move();
+    _player->jump();
+
+    for (auto i : bullets) {
+        i->update(dt);
+        if (i->getMoveTime() <= 0) {
+            _world->removeChild(i);
+        }
+    }
+
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
+        bullets.end());
+
+    _world->update(dt);
+    _world->removeIsDeletingChildren();
+    _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
+}
+
 void MainScene::mousePressed(cocos2d::Event* event) {
     EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
@@ -117,27 +138,6 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
-void MainScene::update(float dt) {
-    _player->canAttack(dt);
-    _player->move();
-    _player->jump();
-
-    for (auto i : bullets) {
-        i->update(dt);
-        if (i->getMoveTime() <= 0) {
-            _world->removeChild(i);
-        }
-    }
-
-    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
-        bullets.end());
-
-    _world->update(dt);
-    _world->removeIsDeletingChildren();
-    _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height/2);
-}
-
 //UNDONE
 //������! �������� ����������
 static int id = 0;
@@ -145,6 +145,10 @@ void MainScene::createSomeEnemy(float dt) {
     id++;
     auto visibleSize = Director::getInstance()->getVisibleSize();
     SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
+    b2Filter filter;
+    filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
+    filter.maskBits = static_cast<uint16>(eColMask::enemy);
+    enemy->getFixtureDef()->filter = filter;
     _world->addChild(enemy);
     enemy->setName("simpleEnemy_" + std::to_string(id));
     Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);

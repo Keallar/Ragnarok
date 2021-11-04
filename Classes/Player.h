@@ -31,8 +31,8 @@ public:
 
 	virtual bool init();
 
-	bool canAttack(float dt); 	//bool func that rerturns players willigness to attack
-	void resetAttackColldown();
+	bool canAttack(float dt) noexcept; 	//bool func that rerturns players willigness to attack
+	void resetAttackColldown() noexcept;
 
 
 	void setRunState(eRunState state);
@@ -51,8 +51,6 @@ public:
 	void move();
 	void changePos(int delta);
 	void jump();
-
-	//CREATE_FUNC(Player);
 
 	static const float ATTACK_COOLDOWN;
 
