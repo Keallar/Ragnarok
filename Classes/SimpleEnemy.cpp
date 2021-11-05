@@ -7,7 +7,6 @@ SimpleEnemy::SimpleEnemy() {
 }
 
 SimpleEnemy::~SimpleEnemy() {
-
 }
 
 SimpleEnemy* SimpleEnemy::createSimpleEnemy() {
@@ -17,8 +16,7 @@ SimpleEnemy* SimpleEnemy::createSimpleEnemy() {
 
 SimpleEnemy* SimpleEnemy::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
 	SimpleEnemy* sprite = new (std::nothrow) SimpleEnemy();
-	if (sprite && sprite->initWithFile(filename))
-	{
+	if (sprite && sprite->initWithFile(filename)) {
 		sprite->initBody(type, friction, restitution);
 		sprite->autorelease();
 		return sprite;
@@ -31,7 +29,11 @@ bool SimpleEnemy::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	speed = 0;
+	
+	setHp(100);
+	setSpeed(10.f);
+	setDamaged(false);
+	setDestroyed(false);
 	return true;
 }
 

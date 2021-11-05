@@ -18,8 +18,7 @@ Bullet* Bullet::createBullet(Vec2 pos, Vec2 dest) {
 
 Bullet* Bullet::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
 	Bullet* sprite = new (std::nothrow) Bullet();
-	if (sprite && sprite->initWithFile(filename))
-	{
+	if (sprite && sprite->initWithFile(filename)) {
 		sprite->initBody(type, friction, restitution);
 		sprite->autorelease();
 		return sprite;

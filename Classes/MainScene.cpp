@@ -1,11 +1,12 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include "ContactListener.h"
+#include "EnemyContactListener.h"
+#include "PlayerContactListener.h"
+#include "BulletContactListener.h"
 #include "EnemyFactory.h"
 #include "BulletFactory.h"
 
 USING_NS_CC;
-
 
 Scene* MainScene::createScene() {
     return MainScene::create();
@@ -29,6 +30,14 @@ bool MainScene::init() {
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
+    _world->getb2World()->SetContactListener(new EnemyContactListener);
+    //_world->getb2World()->SetContactListener(new PlayerContactListener);
+    //_world->getb2World()->SetContactListener(new BulletContactListener);
+
+    //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
+    //auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     tileMapInit();
 
     _player = Player::createPlayer();
@@ -62,9 +71,32 @@ bool MainScene::init() {
 
     scheduleUpdate();
     //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
-    //schedule(schedule_selector(MainScene::removeSomeEnemy), 0.5f);
+    schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
 
     return true;
+}
+
+void MainScene::update(float dt) {
+    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
+        bullets.end());
+
+    _world->update(dt);
+    _world->removeIsDeletingChildren();
+
+    _player->canAttack(dt);
+    _player->move();
+    _player->jump();
+
+    for (auto bullet : bullets) {
+        if (!bullet) {
+            bullet->update(dt);
+            if (bullet->getMoveTime() <= 0) {
+                _world->removeChild(bullet);
+            }
+        }
+    }
+    _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
@@ -74,26 +106,17 @@ void MainScene::mousePressed(cocos2d::Event* event) {
 
         _player->setAnimState(eAnimState::Attack);
         if (_player->canAttack(0)) {
-
             _player->resetAttackColldown();
-
             Vec2 pos = _player->getPosition();
-
             auto click = mouse->getLocation();
-
             auto director = Director::getInstance();
-
             Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
             clickPos += click;
-
             clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
-
             Vec2 dest =  clickPos - pos;
             dest.normalize();
             dest *= _player->BULLET_SPEED;
-
             auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, _world, pos, dest);
-
             bullets.push_back(bullet);
         }
     }
@@ -107,38 +130,11 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
-void MainScene::update(float dt) {
-    _player->canAttack(dt);
-    _player->move();
-    _player->jump();
-
-    for (auto i : bullets) {
-        i->update(dt);
-        if (i->getMoveTime() <= 0) {
-            _world->removeChild(i);
-        }
-    }
-
-    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
-        bullets.end());
-
-    _world->update(dt);
-    _world->removeIsDeletingChildren();
-    _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height/2);
-}
-
-//UNDONE
-//������! �������� ����������
-static int id = 0;
-void MainScene::removeSomeEnemy(float dt) {
+void MainScene::createSomeEnemy(float dt) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
-    _world->addChild(enemy);
-    enemy->setName("simpleEnemy_" + std::to_string(id));
-    Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
-    enemy->getBody()->SetFixedRotation(true);
-    enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+    Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
+    auto enemy = EnemyFactory::getInstance()->createSimpleEnemy(_world, pos);
+    enemies.push_back(enemy);
 }
 
 void MainScene::tileMapInit() {
@@ -154,6 +150,7 @@ void MainScene::tileMapInit() {
                 auto _b2test = b2Sprite::create();
                 _b2test->initWithSprite(_walls->getTileAt({ i, j }));
                 _b2test->initBody(b2BodyType::b2_staticBody);
+                _b2test->setName("platform");
                 b2Filter filter;
                 filter.categoryBits = static_cast<uint16>(eColCategory::platform);
                 filter.maskBits = static_cast<uint16>(eColMask::platform);
