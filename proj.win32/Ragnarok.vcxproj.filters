@@ -45,9 +45,6 @@
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp">
       <Filter>src\box2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\EnemyContactListener.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Bullet.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
@@ -65,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SimpleEnemy.cpp">
       <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\EnemyContactListener.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletContactListener.cpp">
+      <Filter>src\bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +95,6 @@
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h">
       <Filter>src\box2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\EnemyContactListener.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Bullet.h">
       <Filter>src\bullet</Filter>
     </ClInclude>
@@ -112,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SimpleEnemy.h">
       <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EnemyContactListener.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletContactListener.h">
+      <Filter>src\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

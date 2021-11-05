@@ -2,11 +2,11 @@
 #include "SimpleAudioEngine.h"
 #include "EnemyContactListener.h"
 #include "PlayerContactListener.h"
+#include "BulletContactListener.h"
 #include "EnemyFactory.h"
 #include "BulletFactory.h"
 
 USING_NS_CC;
-
 
 Scene* MainScene::createScene() {
     return MainScene::create();
@@ -32,9 +32,8 @@ bool MainScene::init() {
 
     _world->getb2World()->SetContactListener(new EnemyContactListener);
     //_world->getb2World()->SetContactListener(new PlayerContactListener);
+    //_world->getb2World()->SetContactListener(new BulletContactListener);
 
-    //World->debugDraw();
-    
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
@@ -105,26 +104,17 @@ void MainScene::mousePressed(cocos2d::Event* event) {
 
         _player->setAnimState(eAnimState::Attack);
         if (_player->canAttack(0)) {
-
             _player->resetAttackColldown();
-
             Vec2 pos = _player->getPosition();
-
             auto click = mouse->getLocation();
-
             auto director = Director::getInstance();
-
             Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
             clickPos += click;
-
             clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
-
             Vec2 dest =  clickPos - pos;
             dest.normalize();
             dest *= _player->BULLET_SPEED;
-
             auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, _world, pos, dest);
-
             bullets.push_back(bullet);
         }
     }
@@ -138,22 +128,11 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
-//UNDONE
-//������! �������� ����������
-static int id = 0;
 void MainScene::createSomeEnemy(float dt) {
-    id++;
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
-    b2Filter filter;
-    filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
-    filter.maskBits = static_cast<uint16>(eColMask::enemy);
-    enemy->getFixtureDef()->filter = filter;
-    _world->addChild(enemy);
-    enemy->setName("simpleEnemy_" + std::to_string(id));
-    Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
-    enemy->getBody()->SetFixedRotation(true);
-    enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+    Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
+    auto enemy = EnemyFactory::getInstance()->createSimpleEnemy(_world, pos);
+    enemies.push_back(enemy);
 }
 
 void MainScene::tileMapInit() {

@@ -1,6 +1,7 @@
 #include "BulletFactory.h"
 
 BulletFactory* BulletFactory::instance = nullptr;
+int BulletFactory::id = -1;
 
 BulletFactory* BulletFactory::getInstance() {
 	if (instance != nullptr) {

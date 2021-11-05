@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Player.h"
-#include "SimpleEnemy.h"
+#include "IEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
 #include "bullet.h"
 
@@ -36,6 +36,6 @@ private:
     cocos2d::Camera* _cameraTarget;
 
     std::vector<Bullet*> bullets;
-
+    std::vector<IEnemy*> enemies;
 };
 

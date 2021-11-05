@@ -6,10 +6,12 @@ class IEnemy : public b2Sprite {
 public:
 	virtual void setHp(float hp) noexcept;
 	virtual void changeHp(float difHp) noexcept;
-	virtual float getHp() const ;
-	virtual void setDestroyed(bool& state) noexcept;
+	virtual float getHp() const noexcept;
+	virtual void setSpeed(float speed) noexcept;
+	virtual float getSpeed() const noexcept;
+	virtual void setDestroyed(bool state) noexcept;
 	virtual bool isDestroyed() const ;
-	virtual void setDamaged(bool& state) noexcept;
+	virtual void setDamaged(bool state) noexcept;
 	virtual bool isDamaged() const;
 protected:
 	float _speed;

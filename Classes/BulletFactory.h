@@ -13,11 +13,10 @@ public:
 
 	Bullet* createBullet(eBulletType type, b2WorldNode* world, Vec2 pos, Vec2 dest);
 private:
-	//BulletFactory();
-	//~BulletFactory();
+	static BulletFactory* instance;
+	static int id;
 
 	Bullet* createPlayerOrdinaryBullet(b2WorldNode* world, Vec2 pos, Vec2 dest);
 
-	static BulletFactory* instance;
 };
 

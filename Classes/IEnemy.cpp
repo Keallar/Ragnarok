@@ -1,7 +1,5 @@
 #include "IEnemy.h"
 
-USING_NS_CC;
-
 void IEnemy::setHp(float hp) noexcept {
 	if (!hp) {
 		return;
@@ -16,11 +14,19 @@ void IEnemy::changeHp(float difHp) noexcept {
 	_hp -= difHp;
 }
 
-float IEnemy::getHp() const {
+float IEnemy::getHp() const noexcept {
 	return _hp;
 }
 
-void IEnemy::setDestroyed(bool& state) noexcept {
+void IEnemy::setSpeed(float speed) noexcept {
+	_speed = speed;
+}
+
+float IEnemy::getSpeed() const noexcept {
+	return _speed;
+}
+
+void IEnemy::setDestroyed(bool state) noexcept {
 	_destroyed = state;
 }
 
@@ -28,7 +34,7 @@ bool IEnemy::isDestroyed() const {
 	return _destroyed;
 }
 
-void IEnemy::setDamaged(bool& state) noexcept {
+void IEnemy::setDamaged(bool state) noexcept {
 	_damaged = state;
 }
 
