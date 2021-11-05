@@ -4,7 +4,6 @@
 #include "PlayerContactListener.h"
 #include "BulletContactListener.h"
 #include "EnemyFactory.h"
-#include "BulletFactory.h"
 
 USING_NS_CC;
 
@@ -77,49 +76,17 @@ bool MainScene::init() {
 }
 
 void MainScene::update(float dt) {
-    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
-        bullets.end());
 
     _world->update(dt);
     _world->removeIsDeletingChildren();
 
-    _player->canAttack(dt);
-    _player->move();
-    _player->jump();
+    _player->update(dt);
 
-    for (auto bullet : bullets) {
-        if (!bullet) {
-            bullet->update(dt);
-            if (bullet->getMoveTime() <= 0) {
-                _world->removeChild(bullet);
-            }
-        }
-    }
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
-    EventMouse* mouse = dynamic_cast<EventMouse*>(event);
-
-    if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-
-        _player->setAnimState(eAnimState::Attack);
-        if (_player->canAttack(0)) {
-            _player->resetAttackColldown();
-            Vec2 pos = _player->getPosition();
-            auto click = mouse->getLocation();
-            auto director = Director::getInstance();
-            Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
-            clickPos += click;
-            clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
-            Vec2 dest =  clickPos - pos;
-            dest.normalize();
-            dest *= _player->BULLET_SPEED;
-            auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, _world, pos, dest);
-            bullets.push_back(bullet);
-        }
-    }
+    _player->mousePressed(event);
 }
 
 void MainScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {

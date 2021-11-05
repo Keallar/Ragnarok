@@ -35,7 +35,6 @@ private:
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
 
-    std::vector<Bullet*> bullets;
     std::vector<IEnemy*> enemies;
 };
 

@@ -1,6 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include "box2d/b2dSprite.h"
+#include "bullet.h"
+#include "BulletFactory.h"
 
 enum class eRunState {
 	None,
@@ -30,7 +32,8 @@ public:
 
 	virtual bool init();
 
-	bool canAttack(float dt) noexcept; 	//bool func that rerturns players willigness to attack
+	void update(float dt) override;
+
 	void resetAttackColldown() noexcept;
 
 
@@ -46,6 +49,7 @@ public:
 
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void mousePressed(cocos2d::Event* event);
 
 	void move();
 	void changePos(int delta);
@@ -70,5 +74,7 @@ private:
 	eRunState playerRunState;
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
+
+	std::vector<Bullet*> bullets;
 };
 

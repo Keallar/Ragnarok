@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "box2d/b2dRootWorldNode.h"
 
 USING_NS_CC;
 
@@ -81,6 +82,32 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	}
 }
 
+void Player::mousePressed(cocos2d::Event* event) {
+	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
+
+	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
+
+		setAnimState(eAnimState::Attack);
+		if (attackCooldown <= 0) {
+			resetAttackColldown();
+			Vec2 pos = getPosition();
+			auto click = mouse->getLocation();
+			auto director = Director::getInstance();
+			Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+			clickPos += click;
+			clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+			Vec2 dest = clickPos - pos;
+			dest.normalize();
+			dest *= BULLET_SPEED;
+
+			b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
+			auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, world, pos, dest);
+
+			bullets.push_back(bullet);
+		}
+	}
+}
+
 void Player::move() {
 	switch (getRunState()) {
 	case eRunState::Left:
@@ -115,14 +142,28 @@ void Player::jump() {
 	}
 }
 
-bool Player::canAttack(float dt) noexcept {
+void Player::update(float dt) {
+	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
+
+	bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
+		[](Bullet* x) { return (x->getMoveTime() <= 0); }),
+	bullets.end());
+
+	for (auto bullet : bullets) {
+		if (!bullet) {
+			bullet->update(dt);
+			if (bullet->getMoveTime() <= 0) {
+				world->removeChild(bullet);
+			}
+		}
+	}
+
 	if (attackCooldown > 0) {
 		attackCooldown -= dt;
 	}
-	else if (attackCooldown <= 0) {
-		return true;
-	}
-	return false;
+
+	move();
+	jump();
 }
 
 void Player::resetAttackColldown() noexcept {
