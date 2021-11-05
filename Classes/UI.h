@@ -15,7 +15,9 @@ public:
     cocos2d::Sprite* imgMana;
     void beginMana();
 
-    void printText(Label* text);
+    cocos2d::Sprite* paper;
+    void printText(cocos2d::Label* text);
+    
 
     CREATE_FUNC(UI);
 

@@ -149,7 +149,7 @@ bool HelloWorld::init()
     
     UI* ui = UI::create();
     addChild(ui);
-    auto text = Label::create("11111\n11111111111\nt777777777111111111111111111111111111118", "Marker Felt.ttf", 24);
+    auto text = Label::create("11111\n11111111111\nt111111111111111111111111111111111111118", "Marker Felt.ttf", 24);
     ui->printText(text);
     
 

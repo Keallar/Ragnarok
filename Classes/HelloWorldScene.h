@@ -31,10 +31,6 @@ class HelloWorld : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
-    int hp;
-    cocos2d::Label* hpChange;
-    cocos2d::Sprite* hpImgBase;
-    cocos2d::Sprite* hpImgLife;
 
 
     virtual bool init();
