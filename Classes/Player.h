@@ -1,8 +1,5 @@
 #pragma once
-#include "cocos2d.h"
-#include "box2d/b2dSprite.h"
-#include "bullet.h"
-#include "BulletFactory.h"
+#include "ShootingCharacter.h"
 
 enum class eRunState {
 	None,
@@ -23,7 +20,7 @@ enum class eAnimState {
 	Attack
 };
 
-class Player : public b2Sprite {
+class Player : public ShootingCharacter {
 public:
 	Player();
 	~Player();
@@ -33,9 +30,6 @@ public:
 	virtual bool init();
 
 	void update(float dt) override;
-
-	void resetAttackColldown() noexcept;
-
 
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
@@ -55,16 +49,18 @@ public:
 	void changePos(int delta);
 	void jump();
 
-	static const float ATTACK_COOLDOWN;
+	//ShootingCharacter functions
+	void shootInit() override;
+	void shoot(Vec2 targetPos) override;
 
 	//get from private because they are const & i need bullet speed at scene
 	static const int PLAYER_SPEED;
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
+
 	void changeHp(float difHp) noexcept;
 private:
-	float attackCooldown;
 
 	float hp;
 	float speed;
@@ -75,6 +71,5 @@ private:
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
 
-	std::vector<Bullet*> bullets;
 };
 

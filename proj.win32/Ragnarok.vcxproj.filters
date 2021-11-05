@@ -19,15 +19,15 @@
     <Filter Include="src\enemy">
       <UniqueIdentifier>{ce474e65-510c-4b87-902c-8eedfa18495c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\player">
+      <UniqueIdentifier>{c6694159-babc-4a8c-bb1f-b4d79817f0ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainScene.cpp">
@@ -51,9 +51,6 @@
     <ClCompile Include="..\Classes\BulletFactory.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerContactListener.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\EnemyFactory.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
@@ -69,15 +66,21 @@
     <ClCompile Include="..\Classes\BulletContactListener.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PlayerContactListener.cpp">
+      <Filter>src\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ShootingCharacter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainScene.h">
@@ -101,9 +104,6 @@
     <ClInclude Include="..\Classes\BulletFactory.h">
       <Filter>src\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlayerContactListener.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\EnemyFactory.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
@@ -118,6 +118,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BulletContactListener.h">
       <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerContactListener.h">
+      <Filter>src\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShootingCharacter.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

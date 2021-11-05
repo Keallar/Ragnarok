@@ -3,8 +3,6 @@
 
 USING_NS_CC;
 
-const float Player::ATTACK_COOLDOWN = 0.2f;
-
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
 const int Player::PLAYER_JUMP_HEIGHT = 150;
@@ -44,7 +42,6 @@ bool Player::init() {
 	playerRunState = eRunState::None;
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
-	attackCooldown = 0;
 	jumpBegin = 0;
 
 	return true;
@@ -82,29 +79,36 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	}
 }
 
+void Player::shootInit() {
+	attackCooldown = PLAYER_ATTACK_COOLDOWN;
+}
+
+void Player::shoot(Vec2 targetPos) {
+	if (attackCooldown <= 0) {
+		attackCooldown = PLAYER_ATTACK_COOLDOWN;
+		Vec2 pos = getPosition();
+		
+		Vec2 dest = targetPos - pos;
+		dest.normalize();
+		dest *= BULLET_SPEED;
+
+		CreateBulletOnParent(eBulletType::playerOrdinary, pos, dest);
+	}
+}
+
 void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
 
+		auto click = mouse->getLocation();
 		setAnimState(eAnimState::Attack);
-		if (attackCooldown <= 0) {
-			resetAttackColldown();
-			Vec2 pos = getPosition();
-			auto click = mouse->getLocation();
-			auto director = Director::getInstance();
-			Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
-			clickPos += click;
-			clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
-			Vec2 dest = clickPos - pos;
-			dest.normalize();
-			dest *= BULLET_SPEED;
+		auto director = Director::getInstance();
+		Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+		clickPos += click;
+		clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
 
-			b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
-			auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, world, pos, dest);
-
-			bullets.push_back(bullet);
-		}
+		shoot(clickPos);
 	}
 }
 
@@ -142,32 +146,12 @@ void Player::jump() {
 	}
 }
 
-void Player::update(float dt) {
-	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
+void Player::update(float dt) {	
 
-	bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-		[](Bullet* x) { return (x->getMoveTime() <= 0); }),
-	bullets.end());
-
-	for (auto bullet : bullets) {
-		if (!bullet) {
-			bullet->update(dt);
-			if (bullet->getMoveTime() <= 0) {
-				world->removeChild(bullet);
-			}
-		}
-	}
-
-	if (attackCooldown > 0) {
-		attackCooldown -= dt;
-	}
+	ShootingCharacterUpdate(dt);
 
 	move();
 	jump();
-}
-
-void Player::resetAttackColldown() noexcept {
-	attackCooldown = ATTACK_COOLDOWN;
 }
 
 void Player::setRunState(eRunState state) {
