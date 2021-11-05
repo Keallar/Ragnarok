@@ -15,6 +15,7 @@ EnemyFactory* EnemyFactory::getInstance() {
 SimpleEnemy* EnemyFactory::createSimpleEnemy(b2WorldNode* world, Vec2 pos) {
     id++;
     auto simpleEnemyObj = SimpleEnemy::createSimpleEnemy();
+    //simpleEnemyObj->init();
     simpleEnemyObj->setName("simpleEnemy_" + std::to_string(id));
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
@@ -25,5 +26,7 @@ SimpleEnemy* EnemyFactory::createSimpleEnemy(b2WorldNode* world, Vec2 pos) {
     world->addChild(simpleEnemyObj);
     simpleEnemyObj->getBody()->SetFixedRotation(true);
     simpleEnemyObj->setPosition(pos);
+    //UNDONE
+    simpleEnemyObj->createHpLabel();
     return simpleEnemyObj;
 }

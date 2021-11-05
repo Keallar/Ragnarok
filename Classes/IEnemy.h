@@ -4,19 +4,23 @@
 
 class IEnemy : public b2Sprite {
 public:
-	virtual void setHp(float hp) noexcept;
+	virtual void setHp(int hp) noexcept;
 	virtual void changeHp(float difHp) noexcept;
-	virtual float getHp() const noexcept;
+	virtual int getHp() const noexcept;
 	virtual void setSpeed(float speed) noexcept;
 	virtual float getSpeed() const noexcept;
 	virtual void setDestroyed(bool state) noexcept;
-	virtual bool isDestroyed() const ;
+	virtual bool isDestroyed() const noexcept;
 	virtual void setDamaged(bool state) noexcept;
-	virtual bool isDamaged() const;
+	virtual bool isDamaged() const noexcept;
+	virtual void createHpLabel();
+	virtual void updateHpLabel();
 protected:
-	float _speed;
+
 private:
-	float _hp;
+	int _hp;
+	float _speed;
 	bool _destroyed;
 	bool _damaged;
+	Label* hpLabel;
 };

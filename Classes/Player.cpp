@@ -26,7 +26,7 @@ Player* Player::create(const std::string& filename, b2BodyType type, float32 fri
 	Player* sprite = new (std::nothrow) Player();
 	if (sprite && sprite->initWithFile(filename)) {
 		sprite->initBody(type, friction, restitution);
-		sprite->autorelease();
+		//sprite->autorelease();
 		return sprite;
 	}
 	CC_SAFE_DELETE(sprite);

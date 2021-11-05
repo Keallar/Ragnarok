@@ -21,8 +21,7 @@ enum class eAnimState {
 	Attack
 };
 
-class Player : public b2Sprite
-{
+class Player : public b2Sprite {
 public:
 	Player();
 	~Player();

@@ -7,7 +7,6 @@ SimpleEnemy::SimpleEnemy() {
 }
 
 SimpleEnemy::~SimpleEnemy() {
-
 }
 
 SimpleEnemy* SimpleEnemy::createSimpleEnemy() {
@@ -31,11 +30,10 @@ bool SimpleEnemy::init() {
 		return false;
 	}
 	
-	setHp(100.f);
+	setHp(100);
 	setSpeed(10.f);
 	setDamaged(false);
 	setDestroyed(false);
-
 	return true;
 }
 

@@ -77,23 +77,25 @@ bool MainScene::init() {
 }
 
 void MainScene::update(float dt) {
-    _player->canAttack(dt);
-    _player->move();
-    _player->jump();
-
-    for (auto i : bullets) {
-        i->update(dt);
-        if (i->getMoveTime() <= 0) {
-            _world->removeChild(i);
-        }
-    }
-
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
         [](Bullet* x) { return (x->getMoveTime() <= 0); }),
         bullets.end());
 
     _world->update(dt);
     _world->removeIsDeletingChildren();
+
+    _player->canAttack(dt);
+    _player->move();
+    _player->jump();
+
+    for (auto bullet : bullets) {
+        if (!bullet) {
+            bullet->update(dt);
+            if (bullet->getMoveTime() <= 0) {
+                _world->removeChild(bullet);
+            }
+        }
+    }
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
