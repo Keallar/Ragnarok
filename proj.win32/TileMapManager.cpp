@@ -44,6 +44,7 @@ void TileMapManager::TileMapStaticLayerInit(Node* node, CCTMXLayer* layer) {
 				auto _b2test = b2Sprite::create();
 				_b2test->initWithSprite(layer->getTileAt({ i, j }));
 				_b2test->initBody(b2BodyType::b2_staticBody);
+				_b2test->setTriangleShape();
 				node->addChild(_b2test);
 				_b2test->setPosition(i * layer->getTileAt({ i, j })->getTextureRect().size.width,
 					(_tiledMap->getMapSize().height - j) * layer->getTileAt({ i, j })->getTextureRect().size.height);

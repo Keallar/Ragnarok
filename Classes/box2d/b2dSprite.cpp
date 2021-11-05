@@ -164,6 +164,15 @@ b2Sprite* b2Sprite::create(const std::string& filename, const Rect& rect, b2Body
 
 }
 
+void b2Sprite::setTriangleShape()
+{
+	b2Vec2 vertices[3];
+	vertices[0].Set(-0.5, -0.5);
+	vertices[1].Set(0, 0.5);
+	vertices[2].Set(0.5, -0.5);
+	_B2Shape.Set(vertices, 3);
+	_B2FixtureDef.shape = &_B2Shape;
+}
 //		***	SET/GET	***
 
 void b2Sprite::setPosition(const Vec2 & pos)

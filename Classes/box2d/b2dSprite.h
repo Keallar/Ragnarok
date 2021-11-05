@@ -91,7 +91,7 @@ public:
 	virtual void setPosition(const Vec2& pos) override;
 	virtual void setPosition(float x, float y) override;
 	void setB2BodyPosition(float x, float y);
-
+	void setTriangleShape();
 	virtual void setRotation(float rotation) override;
 	void setB2BodyRotation(float rotation);
 
