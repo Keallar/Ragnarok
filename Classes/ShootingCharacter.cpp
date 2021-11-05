@@ -1,23 +1,19 @@
 #include "ShootingCharacter.h"
 
 const float ShootingCharacter::PLAYER_ATTACK_COOLDOWN = 0.2f;
-const float ShootingCharacter::ENEMY_ATTACK_COLLDOWN = 0.5f;
+const float ShootingCharacter::ENEMY_ATTACK_COOLDOWN = 0.5f;
 
 ShootingCharacter::ShootingCharacter() {
-	shootInit();
+	attackCooldown = 0;
 }
 
 ShootingCharacter::~ShootingCharacter() {
 
 }
 
-void ShootingCharacter::shootInit() {
-	attackCooldown = 1.0f;
-}
-
 void ShootingCharacter::CreateBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest) {
 	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
-	auto bullet = BulletFactory::getInstance()->createBullet(eBulletType::playerOrdinary, world, pos, dest);
+	auto bullet = BulletFactory::getInstance()->createBullet(type, world, pos, dest);
 
 	bullets.push_back(bullet);
 }

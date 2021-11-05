@@ -70,8 +70,8 @@ bool MainScene::init() {
 
     scheduleUpdate();
     //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
-    schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
-
+    //schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
+    createSomeEnemy(0);
     return true;
 }
 
@@ -79,6 +79,11 @@ void MainScene::update(float dt) {
 
     _world->update(dt);
     _world->removeIsDeletingChildren();
+
+    for (auto enemy : enemies) {
+        enemy->setShootTarget(_player->getPosition());
+        enemy->update(dt);
+    }
 
     _player->update(dt);
 

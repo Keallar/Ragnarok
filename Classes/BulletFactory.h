@@ -3,7 +3,8 @@
 #include "box2d/b2dRootWorldNode.h"
 
 enum class eBulletType {
-	playerOrdinary
+	playerOrdinary,
+	enemyOrdinary
 };
 
 class BulletFactory
@@ -18,5 +19,6 @@ private:
 
 	Bullet* createPlayerOrdinaryBullet(b2WorldNode* world, Vec2 pos, Vec2 dest);
 
+	Bullet* createEnemyOrdinaryBullet(b2WorldNode* world, Vec2 pos, Vec2 dest);
 };
 

@@ -11,11 +11,9 @@ public:
 	~ShootingCharacter();
 
 	static const float PLAYER_ATTACK_COOLDOWN;
-	static const float ENEMY_ATTACK_COLLDOWN;
+	static const float ENEMY_ATTACK_COOLDOWN;
 
 	virtual void shoot(Vec2 targetPos) = 0;
-
-	virtual void shootInit();
 
 	void CreateBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest);
 

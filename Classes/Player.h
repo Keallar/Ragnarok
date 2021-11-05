@@ -49,8 +49,7 @@ public:
 	void changePos(int delta);
 	void jump();
 
-	//ShootingCharacter functions
-	void shootInit() override;
+	//ShootingCharacter function
 	void shoot(Vec2 targetPos) override;
 
 	//get from private because they are const & i need bullet speed at scene

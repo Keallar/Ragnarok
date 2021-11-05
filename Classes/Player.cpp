@@ -79,10 +79,6 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	}
 }
 
-void Player::shootInit() {
-	attackCooldown = PLAYER_ATTACK_COOLDOWN;
-}
-
 void Player::shoot(Vec2 targetPos) {
 	if (attackCooldown <= 0) {
 		attackCooldown = PLAYER_ATTACK_COOLDOWN;
