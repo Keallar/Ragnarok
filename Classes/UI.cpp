@@ -179,3 +179,90 @@ void UI::printText(cocos2d::Label* text) {
 
     
 }
+
+void UI::showPers() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    auto paper = Sprite::create();
+    paper->initWithFile("paper.png");
+    paper->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 4 + origin.y));
+    paper->setScale(2, 0.4);
+    addChild(paper);
+
+
+    text = Label::createWithTTF("Please select one character to play", "fonts/Marker Felt.ttf", 24);
+    text->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 4 + origin.y));
+    addChild(text);
+
+    auto imgPers1 = ui::Button::create("pers1.png");
+    imgPers1->setScale(0.3f);
+    imgPers1->setPosition(Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 3 * 2 + origin.y));
+
+    imgPers1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            text->setString("Name1. The one-armed god of honor \nand war.");
+            
+            break;
+        default:
+            break;
+        }
+        });
+
+    addChild(imgPers1, 1);
+
+    auto namePers1 = Label::createWithTTF("Name1", "fonts/Marker Felt.ttf", 24);
+    namePers1->setPosition(Vec2(visibleSize.width / 4 + origin.x, visibleSize.height / 3 * 2 + origin.y + imgPers1->getContentSize().height / 5));
+    addChild(namePers1);
+
+
+    auto imgPers2 = ui::Button::create("pers2.png");
+    imgPers2->setScale(0.2f);
+    imgPers2->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 3 * 2 + origin.y));
+
+    imgPers2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            text->setString("Name2. One of the aces, the god of \nspring and light.");
+            
+            break;
+        default:
+            break;
+        }
+        });
+
+    addChild(imgPers2);
+
+    auto namePers2 = Label::createWithTTF("Name2", "fonts/Marker Felt.ttf", 24);
+    namePers2->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 3 * 2 + origin.y + imgPers2->getContentSize().height / 7.5));
+    addChild(namePers2);
+
+
+    auto imgPers3 = ui::Button::create("pers3.png");
+    imgPers3->setScale(0.164f);
+    imgPers3->setPosition(Vec2(visibleSize.width / 4 * 3 + origin.x, visibleSize.height / 3 * 2 + origin.y));
+
+    imgPers3->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            text->setString("Name3. God of vengeance and silence, \nson of Odin and the giantess Grid.");
+            break;
+        default:
+            break;
+        }
+        });
+
+    addChild(imgPers3);
+
+    auto namePers3 = Label::createWithTTF("Name3", "fonts/Marker Felt.ttf", 24);
+    namePers3->setPosition(Vec2(visibleSize.width / 4 * 3 + origin.x, visibleSize.height / 3 * 2 + origin.y + imgPers3->getContentSize().height / 9));
+    addChild(namePers3);
+
+}

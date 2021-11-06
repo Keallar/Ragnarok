@@ -17,6 +17,9 @@ public:
 
     cocos2d::Sprite* paper;
     void printText(cocos2d::Label* text);
+
+    cocos2d::Label* text;
+    void showPers();
     
 
     CREATE_FUNC(UI);
