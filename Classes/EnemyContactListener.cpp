@@ -16,10 +16,6 @@ void EnemyContactListener::BeginContact(b2Contact* contact) {
 				SpriteA->setOnRemove();
 			}
 		}
-		//if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
-		//	SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
-		//	SpriteB->setOnRemove();
-		//}
 	}
 }
 
