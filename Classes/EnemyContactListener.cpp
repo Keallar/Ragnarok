@@ -9,7 +9,12 @@ void EnemyContactListener::BeginContact(b2Contact* contact) {
 		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
-			SpriteA->setOnRemove();
+			auto enemy = static_cast<IEnemy*>(SpriteA);
+			enemy->changeHp(-10);
+			auto curEnemyHp = enemy->getHp();
+			if (curEnemyHp <= 0) {
+				SpriteA->setOnRemove();
+			}
 		}
 		//if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 		//	SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
