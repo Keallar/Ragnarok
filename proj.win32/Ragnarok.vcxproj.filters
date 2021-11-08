@@ -19,6 +19,9 @@
     <Filter Include="src\enemy">
       <UniqueIdentifier>{ce474e65-510c-4b87-902c-8eedfa18495c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ui">
+      <UniqueIdentifier>{9c563543-c210-4f58-b298-9f12893c7a2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,9 +31,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\UI.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainScene.cpp">
@@ -72,6 +72,9 @@
     <ClCompile Include="..\Classes\BulletContactListener.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UI.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -81,9 +84,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\UI.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainScene.h">
@@ -124,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BulletContactListener.h">
       <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UI.h">
+      <Filter>src\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
