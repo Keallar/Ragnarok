@@ -34,10 +34,6 @@ bool MainScene::init() {
     //_world->getb2World()->SetContactListener(new PlayerContactListener);
     //_world->getb2World()->SetContactListener(new BulletContactListener);
 
-    //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
-    //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
-    //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
-    //auto ceil = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     tileMapInit();
 
     _player = Player::createPlayer();
@@ -78,8 +74,18 @@ bool MainScene::init() {
 
 void MainScene::update(float dt) {
     bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-        [](Bullet* x) { return (x->getMoveTime() <= 0); }),
+        [](Bullet* bullet) { return bullet->getMoveTime() <= 0; }),
         bullets.end());
+
+    for (const auto& enemy : enemies) {
+        if (enemy->isDestroyed()) {
+            int a = 0;
+        }
+    }
+
+    enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+        [](IEnemy* enemy) { return enemy->isDestroyed(); }),
+        enemies.end());
 
     _world->update(dt);
     _world->removeIsDeletingChildren();
@@ -89,19 +95,28 @@ void MainScene::update(float dt) {
     _player->jump();
 
     for (auto bullet : bullets) {
-        if (!bullet) {
+        if (bullet) {
             bullet->update(dt);
             if (bullet->getMoveTime() <= 0) {
                 _world->removeChild(bullet);
             }
         }
     }
+
+    /*for (auto enemy : enemies) {
+        if (enemy) {
+            if (enemy->isDestroyed()) {
+                _world->removeChild(enemy);
+            }
+        }
+    }*/
+
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
     EventMouse* mouse = dynamic_cast<EventMouse*>(event);
-
+    
     if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
 
         _player->setAnimState(eAnimState::Attack);

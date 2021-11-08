@@ -10,9 +10,10 @@ void EnemyContactListener::BeginContact(b2Contact* contact) {
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
 			auto enemy = static_cast<IEnemy*>(SpriteA);
-			enemy->changeHp(-10);
+			enemy->changeHp(-100);
 			auto curEnemyHp = enemy->getHp();
 			if (curEnemyHp <= 0) {
+				enemy->setDestroyed(true);
 				SpriteA->setOnRemove();
 			}
 		}
