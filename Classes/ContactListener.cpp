@@ -8,16 +8,17 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
 		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		//Enemy
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
 			auto enemy = static_cast<IEnemy*>(SpriteA);
 			enemy->changeHp(-100);
-			auto curEnemyHp = enemy->getHp();
-			if (curEnemyHp <= 0) {
+			const auto curEnemyHp = enemy->getHp();
+			if (curEnemyHp <= 0 && enemy->isDestroyed() == false) {
 				enemy->setDestroyed(true);
-				SpriteA->setOnRemove();
+				//SpriteA->setOnRemove();
 			}
-		}
+		} //Player
 		else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy)) {
 			auto player = static_cast<Player*>(SpriteA);

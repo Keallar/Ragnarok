@@ -28,7 +28,8 @@ bool MainScene::init() {
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
-    _world->getb2World()->SetContactListener(new ContactListener);
+    auto contactListener = new ContactListener;
+    _world->getb2World()->SetContactListener(contactListener);
 
     tileMapInit();
     
@@ -49,9 +50,9 @@ bool MainScene::init() {
 
     //Creating UI
     _ui = UI::create();
-    auto playerHp = _player->getHp();
+    const auto playerHp = _player->getHp();
     _ui->beginLife(playerHp);
-    auto playerMana = _player->getMana();
+    const auto playerMana = _player->getMana();
     _ui->beginMana(playerMana);
     addChild(_ui);
 
@@ -67,7 +68,6 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();
-    //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
     schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
 
     return true;
@@ -78,15 +78,9 @@ void MainScene::update(float dt) {
         [](Bullet* bullet) { return bullet->getMoveTime() <= 0; }),
         bullets.end());
 
-    /*for (const auto& enemy : enemies) {
-        if (enemy->isDestroyed()) {
-            int a = 0;
-        }
-    }*/
-
-    /*enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+    enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
-        enemies.end());*/
+        enemies.end());
 
     _world->update(dt);
     _world->removeIsDeletingChildren();
@@ -99,18 +93,21 @@ void MainScene::update(float dt) {
         if (bullet) {
             bullet->update(dt);
             if (bullet->getMoveTime() <= 0) {
-                _world->removeChild(bullet);
+                //_world->removeChild(bullet);
+                bullet->setOnRemove();
             }
         }
     }
 
-    /*for (auto enemy : enemies) {
+    for (auto enemy : enemies) {
         if (enemy) {
             if (enemy->isDestroyed()) {
-                _world->removeChild(enemy);
+                //_world->removeChild(enemy);
+                enemy->setOnRemove();
             }
         }
-    }*/
+    }
+
     auto playerHp = _player->getHp();
     _ui->setHp(playerHp);
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
