@@ -1,6 +1,5 @@
 #pragma once
-#include "cocos2d.h"
-#include "box2d/b2dSprite.h"
+#include "ShootingCharacter.h"
 
 enum class eRunState {
 	None,
@@ -21,7 +20,7 @@ enum class eAnimState {
 	Attack
 };
 
-class Player : public b2Sprite {
+class Player : public ShootingCharacter {
 public:
 	Player();
 	~Player();
@@ -30,8 +29,7 @@ public:
 
 	virtual bool init();
 
-	bool canAttack(float dt) noexcept; 	//bool func that rerturns players willigness to attack
-	void resetAttackColldown() noexcept;
+	void update(float dt) override;
 
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
@@ -50,20 +48,23 @@ public:
 
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	void mousePressed(cocos2d::Event* event);
 
 	void move();
 	void changePos(int delta);
 	void jump();
 
-	static const float ATTACK_COOLDOWN;
+	//ShootingCharacter function
+	void shoot(Vec2 targetPos) override;
 
 	//get from private because they are const & i need bullet speed at scene
 	static const int PLAYER_SPEED;
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
+
+	void changeHp(float difHp) noexcept;
 private:
-	float attackCooldown;
 
 	int _hp;
 	int _mana;
@@ -74,5 +75,6 @@ private:
 	eRunState playerRunState;
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
+
 };
 

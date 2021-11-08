@@ -69,6 +69,12 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\player</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ShootingCharacter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\ContactListener.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -117,6 +123,12 @@
       <Filter>src\player</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ContactListener.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ShootingCharacter.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

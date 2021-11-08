@@ -37,7 +37,6 @@ private:
     cocos2d::Camera* _cameraTarget;
     UI* _ui;
 
-    std::vector<Bullet*> bullets;
     std::vector<IEnemy*> enemies;
 };
 

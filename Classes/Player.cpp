@@ -1,8 +1,7 @@
 #include "Player.h"
+#include "box2d/b2dRootWorldNode.h"
 
 USING_NS_CC;
-
-const float Player::ATTACK_COOLDOWN = 0.2f;
 
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
@@ -44,7 +43,6 @@ bool Player::init() {
 	playerRunState = eRunState::None;
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
-	attackCooldown = 0;
 	jumpBegin = 0;
 
 	return true;
@@ -98,6 +96,35 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	}
 }
 
+void Player::shoot(Vec2 targetPos) {
+	if (attackCooldown <= 0) {
+		attackCooldown = PLAYER_ATTACK_COOLDOWN;
+		Vec2 pos = getPosition();
+		
+		Vec2 dest = targetPos - pos;
+		dest.normalize();
+		dest *= BULLET_SPEED;
+
+		CreateBulletOnParent(eBulletType::playerOrdinary, pos, dest);
+	}
+}
+
+void Player::mousePressed(cocos2d::Event* event) {
+	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
+
+	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
+
+		auto click = mouse->getLocation();
+		setAnimState(eAnimState::Attack);
+		auto director = Director::getInstance();
+		Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+		clickPos += click;
+		clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+
+		shoot(clickPos);
+	}
+}
+
 void Player::move() {
 	switch (getRunState()) {
 	case eRunState::Left:
@@ -132,18 +159,12 @@ void Player::jump() {
 	}
 }
 
-bool Player::canAttack(float dt) noexcept {
-	if (attackCooldown > 0) {
-		attackCooldown -= dt;
-	}
-	else if (attackCooldown <= 0) {
-		return true;
-	}
-	return false;
-}
+void Player::update(float dt) {	
 
-void Player::resetAttackColldown() noexcept {
-	attackCooldown = ATTACK_COOLDOWN;
+	ShootingCharacterUpdate(dt);
+
+	move();
+	jump();
 }
 
 void Player::setRunState(eRunState state) {

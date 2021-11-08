@@ -1,5 +1,7 @@
 #include "IEnemy.h"
 
+int IEnemy::BULLET_SPEED = 10;
+
 void IEnemy::setHp(int hp) noexcept {
 	_hp = hp;
 }
@@ -57,4 +59,29 @@ void IEnemy::createHpLabel() {
 
 void IEnemy::updateHpLabel() {
 	hpLabel->setString(std::to_string(_hp));
+}
+
+void IEnemy::update(float dt) {
+	shoot(_shootTarget);
+	ShootingCharacterUpdate(dt);
+	updateHpLabel();
+	attackCooldown -= dt;
+}
+
+void IEnemy::shoot(Vec2 targetPos) {
+	if (attackCooldown <= 0) {
+		attackCooldown = ENEMY_ATTACK_COOLDOWN;
+		Vec2 pos = getPosition();
+
+		Vec2 dest = targetPos - pos;
+		dest.normalize();
+		dest *= BULLET_SPEED;
+		//dest *= 10;
+
+		CreateBulletOnParent(eBulletType::enemyOrdinary, pos, dest);
+	}
+}
+
+void IEnemy::setShootTarget(Vec2 target) {
+	_shootTarget = target;
 }
