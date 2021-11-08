@@ -4,6 +4,7 @@
 #include "IEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
 #include "bullet.h"
+#include "UI.h"
 
 enum class ePhysicsCategory {
     Player = 1,
@@ -34,6 +35,7 @@ private:
     Player* _player;
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
+    UI* _ui;
 
     std::vector<Bullet*> bullets;
     std::vector<IEnemy*> enemies;

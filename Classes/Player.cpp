@@ -37,8 +37,9 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	hp = 100.f;
-	speed = 0.f;
+	_hp = 100;
+	_mana = 100;
+	_speed = 0.f;
 	jumpBegin = 0;
 	playerRunState = eRunState::None;
 	playerJumpState = eJumpState::None;
@@ -76,7 +77,6 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
-
 	}
 	break;
 	}
@@ -178,13 +178,32 @@ eJumpState Player::getJumpState() noexcept {
 	return playerJumpState;
 }
 
-void Player::changeHp(float difHp) noexcept {
-	if (hp <= 0) {
-		return;
-	}
-	hp -= difHp;
+int Player::getMana() noexcept {
+	return _mana;
 }
 
-float Player::getHp() noexcept {
-	return hp;
+void Player::setMana(int mana) noexcept {
+	_mana = mana;
+}
+
+void Player::changeMana(int difMana) noexcept {
+	if (_mana <= 0) {
+		return;
+	}
+	_mana -= difMana;
+}
+
+int Player::getHp() noexcept {
+	return _hp;
+}
+
+void Player::setHp(int hp) noexcept {
+	_hp = hp;
+}
+
+void Player::changeHp(float difHp) noexcept {
+	if (_hp <= 0) {
+		return;
+	}
+	_hp += difHp;
 }

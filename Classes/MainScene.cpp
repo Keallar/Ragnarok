@@ -31,30 +31,35 @@ bool MainScene::init() {
     addChild(_world);
 
     _world->getb2World()->SetContactListener(new EnemyContactListener);
-    //_world->getb2World()->SetContactListener(new PlayerContactListener);
+    _world->getb2World()->SetContactListener(new PlayerContactListener);
     //_world->getb2World()->SetContactListener(new BulletContactListener);
 
     tileMapInit();
-
+    
+    //Creating player
     _player = Player::createPlayer();
-
     Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
-
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::player);
     filter.maskBits = static_cast<uint16>(eColMask::player);
     _player->getFixtureDef()->filter = filter;
-
     _world->addChild(_player);
-
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
-
     _player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
     _player->getBody()->SetBullet(true);
     //camera setup
     _cameraTarget = getDefaultCamera();
 
+    //Creating UI
+    _ui = UI::create();
+    auto playerHp = _player->getHp();
+    _ui->beginLife(playerHp);
+    auto playerMana = _player->getMana();
+    _ui->beginMana(playerMana);
+    addChild(_ui);
+
+    //init HandleEvents
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
@@ -77,15 +82,15 @@ void MainScene::update(float dt) {
         [](Bullet* bullet) { return bullet->getMoveTime() <= 0; }),
         bullets.end());
 
-    for (const auto& enemy : enemies) {
+    /*for (const auto& enemy : enemies) {
         if (enemy->isDestroyed()) {
             int a = 0;
         }
-    }
+    }*/
 
-    enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+    /*enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
-        enemies.end());
+        enemies.end());*/
 
     _world->update(dt);
     _world->removeIsDeletingChildren();
@@ -110,8 +115,10 @@ void MainScene::update(float dt) {
             }
         }
     }*/
-
+    auto playerHp = _player->getHp();
+    _ui->setHp(playerHp);
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
+    //_ui->setPos(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {

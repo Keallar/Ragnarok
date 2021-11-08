@@ -8,6 +8,11 @@ void PlayerContactListener::BeginContact(b2Contact* contact) {
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
 		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
+			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy)) {
+			auto player = static_cast<Player*>(SpriteA);
+			player->changeHp(-1);
+		}
 	}
 }
 
