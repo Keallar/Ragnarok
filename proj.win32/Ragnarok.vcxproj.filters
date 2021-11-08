@@ -22,15 +22,15 @@
     <Filter Include="src\ui">
       <UniqueIdentifier>{9c563543-c210-4f58-b298-9f12893c7a2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\player">
+      <UniqueIdentifier>{575ff336-c05c-4931-87ca-e3cc5f95af70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainScene.cpp">
@@ -54,9 +54,6 @@
     <ClCompile Include="..\Classes\BulletFactory.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerContactListener.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\EnemyFactory.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
@@ -66,14 +63,14 @@
     <ClCompile Include="..\Classes\SimpleEnemy.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\EnemyContactListener.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BulletContactListener.cpp">
-      <Filter>src\bullet</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\UI.cpp">
       <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>src\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ContactListener.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,9 +78,6 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainScene.h">
@@ -107,9 +101,6 @@
     <ClInclude Include="..\Classes\BulletFactory.h">
       <Filter>src\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlayerContactListener.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\EnemyFactory.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
@@ -119,14 +110,14 @@
     <ClInclude Include="..\Classes\SimpleEnemy.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\EnemyContactListener.h">
-      <Filter>src\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BulletContactListener.h">
-      <Filter>src\bullet</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\UI.h">
       <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>src\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ContactListener.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

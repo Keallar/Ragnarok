@@ -7,7 +7,6 @@ public:
     void beginMana(int mana);
     void setHp(int hp);
     void setMana(int mana);
-    void changeMana(int difMana);
     void printText(cocos2d::Label* text);
     void showPers();
     void setPos(float x, float y);
