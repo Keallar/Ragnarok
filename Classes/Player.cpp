@@ -6,7 +6,7 @@ const float Player::ATTACK_COOLDOWN = 0.2f;
 
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
-const int Player::PLAYER_JUMP_HEIGHT = 150;
+const int Player::PLAYER_JUMP_HEIGHT = 70;
 const int Player::BULLET_SPEED = 10;
 
 Player::Player() {
@@ -52,16 +52,33 @@ bool Player::init() {
 void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_D:
+	{
 		setRunState(eRunState::Right);
-		break;
+		auto scaleX = getScaleX();
+		if (scaleX < 0) {
+			scaleX *= -1;
+			setScaleX(scaleX);
+		}
+	}
+	break;
 	case EventKeyboard::KeyCode::KEY_A:
+	{
 		setRunState(eRunState::Left);
-		break;
+		auto scaleX = getScaleX();
+		if (scaleX > 0) {
+			scaleX *= -1;
+			setScaleX(scaleX);
+		}
+	}
+	break;
 	case EventKeyboard::KeyCode::KEY_SPACE:
+	{
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
-		break;
+
+	}
+	break;
 	}
 }
 

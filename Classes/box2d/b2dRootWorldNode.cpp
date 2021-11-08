@@ -182,10 +182,6 @@ void b2WorldNode::removeChild(Node* child, bool cleanup)
 		_world->DestroyBody(B2Dchild->getBody());
 	}
 	Node::removeChild(child, cleanup);
-
-	//child->release();
-
-	//CC_SAFE_DELETE(child);
 }
 
 void b2WorldNode::setOnRemoveList(b2Sprite* sprite)

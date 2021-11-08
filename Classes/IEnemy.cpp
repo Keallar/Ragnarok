@@ -5,7 +5,11 @@ void IEnemy::setHp(int hp) noexcept {
 }
 
 void IEnemy::changeHp(float difHp) noexcept {
-	_hp -= difHp;
+	_hp += difHp;
+	if (!hpLabel) {
+		return;
+	}
+	hpLabel->setString(std::to_string(_hp));
 }
 
 int IEnemy::getHp() const noexcept {
