@@ -37,10 +37,11 @@ void TileMapManager::addLayer(std::string installableName, const std::string& la
 
 void TileMapManager::TileMapStaticLayerInit(Node* node, CCTMXLayer* layer) {
 	Sprite* tile = new Sprite;
-	for (float i = 0; i < layer->getLayerSize().width; i++) {
+	for (float i = 0; i < 200; i++) {
 		for (float j = 0; j < layer->getLayerSize().height; j++)
 		{
 			if (layer->getTileAt({ i, j })) {
+				tile = layer->getTileAt({ i, j });
 				auto _b2test = b2Sprite::create();
 				_b2test->initWithSprite(layer->getTileAt({ i, j }));
 				_b2test->initBody(b2BodyType::b2_staticBody);

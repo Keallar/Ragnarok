@@ -32,9 +32,8 @@ bool MainScene::init() {
 
     //World->debugDraw();
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
-    _firstTileMap->setTiledMap("last.tmx");
-    _firstTileMap->addLayer("Background", "TileLayer1");
-    _firstTileMap->addLayer("Foreground", "TileLayer2");
+    _firstTileMap->setTiledMap("Test.tmx");
+    _firstTileMap->addLayer("Foreground", "FG");
     _firstTileMap->TileMapStaticLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
@@ -64,7 +63,7 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
 
-    _player->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+    _player->setPosition(2000, 22000);
 
     //camera setup
     _cameraTarget = getDefaultCamera();
@@ -94,7 +93,7 @@ void MainScene::update(float dt) {
     _player->jump();
     _world->update(dt);
     _world->removeIsDeletingChildren();
-    _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height/2);
+    _cameraTarget->setPosition(_player->getPosition().x, _player->getPosition().y);
 }
 
 //UNDONE
@@ -107,6 +106,6 @@ void MainScene::removeSomeEnemy(float dt) {
     enemy->setName("simpleEnemy_" + std::to_string(id));
     Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
     enemy->getBody()->SetFixedRotation(true);
-    enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+    enemy->setPosition(2000, 22000);
 }
 
