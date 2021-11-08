@@ -1,8 +1,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
-#include "EnemyContactListener.h"
-#include "PlayerContactListener.h"
-#include "BulletContactListener.h"
+#include "ContactListener.h"
 #include "EnemyFactory.h"
 #include "BulletFactory.h"
 
@@ -30,9 +28,7 @@ bool MainScene::init() {
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
-    _world->getb2World()->SetContactListener(new EnemyContactListener);
-    _world->getb2World()->SetContactListener(new PlayerContactListener);
-    //_world->getb2World()->SetContactListener(new BulletContactListener);
+    _world->getb2World()->SetContactListener(new ContactListener);
 
     tileMapInit();
     

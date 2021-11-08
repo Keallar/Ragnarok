@@ -1,8 +1,9 @@
-#include "EnemyContactListener.h"
+#include "ContactListener.h"
 #include "box2d/b2dSprite.h"
 #include "IEnemy.h"
+#include "Player.h"
 
-void EnemyContactListener::BeginContact(b2Contact* contact) {
+void ContactListener::BeginContact(b2Contact* contact) {
 	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL &&
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
@@ -17,13 +18,18 @@ void EnemyContactListener::BeginContact(b2Contact* contact) {
 				SpriteA->setOnRemove();
 			}
 		}
+		else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
+			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy)) {
+			auto player = static_cast<Player*>(SpriteA);
+			player->changeHp(-1);
+		}
 	}
 }
 
-void EnemyContactListener::EndContact(b2Contact* contact) {
+void ContactListener::EndContact(b2Contact* contact) {
 }
 
-void EnemyContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
+void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
 	/*if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
 		contact->SetEnabled(false);
 	}
@@ -32,5 +38,5 @@ void EnemyContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldMan
 	}*/
 }
 
-void EnemyContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
+void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
 }

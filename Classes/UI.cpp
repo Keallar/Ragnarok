@@ -16,7 +16,7 @@ void UI::beginLife(int hp) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    _hp = 100;
+    _hp = hp;
     hpImgBase = Sprite::create();
     hpImgBase->initWithFile("hpBase.png");
     addChild(hpImgBase);
@@ -32,7 +32,7 @@ void UI::beginMana(int mana) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    _mana = 100;
+    _mana = mana;
     imgManaBase = Sprite::create();
     imgManaBase->initWithFile("hpBase.png");
     addChild(imgManaBase);
@@ -42,50 +42,6 @@ void UI::beginMana(int mana) {
     imgMana->initWithFile("Mana.png");
     addChild(imgMana);
     imgMana->setPosition(Vec2(origin.x + imgMana->getContentSize().width / 2, origin.y + visibleSize.height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
-
-    ui::Button* btnPlus = ui::Button::create();
-    btnPlus->setTitleText("Mana+");
-    btnPlus->setPosition(Vec2(visibleSize.height / 2 + 100, visibleSize.width / 2));
-
-    btnPlus->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-        switch (type) {
-        case ui::Widget::TouchEventType::BEGAN:
-            break;
-        case ui::Widget::TouchEventType::ENDED:
-            if (_mana < 100) {
-                _mana++;
-            }
-            imgMana->setScale((imgMana->getContentSize().width / 400) * ((float)_mana / 100), imgMana->getContentSize().height / 13);
-            imgMana->setPosition(Vec2(imgMana->getContentSize().width / 2 - ((imgMana->getContentSize().width) * ((100 - _mana) / 100.f)) / 2,
-                Director::getInstance()->getVisibleOrigin().y + Director::getInstance()->getVisibleSize().height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
-            break;
-        default:
-            break;
-        }
-        });
-    addChild(btnPlus);
-
-    ui::Button* btnMinus = ui::Button::create();
-    btnMinus->setTitleText("Mana-");
-    btnMinus->setPosition(Vec2(visibleSize.height / 2 + 100, visibleSize.width / 4));
-    btnMinus->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
-        switch (type)
-        {
-        case ui::Widget::TouchEventType::BEGAN:
-            break;
-        case ui::Widget::TouchEventType::ENDED:
-            if (_mana > 1) {
-                _mana--;
-            }
-            imgMana->setScale((imgMana->getContentSize().width / 400) * ((float)_mana / 100), imgMana->getContentSize().height / 13);
-            imgMana->setPosition(Vec2(imgMana->getContentSize().width / 2 - ((imgMana->getContentSize().width) * ((100 - _mana) / 100.f)) / 2,
-                Director::getInstance()->getVisibleOrigin().y + Director::getInstance()->getVisibleSize().height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
-            break;
-        default:
-            break;
-        }
-        });
-    addChild(btnMinus);
 }
 
 void UI::printText(cocos2d::Label* text) {
@@ -191,9 +147,9 @@ void UI::setHp(int _hp) {
 
 void UI::setMana(int mana) {
     _mana = mana;
-}
-
-void UI::changeMana(int difMana) {
+    imgMana->setScale((imgMana->getContentSize().width / 400) * ((float)_mana / 100), imgMana->getContentSize().height / 13);
+    imgMana->setPosition(Vec2(imgMana->getContentSize().width / 2 - ((imgMana->getContentSize().width) * ((100 - _mana) / 100.f)) / 2,
+        Director::getInstance()->getVisibleOrigin().y + Director::getInstance()->getVisibleSize().height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
 }
 
 void UI::setPos(float x, float y) {
