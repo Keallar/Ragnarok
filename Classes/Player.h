@@ -33,14 +33,18 @@ public:
 	bool canAttack(float dt) noexcept; 	//bool func that rerturns players willigness to attack
 	void resetAttackColldown() noexcept;
 
-
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	void setAnimState(eAnimState state);
 	eRunState getRunState() noexcept;
 	eJumpState getJumpState() noexcept;
 	eAnimState getAnimState() noexcept;
-	float getHp() noexcept;
+	int getHp() noexcept;
+	void setHp(int hp) noexcept;
+	void changeHp(float difHp) noexcept;
+	int getMana() noexcept;
+	void setMana(int mana) noexcept;
+	void changeMana(int difMana) noexcept;
 
 	//key callbacks
 
@@ -58,12 +62,12 @@ public:
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
-	void changeHp(float difHp) noexcept;
 private:
 	float attackCooldown;
 
-	float hp;
-	float speed;
+	int _hp;
+	int _mana;
+	float _speed;
 	float jumpSpeed;
 	int jumpBegin;
 
