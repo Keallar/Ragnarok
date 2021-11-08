@@ -19,7 +19,6 @@ public:
 
     virtual bool init();
     void update(float dt) override;
-    //void createSomePlayer(float dt);
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);

@@ -36,6 +36,7 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
+	attackCooldown = 0;
 	_hp = 100;
 	_mana = 100;
 	_speed = 0.f;
@@ -160,9 +161,7 @@ void Player::jump() {
 }
 
 void Player::update(float dt) {	
-
 	ShootingCharacterUpdate(dt);
-
 	move();
 	jump();
 }

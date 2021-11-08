@@ -62,8 +62,6 @@ public:
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
-
-	void changeHp(float difHp) noexcept;
 private:
 
 	int _hp;

@@ -29,7 +29,7 @@ bool SimpleEnemy::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	
+	attackCooldown = 0;
 	setHp(100);
 	setSpeed(10.f);
 	setDamaged(false);

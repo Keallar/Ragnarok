@@ -73,10 +73,6 @@ bool MainScene::init() {
 }
 
 void MainScene::update(float dt) {
-    bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-        [](Bullet* bullet) { return bullet->getMoveTime() <= 0; }),
-        bullets.end());
-
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
         enemies.end());
@@ -87,27 +83,13 @@ void MainScene::update(float dt) {
     for (auto enemy : enemies) {
         enemy->setShootTarget(_player->getPosition());
         enemy->update(dt);
-    _player->canAttack(dt);
-    _player->move();
-    _player->jump();
-
-    for (auto bullet : bullets) {
-        if (bullet) {
-            bullet->update(dt);
-            if (bullet->getMoveTime() <= 0) {
-                //_world->removeChild(bullet);
-                bullet->setOnRemove();
-            }
-        }
     }
 
     _player->update(dt);
 
-
     for (auto enemy : enemies) {
         if (enemy) {
             if (enemy->isDestroyed()) {
-                //_world->removeChild(enemy);
                 enemy->setOnRemove();
             }
         }
@@ -145,8 +127,7 @@ void MainScene::tileMapInit() {
     _walls = _tiledMap->layerNamed("TileLayer2");
     Sprite* tile = new Sprite;
     for (float i = 0; i < _walls->getLayerSize().width; i++) {
-        for (float j = 0; j < _walls->getLayerSize().height; j++) 
-        {
+        for (float j = 0; j < _walls->getLayerSize().height; j++) {
             if (_walls->getTileAt({ i, j })) {
                 auto _b2test = b2Sprite::create();
                 _b2test->initWithSprite(_walls->getTileAt({ i, j }));

@@ -3,7 +3,6 @@
 
 class IEnemy : public ShootingCharacter {
 public:
-
 	virtual void setHp(int hp) noexcept;
 	virtual void changeHp(float difHp) noexcept;
 	virtual int getHp() const noexcept;
@@ -21,8 +20,6 @@ public:
 	virtual void setShootTarget(Vec2 target);
 
 	static int BULLET_SPEED;
-protected:
-
 private:
 	Vec2 _shootTarget;
 	int _hp;

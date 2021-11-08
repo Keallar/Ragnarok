@@ -3,18 +3,9 @@
 const float ShootingCharacter::PLAYER_ATTACK_COOLDOWN = 0.2f;
 const float ShootingCharacter::ENEMY_ATTACK_COOLDOWN = 0.5f;
 
-ShootingCharacter::ShootingCharacter() {
-	attackCooldown = 0;
-}
-
-ShootingCharacter::~ShootingCharacter() {
-
-}
-
 void ShootingCharacter::CreateBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest) {
 	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
 	auto bullet = BulletFactory::getInstance()->createBullet(type, world, pos, dest);
-
 	bullets.push_back(bullet);
 }
 
