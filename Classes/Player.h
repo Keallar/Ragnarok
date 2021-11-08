@@ -21,8 +21,7 @@ enum class eAnimState {
 	Attack
 };
 
-class Player : public b2Sprite
-{
+class Player : public b2Sprite {
 public:
 	Player();
 	~Player();
@@ -31,15 +30,17 @@ public:
 
 	virtual bool init();
 
-	bool canAttack(float dt); 	//bool func that rerturns players willigness to attack
-	void resetAttackColldown();
+	bool canAttack(float dt) noexcept; 	//bool func that rerturns players willigness to attack
+	void resetAttackColldown() noexcept;
 
-	eRunState getRunState();
-	eJumpState getJumpState();
-	eAnimState getAnimState();
+
 	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	void setAnimState(eAnimState state);
+	eRunState getRunState() noexcept;
+	eJumpState getJumpState() noexcept;
+	eAnimState getAnimState() noexcept;
+	float getHp() noexcept;
 
 	//key callbacks
 
@@ -50,8 +51,6 @@ public:
 	void changePos(int delta);
 	void jump();
 
-	//CREATE_FUNC(Player);
-
 	static const float ATTACK_COOLDOWN;
 
 	//get from private because they are const & i need bullet speed at scene
@@ -59,9 +58,13 @@ public:
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
+	void changeHp(float difHp) noexcept;
 private:
 	float attackCooldown;
 
+	float hp;
+	float speed;
+	float jumpSpeed;
 	int jumpBegin;
 
 	eRunState playerRunState;

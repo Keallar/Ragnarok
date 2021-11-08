@@ -24,10 +24,9 @@ Player* Player::createPlayer() {
 
 Player* Player::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
 	Player* sprite = new (std::nothrow) Player();
-	if (sprite && sprite->initWithFile(filename))
-	{
+	if (sprite && sprite->initWithFile(filename)) {
 		sprite->initBody(type, friction, restitution);
-		sprite->autorelease();
+		//sprite->autorelease();
 		return sprite;
 	}
 	CC_SAFE_DELETE(sprite);
@@ -38,6 +37,9 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
+	hp = 100.f;
+	speed = 0.f;
+	jumpBegin = 0;
 	playerRunState = eRunState::None;
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
@@ -74,6 +76,8 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	case EventKeyboard::KeyCode::KEY_SPACE:
 		setJumpState(eJumpState::Fall);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -88,6 +92,8 @@ void Player::move() {
 	case eRunState::None:
 		changePos(0);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -98,7 +104,6 @@ void Player::changePos(int delta) {
 void Player::jump() {
 
 	if (getJumpState() == eJumpState::Jump) {
-
 		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
 	}
 	if (getPosition().y - jumpBegin >= PLAYER_JUMP_HEIGHT) {
@@ -110,7 +115,7 @@ void Player::jump() {
 	}
 }
 
-bool Player::canAttack(float dt) {
+bool Player::canAttack(float dt) noexcept {
 	if (attackCooldown > 0) {
 		attackCooldown -= dt;
 	}
@@ -120,7 +125,7 @@ bool Player::canAttack(float dt) {
 	return false;
 }
 
-void Player::resetAttackColldown() {
+void Player::resetAttackColldown() noexcept {
 	attackCooldown = ATTACK_COOLDOWN;
 }
 
@@ -128,10 +133,9 @@ void Player::setRunState(eRunState state) {
 	if (state == eRunState::Left && getRunState() == eRunState::Right ||
 		state == eRunState::Right && getRunState() == eRunState::Left) {
 		playerRunState = eRunState::None;
+		return;
 	}
-	else {
-		playerRunState = state;
-	}
+	playerRunState = state;
 }
 
 void Player::setJumpState(eJumpState state) {
@@ -145,15 +149,25 @@ void Player::setAnimState(eAnimState state) {
 	playerAnimState = state;
 }
 
-eRunState Player::getRunState() {
+eRunState Player::getRunState() noexcept {
 	return playerRunState;
 }
 
-eJumpState Player::getJumpState() {
-	return playerJumpState;
-}
-
-eAnimState Player::getAnimState() {
+eAnimState Player::getAnimState() noexcept {
 	return playerAnimState;
 }
 
+eJumpState Player::getJumpState() noexcept {
+	return playerJumpState;
+}
+
+void Player::changeHp(float difHp) noexcept {
+	if (hp <= 0) {
+		return;
+	}
+	hp -= difHp;
+}
+
+float Player::getHp() noexcept {
+	return hp;
+}

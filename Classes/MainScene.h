@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Player.h"
-#include "SimpleEnemy.h"
+#include "IEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
 #include "bullet.h"
 
@@ -18,13 +18,11 @@ public:
 
     virtual bool init();
     void update(float dt) override;
-    void createSomePlayer(float dt);
-
+    //void createSomePlayer(float dt);
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);
-
-    void removeSomeEnemy(float dt);
+    void createSomeEnemy(float dt);
 
     void tileMapInit();
     // implement the "static create()" method manually
@@ -38,6 +36,6 @@ private:
     cocos2d::Camera* _cameraTarget;
 
     std::vector<Bullet*> bullets;
-
+    std::vector<IEnemy*> enemies;
 };
 

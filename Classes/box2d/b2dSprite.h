@@ -15,10 +15,12 @@ enum class eColCategory {
 };
 
 enum class eColMask {
-	player =   static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy)    | static_cast<int>(eColCategory::platform),
-	enemy =    static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy)    | static_cast<int>(eColCategory::platform) | static_cast<int>(eColCategory::bullet),
-	bullet =   static_cast<int>(eColCategory::enemy)  | static_cast<int>(eColCategory::platform),
-	platform = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy)    | static_cast<int>(eColCategory::bullet)
+	player = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform),
+	enemy = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform) | static_cast<int>(eColCategory::bullet),
+	playerBullet = static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform),
+	enemyBullet = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::platform),
+	platform = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::bullet),
+	all = -1
 };
 
 USING_NS_CC;
@@ -38,7 +40,7 @@ public:
 	bool initBody(b2BodyType type);
 	bool initBody(float32 friction, float32 restitution);
 	bool initBody(b2BodyType type, float32 friction, float32 restitution);
-	void initWithSprite(Sprite *sprite);
+	void initWithSprite(Sprite* sprite);
 	static b2Sprite* create();
 	/**
 	* Creates a b2Sprite with sane defaults.
@@ -115,7 +117,7 @@ public:
 	//modification for deleting element after contact for project
 	void setOnRemove();
 	//bool isDeleting();
-	
+
 	virtual void setBody(b2Body* body, b2WorldNode* world);
 	/**
 	* Sets this b2Sprites body.
@@ -137,9 +139,9 @@ public:
 
 protected:
 
-	b2Body * _B2Body;
+	b2Body* _B2Body;
 	b2BodyDef _B2BodyDef;
-	b2Fixture * _B2Fixture;
+	b2Fixture* _B2Fixture;
 	b2FixtureDef _B2FixtureDef;
 	b2PolygonShape _B2Shape;
 	//bool _isDeleting;
