@@ -63,7 +63,7 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
 
-    _player->setPosition(2000, 22000);
+    _player->setPosition(13000, 22000);
 
     //camera setup
     _cameraTarget = getDefaultCamera();

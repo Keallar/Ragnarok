@@ -17,5 +17,6 @@ public:
     void TileMapStaticLayerInit(Node* node, CCTMXLayer* layer);
     void TileMapObjectLayerInit(Node* node, CCTMXLayer* layer);
     void TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer);
+    void TileMapManager::CollidableLayerInit(Node* node, CCTMXLayer* layer);
 };
 
