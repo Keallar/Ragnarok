@@ -1,7 +1,7 @@
 #include "cocos2d.h"
 
 
-class UI : public cocos2d::Scene {
+class UI : public cocos2d::Node {
 public:
     void beginLife(int hp);
     void beginMana(int mana);
@@ -9,7 +9,6 @@ public:
     void setMana(int mana);
     void printText(cocos2d::Label* text);
     void showPers();
-    void setPos(float x, float y);
     CREATE_FUNC(UI);
 private:
     int _hp;

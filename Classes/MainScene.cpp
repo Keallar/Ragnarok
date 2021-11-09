@@ -98,6 +98,7 @@ void MainScene::update(float dt) {
     auto playerHp = _player->getHp();
     _ui->setHp(playerHp);
     _cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
+    _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
     //_ui->setPos(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
