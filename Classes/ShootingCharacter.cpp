@@ -31,3 +31,11 @@ void ShootingCharacter::ShootingCharacterUpdate(float dt) {
 		attackCooldown -= dt;
 	}
 }
+
+void ShootingCharacter::cleanFunc() {
+	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
+	for (Bullet* i : bullets) {
+		world->removeChild(i);
+	}
+	bullets.clear();
+}

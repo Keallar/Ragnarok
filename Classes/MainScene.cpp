@@ -90,6 +90,7 @@ void MainScene::update(float dt) {
     for (auto enemy : enemies) {
         if (enemy) {
             if (enemy->isDestroyed()) {
+                enemy->cleanFunc();
                 enemy->setOnRemove();
             }
         }
