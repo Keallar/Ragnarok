@@ -24,6 +24,16 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			auto player = static_cast<Player*>(SpriteA);
 			player->changeHp(-1);
 		}
+		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
+			SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
+			auto bullet = static_cast<Bullet*>(SpriteA);
+			bullet->setOnRemove();
+		}
+		else if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
+			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
+			auto bullet = static_cast<Bullet*>(SpriteB);
+			bullet->setOnRemove();
+		}
 	}
 }
 

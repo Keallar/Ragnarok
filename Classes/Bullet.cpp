@@ -38,6 +38,7 @@ bool Bullet::init() {
 
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 	_moveTime = BULLET_MOVE_TIME;
+	_isOnRemove = false;
 	return true;
 }
 
@@ -48,4 +49,12 @@ void Bullet::setCoords(Vec2 pos, Vec2 dest) {
 
 float Bullet::getMoveTime() {
 	return _moveTime;
+}
+
+void Bullet::setOnRemove() {
+	_isOnRemove = true;
+}
+
+bool Bullet::isRemoving() {
+	return _isOnRemove;
 }

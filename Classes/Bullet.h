@@ -19,6 +19,9 @@ public:
 
 	float getMoveTime();
 
+	void setOnRemove();
+	bool isRemoving();
+
 private:
 	static float BULLET_MOVE_TIME;
 	
@@ -27,6 +30,6 @@ private:
 	Vec2 _pos;
 	Vec2 _dest;
 	float _moveTime;
-
+	bool _isOnRemove;
 };
 

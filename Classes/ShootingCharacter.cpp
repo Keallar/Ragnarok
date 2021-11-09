@@ -14,8 +14,13 @@ void ShootingCharacter::ShootingCharacterUpdate(float dt) {
 
 	for (auto bullet : bullets) {
 		if (bullet) {
-			bullet->update(dt);
-			if (bullet->getMoveTime() <= 0) {
+			if (!(bullet->isRemoving())) {
+				bullet->update(dt);
+				if (bullet->getMoveTime() <= 0) {
+					bullet->setOnRemove();
+				}
+			}
+			if (bullet->isRemoving()) {
 				world->removeChild(bullet);
 				bullets.erase(std::find(bullets.begin(), bullets.end(), bullet));
 			}
