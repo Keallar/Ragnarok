@@ -1,6 +1,10 @@
 #include "Bullet.h"
 
 float Bullet::BULLET_MOVE_TIME = 2.0f;
+float Bullet::BIG_BULLET_MOVE_TIME = 2.0f;
+
+int Bullet::BULLET_DAMAGE = 100;
+int Bullet::BIG_BULLET_DAMAGE = 150;
 
 Bullet::Bullet() {
 	init();
@@ -28,7 +32,18 @@ Bullet* Bullet::create(const std::string& filename, b2BodyType type, float32 fri
 }
 
 void Bullet::update(float dt) {
+	ordinaryUpdate(dt);
+}
+
+void Bullet::ordinaryUpdate(float dt) {
 	_moveTime -= dt;
+	_lifeTime -= dt;
+	if (_moveTime <= 0) {
+		getBody()->SetLinearVelocity(b2Vec2{ 0, 0 });
+	}
+	if (_lifeTime <= 0) {
+		setOnRemove();
+	}
 }
 
 bool Bullet::init() {
@@ -38,6 +53,7 @@ bool Bullet::init() {
 
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 	_moveTime = BULLET_MOVE_TIME;
+	_lifeTime = BULLET_MOVE_TIME;
 	_isOnRemove = false;
 	return true;
 }
@@ -57,4 +73,8 @@ void Bullet::setOnRemove() {
 
 bool Bullet::isRemoving() {
 	return _isOnRemove;
+}
+
+int Bullet::getDamage() {
+	return BULLET_DAMAGE;
 }

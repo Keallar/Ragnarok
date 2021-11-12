@@ -25,6 +25,9 @@
     <Filter Include="src\player">
       <UniqueIdentifier>{575ff336-c05c-4931-87ca-e3cc5f95af70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\bullet\bulletTypes">
+      <UniqueIdentifier>{09e9250e-bc7b-41e0-9ccb-ba6f816daae0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,6 +81,12 @@
     <ClCompile Include="..\Classes\ContactListener.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Ray.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BigBullet.cpp">
+      <Filter>src\bullet\bulletTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -130,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ShootingCharacter.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Ray.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BigBullet.h">
+      <Filter>src\bullet\bulletTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

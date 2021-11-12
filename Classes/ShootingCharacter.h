@@ -6,13 +6,14 @@
 
 class ShootingCharacter : public b2Sprite {
 public:
-	virtual void shoot(Vec2 targetPos) = 0;
+	virtual void shoot(Vec2 targetPos, eBulletType type) = 0;
 	void CreateBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest);
 	void ShootingCharacterUpdate(float dt);
 
 	void cleanFunc();
 
 	static const float PLAYER_ATTACK_COOLDOWN;
+	static const float PLAYER_BIG_ATTACK_COOLDOWN;
 	static const float ENEMY_ATTACK_COOLDOWN;
 protected:
 	float attackCooldown;

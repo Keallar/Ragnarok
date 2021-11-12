@@ -8,28 +8,34 @@ public:
 	Bullet();
 	~Bullet();
 
-	static Bullet* createPlayerBullet(Vec2 pos, Vec2 dest);
-
 	static Bullet* createBullet(Vec2 pos, Vec2 dest);
 	static Bullet* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
 
 	virtual bool init();
 
-	void update(float dt) override;
+	virtual void update(float dt);
+	void ordinaryUpdate(float dt);
 
 	float getMoveTime();
 
 	void setOnRemove();
 	bool isRemoving();
 
-private:
+	virtual int getDamage();
+
+protected:
 	static float BULLET_MOVE_TIME;
-	
+	static float BIG_BULLET_MOVE_TIME;
+
+	static int BULLET_DAMAGE;
+	static int BIG_BULLET_DAMAGE;
+
 	void setCoords(Vec2 pos, Vec2 dest);
 
 	Vec2 _pos;
 	Vec2 _dest;
 	float _moveTime;
+	float _lifeTime;
 	bool _isOnRemove;
 };
 
