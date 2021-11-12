@@ -110,6 +110,7 @@ void Player::shoot(Vec2 targetPos, eBulletType type) {
 
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
+		dest.y *= -1;
 		dest *= BULLET_SPEED;
 
 		CreateBulletOnParent(type, pos, dest);
@@ -122,7 +123,8 @@ Vec2 Player::clickPosCalculate(EventMouse* mouse) {
 	auto director = Director::getInstance();
 	Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
 	clickPos += click;
-	clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+	//clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+	//clickPos = Vec2(Director::getInstance()->getVisibleSize()) - click + Director::getInstance()->getVisibleOrigin();
 	return clickPos;
 }
 
