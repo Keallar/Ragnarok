@@ -99,9 +99,6 @@
     <ClCompile Include="..\Classes\IEnemyBehaviour.cpp">
       <Filter>src\enemy\enemyBehaviour</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\IEnemyType.cpp">
-      <Filter>src\enemy\enemyTypes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Boss.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>

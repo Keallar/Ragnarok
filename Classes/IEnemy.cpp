@@ -2,6 +2,11 @@
 
 int IEnemy::BULLET_SPEED = 10;
 
+IEnemy::IEnemy(IEnemyBehaviour* behaviour, IEnemyType* type) {
+	_behaviour = behaviour;
+	_type = _type;
+}
+
 IEnemy::~IEnemy() {
 	delete hpLabel;
 }
@@ -28,6 +33,14 @@ void IEnemy::setSpeed(float speed) noexcept {
 
 float IEnemy::getSpeed() const noexcept {
 	return _speed;
+}
+
+int IEnemy::getDamage() const noexcept {
+	return _damage;
+}
+
+void IEnemy::setDamage(int damage) noexcept {
+	_damage = damage;
 }
 
 void IEnemy::setDestroyed(bool state) noexcept {

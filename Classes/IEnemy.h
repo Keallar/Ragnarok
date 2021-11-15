@@ -6,6 +6,7 @@
 
 class IEnemy : public ShootingCharacter {
 public:
+	IEnemy(IEnemyBehaviour* behaviour = nullptr, IEnemyType* type = nullptr);
 	virtual ~IEnemy();
 	void setBehaviour(IEnemyBehaviour* behaviour);
 	void setType(IEnemyType* type);
@@ -14,6 +15,8 @@ public:
 	int getHp() const noexcept;
 	void setSpeed(float speed) noexcept;
 	float getSpeed() const noexcept;
+	int getDamage() const noexcept;
+	void setDamage(int damage) noexcept;
 	void setDestroyed(bool state) noexcept;
 	bool isDestroyed() const noexcept;
 	void setDamaged(bool state) noexcept;
@@ -26,13 +29,15 @@ public:
 	virtual void setShootTarget(Vec2 target);
 
 	static int BULLET_SPEED;
+protected:
+	IEnemyBehaviour* _behaviour;
+	IEnemyType* _type;
 private:
 	Vec2 _shootTarget;
 	int _hp;
 	float _speed;
+	int _damage;
 	bool _destroyed;
 	bool _damaged;
 	Label* hpLabel;
-	IEnemyBehaviour* _behaviour;
-	IEnemyType* _type;
 };

@@ -8,10 +8,20 @@ USING_NS_CC;
 class IEnemyType {
 public:
 	virtual ~IEnemyType() {};
+	std::string getFileName() const { return _fileName; }
+	std::string getName() const { return _enemyName; }
+	b2Filter getFilter() const noexcept { return _filter; }
+	int getHp() const noexcept { return _hp; }
+	int getDamage() const noexcept { return _damage; }
+	float getSpeed() const noexcept { return _speed; }
+	float getAttackCooldown() const noexcept { return _attackCooldown; }
 protected:
-	std::string filename;
-	std::string enemyName;
-	b2Filter filter;
+	std::string _fileName;
+	std::string _enemyName;
+	b2Filter _filter;
 	int _hp;
 	int _damage;
+	float _speed;
+	float _attackCooldown;
+	int _bulletSpeed;
 };

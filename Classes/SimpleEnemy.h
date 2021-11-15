@@ -2,6 +2,5 @@
 
 class SimpleEnemy : public IEnemyType {
 public:
-private:
-
+	SimpleEnemy();
 };

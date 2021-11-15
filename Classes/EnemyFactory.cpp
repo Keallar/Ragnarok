@@ -2,6 +2,7 @@
 #include "EnemyFactory.h"
 #include "IEnemyType.h"
 #include "IEnemyBehaviour.h"
+#include "SimpleEnemy.h"
 
 EnemyFactory* EnemyFactory::instance = nullptr;
 int EnemyFactory::id = -1;
@@ -16,7 +17,7 @@ EnemyFactory* EnemyFactory::getInstance() {
 
 Enemy* EnemyFactory::createEnemy(b2WorldNode* world, Vec2 pos) {
     id++;
-    auto enemyObj = Enemy::create("hero.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+    auto enemyObj = Enemy::create("hero.png", b2BodyType::b2_dynamicBody, 0.f, 0, nullptr, new SimpleEnemy);
     enemyObj->setName("simpleEnemy_" + std::to_string(id));
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
