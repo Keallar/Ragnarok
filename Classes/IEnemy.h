@@ -1,19 +1,21 @@
 #pragma once
 #include "ShootingCharacter.h"
+#include "IEnemyBehaviour.h"
 
 class IEnemy : public ShootingCharacter {
 public:
-	virtual void setHp(int hp) noexcept;
-	virtual void changeHp(float difHp) noexcept;
-	virtual int getHp() const noexcept;
-	virtual void setSpeed(float speed) noexcept;
-	virtual float getSpeed() const noexcept;
-	virtual void setDestroyed(bool state) noexcept;
-	virtual bool isDestroyed() const noexcept;
-	virtual void setDamaged(bool state) noexcept;
-	virtual bool isDamaged() const noexcept;
-	virtual void createHpLabel();
-	virtual void updateHpLabel();
+	void setHp(int hp) noexcept;
+	void changeHp(float difHp);
+	int getHp() const noexcept;
+	void setSpeed(float speed) noexcept;
+	float getSpeed() const noexcept;
+	void setDestroyed(bool state) noexcept;
+	bool isDestroyed() const noexcept;
+	void setDamaged(bool state) noexcept;
+	bool isDamaged() const noexcept;
+	void createHpLabel();
+	void updateHpLabel();
+	void setBehaviour()
 
 	virtual void update(float dt);
 	virtual void shoot(Vec2 targetPos, eBulletType type);

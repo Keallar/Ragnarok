@@ -6,7 +6,7 @@ void IEnemy::setHp(int hp) noexcept {
 	_hp = hp;
 }
 
-void IEnemy::changeHp(float difHp) noexcept {
+void IEnemy::changeHp(float difHp) {
 	_hp += difHp;
 	if (!hpLabel) {
 		return;
@@ -63,7 +63,7 @@ void IEnemy::updateHpLabel() {
 
 void IEnemy::update(float dt) {
 	shoot(_shootTarget, eBulletType::enemyOrdinary);
-	ShootingCharacterUpdate(dt);
+	shootingCharacterUpdate(dt);
 	updateHpLabel();
 	attackCooldown -= dt;
 }
@@ -72,13 +72,12 @@ void IEnemy::shoot(Vec2 targetPos, eBulletType type) {
 	if (attackCooldown <= 0) {
 		attackCooldown = ENEMY_ATTACK_COOLDOWN;
 		Vec2 pos = getPosition();
-
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest *= BULLET_SPEED;
 		//dest *= 10;
 
-		CreateBulletOnParent(type, pos, dest);
+		createBulletOnParent(type, pos, dest);
 	}
 }
 

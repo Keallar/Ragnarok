@@ -121,7 +121,7 @@ void Player::shoot(Vec2 targetPos, eBulletType type) {
 		dest.y *= -1;
 		dest *= BULLET_SPEED;
 
-		CreateBulletOnParent(type, pos, dest);
+		createBulletOnParent(type, pos, dest);
 	}
 }
 
@@ -173,7 +173,7 @@ void Player::jump() {
 }
 
 void Player::update(float dt) {	
-	ShootingCharacterUpdate(dt);
+	shootingCharacterUpdate(dt);
 	jump();
 }
 

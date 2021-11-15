@@ -7,9 +7,8 @@
 class ShootingCharacter : public b2Sprite {
 public:
 	virtual void shoot(Vec2 targetPos, eBulletType type) = 0;
-	void CreateBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest);
-	void ShootingCharacterUpdate(float dt);
-
+	void createBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest);
+	void shootingCharacterUpdate(float dt);
 	void cleanFunc();
 
 	static const float PLAYER_ATTACK_COOLDOWN;

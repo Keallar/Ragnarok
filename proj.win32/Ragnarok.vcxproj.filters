@@ -28,6 +28,12 @@
     <Filter Include="src\bullet\bulletTypes">
       <UniqueIdentifier>{09e9250e-bc7b-41e0-9ccb-ba6f816daae0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\enemy\enemyTypes">
+      <UniqueIdentifier>{38fe22d1-07c1-4571-966f-a988500b01e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\enemy\enemyBehaviour">
+      <UniqueIdentifier>{d23b69ba-1a5e-48ca-b990-f3be609e9606}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,7 +69,7 @@
     <ClCompile Include="..\Classes\IEnemy.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SimpleEnemy.cpp">
+    <ClCompile Include="..\Classes\Enemy.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\UI.cpp">
@@ -86,6 +92,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\BigBullet.cpp">
       <Filter>src\bullet\bulletTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SimpleEnemy.cpp">
+      <Filter>src\enemy\enemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IEnemyBehaviour.cpp">
+      <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IEnemyType.cpp">
+      <Filter>src\enemy\enemyTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,7 +137,7 @@
     <ClInclude Include="..\Classes\IEnemy.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\SimpleEnemy.h">
+    <ClInclude Include="..\Classes\Enemy.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\UI.h">
@@ -145,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BigBullet.h">
       <Filter>src\bullet\bulletTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SimpleEnemy.h">
+      <Filter>src\enemy\enemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IEnemyBehaviour.h">
+      <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IEnemyType.h">
+      <Filter>src\enemy\enemyTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

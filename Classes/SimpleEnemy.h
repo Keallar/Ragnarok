@@ -1,15 +1,6 @@
-#pragma once
-#include "IEnemy.h"
+#include "IEnemyBehaviour.h"
 
-
-class SimpleEnemy : public IEnemy {
+class SimpleEnemy : public IEnemyBehaviour {
 public:
-	SimpleEnemy();
-	~SimpleEnemy();
-	static SimpleEnemy* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
-	static SimpleEnemy* createSimpleEnemy();
-	virtual bool init() override;
 private:
-	
 };
-
