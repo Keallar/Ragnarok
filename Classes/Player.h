@@ -55,7 +55,7 @@ public:
 	void jump();
 
 	//ShootingCharacter function
-	void shoot(Vec2 targetPos) override;
+	void shoot(cocos2d::Vec2 targetPos, eBulletType type) override;
 
 	//get from private because they are const & i need bullet speed at scene
 	static const int PLAYER_SPEED;
@@ -63,6 +63,8 @@ public:
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
 private:
+
+	cocos2d::Vec2 clickPosCalculate(cocos2d::EventMouse* mouse);
 
 	int _hp;
 	int _mana;

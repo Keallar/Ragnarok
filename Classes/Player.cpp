@@ -97,32 +97,45 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	}
 }
 
-void Player::shoot(Vec2 targetPos) {
+void Player::shoot(Vec2 targetPos, eBulletType type) {
 	if (attackCooldown <= 0) {
-		attackCooldown = PLAYER_ATTACK_COOLDOWN;
+		if (type == eBulletType::playerOrdinary) {
+			attackCooldown = PLAYER_ATTACK_COOLDOWN;
+		}
+		else if (type == eBulletType::playerBig) {
+			attackCooldown = PLAYER_BIG_ATTACK_COOLDOWN;
+		}
+
 		Vec2 pos = getPosition();
-		
+
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
+		dest.y *= -1;
 		dest *= BULLET_SPEED;
 
-		CreateBulletOnParent(eBulletType::playerOrdinary, pos, dest);
+		CreateBulletOnParent(type, pos, dest);
 	}
+}
+
+Vec2 Player::clickPosCalculate(EventMouse* mouse) {
+	auto click = mouse->getLocation();
+	setAnimState(eAnimState::Attack);
+	auto director = Director::getInstance();
+	Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+	clickPos += click;
+	//clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
+	//clickPos = Vec2(Director::getInstance()->getVisibleSize()) - click + Director::getInstance()->getVisibleOrigin();
+	return clickPos;
 }
 
 void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-
-		auto click = mouse->getLocation();
-		setAnimState(eAnimState::Attack);
-		auto director = Director::getInstance();
-		Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
-		clickPos += click;
-		clickPos.y = Director::getInstance()->getVisibleSize().height - click.y + Director::getInstance()->getVisibleOrigin().y;
-
-		shoot(clickPos);
+		shoot(clickPosCalculate(mouse), eBulletType::playerOrdinary);
+	}
+	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
+		shoot(clickPosCalculate(mouse), eBulletType::playerBig);
 	}
 }
 

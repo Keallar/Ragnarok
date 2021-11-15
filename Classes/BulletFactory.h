@@ -4,7 +4,8 @@
 
 enum class eBulletType {
 	playerOrdinary,
-	enemyOrdinary
+	enemyOrdinary,
+	playerBig
 };
 
 class BulletFactory
@@ -20,5 +21,7 @@ private:
 	Bullet* createPlayerOrdinaryBullet(b2WorldNode* world, Vec2 pos, Vec2 dest);
 
 	Bullet* createEnemyOrdinaryBullet(b2WorldNode* world, Vec2 pos, Vec2 dest);
+
+	Bullet* createPlayerBigBullet(b2WorldNode* world, Vec2 pos, Vec2 dest);
 };
 
