@@ -1,3 +1,4 @@
+#include <iostream>
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
@@ -16,11 +17,11 @@ bool MainScene::init() {
 
     GameVars::initVars();
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     DrawNode* background = DrawNode::create();
-    Vec2 backSize{ 5000, 5000 };
+    const Vec2 backSize{ 5000, 5000 };
     background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     addChild(background);
 
@@ -34,7 +35,7 @@ bool MainScene::init() {
     
     //Creating player
     _player = Player::createPlayer();
-    Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
+    const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::player);
     filter.maskBits = static_cast<uint16>(eColMask::player);
@@ -73,21 +74,33 @@ bool MainScene::init() {
 }
 
 void MainScene::update(float dt) {
+    _world->update(dt);
+    _world->removeIsDeletingChildren();
+
+    if (_player) {
+        if (_player->isDied()) {
+            _player->cleanFunc();
+            _player->removeFromParent();
+            //_player->setOnRemove();
+            return;
+        }
+        _player->update(dt);
+        const auto playerHp = _player->getHp();
+        _ui->setHp(playerHp);
+        const auto cameraPos = _player->getPosition();
+        _cameraTarget->setPosition(cameraPos);
+    }
+
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
         enemies.end());
 
-    _world->update(dt);
-    _world->removeIsDeletingChildren();
-
     for (auto enemy : enemies) {
-        enemy->setShootTarget(_player->getPosition());
+        if (_player) {
+            const auto playerPos = _player->getPosition();
+            enemy->setShootTarget(playerPos);
+        }
         enemy->update(dt);
-    }
-
-    _player->update(dt);
-
-    for (auto enemy : enemies) {
         if (enemy) {
             if (enemy->isDestroyed()) {
                 enemy->cleanFunc();
@@ -96,29 +109,33 @@ void MainScene::update(float dt) {
         }
     }
 
-    auto playerHp = _player->getHp();
-    _ui->setHp(playerHp);
-    //_cameraTarget->setPosition(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
-    _cameraTarget->setPosition(_player->getPosition());
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
-    //_ui->setPos(_player->getPosition().x, Director::getInstance()->getVisibleSize().height / 2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
+    if (!_player) {
+        return;
+    }
     _player->mousePressed(event);
 }
 
 void MainScene::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+    if (!_player) {
+        return;
+    }
     _player->keyPressed(keyCode, event);
 }
 
 void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+    if (!_player) {
+        return;
+    }
     _player->KeyReleased(keyCode, event);
 }
 
 void MainScene::createSomeEnemy(float dt) {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    const Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
     auto enemy = EnemyFactory::getInstance()->createSimpleEnemy(_world, pos);
     enemies.push_back(enemy);
 }

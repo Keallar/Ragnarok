@@ -16,13 +16,12 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			const auto curEnemyHp = enemy->getHp();
 			if (curEnemyHp <= 0 && enemy->isDestroyed() == false) {
 				enemy->setDestroyed(true);
-				//SpriteA->setOnRemove();
 			}
 		} //Player
 		else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
 			auto player = static_cast<Player*>(SpriteA);
-			player->changeHp(-1);
+			player->changeHp(-10);
 		}
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
 			SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {

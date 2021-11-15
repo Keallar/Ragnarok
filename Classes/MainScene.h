@@ -17,7 +17,7 @@ class MainScene : public cocos2d::Scene
 public:
     static cocos2d::Scene* createScene();
 
-    virtual bool init();
+    bool init() override;
     void update(float dt) override;
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
@@ -25,7 +25,7 @@ public:
     void createSomeEnemy(float dt);
 
     void tileMapInit();
-    // implement the "static create()" method manually
+
     CREATE_FUNC(MainScene);
 private:
     CCTMXTiledMap* _tiledMap;

@@ -40,10 +40,10 @@ bool Player::init() {
 	_hp = 100;
 	_mana = 100;
 	_speed = 0.f;
-	jumpBegin = 0;
+	_jumpBegin = 0;
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
-	jumpBegin = 0;
+	_isDied = false;
 
 	return true;
 }
@@ -163,12 +163,12 @@ void Player::jump() {
 	if (getJumpState() == eJumpState::Jump) {
 		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
 	}
-	if (getPosition().y - jumpBegin >= PLAYER_JUMP_HEIGHT) {
+	if (getPosition().y - _jumpBegin >= PLAYER_JUMP_HEIGHT) {
 		setJumpState(eJumpState::Fall);
 	}
 	if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
 		setJumpState(eJumpState::None);
-		jumpBegin = 0;
+		_jumpBegin = 0;
 	}
 }
 
@@ -179,7 +179,7 @@ void Player::update(float dt) {
 
 void Player::setJumpState(eJumpState state) {
 	if (state == eJumpState::Jump) {
-		jumpBegin = getPosition().y;
+		_jumpBegin = getPosition().y;
 	}
 	playerJumpState = state;
 }
@@ -221,7 +221,16 @@ void Player::setHp(int hp) noexcept {
 
 void Player::changeHp(float difHp) noexcept {
 	if (_hp <= 0) {
+		_isDied = true;
 		return;
 	}
 	_hp += difHp;
+}
+
+bool Player::isDied() const {
+	return _isDied;
+}
+
+void Player::setDied(bool state) noexcept {
+	_isDied = state;
 }

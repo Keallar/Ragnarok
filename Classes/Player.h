@@ -21,7 +21,7 @@ public:
 	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
 	static Player* createPlayer();
 
-	virtual bool init();
+	bool init() override;
 
 	void update(float dt) override;
 
@@ -35,6 +35,8 @@ public:
 	int getMana() const;
 	void setMana(int mana) noexcept;
 	void changeMana(int difMana) noexcept;
+	bool isDied() const;
+	void setDied(bool state) noexcept;
 
 	//key callbacks
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
@@ -42,7 +44,6 @@ public:
 	void mousePressed(cocos2d::Event* event);
 
 	void move(int shift);
-	void changePos(int delta);
 	void jump();
 
 	//ShootingCharacter function
@@ -54,17 +55,17 @@ public:
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
 private:
-
+	void changePos(int delta);
 	cocos2d::Vec2 clickPosCalculate(cocos2d::EventMouse* mouse);
 
 	int _hp;
 	int _mana;
 	float _speed;
-	float jumpSpeed;
-	int jumpBegin;
+	float _jumpSpeed;
+	int _jumpBegin;
+	bool _isDied;
 
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
-
 };
 
