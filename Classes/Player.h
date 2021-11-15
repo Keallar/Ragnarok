@@ -1,12 +1,6 @@
 #pragma once
 #include "ShootingCharacter.h"
 
-enum class eRunState {
-	None,
-	Left,
-	Right
-};
-
 enum class eJumpState {
 	None,
 	Jump,
@@ -31,26 +25,23 @@ public:
 
 	void update(float dt) override;
 
-	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	void setAnimState(eAnimState state);
-	eRunState getRunState() noexcept;
 	eJumpState getJumpState() noexcept;
 	eAnimState getAnimState() noexcept;
-	int getHp() noexcept;
+	int getHp() const;
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp) noexcept;
-	int getMana() noexcept;
+	int getMana() const;
 	void setMana(int mana) noexcept;
 	void changeMana(int difMana) noexcept;
 
 	//key callbacks
-
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void mousePressed(cocos2d::Event* event);
 
-	void move();
+	void move(int shift);
 	void changePos(int delta);
 	void jump();
 
@@ -72,7 +63,6 @@ private:
 	float jumpSpeed;
 	int jumpBegin;
 
-	eRunState playerRunState;
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
 
