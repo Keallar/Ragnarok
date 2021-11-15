@@ -2,13 +2,15 @@
 
 int IEnemy::BULLET_SPEED = 10;
 
-IEnemy::IEnemy(IEnemyBehaviour* behaviour, IEnemyType* type) {
+IEnemy::IEnemy(IEnemyType* type, IEnemyBehaviour* behaviour) {
+	_type = type;
 	_behaviour = behaviour;
-	_type = _type;
 }
 
 IEnemy::~IEnemy() {
 	delete hpLabel;
+	delete _type;
+	delete _behaviour;
 }
 
 void IEnemy::setHp(int hp) noexcept {

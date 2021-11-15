@@ -15,6 +15,7 @@ public:
 	int getDamage() const noexcept { return _damage; }
 	float getSpeed() const noexcept { return _speed; }
 	float getAttackCooldown() const noexcept { return _attackCooldown; }
+
 protected:
 	std::string _fileName;
 	std::string _enemyName;

@@ -4,9 +4,9 @@
 
 class Enemy : public IEnemy {
 public:
-	Enemy(IEnemyBehaviour* behaviour = nullptr, IEnemyType* type = nullptr);
+	Enemy(IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
 	~Enemy();
-	static Enemy* create(const std::string& filename, b2BodyType bodyType, float32 friction, float32 restitution, IEnemyBehaviour* behaviour = nullptr, IEnemyType* type = nullptr);
+	static Enemy* create(b2BodyType bodyType, float32 friction, float32 restitution, IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
 	bool init() override;
 private:
 	

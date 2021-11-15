@@ -15,14 +15,10 @@ EnemyFactory* EnemyFactory::getInstance() {
     return instance;
 }
 
-Enemy* EnemyFactory::createEnemy(b2WorldNode* world, Vec2 pos) {
+Enemy* EnemyFactory::createEnemy(b2WorldNode* world, Vec2 pos, IEnemyType* type, IEnemyBehaviour* behaviour) {
     id++;
-    auto enemyObj = Enemy::create("hero.png", b2BodyType::b2_dynamicBody, 0.f, 0, nullptr, new SimpleEnemy);
-    enemyObj->setName("simpleEnemy_" + std::to_string(id));
-    b2Filter filter;
-    filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
-    filter.maskBits = static_cast<uint16>(eColMask::enemy);
-    enemyObj->getFixtureDef()->filter = filter;
+    auto enemyObj = Enemy::create(b2BodyType::b2_dynamicBody, 0.f, 0, new SimpleEnemy, behaviour);
+    enemyObj->setName(enemyObj->getName() + std::to_string(id));
     world->addChild(enemyObj);
     enemyObj->getBody()->SetFixedRotation(true);
     enemyObj->setPosition(pos);

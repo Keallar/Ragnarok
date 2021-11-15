@@ -2,19 +2,21 @@
 
 USING_NS_CC;
 
-Enemy::Enemy(IEnemyBehaviour* behaviour, IEnemyType* type) 
-	: IEnemy(behaviour, type) {
+Enemy::Enemy(IEnemyType* type, IEnemyBehaviour* behaviour)
+	: IEnemy(type, behaviour) {
 	init();
 }
 
 Enemy::~Enemy() {
 }
 
-Enemy* Enemy::create(const std::string& filename, b2BodyType bodyType, float32 friction, float32 restitution, IEnemyBehaviour* behaviour, IEnemyType* type) {
-	Enemy* enemyObj = new (std::nothrow) Enemy(behaviour, type);
-	if (enemyObj && enemyObj->initWithFile(filename)) {
+Enemy* Enemy::create(b2BodyType bodyType, float32 friction, float32 restitution, IEnemyType* type, IEnemyBehaviour* behaviour) {
+	Enemy* enemyObj = new (std::nothrow) Enemy(type, behaviour);
+	if (enemyObj && enemyObj->initWithFile(type->getFileName())) {
 		enemyObj->initBody(bodyType, friction, restitution);
 		enemyObj->autorelease();
+		enemyObj->setName(type->getName());
+		enemyObj->getFixtureDef()->filter = type->getFilter();
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);

@@ -6,7 +6,7 @@
 
 class IEnemy : public ShootingCharacter {
 public:
-	IEnemy(IEnemyBehaviour* behaviour = nullptr, IEnemyType* type = nullptr);
+	IEnemy(IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
 	virtual ~IEnemy();
 	void setBehaviour(IEnemyBehaviour* behaviour);
 	void setType(IEnemyType* type);
