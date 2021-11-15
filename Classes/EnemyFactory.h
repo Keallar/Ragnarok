@@ -12,7 +12,7 @@ enum class eEnemyType {
 class EnemyFactory {
 public:
 	static EnemyFactory* getInstance();
-	static Enemy* createSimpleEnemy(b2WorldNode* world, Vec2 pos );
+	static Enemy* createEnemy(b2WorldNode* world, Vec2 pos );
 private:
 	static EnemyFactory* instance;
 	static int id;

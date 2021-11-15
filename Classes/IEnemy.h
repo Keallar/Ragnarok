@@ -1,9 +1,14 @@
 #pragma once
 #include "ShootingCharacter.h"
 #include "IEnemyBehaviour.h"
+#include "IEnemyType.h"
+#include "IEnemyBehaviour.h"
 
 class IEnemy : public ShootingCharacter {
 public:
+	virtual ~IEnemy();
+	void setBehaviour(IEnemyBehaviour* behaviour);
+	void setType(IEnemyType* type);
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp);
 	int getHp() const noexcept;
@@ -15,7 +20,6 @@ public:
 	bool isDamaged() const noexcept;
 	void createHpLabel();
 	void updateHpLabel();
-	void setBehaviour()
 
 	virtual void update(float dt);
 	virtual void shoot(Vec2 targetPos, eBulletType type);
@@ -29,4 +33,6 @@ private:
 	bool _destroyed;
 	bool _damaged;
 	Label* hpLabel;
+	IEnemyBehaviour* _behaviour;
+	IEnemyType* _type;
 };

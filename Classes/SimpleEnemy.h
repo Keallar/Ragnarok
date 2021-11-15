@@ -1,6 +1,7 @@
-#include "IEnemyBehaviour.h"
+#include "IEnemyType.h"
 
-class SimpleEnemy : public IEnemyBehaviour {
+class SimpleEnemy : public IEnemyType {
 public:
 private:
+
 };

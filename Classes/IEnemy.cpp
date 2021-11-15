@@ -2,6 +2,10 @@
 
 int IEnemy::BULLET_SPEED = 10;
 
+IEnemy::~IEnemy() {
+	delete hpLabel;
+}
+
 void IEnemy::setHp(int hp) noexcept {
 	_hp = hp;
 }
@@ -59,6 +63,14 @@ void IEnemy::createHpLabel() {
 
 void IEnemy::updateHpLabel() {
 	hpLabel->setString(std::to_string(_hp));
+}
+
+void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
+	_behaviour = behaviour;
+}
+
+void IEnemy::setType(IEnemyType* type) {
+	_type = type;
 }
 
 void IEnemy::update(float dt) {

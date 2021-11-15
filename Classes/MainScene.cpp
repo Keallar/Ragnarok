@@ -136,7 +136,7 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
-    auto enemy = EnemyFactory::getInstance()->createSimpleEnemy(_world, pos);
+    auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos);
     enemies.push_back(enemy);
 }
 

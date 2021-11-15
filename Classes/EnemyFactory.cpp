@@ -1,5 +1,7 @@
 #pragma once
 #include "EnemyFactory.h"
+#include "IEnemyType.h"
+#include "IEnemyBehaviour.h"
 
 EnemyFactory* EnemyFactory::instance = nullptr;
 int EnemyFactory::id = -1;
@@ -12,7 +14,7 @@ EnemyFactory* EnemyFactory::getInstance() {
     return instance;
 }
 
-Enemy* EnemyFactory::createSimpleEnemy(b2WorldNode* world, Vec2 pos) {
+Enemy* EnemyFactory::createEnemy(b2WorldNode* world, Vec2 pos) {
     id++;
     auto enemyObj = Enemy::create("hero.png", b2BodyType::b2_dynamicBody, 0.f, 0);
     enemyObj->setName("simpleEnemy_" + std::to_string(id));
