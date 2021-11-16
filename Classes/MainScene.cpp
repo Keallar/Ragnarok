@@ -27,16 +27,20 @@ bool MainScene::init() {
     background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     addChild(background);
 
+    //World init
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
+    //ContactListener init
     auto contactListener = new ContactListener;
     _world->getb2World()->SetContactListener(contactListener);
 
+    //TileMap init
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
     _firstTileMap->setTiledMap("Test.tmx");
     _firstTileMap->addLayer("Foreground", "FG");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
+
     //Creating player
     _player = Player::createPlayer();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
@@ -49,7 +53,8 @@ bool MainScene::init() {
     _player->setName("player");
     _player->setPosition(8000, 22000);
     _player->getBody()->SetBullet(true);
-    //camera setup
+
+    //Camera setup
     _cameraTarget = getDefaultCamera();
 
     //Creating UI
@@ -60,11 +65,10 @@ bool MainScene::init() {
     _ui->beginMana(playerMana);
     addChild(_ui);
 
-    //init HandleEvents
+    //HandleEvents init
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
-
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(MainScene::mousePressed, this);
 
@@ -72,8 +76,9 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();
-    //schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
+
     createSomeEnemy(0);
+
     return true;
 }
 
