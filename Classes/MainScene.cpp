@@ -107,6 +107,7 @@ void MainScene::update(float dt) {
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
         enemies.end());
+
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
 }
 

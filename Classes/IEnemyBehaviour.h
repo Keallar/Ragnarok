@@ -5,5 +5,5 @@
 class IEnemyBehaviour {
 public:
 	virtual ~IEnemyBehaviour() {}
-	virtual void behaviour() = 0;
+	virtual void perform() = 0;
 };

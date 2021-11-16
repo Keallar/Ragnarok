@@ -39,5 +39,5 @@ private:
 	int _damage;
 	bool _destroyed;
 	bool _damaged;
-	Label* hpLabel;
+	Label* _hpLabel;
 };
