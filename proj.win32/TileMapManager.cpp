@@ -1,5 +1,5 @@
 #include "TileMapManager.h"
-
+#include "box2d/b2dRootWorldNode.h"
 TileMapManager::TileMapManager() {
 
 }
@@ -73,7 +73,7 @@ void TileMapManager::CollidableLayerInit(Node* node, CCTMXLayer* layer) {
 			else {
 				if (_b2test->getContentSize().width) {
 					_b2test->initBody(b2BodyType::b2_staticBody);
-					_b2test->setTiles(layer->getTileAt({ j-1, i })->getTextureRect().size.width);
+					_b2test->setTiles(layer->getTileAt({ j - 1, i })->getTextureRect().size.width, node);
 					node->addChild(_b2test);
 					_b2test->setPosition(startPoint.x * layer->getTileAt({ j-1, i })->getTextureRect().size.width,
 						(_tiledMap->getMapSize().height - startPoint.y) * layer->getTileAt({ j-1, i })->getTextureRect().size.width );

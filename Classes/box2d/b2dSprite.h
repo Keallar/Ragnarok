@@ -92,7 +92,7 @@ public:
 	virtual void setPosition(float x, float y) override;
 	void setB2BodyPosition(float x, float y);
 	void setTriangleShape();
-	void setTiles(float _tileWidth);
+	void setTiles(float _tileWidth, Node* world);
 	virtual void setRotation(float rotation) override;
 	void setB2BodyRotation(float rotation);
 

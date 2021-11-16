@@ -39,7 +39,7 @@ public:
 private:
 	static const int PLAYER_SPEED = 20;
 	static const int PLAYER_JUMP_SPEED = 20;
-	static const int PLAYER_JUMP_HEIGHT = 150;
+	static const int PLAYER_JUMP_HEIGHT = 100;
 
 	int speed;
 	float jumpSpeed;

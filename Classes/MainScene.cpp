@@ -27,14 +27,13 @@ bool MainScene::init() {
 
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
-
     //_world->getb2World()->SetContactListener(new ContactListener);
 
     //World->debugDraw();
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
     _firstTileMap->setTiledMap("Test.tmx");
     _firstTileMap->addLayer("Foreground", "FG");
-    _firstTileMap->TileMapStaticLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
+    _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
@@ -63,7 +62,7 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
 
-    _player->setPosition(13000, 22000);
+    _player->setPosition(8000, 22000);
 
     //camera setup
     _cameraTarget = getDefaultCamera();
