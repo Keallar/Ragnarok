@@ -72,7 +72,7 @@
     <ClCompile Include="..\Classes\Enemy.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UI.cpp">
+    <ClCompile Include="..\Classes\HUD.cpp">
       <Filter>src\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Player.cpp">
@@ -104,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\IdleBehaviour.cpp">
       <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBox.cpp">
+      <Filter>src\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,7 +146,7 @@
     <ClInclude Include="..\Classes\Enemy.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\UI.h">
+    <ClInclude Include="..\Classes\HUD.h">
       <Filter>src\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\IdleBehaviour.h">
       <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBox.h">
+      <Filter>src\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

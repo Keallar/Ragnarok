@@ -5,6 +5,7 @@
 #include "EnemyFactory.h"
 #include <proj.win32/TileMapManager.h>
 #include "SimpleEnemy.h"
+#include "HUD.h"
 
 USING_NS_CC;
 
@@ -53,11 +54,10 @@ bool MainScene::init() {
     _cameraTarget = getDefaultCamera();
 
     //Creating UI
-    _ui = UI::create();
+    _ui = HUD::create();
     const auto playerHp = _player->getHp();
-    _ui->beginLife(playerHp);
     const auto playerMana = _player->getMana();
-    _ui->beginMana(playerMana);
+    _ui->beginLife(playerHp, playerMana);
     addChild(_ui);
 
     //init HandleEvents
@@ -137,7 +137,7 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 
 void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
-    const Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
+    const Vec2 pos = { 5000, 5000 };
     auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
     enemies.push_back(enemy);
 }

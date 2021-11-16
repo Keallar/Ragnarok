@@ -170,8 +170,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\ShootingCharacter.cpp" />
     <ClCompile Include="..\Classes\Enemy.cpp" />
     <ClCompile Include="..\Classes\SimpleEnemy.cpp" />
-    <ClCompile Include="..\Classes\UI.cpp" />
+    <ClCompile Include="..\Classes\HUD.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="TileMapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,8 +197,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\ShootingCharacter.h" />
     <ClInclude Include="..\Classes\Enemy.h" />
     <ClInclude Include="..\Classes\SimpleEnemy.h" />
-    <ClInclude Include="..\Classes\UI.h" />
+    <ClInclude Include="..\Classes\HUD.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="MessageBox.h" />
     <ClInclude Include="TileMapManager.h" />
   </ItemGroup>
   <ItemGroup>
