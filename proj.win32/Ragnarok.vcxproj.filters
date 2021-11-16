@@ -87,6 +87,9 @@
     <ClCompile Include="..\Classes\ContactListener.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="TileMapManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\Ray.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\IEnemyBehaviour.h">
       <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapManager.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\IEnemyType.h">
       <Filter>src\enemy\enemyTypes</Filter>

@@ -28,9 +28,6 @@ public:
 
     CREATE_FUNC(MainScene);
 private:
-    CCTMXTiledMap* _tiledMap;
-    CCTMXLayer* _background;
-    CCTMXLayer* _walls;
     Player* _player;
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;

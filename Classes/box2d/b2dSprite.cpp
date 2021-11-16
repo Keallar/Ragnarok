@@ -164,6 +164,32 @@ b2Sprite* b2Sprite::create(const std::string& filename, const Rect& rect, b2Body
 
 }
 
+void b2Sprite::setTriangleShape()
+{
+	b2Vec2 vertices[3];
+	vertices[0].Set(-0.5, -0.5);
+	vertices[1].Set(0, 0.5);
+	vertices[2].Set(0.5, -0.5);
+	_B2Shape.Set(vertices, 3);
+	_B2FixtureDef.shape = &_B2Shape;
+}
+
+void b2Sprite::setTiles(float _tileWidth, Node* world)
+{
+	if (_parentWorldNode == nullptr)
+	{
+		setWorldNode(dynamic_cast<b2WorldNode*>(world));
+	}
+	float _width = getContentSize().width;
+	b2Vec2 vertices[4];
+	float a = _parentWorldNode->getPTM();
+	vertices[0].Set(0, -(this->getContentSize().height / _parentWorldNode->getPTM() / 2));
+	vertices[1].Set(0, this->getContentSize().height / _parentWorldNode->getPTM() / 2);
+	vertices[2].Set(getContentSize().width / _parentWorldNode->getPTM(), (this->getContentSize().height / _parentWorldNode->getPTM() / 2));
+	vertices[3].Set(getContentSize().width / _parentWorldNode->getPTM(), -(this->getContentSize().height / _parentWorldNode->getPTM() / 2));
+	_B2Shape.Set(vertices, 4);
+	_B2FixtureDef.shape = &_B2Shape;
+}
 //		***	SET/GET	***
 
 void b2Sprite::setPosition(const Vec2 & pos)
@@ -225,7 +251,7 @@ void b2Sprite::setBody(b2Body* body, b2WorldNode* world)
 	if(_B2Shape.m_count == 0)
 	{
 		_B2Shape.SetAsBox(this->getTextureRect().size.width / _parentWorldNode->getPTM() / 2, this->getTextureRect().size.height / _parentWorldNode->getPTM() / 2);
-	}
+	} //#ÂÀÆÍÎÑÒÜ ÏÐÈÑÓÒÑÒÂÓÅÒ
 	_B2Fixture = _B2Body->CreateFixture(&_B2FixtureDef);
 
 }
