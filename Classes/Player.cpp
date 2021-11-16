@@ -40,11 +40,10 @@ bool Player::init() {
 	_hp = 100;
 	_mana = 100;
 	_speed = 0.f;
-	jumpBegin = 0;
-	playerRunState = eRunState::None;
+	_jumpBegin = 0;
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
-	jumpBegin = 0;
+	_isDied = false;
 
 	return true;
 }
@@ -53,7 +52,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_D:
 	{
-		setRunState(eRunState::Right);
+		move(PLAYER_SPEED);
 		auto scaleX = getScaleX();
 		if (scaleX < 0) {
 			scaleX *= -1;
@@ -63,7 +62,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	break;
 	case EventKeyboard::KeyCode::KEY_A:
 	{
-		setRunState(eRunState::Left);
+		move(-PLAYER_SPEED);
 		auto scaleX = getScaleX();
 		if (scaleX > 0) {
 			scaleX *= -1;
@@ -78,18 +77,28 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		}
 	}
 	break;
+	case EventKeyboard::KeyCode::KEY_W:
+	{
+		if (getJumpState() == eJumpState::None) {
+			setJumpState(eJumpState::Jump);
+		}
+	}
+	break;
 	}
 }
 
 void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
 	switch (keyCode) {
-	case EventKeyboard::KeyCode::KEY_D:
-		setRunState(eRunState::Left);
-		break;
 	case EventKeyboard::KeyCode::KEY_A:
-		setRunState(eRunState::Right);
+		move(0);
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
+		move(0);
 		break;
 	case EventKeyboard::KeyCode::KEY_SPACE:
+		setJumpState(eJumpState::Fall);
+		break;
+	case EventKeyboard::KeyCode::KEY_W:
 		setJumpState(eJumpState::Fall);
 		break;
 	default:
@@ -107,13 +116,12 @@ void Player::shoot(Vec2 targetPos, eBulletType type) {
 		}
 
 		Vec2 pos = getPosition();
-
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest.y *= -1;
 		dest *= BULLET_SPEED;
 
-		CreateBulletOnParent(type, pos, dest);
+		createBulletOnParent(type, pos, dest);
 	}
 }
 
@@ -139,20 +147,11 @@ void Player::mousePressed(cocos2d::Event* event) {
 	}
 }
 
-void Player::move() {
-	switch (getRunState()) {
-	case eRunState::Left:
-		changePos(-PLAYER_SPEED);
-		break;
-	case eRunState::Right:
-		changePos(PLAYER_SPEED);
-		break;
-	case eRunState::None:
-		changePos(0);
-		break;
-	default:
-		break;
-	}
+void Player::move(int shift) {
+	/*if (shift == 0) {
+		return;
+	}*/
+	changePos(shift);
 }
 
 void Player::changePos(int delta) {
@@ -164,43 +163,29 @@ void Player::jump() {
 	if (getJumpState() == eJumpState::Jump) {
 		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
 	}
-	if (getPosition().y - jumpBegin >= PLAYER_JUMP_HEIGHT) {
+	if (getPosition().y - _jumpBegin >= PLAYER_JUMP_HEIGHT) {
 		setJumpState(eJumpState::Fall);
 	}
 	if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
 		setJumpState(eJumpState::None);
-		jumpBegin = 0;
+		_jumpBegin = 0;
 	}
 }
 
 void Player::update(float dt) {	
-	ShootingCharacterUpdate(dt);
-	move();
+	shootingCharacterUpdate(dt);
 	jump();
-}
-
-void Player::setRunState(eRunState state) {
-	if (state == eRunState::Left && getRunState() == eRunState::Right ||
-		state == eRunState::Right && getRunState() == eRunState::Left) {
-		playerRunState = eRunState::None;
-		return;
-	}
-	playerRunState = state;
 }
 
 void Player::setJumpState(eJumpState state) {
 	if (state == eJumpState::Jump) {
-		jumpBegin = getPosition().y;
+		_jumpBegin = getPosition().y;
 	}
 	playerJumpState = state;
 }
 
 void Player::setAnimState(eAnimState state) {
 	playerAnimState = state;
-}
-
-eRunState Player::getRunState() noexcept {
-	return playerRunState;
 }
 
 eAnimState Player::getAnimState() noexcept {
@@ -211,7 +196,7 @@ eJumpState Player::getJumpState() noexcept {
 	return playerJumpState;
 }
 
-int Player::getMana() noexcept {
+int Player::getMana() const {
 	return _mana;
 }
 
@@ -226,7 +211,7 @@ void Player::changeMana(int difMana) noexcept {
 	_mana -= difMana;
 }
 
-int Player::getHp() noexcept {
+int Player::getHp() const {
 	return _hp;
 }
 
@@ -236,7 +221,16 @@ void Player::setHp(int hp) noexcept {
 
 void Player::changeHp(float difHp) noexcept {
 	if (_hp <= 0) {
+		_isDied = true;
 		return;
 	}
 	_hp += difHp;
+}
+
+bool Player::isDied() const {
+	return _isDied;
+}
+
+void Player::setDied(bool state) noexcept {
+	_isDied = state;
 }

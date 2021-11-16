@@ -11,27 +11,27 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		//Enemy
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
-			auto enemy = static_cast<IEnemy*>(SpriteA);
+			auto enemy = dynamic_cast<IEnemy*>(SpriteA);
+			enemy->setDamaged(true);
 			enemy->changeHp(-100);
-			const auto curEnemyHp = enemy->getHp();
-			if (curEnemyHp <= 0 && enemy->isDestroyed() == false) {
-				enemy->setDestroyed(true);
-				//SpriteA->setOnRemove();
-			}
+			//const auto curEnemyHp = enemy->getHp();
+			//if (curEnemyHp <= 0 && enemy->isDestroyed() == false) {
+			//	enemy->setDestroyed(true);
+			//}
 		} //Player
 		else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
-			auto player = static_cast<Player*>(SpriteA);
+			auto player = dynamic_cast<Player*>(SpriteA);
 			player->changeHp(-1);
-		}
+		} //Bullets
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
 			SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
-			auto bullet = static_cast<Bullet*>(SpriteA);
+			auto bullet = dynamic_cast<Bullet*>(SpriteA);
 			bullet->setOnRemove();
 		}
 		else if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
-			auto bullet = static_cast<Bullet*>(SpriteB);
+			auto bullet = dynamic_cast<Bullet*>(SpriteB);
 			bullet->setOnRemove();
 		}
 	}

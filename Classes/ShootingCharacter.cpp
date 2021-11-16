@@ -4,13 +4,13 @@ const float ShootingCharacter::PLAYER_ATTACK_COOLDOWN = 0.2f;
 const float ShootingCharacter::PLAYER_BIG_ATTACK_COOLDOWN = 1;
 const float ShootingCharacter::ENEMY_ATTACK_COOLDOWN = 0.5f;
 
-void ShootingCharacter::CreateBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest) {
+void ShootingCharacter::createBulletOnParent(eBulletType type, Vec2 pos, Vec2 dest) {
 	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
 	auto bullet = BulletFactory::getInstance()->createBullet(type, world, pos, dest);
 	bullets.push_back(bullet);
 }
 
-void ShootingCharacter::ShootingCharacterUpdate(float dt) {
+void ShootingCharacter::shootingCharacterUpdate(float dt) {
 	b2WorldNode* world = dynamic_cast<b2WorldNode*>(getParent());
 
 	for (auto bullet : bullets) {

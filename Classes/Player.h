@@ -1,12 +1,6 @@
 #pragma once
 #include "ShootingCharacter.h"
 
-enum class eRunState {
-	None,
-	Left,
-	Right
-};
-
 enum class eJumpState {
 	None,
 	Jump,
@@ -27,31 +21,29 @@ public:
 	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
 	static Player* createPlayer();
 
-	virtual bool init();
+	bool init() override;
 
 	void update(float dt) override;
 
-	void setRunState(eRunState state);
 	void setJumpState(eJumpState state);
 	void setAnimState(eAnimState state);
-	eRunState getRunState() noexcept;
 	eJumpState getJumpState() noexcept;
 	eAnimState getAnimState() noexcept;
-	int getHp() noexcept;
+	int getHp() const;
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp) noexcept;
-	int getMana() noexcept;
+	int getMana() const;
 	void setMana(int mana) noexcept;
 	void changeMana(int difMana) noexcept;
+	bool isDied() const;
+	void setDied(bool state) noexcept;
 
 	//key callbacks
-
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void mousePressed(cocos2d::Event* event);
 
-	void move();
-	void changePos(int delta);
+	void move(int shift);
 	void jump();
 
 	//ShootingCharacter function
@@ -63,18 +55,17 @@ public:
 	static const int PLAYER_JUMP_HEIGHT;
 	static const int BULLET_SPEED;
 private:
-
+	void changePos(int delta);
 	cocos2d::Vec2 clickPosCalculate(cocos2d::EventMouse* mouse);
 
 	int _hp;
 	int _mana;
 	float _speed;
-	float jumpSpeed;
-	int jumpBegin;
+	float _jumpSpeed;
+	int _jumpBegin;
+	bool _isDied;
 
-	eRunState playerRunState;
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
-
 };
 

@@ -1,40 +1,15 @@
+#pragma once
 #include "SimpleEnemy.h"
-
-USING_NS_CC;
+#include "box2d/b2dRootWorldNode.h"
 
 SimpleEnemy::SimpleEnemy() {
-	init();
+	_fileName = "hero.png";
+	_enemyName = "SimpleEnemy_";
+	_filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
+	_filter.maskBits = static_cast<uint16>(eColMask::enemy);
+	_hp = 100;
+	_damage = 1;
+	_speed = 10.f;
+	_attackCooldown = 0.5f;
+	_bulletSpeed = 10;
 }
-
-SimpleEnemy::~SimpleEnemy() {
-}
-
-SimpleEnemy* SimpleEnemy::createSimpleEnemy() {
-	auto simpleEnemyObj = create("hero.png", b2BodyType::b2_dynamicBody, 0.f, 0);
-	return simpleEnemyObj;
-}
-
-SimpleEnemy* SimpleEnemy::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
-	SimpleEnemy* sprite = new (std::nothrow) SimpleEnemy();
-	if (sprite && sprite->initWithFile(filename)) {
-		sprite->initBody(type, friction, restitution);
-		sprite->autorelease();
-		return sprite;
-	}
-	CC_SAFE_DELETE(sprite);
-	return nullptr;
-}
-
-bool SimpleEnemy::init() {
-	if (!b2Sprite::init()) {
-		return false;
-	}
-	attackCooldown = 0;
-	setHp(100);
-	setSpeed(10.f);
-	setDamaged(false);
-	setDestroyed(false);
-	return true;
-}
-
-
