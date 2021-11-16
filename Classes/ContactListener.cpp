@@ -12,11 +12,12 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
 			auto enemy = dynamic_cast<IEnemy*>(SpriteA);
+			enemy->setDamaged(true);
 			enemy->changeHp(-100);
-			const auto curEnemyHp = enemy->getHp();
-			if (curEnemyHp <= 0 && enemy->isDestroyed() == false) {
-				enemy->setDestroyed(true);
-			}
+			//const auto curEnemyHp = enemy->getHp();
+			//if (curEnemyHp <= 0 && enemy->isDestroyed() == false) {
+			//	enemy->setDestroyed(true);
+			//}
 		} //Player
 		else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {

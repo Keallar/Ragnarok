@@ -19,6 +19,10 @@ void IEnemy::setHp(int hp) noexcept {
 
 void IEnemy::changeHp(float difHp) {
 	_hp += difHp;
+	setDamaged(false);
+	if (_hp <= 0) {
+		setDestroyed(true);
+	}
 	if (!hpLabel) {
 		return;
 	}

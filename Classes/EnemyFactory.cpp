@@ -17,7 +17,7 @@ EnemyFactory* EnemyFactory::getInstance() {
 
 Enemy* EnemyFactory::createEnemy(b2WorldNode* world, Vec2 pos, IEnemyType* type, IEnemyBehaviour* behaviour) {
     id++;
-    auto enemyObj = Enemy::create(b2BodyType::b2_dynamicBody, 0.f, 0, new SimpleEnemy, behaviour);
+    auto enemyObj = Enemy::create(b2BodyType::b2_dynamicBody, 0.f, 0, type, behaviour);
     enemyObj->setName(enemyObj->getName() + std::to_string(id));
     world->addChild(enemyObj);
     enemyObj->getBody()->SetFixedRotation(true);

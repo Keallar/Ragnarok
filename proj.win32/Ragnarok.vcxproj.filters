@@ -96,11 +96,11 @@
     <ClCompile Include="..\Classes\SimpleEnemy.cpp">
       <Filter>src\enemy\enemyTypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\IEnemyBehaviour.cpp">
-      <Filter>src\enemy\enemyBehaviour</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Boss.cpp">
       <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IdleBehaviour.cpp">
+      <Filter>src\enemy\enemyBehaviour</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Boss.h">
       <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IdleBehaviour.h">
+      <Filter>src\enemy\enemyBehaviour</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

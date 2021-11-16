@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
 #include "EnemyFactory.h"
+#include "SimpleEnemy.h"
 
 USING_NS_CC;
 
@@ -81,7 +82,6 @@ void MainScene::update(float dt) {
         if (_player->isDied()) {
             _player->cleanFunc();
             _player->removeFromParent();
-            //_player->setOnRemove();
             return;
         }
         _player->update(dt);
@@ -136,7 +136,7 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
-    auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos);
+    auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
     enemies.push_back(enemy);
 }
 

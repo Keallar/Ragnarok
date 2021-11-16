@@ -161,8 +161,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Bullet.cpp" />
     <ClCompile Include="..\Classes\BulletFactory.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
-    <ClCompile Include="..\Classes\IEnemyBehaviour.cpp" />
     <ClCompile Include="..\Classes\EnemyFactory.cpp" />
+    <ClCompile Include="..\Classes\IdleBehaviour.cpp" />
     <ClCompile Include="..\Classes\IEnemy.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
@@ -184,6 +184,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Bullet.h" />
     <ClInclude Include="..\Classes\BulletFactory.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
+    <ClInclude Include="..\Classes\IdleBehaviour.h" />
     <ClInclude Include="..\Classes\IEnemyBehaviour.h" />
     <ClInclude Include="..\Classes\EnemyFactory.h" />
     <ClInclude Include="..\Classes\IEnemy.h" />
