@@ -5,6 +5,8 @@
 #include "EnemyFactory.h"
 #include <proj.win32/TileMapManager.h>
 #include "SimpleEnemy.h"
+#include "imgui/CCIMGUI.h"
+#include "imgui/imgui.h"
 
 USING_NS_CC;
 
@@ -78,6 +80,10 @@ bool MainScene::init() {
     scheduleUpdate();
 
     createSomeEnemy(0);
+
+    CCIMGUI::getInstance()->addImGUI([=]() {
+        ImGui::ShowTestWindow();
+        }, "Function ID");
 
     return true;
 }
