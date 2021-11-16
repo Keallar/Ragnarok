@@ -91,10 +91,6 @@ void MainScene::update(float dt) {
         _cameraTarget->setPosition(cameraPos);
     }
 
-    enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
-        [](IEnemy* enemy) { return enemy->isDestroyed(); }),
-        enemies.end());
-
     for (auto enemy : enemies) {
         if (_player) {
             const auto playerPos = _player->getPosition();
@@ -108,7 +104,9 @@ void MainScene::update(float dt) {
             }
         }
     }
-
+    enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
+        [](IEnemy* enemy) { return enemy->isDestroyed(); }),
+        enemies.end());
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
 }
 
