@@ -141,36 +141,3 @@ void MainScene::createSomeEnemy(float dt) {
     auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
     enemies.push_back(enemy);
 }
-
-//UNDONE
-//������! �������� ����������
-static int id = 0;
-void MainScene::removeSomeEnemy(float dt) {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    SimpleEnemy* enemy = SimpleEnemy::createSimpleEnemy();
-    _world->addChild(enemy);
-    enemy->setName("simpleEnemy_" + std::to_string(id));
-    Vec2 playerOrigin(Director::getInstance()->getWinSize() / 2);
-    enemy->getBody()->SetFixedRotation(true);
-    enemy->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-}
-
-void MainScene::tileMapInit() {
-    _tiledMap = new CCTMXTiledMap();
-    _tiledMap->initWithTMXFile("last.tmx");
-    _background = _tiledMap->layerNamed("TileLayer1");
-    _walls = _tiledMap->layerNamed("TileLayer2");
-    Sprite* tile = new Sprite;
-    for (float i = 0; i < _walls->getLayerSize().width; i++) {
-        for (float j = 0; j < _walls->getLayerSize().height; j++) 
-        {
-            if (_walls->getTileAt({ i, j })) {
-                auto _b2test = b2Sprite::create();
-                _b2test->initWithSprite(_walls->getTileAt({ i, j }));
-                _b2test->initBody(b2BodyType::b2_staticBody);
-                _world->addChild(_b2test);
-                _b2test->setPosition(i * _walls->getTileAt({ i, j })->getTextureRect().size.width, (_tiledMap->getMapSize().height-j )* _walls->getTileAt({ i, j })->getTextureRect().size.height);
-            }
-        }
-    }
-}
