@@ -14,7 +14,7 @@ IEnemy::~IEnemy() {
 }
 
 void IEnemy::update(float dt) {
-	_behaviour->perform();
+	//_behaviour->perform();
 	shoot(_shootTarget, eBulletType::enemyOrdinary);
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
