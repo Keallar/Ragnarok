@@ -12,8 +12,7 @@ enum class ePhysicsCategory {
     All = 3
 };
 
-class MainScene : public cocos2d::Scene
-{
+class MainScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
 
@@ -23,6 +22,7 @@ public:
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);
     void createSomeEnemy(float dt);
+    void showImGui();
 
     void tileMapInit();
 

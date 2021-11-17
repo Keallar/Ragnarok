@@ -81,9 +81,8 @@ bool MainScene::init() {
 
     createSomeEnemy(0);
 
-    CCIMGUI::getInstance()->addImGUI([=]() {
-        ImGui::ShowTestWindow();
-        }, "Function ID");
+    CCIMGUI::getInstance()->addImGUI([=](){
+        showImGui(); } , "Function ID");
 
     return true;
 }
@@ -146,9 +145,39 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
+void MainScene::showImGui() {
+    if (!ImGui::Begin("Debug")) {
+        ImGui::End();
+        return;
+    }
+    if (ImGui::TreeNode("Player")) {
+        if (ImGui::Button("UpHp")) {
+            if (_player) {
+                _player->changeHp(1);
+            }
+        }
+        if (ImGui::Button("DownHp")) {
+            if (_player) {
+                _player->changeHp(-1);
+            }
+        }
+        ImGui::TreePop();
+    }
+    if (ImGui::TreeNode("Metrics")) {
+        ImGui::ShowMetricsWindow();
+        ImGui::TreePop();
+    }
+    if (ImGui::Button("CreateEnemy")) {
+        createSomeEnemy(0);
+    }
+    ImGui::End();
+}
+
 void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
-    const Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
-    auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
-    enemies.push_back(enemy);
+    if (_player) {
+        const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
+        auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
+        enemies.push_back(enemy);
+    }
 }
