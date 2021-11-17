@@ -1,13 +1,11 @@
-#define __MyProject__MyScene__
-#define ACTION_PLAY 1
-
+#pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "HUD.h"
+
 USING_NS_CC;
 
-static void problemLoading(const char* filename)
-{
+static void problemLoading(const char* filename) {
     printf("Error while loading: %s\n", filename);
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }

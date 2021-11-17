@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\EnemyFactory.cpp" />
     <ClCompile Include="..\Classes\IdleBehaviour.cpp" />
     <ClCompile Include="..\Classes\IEnemy.cpp" />
+    <ClCompile Include="..\Classes\MessageBox.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
     <ClCompile Include="..\Classes\Ray.cpp" />
@@ -172,7 +173,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\SimpleEnemy.cpp" />
     <ClCompile Include="..\Classes\HUD.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MessageBox.cpp" />
     <ClCompile Include="TileMapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +191,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\EnemyFactory.h" />
     <ClInclude Include="..\Classes\IEnemy.h" />
     <ClInclude Include="..\Classes\IEnemyType.h" />
+    <ClInclude Include="..\Classes\MessageBox.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="..\Classes\Ray.h" />
@@ -199,7 +200,6 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\SimpleEnemy.h" />
     <ClInclude Include="..\Classes\HUD.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="MessageBox.h" />
     <ClInclude Include="TileMapManager.h" />
   </ItemGroup>
   <ItemGroup>

@@ -105,7 +105,7 @@
     <ClCompile Include="..\Classes\IdleBehaviour.cpp">
       <Filter>src\enemy\enemyBehaviour</Filter>
     </ClCompile>
-    <ClCompile Include="MessageBox.cpp">
+    <ClCompile Include="..\Classes\MessageBox.cpp">
       <Filter>src\ui</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,7 +185,7 @@
     <ClInclude Include="..\Classes\IdleBehaviour.h">
       <Filter>src\enemy\enemyBehaviour</Filter>
     </ClInclude>
-    <ClInclude Include="MessageBox.h">
+    <ClInclude Include="..\Classes\MessageBox.h">
       <Filter>src\ui</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,6 @@
 #include "EnemyFactory.h"
 #include <proj.win32/TileMapManager.h>
 #include "SimpleEnemy.h"
-#include "HUD.h"
 
 USING_NS_CC;
 
@@ -54,11 +53,11 @@ bool MainScene::init() {
     _cameraTarget = getDefaultCamera();
 
     //Creating UI
-    _ui = HUD::create();
+    _hud = HUD::create();
     const auto playerHp = _player->getHp();
     const auto playerMana = _player->getMana();
-    _ui->beginLife(playerHp, playerMana);
-    addChild(_ui);
+    _hud->beginLife(playerHp, playerMana);
+    addChild(_hud);
 
     //init HandleEvents
     auto keyboardListener = EventListenerKeyboard::create();
@@ -89,7 +88,7 @@ void MainScene::update(float dt) {
         }
         _player->update(dt);
         const auto playerHp = _player->getHp();
-        _ui->setHp(playerHp);
+        _hud->setHp(playerHp);
         const auto cameraPos = _player->getPosition();
         _cameraTarget->setPosition(cameraPos);
     }
@@ -111,7 +110,7 @@ void MainScene::update(float dt) {
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
         enemies.end());
 
-    _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
+    _hud->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
