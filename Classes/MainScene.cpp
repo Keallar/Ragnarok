@@ -22,10 +22,14 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    DrawNode* background = DrawNode::create();
+    _background = Sprite::create("background.png");
+    _background->setContentSize(Director::getInstance()->getWinSize());
+    addChild(_background);
+
+    //DrawNode* background = DrawNode::create();
     const Vec2 backSize{ 5000, 5000 };
-    background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
-    addChild(background);
+    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
+    //addChild(background);
 
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
@@ -51,6 +55,8 @@ bool MainScene::init() {
     _player->getBody()->SetBullet(true);
     //camera setup
     _cameraTarget = getDefaultCamera();
+    
+    _background->setPosition(_cameraTarget->getPosition());
 
     //Creating UI
     _ui = UI::create();
@@ -112,6 +118,7 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
+    _background->setPosition(_cameraTarget->getPosition());
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {

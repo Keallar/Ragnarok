@@ -31,6 +31,7 @@ private:
     Player* _player;
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
+    cocos2d::Sprite* _background;
     UI* _ui;
 
     std::vector<IEnemy*> enemies;
