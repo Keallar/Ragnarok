@@ -102,6 +102,15 @@
     <ClCompile Include="..\Classes\IdleBehaviour.cpp">
       <Filter>src\enemy\enemyBehaviour</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\IBulletMoveBehavior.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IBulletTypeCreator.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IShootingPattern.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -175,6 +184,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\IdleBehaviour.h">
       <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IBulletMoveBehavior.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IBulletTypeCreator.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IShootingPattern.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

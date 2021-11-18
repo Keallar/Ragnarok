@@ -25,7 +25,7 @@ public:
 	void updateHpLabel();
 
 	virtual void update(float dt);
-	virtual void shoot(Vec2 targetPos, eBulletType type);
+	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
 	virtual void setShootTarget(Vec2 target);
 
 	static int BULLET_SPEED;

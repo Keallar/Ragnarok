@@ -1,4 +1,5 @@
 #include "BigBullet.h"
+#include "IBulletMoveBehavior.h"
 
 bool BigBullet::init() {
 	if (!b2Sprite::init()) {
@@ -19,6 +20,7 @@ void BigBullet::update(float dt) {
 BigBullet* BigBullet::createBullet(Vec2 pos, Vec2 dest) {
 	auto bullet = BigBullet::create("BigBullet.png", b2BodyType::b2_dynamicBody, 0.f, 0);
 	bullet->setCoords(pos, dest);
+	bullet->setNewBehavior(new BulletIdleBehavior(bullet));
 	return bullet;
 }
 
