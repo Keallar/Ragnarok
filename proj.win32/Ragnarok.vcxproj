@@ -162,8 +162,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\BulletFactory.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\EnemyFactory.cpp" />
+    <ClCompile Include="..\Classes\IBulletMoveBehavior.cpp" />
+    <ClCompile Include="..\Classes\IBulletTypeCreator.cpp" />
     <ClCompile Include="..\Classes\IdleBehaviour.cpp" />
     <ClCompile Include="..\Classes\IEnemy.cpp" />
+    <ClCompile Include="..\Classes\IShootingPattern.cpp" />
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
     <ClCompile Include="..\Classes\Ray.cpp" />
@@ -185,11 +188,14 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Bullet.h" />
     <ClInclude Include="..\Classes\BulletFactory.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
+    <ClInclude Include="..\Classes\IBulletMoveBehavior.h" />
+    <ClInclude Include="..\Classes\IBulletTypeCreator.h" />
     <ClInclude Include="..\Classes\IdleBehaviour.h" />
     <ClInclude Include="..\Classes\IEnemyBehaviour.h" />
     <ClInclude Include="..\Classes\EnemyFactory.h" />
     <ClInclude Include="..\Classes\IEnemy.h" />
     <ClInclude Include="..\Classes\IEnemyType.h" />
+    <ClInclude Include="..\Classes\IShootingPattern.h" />
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="..\Classes\Ray.h" />

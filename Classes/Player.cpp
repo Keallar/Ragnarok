@@ -1,12 +1,12 @@
 #include "Player.h"
 #include "box2d/b2dRootWorldNode.h"
+#include "IShootingPattern.h"
 
 USING_NS_CC;
 
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
 const int Player::PLAYER_JUMP_HEIGHT = 70;
-const int Player::BULLET_SPEED = 10;
 
 Player::Player() {
 	init();
@@ -36,7 +36,8 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	attackCooldown = 0;
+	_shootingPattern = new IdleShootingPattern(this);
+	_attackCooldown = 0;
 	_hp = 100;
 	_mana = 100;
 	_speed = 0.f;
@@ -106,22 +107,22 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	}
 }
 
-void Player::shoot(Vec2 targetPos, eBulletType type) {
-	if (attackCooldown <= 0) {
-		if (type == eBulletType::playerOrdinary) {
-			attackCooldown = PLAYER_ATTACK_COOLDOWN;
-		}
-		else if (type == eBulletType::playerBig) {
-			attackCooldown = PLAYER_BIG_ATTACK_COOLDOWN;
-		}
+void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
+	if (_attackCooldown <= 0) {
 
+		if (auto isIdle = dynamic_cast<PlayerIdleBulletCreator*>(bulletCreator)) {
+			_attackCooldown = PLAYER_ATTACK_COOLDOWN;
+		}
+		else if (auto isBig = dynamic_cast<PlayerBigBulletCreator*>(bulletCreator)) {
+			_attackCooldown = PLAYER_BIG_ATTACK_COOLDOWN;
+		}
 		Vec2 pos = getPosition();
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest.y *= -1;
-		dest *= BULLET_SPEED;
+		dest *= PLAYER_BULLET_SPEED;
 
-		createBulletOnParent(type, pos, dest);
+		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
 }
 
@@ -140,10 +141,10 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), eBulletType::playerOrdinary);
+		shoot(clickPosCalculate(mouse), new PlayerIdleBulletCreator);
 	}
 	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
-		shoot(clickPosCalculate(mouse), eBulletType::playerBig);
+		shoot(clickPosCalculate(mouse), new PlayerBigBulletCreator);
 	}
 }
 

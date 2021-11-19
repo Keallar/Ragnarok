@@ -1,8 +1,10 @@
 #include "IEnemy.h"
+#include "IShootingPattern.h"
 
 int IEnemy::BULLET_SPEED = 10;
 
 IEnemy::IEnemy(IEnemyType* type, IEnemyBehaviour* behaviour) {
+	_shootingPattern = new CircleShootingPattern(this);
 	_type = type;
 	_behaviour = behaviour;
 }
@@ -15,22 +17,22 @@ IEnemy::~IEnemy() {
 
 void IEnemy::update(float dt) {
 	//_behaviour->perform();
-	shoot(_shootTarget, eBulletType::enemyOrdinary);
+	shoot(_shootTarget, new EnemyIdleBulletCreator);
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
-	attackCooldown -= dt;
+	_attackCooldown -= dt;
 }
 
-void IEnemy::shoot(Vec2 targetPos, eBulletType type) {
-	if (attackCooldown <= 0) {
-		attackCooldown = ENEMY_ATTACK_COOLDOWN;
+void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
+	if (_attackCooldown <= 0) {
+		_attackCooldown = ENEMY_ATTACK_COOLDOWN;
 		Vec2 pos = getPosition();
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest *= BULLET_SPEED;
 		//dest *= 10;
 
-		createBulletOnParent(type, pos, dest);
+		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
 }
 

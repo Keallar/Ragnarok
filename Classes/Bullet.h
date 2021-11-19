@@ -2,6 +2,8 @@
 #include "cocos2d.h"
 #include "box2d/b2dSprite.h"
 
+class IBulletMoveBehavior;
+
 class Bullet : public b2Sprite
 {
 public:
@@ -21,6 +23,9 @@ public:
 	void setOnRemove();
 	bool isRemoving();
 
+	Vec2 getDest();
+	void setNewBehavior(IBulletMoveBehavior* behavior);
+
 	virtual int getDamage();
 
 protected:
@@ -32,10 +37,10 @@ protected:
 
 	void setCoords(Vec2 pos, Vec2 dest);
 
+	IBulletMoveBehavior* _moveBehavior;
 	Vec2 _pos;
 	Vec2 _dest;
 	float _moveTime;
 	float _lifeTime;
 	bool _isOnRemove;
 };
-
