@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
@@ -161,11 +162,29 @@ void MainScene::showImGui() {
                 _player->changeHp(-1);
             }
         }
+        //Player jump
+        std::string jumpInfo = "None";
+        if (_player->getJumpState() == eJumpState::None)
+            jumpInfo = "None";
+        else if (_player->getJumpState() == eJumpState::Jump)
+            jumpInfo = "Jump";
+        else if (_player->getJumpState() == eJumpState::Fall)
+            jumpInfo = "Fall";
+        ImGui::Text("JumpInfo: %s", jumpInfo.c_str());
+
         ImGui::TreePop();
     }
-    if (ImGui::TreeNode("Metrics")) {
+    static bool isToucedMetric = false;
+    if (ImGui::Button("Metrics")) {
+        if (!isToucedMetric) {
+            isToucedMetric = true;
+        } 
+        else {
+            isToucedMetric = false;
+        }
+    }
+    if (isToucedMetric) {
         ImGui::ShowMetricsWindow();
-        ImGui::TreePop();
     }
     if (ImGui::Button("CreateEnemy")) {
         createSomeEnemy(0);
