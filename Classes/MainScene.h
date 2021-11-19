@@ -27,6 +27,7 @@ private:
     cocos2d::Camera* _cameraTarget;
     cocos2d::Sprite* _background;
     UI* _ui;
+    cocos2d::DrawNode* _test;
 
     std::vector<IEnemy*> enemies;
 };

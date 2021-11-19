@@ -30,8 +30,8 @@ bool MainScene::init() {
     addChild(_background);
 
     //DrawNode* background = DrawNode::create();
-    const Vec2 backSize{ 5000, 5000 };
-    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
+    //const Vec2 backSize{ 5000, 5000 };
+    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(0, 0, 0, 1));
     //addChild(background);
 
     //World init
@@ -90,6 +90,10 @@ bool MainScene::init() {
 
     CCIMGUI::getInstance()->addImGUI([=](){
         showImGui(); } , "Function ID");
+
+    //_test = DrawNode::create();
+    //_test->drawSolidRect(Director::getInstance()->getVisibleOrigin() - Vec2(5000, 5000), Director::getInstance()->getVisibleSize() + Size(5000, 5000), Color4F::GRAY);
+    //addChild(_test);
 
     return true;
 }

@@ -21,14 +21,16 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			player->changeHp(-1);
 		} //Bullets with platforms
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
-			SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
+			SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet) ||
+			SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::hook)) {
 			auto bullet = dynamic_cast<Bullet*>(SpriteA);
-			bullet->setOnRemove();
+			bullet->collideFunc();
 		}
 		else if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
-			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
+				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet) ||
+				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::hook)) {
 			auto bullet = dynamic_cast<Bullet*>(SpriteB);
-			bullet->setOnRemove();
+			bullet->collideFunc();
 		}
 		auto temp1 = SpriteA->getFixtureDef()->filter.maskBits;
 		auto temp2 = SpriteB->getFixtureDef()->filter.maskBits;

@@ -1,4 +1,6 @@
 #include "IBulletTypeCreator.h" 
+#include "BigBullet.h"
+#include "PlayerHookBullet.h"
 
 void playerOrdinaryOptions(Bullet* bullet, b2WorldNode* world, Vec2 pos, Vec2 dest) {
 	world->addChild(bullet);
@@ -43,5 +45,16 @@ Bullet* EnemyIdleBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) 
 	world->addChild(bullet);
 	bullet->setPosition(pos);
 	bullet->getBody()->SetGravityScale(0);
+	return bullet;
+}
+
+Bullet* PlayerHookBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
+	auto bullet = PlayerHookBullet::createBullet(pos, dest);
+	bullet->setName("bulletPlayerHook");
+	b2Filter filter;
+	filter.categoryBits = static_cast<uint16>(eColCategory::bullet);
+	filter.maskBits = static_cast<uint16>(eColMask::hook);
+	bullet->getFixtureDef()->filter = filter;
+	playerOrdinaryOptions(bullet, world, pos, dest);
 	return bullet;
 }

@@ -3,6 +3,7 @@
 
 float Bullet::BULLET_MOVE_TIME = 2.0f;
 float Bullet::BIG_BULLET_MOVE_TIME = 2.0f;
+float Bullet::HOOK_BULLET_MOVE_TIME = 0.5f;
 
 int Bullet::BULLET_DAMAGE = 100;
 int Bullet::BIG_BULLET_DAMAGE = 150;
@@ -72,12 +73,20 @@ float Bullet::getMoveTime() {
 	return _moveTime;
 }
 
+float Bullet::getLifeTime() {
+	return _lifeTime;
+}
+
 void Bullet::setOnRemove() {
 	_isOnRemove = true;
 }
 
 bool Bullet::isRemoving() {
 	return _isOnRemove;
+}
+
+void Bullet::collideFunc() {
+	setOnRemove();
 }
 
 int Bullet::getDamage() {

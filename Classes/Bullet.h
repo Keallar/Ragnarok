@@ -19,6 +19,9 @@ public:
 	void ordinaryUpdate(float dt);
 
 	float getMoveTime();
+	float getLifeTime();
+
+	virtual void collideFunc();
 
 	void setOnRemove();
 	bool isRemoving();
@@ -31,6 +34,7 @@ public:
 protected:
 	static float BULLET_MOVE_TIME;
 	static float BIG_BULLET_MOVE_TIME;
+	static float HOOK_BULLET_MOVE_TIME;
 
 	static int BULLET_DAMAGE;
 	static int BIG_BULLET_DAMAGE;

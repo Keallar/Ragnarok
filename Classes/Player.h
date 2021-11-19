@@ -64,6 +64,9 @@ private:
 	int _jumpBegin;
 	bool _isDied;
 
+	Bullet* _hook;
+	cocos2d::DrawNode* _hookBody;
+
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
 };

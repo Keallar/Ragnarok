@@ -141,6 +141,9 @@
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp">
       <Filter>src\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PlayerHookBullet.cpp">
+      <Filter>src\bullet\bulletTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h">
       <Filter>src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerHookBullet.h">
+      <Filter>src\bullet\bulletTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

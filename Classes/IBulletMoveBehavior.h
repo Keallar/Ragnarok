@@ -19,3 +19,9 @@ public:
 	BulletIdleBehavior(Bullet* parent) : IBulletMoveBehavior(parent) {};
 	void move(float dt) override;
 };
+
+class BulletStopBehavior : public IBulletMoveBehavior {
+public:
+	BulletStopBehavior(Bullet* parent) : IBulletMoveBehavior(parent) {};
+	void move(float dt) override;
+};

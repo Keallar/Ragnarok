@@ -45,7 +45,10 @@ bool Player::init() {
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
 	_isDied = false;
-
+	_hook = nullptr;
+	_hookBody = DrawNode::create();
+	_hookBody->retain();
+	//addChild(_hookBody);
 	return true;
 }
 
@@ -101,6 +104,10 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 		break;
 	case EventKeyboard::KeyCode::KEY_W:
 		setJumpState(eJumpState::Fall);
+		break;
+	case EventKeyboard::KeyCode::KEY_R:
+		shoot(getPosition() + Vec2(45*getScaleX(), -45), new PlayerHookBulletCreator);
+		_hook = bullets.back();
 		break;
 	default:
 		break;
@@ -174,8 +181,19 @@ void Player::jump() {
 }
 
 void Player::update(float dt) {	
+	if (_hook && _hook->getLifeTime() > 0) {
+		_hookBody->retain();
+		_hookBody->clear();
+		_hookBody->drawLine(getPosition(), _hook->getPosition(), Color4F::GRAY);
+		_hookBody->setPosition(getPosition());
+		getParent()->addChild(_hookBody);
+	}
+	else {
+		_hook = nullptr;
+	}
 	shootingCharacterUpdate(dt);
 	jump();
+	
 }
 
 void Player::setJumpState(eJumpState state) {
