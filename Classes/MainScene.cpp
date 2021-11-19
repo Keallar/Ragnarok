@@ -1,10 +1,13 @@
 #include <iostream>
+#include <string>
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
 #include "EnemyFactory.h"
 #include <proj.win32/TileMapManager.h>
 #include "SimpleEnemy.h"
+#include "imgui/CCIMGUI.h"
+#include "imgui/imgui.h"
 
 USING_NS_CC;
 
@@ -31,16 +34,20 @@ bool MainScene::init() {
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
 
+    //World init
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
+    //ContactListener init
     auto contactListener = new ContactListener;
     _world->getb2World()->SetContactListener(contactListener);
 
+    //TileMap init
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
     _firstTileMap->setTiledMap("Test.tmx");
     _firstTileMap->addLayer("Foreground", "FG");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
+
     //Creating player
     _player = Player::createPlayer();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
@@ -53,7 +60,8 @@ bool MainScene::init() {
     _player->setName("player");
     _player->setPosition(8000, 22000);
     _player->getBody()->SetBullet(true);
-    //camera setup
+
+    //Camera setup
     _cameraTarget = getDefaultCamera();
     
     _background->setPosition(_cameraTarget->getPosition());
@@ -66,11 +74,10 @@ bool MainScene::init() {
     _ui->beginMana(playerMana);
     addChild(_ui);
 
-    //init HandleEvents
+    //HandleEvents init
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
-
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(MainScene::mousePressed, this);
 
@@ -78,8 +85,12 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();
-    //schedule(schedule_selector(MainScene::createSomeEnemy), 0.5f);
+
     createSomeEnemy(0);
+
+    CCIMGUI::getInstance()->addImGUI([=](){
+        showImGui(); } , "Function ID");
+
     return true;
 }
 
@@ -142,9 +153,57 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
+void MainScene::showImGui() {
+    if (!ImGui::Begin("Debug")) {
+        ImGui::End();
+        return;
+    }
+    if (ImGui::TreeNode("Player")) {
+        if (ImGui::Button("UpHp")) {
+            if (_player) {
+                _player->changeHp(1);
+            }
+        }
+        if (ImGui::Button("DownHp")) {
+            if (_player) {
+                _player->changeHp(-1);
+            }
+        }
+        //Player jump
+        std::string jumpInfo = "None";
+        if (_player->getJumpState() == eJumpState::None)
+            jumpInfo = "None";
+        else if (_player->getJumpState() == eJumpState::Jump)
+            jumpInfo = "Jump";
+        else if (_player->getJumpState() == eJumpState::Fall)
+            jumpInfo = "Fall";
+        ImGui::Text("JumpInfo: %s", jumpInfo.c_str());
+
+        ImGui::TreePop();
+    }
+    static bool isToucedMetric = false;
+    if (ImGui::Button("Metrics")) {
+        if (!isToucedMetric) {
+            isToucedMetric = true;
+        } 
+        else {
+            isToucedMetric = false;
+        }
+    }
+    if (isToucedMetric) {
+        ImGui::ShowMetricsWindow();
+    }
+    if (ImGui::Button("CreateEnemy")) {
+        createSomeEnemy(0);
+    }
+    ImGui::End();
+}
+
 void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
-    const Vec2 pos = { visibleSize.width / 2, visibleSize.height / 2 };
-    auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
-    enemies.push_back(enemy);
+    if (_player) {
+        const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
+        auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
+        enemies.push_back(enemy);
+    }
 }

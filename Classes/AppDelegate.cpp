@@ -25,6 +25,10 @@
 #include "AppDelegate.h"
 #include "MainScene.h"
 
+#include "imgui/CCIMGUIGLViewImpl.h"
+#include "imgui/CCImGuiLayer.h"
+#include "imgui/CCIMGUI.h"
+
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
 
@@ -83,7 +87,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("game3", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = IMGUIGLViewImpl::createWithRect("game3", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
 #else
         glview = GLViewImpl::create("game3");
 #endif
@@ -122,6 +126,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto scene = MainScene::createScene();
     // run
     director->runWithScene(scene);
+
+    director->getScheduler()->schedule([=](float dt)
+        {
+            auto runningScene = Director::getInstance()->getRunningScene();
+            if (runningScene && !runningScene->getChildByName("ImGUILayer"))
+            {
+                runningScene->addChild(ImGuiLayer::create(), INT_MAX, "ImGUILayer");
+            }
+        }, this, 0, false, "checkIMGUI");
 
     return true;
 }

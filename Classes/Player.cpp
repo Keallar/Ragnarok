@@ -6,7 +6,8 @@ USING_NS_CC;
 
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
-const int Player::PLAYER_JUMP_HEIGHT = 70;
+const int Player::PLAYER_JUMP_HEIGHT = 10;
+const int Player::BULLET_SPEED = 10;
 
 Player::Player() {
 	init();
@@ -160,9 +161,9 @@ void Player::changePos(int delta) {
 }
 
 void Player::jump() {
-
 	if (getJumpState() == eJumpState::Jump) {
-		getBody()->SetLinearVelocity(b2Vec2(getBody()->GetLinearVelocity().x, PLAYER_JUMP_SPEED));
+		_jumpBegin = getPosition().y;
+		getBody()->ApplyLinearImpulseToCenter({0, PLAYER_JUMP_HEIGHT}, true);
 	}
 	if (getPosition().y - _jumpBegin >= PLAYER_JUMP_HEIGHT) {
 		setJumpState(eJumpState::Fall);
@@ -179,9 +180,6 @@ void Player::update(float dt) {
 }
 
 void Player::setJumpState(eJumpState state) {
-	if (state == eJumpState::Jump) {
-		_jumpBegin = getPosition().y;
-	}
 	playerJumpState = state;
 }
 
