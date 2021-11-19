@@ -162,6 +162,7 @@ void MainScene::showImGui() {
                 _player->changeHp(-1);
             }
         }
+        ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
         //Player jump
         std::string jumpInfo = "None";
         if (_player->getJumpState() == eJumpState::None)
