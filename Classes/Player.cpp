@@ -47,8 +47,7 @@ bool Player::init() {
 	_isDied = false;
 	_hook = nullptr;
 	_hookBody = DrawNode::create();
-	_hookBody->retain();
-	//addChild(_hookBody);
+	addChild(_hookBody);
 	return true;
 }
 
@@ -62,8 +61,8 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			scaleX *= -1;
 			setScaleX(scaleX);
 		}
+		break;
 	}
-	break;
 	case EventKeyboard::KeyCode::KEY_A:
 	{
 		move(-PLAYER_SPEED);
@@ -72,22 +71,43 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			scaleX *= -1;
 			setScaleX(scaleX);
 		}
+		break;
 	}
-	break;
 	case EventKeyboard::KeyCode::KEY_SPACE:
 	{
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
+		if (_hook && _hook->isHooked()) {
+			_hook->setOnRemove();
+			_hook = nullptr;
+		}
+		break;
 	}
-	break;
 	case EventKeyboard::KeyCode::KEY_W:
 	{
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
+		if (_hook && _hook->isHooked()) {
+			_hook->setOnRemove();
+			_hook = nullptr;
+		}
+		break;
 	}
-	break;
+	case EventKeyboard::KeyCode::KEY_R:
+		if (_hook && _hook->isHooked()) {
+			_hook->setOnRemove();
+			_hook = nullptr;
+		}
+		else {
+			shoot(getPosition() + Vec2(45 * getScaleX(), -45), new PlayerHookBulletCreator);
+			_hook = dynamic_cast<PlayerHookBullet*>(bullets.back());
+			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -106,8 +126,6 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 		setJumpState(eJumpState::Fall);
 		break;
 	case EventKeyboard::KeyCode::KEY_R:
-		shoot(getPosition() + Vec2(45*getScaleX(), -45), new PlayerHookBulletCreator);
-		_hook = bullets.back();
 		break;
 	default:
 		break;
@@ -156,9 +174,6 @@ void Player::mousePressed(cocos2d::Event* event) {
 }
 
 void Player::move(int shift) {
-	/*if (shift == 0) {
-		return;
-	}*/
 	changePos(shift);
 }
 
@@ -180,20 +195,34 @@ void Player::jump() {
 	}
 }
 
-void Player::update(float dt) {	
+void Player::hookBodyUpdate(float dt) {
 	if (_hook && _hook->getLifeTime() > 0) {
-		_hookBody->retain();
 		_hookBody->clear();
-		_hookBody->drawLine(getPosition(), _hook->getPosition(), Color4F::GRAY);
-		_hookBody->setPosition(getPosition());
-		getParent()->addChild(_hookBody);
+		Vec2 dest = _hook->getPosition() - getPosition();
+		dest.y += getContentSize().width / 2;
+		dest.x += getContentSize().height / 2 * getScaleX();
+		dest.x *= getScaleX();
+		_hookBody->drawLine(Vec2(getContentSize() / 2), dest, Color4F::GRAY);
+		if (_hook->isHooked()) {
+			//move(0);
+			//setJumpState(eJumpState::None);
+			dest.normalize();
+			dest.x *= getScaleX();
+			dest *= 30;
+			b2Vec2 playerVel = { dest.x, dest.y };
+			getBody()->SetLinearVelocity(playerVel);
+		}
 	}
 	else {
 		_hook = nullptr;
+		_hookBody->clear();
 	}
+}
+
+void Player::update(float dt) {	
+	hookBodyUpdate(dt);
 	shootingCharacterUpdate(dt);
 	jump();
-	
 }
 
 void Player::setJumpState(eJumpState state) {

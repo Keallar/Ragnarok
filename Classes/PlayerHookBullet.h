@@ -11,6 +11,7 @@ public:
 	virtual bool init();
 	virtual void update(float dt);
 	virtual int getDamage();
+	bool isHooked();
 
 private:
 	static PlayerHookBullet* _hook;

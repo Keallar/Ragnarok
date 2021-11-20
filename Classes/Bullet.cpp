@@ -9,7 +9,7 @@ int Bullet::BULLET_DAMAGE = 100;
 int Bullet::BIG_BULLET_DAMAGE = 150;
 
 Bullet::Bullet() {
-	init();
+	b2Sprite::init();
 }
 
 Bullet::~Bullet() {
@@ -18,6 +18,7 @@ Bullet::~Bullet() {
 
 Bullet* Bullet::createBullet(Vec2 pos, Vec2 dest) {
 	auto bullet = Bullet::create("bullet.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+	bullet->init();
 	bullet->setCoords(pos, dest);
 	bullet->setNewBehavior(new BulletIdleBehavior(bullet));
 	return bullet;
@@ -51,10 +52,6 @@ void Bullet::ordinaryUpdate(float dt) {
 }
 
 bool Bullet::init() {
-	if (!b2Sprite::init()) {
-		return false;
-	}
-
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 
 

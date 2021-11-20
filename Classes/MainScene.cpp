@@ -25,9 +25,9 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    _background = Sprite::create("background.png");
-    _background->setContentSize(Director::getInstance()->getWinSize());
-    addChild(_background);
+    //_background = Sprite::create("background.png");
+    //_background->setContentSize(Director::getInstance()->getWinSize());
+    //addChild(_background);
 
     //DrawNode* background = DrawNode::create();
     //const Vec2 backSize{ 5000, 5000 };
@@ -64,7 +64,7 @@ bool MainScene::init() {
     //Camera setup
     _cameraTarget = getDefaultCamera();
     
-    _background->setPosition(_cameraTarget->getPosition());
+    //_background->setPosition(_cameraTarget->getPosition());
 
     //Creating UI
     _ui = UI::create();
@@ -86,14 +86,11 @@ bool MainScene::init() {
 
     scheduleUpdate();
 
-    createSomeEnemy(0);
+    //createSomeEnemy(0);
 
     CCIMGUI::getInstance()->addImGUI([=](){
         showImGui(); } , "Function ID");
 
-    //_test = DrawNode::create();
-    //_test->drawSolidRect(Director::getInstance()->getVisibleOrigin() - Vec2(5000, 5000), Director::getInstance()->getVisibleSize() + Size(5000, 5000), Color4F::GRAY);
-    //addChild(_test);
 
     return true;
 }
@@ -133,7 +130,7 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
-    _background->setPosition(_cameraTarget->getPosition());
+    //_background->setPosition(_cameraTarget->getPosition());
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {

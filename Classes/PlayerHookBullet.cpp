@@ -4,13 +4,9 @@
 PlayerHookBullet* PlayerHookBullet::_hook = nullptr;
 
 bool PlayerHookBullet::init() {
-	if (!b2Sprite::init()) {
-		return false;
-	}
-
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
-	_moveTime = HOOK_BULLET_MOVE_TIME;
-	_lifeTime = HOOK_BULLET_MOVE_TIME;
+	_moveTime = 3.0f;
+	_lifeTime = 100.0f;
 	_hooked = false;
 	_isOnRemove = false;
 	return true;
@@ -33,6 +29,7 @@ PlayerHookBullet* PlayerHookBullet::createBullet(Vec2 pos, Vec2 dest) {
 		_hook->setOnRemove();
 	}
 	_hook = PlayerHookBullet::create("BigBullet.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+	_hook->init();
 	_hook->setCoords(pos, dest);
 	_hook->setNewBehavior(new BulletIdleBehavior(_hook));
 	return _hook;
@@ -51,4 +48,8 @@ PlayerHookBullet* PlayerHookBullet::create(const std::string& filename, b2BodyTy
 
 int PlayerHookBullet::getDamage() {
 	return 0;
+}
+
+bool PlayerHookBullet::isHooked() {
+	return _hooked;
 }
