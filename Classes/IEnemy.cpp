@@ -1,4 +1,6 @@
+#pragma once
 #include "IEnemy.h"
+#include "IEnemyBehaviour.h"
 
 int IEnemy::BULLET_SPEED = 10;
 
@@ -14,7 +16,7 @@ IEnemy::~IEnemy() {
 }
 
 void IEnemy::update(float dt) {
-	//_behaviour->perform();
+	_behaviour->perform(this);
 	shoot(_shootTarget, eBulletType::enemyOrdinary);
 	shootingCharacterUpdate(dt);
 	updateHpLabel();

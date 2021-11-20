@@ -5,9 +5,10 @@
 #include "ContactListener.h"
 #include "EnemyFactory.h"
 #include <proj.win32/TileMapManager.h>
-#include "SimpleEnemy.h"
 #include "imgui/CCIMGUI.h"
 #include "imgui/imgui.h"
+#include "SimpleEnemy.h"
+#include "IdleBehaviour.h"
 
 USING_NS_CC;
 
@@ -146,6 +147,15 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
+void MainScene::createSomeEnemy(float dt) {
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    if (_player) {
+        const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
+        auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy, new IdleBehaviour);
+        enemies.push_back(enemy);
+    }
+}
+
 void MainScene::showImGui() {
     if (!ImGui::Begin("Debug")) {
         ImGui::End();
@@ -175,11 +185,18 @@ void MainScene::showImGui() {
 
         ImGui::TreePop();
     }
+    //Enemies info
+    if (ImGui::TreeNode("Enemies")) {
+        for (const auto enemy : enemies) {
+             ImGui::Text("%s position X: %f Y: %f", enemy->getName().c_str(), enemy->getPosition().x, enemy->getPosition().y);
+        }
+        ImGui::TreePop();
+    }
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {
         if (!isToucedMetric) {
             isToucedMetric = true;
-        } 
+        }
         else {
             isToucedMetric = false;
         }
@@ -191,13 +208,4 @@ void MainScene::showImGui() {
         createSomeEnemy(0);
     }
     ImGui::End();
-}
-
-void MainScene::createSomeEnemy(float dt) {
-    const auto visibleSize = Director::getInstance()->getVisibleSize();
-    if (_player) {
-        const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-        auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
-        enemies.push_back(enemy);
-    }
 }

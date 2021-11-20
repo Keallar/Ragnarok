@@ -1,8 +1,8 @@
 #pragma once
 #include "ShootingCharacter.h"
-#include "IEnemyBehaviour.h"
 #include "IEnemyType.h"
-#include "IEnemyBehaviour.h"
+
+class IEnemyBehaviour;
 
 class IEnemy : public ShootingCharacter {
 public:

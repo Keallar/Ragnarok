@@ -132,6 +132,9 @@
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp">
       <Filter>src\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\AgressiveBehaviour.cpp">
+      <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h">
       <Filter>src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AgressiveBehaviour.h">
+      <Filter>src\enemy\enemyBehaviour</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,8 @@
 #pragma once
-#include "cocos2d.h"
-#include "box2d/b2dSprite.h"
+#include "IEnemy.h"
 
 class IEnemyBehaviour {
 public:
 	virtual ~IEnemyBehaviour() {}
-	virtual void perform() = 0;
+	virtual void perform(IEnemy* enemy) = 0;
 };
