@@ -4,7 +4,8 @@
 enum class eJumpState {
 	None,
 	Jump,
-	Fall
+	Fall,
+	DoubleJump
 };
 
 enum class eAnimState {

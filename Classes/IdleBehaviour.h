@@ -13,5 +13,6 @@ public:
 	void perform(IEnemy* enemy) override;
 private:
 	eIdleState _idleState;
+	int _startPos;
 	bool _completed;
 };

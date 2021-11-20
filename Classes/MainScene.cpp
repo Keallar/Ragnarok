@@ -181,6 +181,8 @@ void MainScene::showImGui() {
             jumpInfo = "Jump";
         else if (_player->getJumpState() == eJumpState::Fall)
             jumpInfo = "Fall";
+        else if (_player->getJumpState() == eJumpState::DoubleJump)
+            jumpInfo = "DoubleJump";
         ImGui::Text("JumpInfo: %s", jumpInfo.c_str());
 
         ImGui::TreePop();
