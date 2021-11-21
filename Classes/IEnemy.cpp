@@ -20,7 +20,7 @@ IEnemy::~IEnemy() {
 void IEnemy::update(float dt) {
 	_behaviour->perform(this);
 	//if (_behaviour == )
-	shoot(_shootTarget, eBulletType::enemyOrdinary);
+	shoot(_shootTarget, new EnemyIdleBulletCreator);
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
 	_attackCooldown -= dt;

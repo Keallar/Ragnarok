@@ -7,7 +7,7 @@ USING_NS_CC;
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
 const int Player::PLAYER_JUMP_HEIGHT = 90;
-const int Player::BULLET_SPEED = 10;
+//const int Player::BULLET_SPEED = 10;
 
 Player::Player() {
 	init();

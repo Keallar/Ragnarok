@@ -1,5 +1,6 @@
 #include "IBulletTypeCreator.h" 
 
+//WTF
 void playerOrdinaryOptions(Bullet* bullet, b2WorldNode* world, Vec2 pos, Vec2 dest) {
 	world->addChild(bullet);
 	bullet->setPosition(pos);
