@@ -1,5 +1,4 @@
 #include "b2dRootWorldNode.h"
-
 USING_NS_CC;
 
 //		***	INSTANTIATION	***

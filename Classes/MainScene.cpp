@@ -22,18 +22,25 @@ bool MainScene::init() {
 
     DrawNode* background = DrawNode::create();
     Vec2 backSize{ 5000, 5000 };
-    background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
-    addChild(background);
+    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
+    //addChild(background);
 
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
     //_world->getb2World()->SetContactListener(new ContactListener);
 
     //World->debugDraw();
+
+    // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
+    // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
+    addChild(_firstTileMap->getTiledMap());
     _firstTileMap->setTiledMap("maximum.tmx");
-    _firstTileMap->addLayer("Foreground", "Collidable");
-    _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
+    _firstTileMap->addLayer("Collidable", "Collidable");
+    _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
+
+
+    //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallR = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
@@ -62,7 +69,7 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
 
-    _player->setPosition(8000, 22000);
+    _player->setPosition(8000, 25000);
 
     //camera setup
     _cameraTarget = getDefaultCamera();
