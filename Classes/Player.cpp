@@ -6,14 +6,14 @@ USING_NS_CC;
 
 const int Player::PLAYER_SPEED = 20;
 const int Player::PLAYER_JUMP_SPEED = 20;
-const int Player::PLAYER_JUMP_HEIGHT = 10;
+const int Player::PLAYER_JUMP_HEIGHT = 90;
+const int Player::BULLET_SPEED = 10;
 
 Player::Player() {
 	init();
 }
 
 Player::~Player() {
-
 }
 
 Player* Player::createPlayer() {
@@ -76,12 +76,18 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
+		else if (getJumpState() == eJumpState::Fall /*|| getJumpState() == eJumpState::Jump*/) {
+			setJumpState(eJumpState::DoubleJump);
+		}
 	}
 	break;
 	case EventKeyboard::KeyCode::KEY_W:
 	{
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
+		}
+		else if (getJumpState() == eJumpState::Fall /*|| getJumpState() == eJumpState::Jump*/) {
+			setJumpState(eJumpState::DoubleJump);
 		}
 	}
 	break;
@@ -149,9 +155,6 @@ void Player::mousePressed(cocos2d::Event* event) {
 }
 
 void Player::move(int shift) {
-	/*if (shift == 0) {
-		return;
-	}*/
 	changePos(shift);
 }
 
@@ -161,8 +164,7 @@ void Player::changePos(int delta) {
 
 void Player::jump() {
 	if (getJumpState() == eJumpState::Jump) {
-		_jumpBegin = getPosition().y;
-		getBody()->ApplyLinearImpulseToCenter({0, PLAYER_JUMP_HEIGHT}, true);
+		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
 	}
 	if (getPosition().y - _jumpBegin >= PLAYER_JUMP_HEIGHT) {
 		setJumpState(eJumpState::Fall);
@@ -170,6 +172,10 @@ void Player::jump() {
 	if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
 		setJumpState(eJumpState::None);
 		_jumpBegin = 0;
+	}
+	if (getJumpState() == eJumpState::DoubleJump) {
+		//getBody()->SetLinearVelocity({ 0, 10 });
+		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
 	}
 }
 
@@ -179,6 +185,12 @@ void Player::update(float dt) {
 }
 
 void Player::setJumpState(eJumpState state) {
+	if (getJumpState() == eJumpState::None) {
+		_jumpBegin = getPosition().y;
+	} 
+	else if (getJumpState() == eJumpState::DoubleJump) {
+		_jumpBegin += getPosition().y;
+	}
 	playerJumpState = state;
 }
 

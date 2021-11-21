@@ -8,6 +8,15 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
 		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
 		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
+		//Player jump
+		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::platform) &&
+			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
+			const auto minYPlayer = SpriteB->getTextureRect().getMinY();
+			const auto maxYPlatoform = SpriteA->getTextureRect().getMaxY();
+			if (minYPlayer <= maxYPlatoform) {
+				CCLOG("JUMP!");
+			}
+		}
 		//Enemy with bullets
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
@@ -29,16 +38,6 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
 			auto bullet = dynamic_cast<Bullet*>(SpriteB);
 			bullet->setOnRemove();
-		}
-		auto temp1 = SpriteA->getFixtureDef()->filter.maskBits;
-		auto temp2 = SpriteB->getFixtureDef()->filter.maskBits;
-		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) && 
-			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::platform)) {
-			const auto minYPlayer = SpriteA->getTextureRect().getMinY();
-			const auto maxYPlatoform = SpriteB->getTextureRect().getMaxY();
-			if (minYPlayer <= maxYPlatoform) {
-				CCLOG("I'm here!");
-			}
 		}
 	}
 }

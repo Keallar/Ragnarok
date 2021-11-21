@@ -1,10 +1,9 @@
 #pragma once
 #include "cocos2d.h"
-#include "IEnemy.h"
-#include "Enemy.h"
-#include "IEnemyType.h"
-#include "IEnemyBehaviour.h"
 #include "box2d/b2dRootWorldNode.h"
+#include "IEnemyBehaviour.h"
+#include "IEnemyType.h"
+#include "Enemy.h"
 
 enum class eEnemyType {
 	simpleEnemy,

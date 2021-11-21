@@ -1,8 +1,5 @@
 #pragma once
 #include "EnemyFactory.h"
-#include "IEnemyType.h"
-#include "IEnemyBehaviour.h"
-#include "SimpleEnemy.h"
 
 EnemyFactory* EnemyFactory::instance = nullptr;
 int EnemyFactory::id = -1;

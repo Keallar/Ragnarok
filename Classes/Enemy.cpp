@@ -1,3 +1,4 @@
+#pragma once
 #include "Enemy.h"
 
 USING_NS_CC;
@@ -33,6 +34,7 @@ bool Enemy::init() {
 	if (!_type) {
 		return false;
 	}
+	setName(_type->getName());
 	setHp(_type->getHp());
 	setSpeed(_type->getSpeed());
 	setDamage(_type->getDamage());

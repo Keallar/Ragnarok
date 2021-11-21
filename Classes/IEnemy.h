@@ -1,8 +1,8 @@
 #pragma once
 #include "ShootingCharacter.h"
-#include "IEnemyBehaviour.h"
 #include "IEnemyType.h"
-#include "IEnemyBehaviour.h"
+
+class IEnemyBehaviour;
 
 class IEnemy : public ShootingCharacter {
 public:
@@ -10,6 +10,7 @@ public:
 	virtual ~IEnemy();
 	void setBehaviour(IEnemyBehaviour* behaviour);
 	void setType(IEnemyType* type);
+	IEnemyType* getType() const;
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp);
 	int getHp() const noexcept;

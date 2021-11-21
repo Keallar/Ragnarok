@@ -1,5 +1,7 @@
+#pragma once
 #include "IEnemy.h"
 #include "IShootingPattern.h"
+#include "IEnemyBehaviour.h"
 
 int IEnemy::BULLET_SPEED = 10;
 
@@ -16,8 +18,9 @@ IEnemy::~IEnemy() {
 }
 
 void IEnemy::update(float dt) {
-	//_behaviour->perform();
-	shoot(_shootTarget, new EnemyIdleBulletCreator);
+	_behaviour->perform(this);
+	//if (_behaviour == )
+	shoot(_shootTarget, eBulletType::enemyOrdinary);
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
 	_attackCooldown -= dt;
@@ -119,4 +122,11 @@ void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
 void IEnemy::setType(IEnemyType* type) {
 	delete _type;
 	_type = type;
+}
+
+IEnemyType* IEnemy::getType() const {
+	if (!_type) {
+		return nullptr;
+	}
+	return _type;
 }
