@@ -8,6 +8,7 @@ USING_NS_CC;
 class IEnemyType {
 public:
 	virtual ~IEnemyType() {};
+	virtual std::string getTypeName() const = 0;
 	std::string getFileName() const { return _fileName; }
 	std::string getName() const { return _enemyName; }
 	b2Filter getFilter() const noexcept { return _filter; }

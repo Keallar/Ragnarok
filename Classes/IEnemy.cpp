@@ -17,6 +17,7 @@ IEnemy::~IEnemy() {
 
 void IEnemy::update(float dt) {
 	_behaviour->perform(this);
+	//if (_behaviour == )
 	shoot(_shootTarget, eBulletType::enemyOrdinary);
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
@@ -119,4 +120,11 @@ void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
 void IEnemy::setType(IEnemyType* type) {
 	delete _type;
 	_type = type;
+}
+
+IEnemyType* IEnemy::getType() const {
+	if (!_type) {
+		return nullptr;
+	}
+	return _type;
 }

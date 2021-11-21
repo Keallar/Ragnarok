@@ -13,3 +13,7 @@ SimpleEnemy::SimpleEnemy() {
 	_attackCooldown = 0.5f;
 	_bulletSpeed = 10;
 }
+
+std::string SimpleEnemy::getTypeName() const {
+	return "SimpleEnemy";
+}

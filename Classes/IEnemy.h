@@ -10,6 +10,7 @@ public:
 	virtual ~IEnemy();
 	void setBehaviour(IEnemyBehaviour* behaviour);
 	void setType(IEnemyType* type);
+	IEnemyType* getType() const;
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp);
 	int getHp() const noexcept;
