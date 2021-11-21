@@ -31,8 +31,8 @@ bool MainScene::init() {
 
     //World->debugDraw();
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
-    _firstTileMap->setTiledMap("Test.tmx");
-    _firstTileMap->addLayer("Foreground", "FG");
+    _firstTileMap->setTiledMap("maximum.tmx");
+    _firstTileMap->addLayer("Foreground", "Collidable");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
