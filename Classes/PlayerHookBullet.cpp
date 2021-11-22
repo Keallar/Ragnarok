@@ -5,8 +5,8 @@ PlayerHookBullet* PlayerHookBullet::_hook = nullptr;
 
 bool PlayerHookBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
-	_moveTime = 3.0f;
-	_lifeTime = 100.0f;
+	_moveTime = HOOK_BULLET_MOVE_TIME;
+	_lifeTime = HOOK_BULLET_LIFE_TIME;
 	_hooked = false;
 	_isOnRemove = false;
 	return true;

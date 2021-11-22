@@ -146,6 +146,9 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 		dest.normalize();
 		dest.y *= -1;
 		dest *= PLAYER_BULLET_SPEED;
+		if (auto isHook = dynamic_cast<PlayerHookBullet*>(bulletCreator)) {
+			dest *= PLAYER_BULLET_SPEED;
+		}
 
 		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
@@ -208,7 +211,7 @@ void Player::hookBodyUpdate(float dt) {
 			//setJumpState(eJumpState::None);
 			dest.normalize();
 			dest.x *= getScaleX();
-			dest *= 30;
+			dest *= 30; //hooked player fly speed
 			b2Vec2 playerVel = { dest.x, dest.y };
 			getBody()->SetLinearVelocity(playerVel);
 		}

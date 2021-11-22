@@ -3,7 +3,8 @@
 
 float Bullet::BULLET_MOVE_TIME = 2.0f;
 float Bullet::BIG_BULLET_MOVE_TIME = 2.0f;
-float Bullet::HOOK_BULLET_MOVE_TIME = 0.5f;
+float Bullet::HOOK_BULLET_MOVE_TIME = 2;
+float Bullet::HOOK_BULLET_LIFE_TIME = 7.0f;
 
 int Bullet::BULLET_DAMAGE = 100;
 int Bullet::BIG_BULLET_DAMAGE = 150;
