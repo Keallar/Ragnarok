@@ -60,24 +60,6 @@
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp">
       <Filter>src\box2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Bullet.cpp">
-      <Filter>src\bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BulletFactory.cpp">
-      <Filter>src\bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\EnemyFactory.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\IEnemy.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Enemy.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\HUD.cpp">
-      <Filter>src\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>src\player</Filter>
     </ClCompile>
@@ -89,33 +71,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ContactListener.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMapManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Ray.cpp">
-      <Filter>src\bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\BigBullet.cpp">
-      <Filter>src\bullet\bulletTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\SimpleEnemy.cpp">
-      <Filter>src\enemy\enemyTypes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Boss.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\IdleBehaviour.cpp">
-      <Filter>src\enemy\enemyBehaviour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MessageBox.cpp">
-      <Filter>src\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\IBulletMoveBehavior.cpp">
-      <Filter>src\bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\IBulletTypeCreator.cpp">
-      <Filter>src\bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\IShootingPattern.cpp">
       <Filter>src</Filter>
@@ -144,8 +99,53 @@
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp">
       <Filter>src\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AgressiveBehaviour.cpp">
+    <ClCompile Include="..\Classes\bullets\BigBullet.cpp">
+      <Filter>src\bullet\bulletTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\Ray.cpp">
+      <Filter>src\bullet\bulletTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\Bullet.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\BulletFactory.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\IBulletMoveBehavior.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\IBulletTypeCreator.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp">
       <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp">
+      <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp">
+      <Filter>src\enemy\enemyTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\Boss.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\Enemy.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\EnemyFactory.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\IEnemy.cpp">
+      <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\HUD.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ui\MessageBox.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileMapManager.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,24 +170,6 @@
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h">
       <Filter>src\box2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Bullet.h">
-      <Filter>src\bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BulletFactory.h">
-      <Filter>src\bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\EnemyFactory.h">
-      <Filter>src\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IEnemy.h">
-      <Filter>src\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Enemy.h">
-      <Filter>src\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\HUD.h">
-      <Filter>src\ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Player.h">
       <Filter>src\player</Filter>
     </ClInclude>
@@ -199,39 +181,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ShootingCharacter.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Ray.h">
-      <Filter>src\bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\BigBullet.h">
-      <Filter>src\bullet\bulletTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SimpleEnemy.h">
-      <Filter>src\enemy\enemyTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IEnemyBehaviour.h">
-      <Filter>src\enemy\enemyBehaviour</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMapManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IEnemyType.h">
-      <Filter>src\enemy\enemyTypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Boss.h">
-      <Filter>src\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IdleBehaviour.h">
-      <Filter>src\enemy\enemyBehaviour</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MessageBox.h">
-      <Filter>src\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IBulletMoveBehavior.h">
-      <Filter>src\bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IBulletTypeCreator.h">
-      <Filter>src\bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\IShootingPattern.h">
       <Filter>src</Filter>
@@ -266,8 +215,59 @@
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h">
       <Filter>src\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AgressiveBehaviour.h">
+    <ClInclude Include="..\Classes\bullets\BigBullet.h">
+      <Filter>src\bullet\bulletTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\Ray.h">
+      <Filter>src\bullet\bulletTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\Bullet.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\BulletFactory.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\IBulletMoveBehavior.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\IBulletTypeCreator.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h">
       <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IdleBehaviour.h">
+      <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h">
+      <Filter>src\enemy\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IEnemyType.h">
+      <Filter>src\enemy\enemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h">
+      <Filter>src\enemy\enemyTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\Boss.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\Enemy.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\EnemyFactory.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IEnemy.h">
+      <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\HUD.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\MessageBox.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileMapManager.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

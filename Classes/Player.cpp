@@ -45,6 +45,7 @@ bool Player::init() {
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
 	_isDied = false;
+	_doubleJump = false;
 
 	return true;
 }
@@ -76,7 +77,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
-		else if (getJumpState() == eJumpState::Fall /*|| getJumpState() == eJumpState::Jump*/) {
+		else if (!_doubleJump) {
 			setJumpState(eJumpState::DoubleJump);
 		}
 	}
@@ -86,7 +87,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		if (getJumpState() == eJumpState::None) {
 			setJumpState(eJumpState::Jump);
 		}
-		else if (getJumpState() == eJumpState::Fall /*|| getJumpState() == eJumpState::Jump*/) {
+		else if (!_doubleJump) {
 			setJumpState(eJumpState::DoubleJump);
 		}
 	}
@@ -166,7 +167,7 @@ void Player::jump() {
 	if (getJumpState() == eJumpState::Jump) {
 		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
 	}
-	if (getPosition().y - _jumpBegin >= PLAYER_JUMP_HEIGHT) {
+	if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
 	}
 	if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
@@ -174,8 +175,8 @@ void Player::jump() {
 		_jumpBegin = 0;
 	}
 	if (getJumpState() == eJumpState::DoubleJump) {
-		//getBody()->SetLinearVelocity({ 0, 10 });
 		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
+		_doubleJump = true;
 	}
 }
 
@@ -186,10 +187,10 @@ void Player::update(float dt) {
 
 void Player::setJumpState(eJumpState state) {
 	if (getJumpState() == eJumpState::None) {
-		_jumpBegin = getPosition().y;
+		_jumpBegin = getPosition().y + PLAYER_JUMP_HEIGHT;
 	} 
-	else if (getJumpState() == eJumpState::DoubleJump) {
-		_jumpBegin += getPosition().y;
+	else if (state == eJumpState::DoubleJump) {
+		_jumpBegin += PLAYER_JUMP_HEIGHT;
 	}
 	playerJumpState = state;
 }
@@ -243,4 +244,8 @@ bool Player::isDied() const {
 
 void Player::setDied(bool state) noexcept {
 	_isDied = state;
+}
+
+bool Player::isDoubleJump() const {
+	return _doubleJump;
 }

@@ -4,7 +4,7 @@
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
 #include "EnemyFactory.h"
-#include <proj.win32/TileMapManager.h>
+#include <TileMapManager.h>
 #include "imgui/CCIMGUI.h"
 #include "imgui/imgui.h"
 #include "SimpleEnemy.h"
@@ -91,8 +91,6 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
     scheduleUpdate();
-
-    createSomeEnemy(0);
 
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
@@ -185,6 +183,12 @@ void MainScene::showImGui() {
             }
         }
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
+        std::string isDoubleJump = "";
+        if (_player->isDoubleJump())
+            isDoubleJump = "True";
+        else 
+            isDoubleJump = "false";
+        ImGui::Text("Double Jump: %s", isDoubleJump.c_str());
         //Player jump
         std::string jumpInfo = "None";
         if (_player->getJumpState() == eJumpState::None)
