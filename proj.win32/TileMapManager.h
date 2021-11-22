@@ -10,12 +10,11 @@ public:
     CCTMXLayer* getLayerByName(const std::string& layerName);
     void setTiledMap(const std::string& filename);
     void addLayer(const std::string installableName, const std::string& layerNameInMap);
-    void TileMapStaticLayerInit(Node* node, CCTMXLayer* layer);
     void TileMapObjectLayerInit(Node* node, CCTMXLayer* layer);
     void TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer);
-    void TileMapManager::CollidableLayerInit(Node* node, CCTMXLayer* layer);
+    void CollidableLayerInit(Node* node, CCTMXLayer* layer);
 private:
-    CCTMXTiledMap* _tiledMap = new CCTMXTiledMap();
     std::vector <std::pair<std::string, CCTMXLayer*>> _layers;
+    CCTMXTiledMap* _tiledMap = new CCTMXTiledMap();
 };
 

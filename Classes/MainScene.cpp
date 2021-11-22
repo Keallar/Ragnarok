@@ -26,9 +26,9 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    _background = Sprite::create("background.png");
-    _background->setContentSize(Director::getInstance()->getWinSize());
-    addChild(_background);
+    DrawNode* background = DrawNode::create();
+    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
+    //addChild(background);
 
     //DrawNode* background = DrawNode::create();
     const Vec2 backSize{ 5000, 5000 };
@@ -39,15 +39,21 @@ bool MainScene::init() {
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
 
+    //World->debugDraw();
+
+    // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
+    // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
     //ContactListener init
     auto contactListener = new ContactListener;
     _world->getb2World()->SetContactListener(contactListener);
 
     //TileMap init
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
-    _firstTileMap->setTiledMap("Test.tmx");
-    _firstTileMap->addLayer("Foreground", "FG");
-    _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Foreground"));
+    addChild(_firstTileMap->getTiledMap());
+    _firstTileMap->setTiledMap("maximum.tmx");
+    _firstTileMap->addLayer("Collidable", "Collidable");
+    _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
+    //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
     _player = Player::createPlayer();
@@ -65,7 +71,7 @@ bool MainScene::init() {
     //Camera setup
     _cameraTarget = getDefaultCamera();
     
-    _background->setPosition(_cameraTarget->getPosition());
+    //_background->setPosition(_cameraTarget->getPosition());
 
     //Creating UI
     _ui = UI::create();
@@ -130,7 +136,6 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
-    _background->setPosition(_cameraTarget->getPosition());
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
