@@ -90,12 +90,12 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-    CCIMGUI::getInstance()->addImGUI([=]() {
-        showImGui(); }, "Function ID");
-
     scheduleUpdate();
 
     createSomeEnemy(0);
+
+    CCIMGUI::getInstance()->addImGUI([=]() {
+        showImGui(); }, "Function ID");
 
     return true;
 }
