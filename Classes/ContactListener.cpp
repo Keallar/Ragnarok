@@ -17,6 +17,11 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			if (playerY >= platformY) {
 				static_cast<Player*>(SpriteB)->setJumpState(eJumpState::Fall);
 			}
+			const auto playerY2 = SpriteB->getPosition().y;
+			const auto platformY2 = SpriteA->getPosition().y/* + SpriteA->getTextureRect().getMaxY()*/;
+			if (playerY2 >= platformY2) {
+				static_cast<Player*>(SpriteB)->setJumpState(eJumpState::None);
+			}
 		}
 		//Enemy with bullets
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&

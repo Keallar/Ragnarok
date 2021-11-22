@@ -183,12 +183,7 @@ void MainScene::showImGui() {
             }
         }
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
-        std::string isDoubleJump = "";
-        if (_player->isDoubleJump())
-            isDoubleJump = "True";
-        else 
-            isDoubleJump = "false";
-        ImGui::Text("Double Jump: %s", isDoubleJump.c_str());
+        ImGui::Text("Double Jump: %i",_player->getJumpCount());
         //Player jump
         std::string jumpInfo = "None";
         if (_player->getJumpState() == eJumpState::None)
@@ -197,8 +192,6 @@ void MainScene::showImGui() {
             jumpInfo = "Jump";
         else if (_player->getJumpState() == eJumpState::Fall)
             jumpInfo = "Fall";
-        else if (_player->getJumpState() == eJumpState::DoubleJump)
-            jumpInfo = "DoubleJump";
         ImGui::Text("JumpInfo: %s", jumpInfo.c_str());
 
         ImGui::TreePop();

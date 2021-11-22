@@ -45,7 +45,7 @@ bool Player::init() {
 	playerJumpState = eJumpState::None;
 	playerAnimState = eAnimState::None;
 	_isDied = false;
-	_doubleJump = false;
+	_jumpCount = 0;
 
 	return true;
 }
@@ -74,21 +74,17 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	break;
 	case EventKeyboard::KeyCode::KEY_SPACE:
 	{
-		if (getJumpState() == eJumpState::None) {
+		if (getJumpState() == eJumpState::None || _jumpCount != 2) {
 			setJumpState(eJumpState::Jump);
-		}
-		else if (!_doubleJump) {
-			setJumpState(eJumpState::DoubleJump);
+			_jumpCount++;
 		}
 	}
 	break;
 	case EventKeyboard::KeyCode::KEY_W:
 	{
-		if (getJumpState() == eJumpState::None) {
+		if (getJumpState() == eJumpState::None || _jumpCount != 2) {
 			setJumpState(eJumpState::Jump);
-		}
-		else if (!_doubleJump) {
-			setJumpState(eJumpState::DoubleJump);
+			_jumpCount++;
 		}
 	}
 	break;
@@ -164,19 +160,15 @@ void Player::changePos(int delta) {
 }
 
 void Player::jump() {
+	/*if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
+		setJumpState(eJumpState::None);
+		_jumpBegin = 0;
+	}*/
 	if (getJumpState() == eJumpState::Jump) {
 		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
 	}
 	if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
-	}
-	if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
-		setJumpState(eJumpState::None);
-		_jumpBegin = 0;
-	}
-	if (getJumpState() == eJumpState::DoubleJump) {
-		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
-		_doubleJump = true;
 	}
 }
 
@@ -186,11 +178,12 @@ void Player::update(float dt) {
 }
 
 void Player::setJumpState(eJumpState state) {
-	if (getJumpState() == eJumpState::None) {
+	if (state == eJumpState::Jump) {
 		_jumpBegin = getPosition().y + PLAYER_JUMP_HEIGHT;
 	} 
-	else if (state == eJumpState::DoubleJump) {
-		_jumpBegin += PLAYER_JUMP_HEIGHT;
+	if (state == eJumpState::None) {
+		_jumpCount = 0;
+		_jumpBegin = 0;
 	}
 	playerJumpState = state;
 }
@@ -246,6 +239,6 @@ void Player::setDied(bool state) noexcept {
 	_isDied = state;
 }
 
-bool Player::isDoubleJump() const {
-	return _doubleJump;
+int Player::getJumpCount() const {
+	return _jumpCount;
 }
