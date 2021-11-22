@@ -74,12 +74,11 @@ bool MainScene::init() {
     //_background->setPosition(_cameraTarget->getPosition());
 
     //Creating UI
-    _ui = UI::create();
+    _hud = HUD::create();
     const auto playerHp = _player->getHp();
-    _ui->beginLife(playerHp);
     const auto playerMana = _player->getMana();
-    _ui->beginMana(playerMana);
-    addChild(_ui);
+    _hud->beginLife(playerHp, playerMana);
+    addChild(_hud);
 
     //HandleEvents init
     auto keyboardListener = EventListenerKeyboard::create();
@@ -91,12 +90,12 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
+    CCIMGUI::getInstance()->addImGUI([=]() {
+        showImGui(); }, "Function ID");
+
     scheduleUpdate();
 
     createSomeEnemy(0);
-
-    CCIMGUI::getInstance()->addImGUI([=](){
-        showImGui(); } , "Function ID");
 
     return true;
 }
@@ -113,7 +112,7 @@ void MainScene::update(float dt) {
         }
         _player->update(dt);
         const auto playerHp = _player->getHp();
-        _ui->setHp(playerHp);
+        _hud->setHp(playerHp);
         const auto cameraPos = _player->getPosition();
         _cameraTarget->setPosition(cameraPos);
     }
@@ -131,11 +130,12 @@ void MainScene::update(float dt) {
             }
         }
     }
+
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
         enemies.end());
 
-    _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
+    _hud->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
@@ -201,7 +201,15 @@ void MainScene::showImGui() {
     }
     //Enemies info
     if (ImGui::TreeNode("Enemies")) {
-        for (const auto enemy : enemies) {
+        if (ImGui::Button("CreateEnemy")) {
+            createSomeEnemy(0);
+        }
+        if (ImGui::Button("DeleteLastEnemy")) {
+            if (!enemies.empty()) {
+                enemies[enemies.size() - 1]->setDestroyed(true);
+            }
+        }
+        for (const auto& enemy : enemies) {
              ImGui::Text("%s position X: %f Y: %f", enemy->getName().c_str(), enemy->getPosition().x, enemy->getPosition().y);
         }
         ImGui::TreePop();
@@ -217,9 +225,6 @@ void MainScene::showImGui() {
     }
     if (isToucedMetric) {
         ImGui::ShowMetricsWindow();
-    }
-    if (ImGui::Button("CreateEnemy")) {
-        createSomeEnemy(0);
     }
     ImGui::End();
 }

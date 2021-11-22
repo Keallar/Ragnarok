@@ -1,63 +1,43 @@
-#define __MyProject__MyScene__
-#define ACTION_PLAY 1
-
+#pragma once
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "UI.h"
+#include "HUD.h"
+
 USING_NS_CC;
 
-static void problemLoading(const char* filename)
-{
+static void problemLoading(const char* filename) {
     printf("Error while loading: %s\n", filename);
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
-void UI::beginLife(int hp) {
+void HUD::beginLife(int hp, int mana) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     _hp = hp;
     hpImgBase = Sprite::create();
     hpImgBase->initWithFile("hpBase.png");
-    addChild(hpImgBase);
     hpImgBase->setPosition(Vec2(origin.x + hpImgBase->getContentSize().width / 2, origin.y + visibleSize.height - hpImgBase->getContentSize().height / 2));
+    addChild(hpImgBase);
 
     hpImgLife = Sprite::create();
     hpImgLife->initWithFile("hpLife.png");
-    addChild(hpImgLife);
     hpImgLife->setPosition(Vec2(origin.x + hpImgLife->getContentSize().width / 2, origin.y + visibleSize.height - hpImgLife->getContentSize().height / 2));
-}
-
-void UI::beginMana(int mana) {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    addChild(hpImgLife);
 
     _mana = mana;
     imgManaBase = Sprite::create();
     imgManaBase->initWithFile("hpBase.png");
+    imgManaBase->setPosition(Vec2(origin.x + imgManaBase->getContentSize().width / 2, origin.y + visibleSize.height - imgManaBase->getContentSize().height / 2 - hpImgBase->getContentSize().height));
     addChild(imgManaBase);
-    hpImgBase->setPosition(Vec2(origin.x + imgManaBase->getContentSize().width / 2, origin.y + visibleSize.height - imgManaBase->getContentSize().height / 2 - hpImgBase->getContentSize().height));
 
     imgMana = Sprite::create();
     imgMana->initWithFile("Mana.png");
-    addChild(imgMana);
     imgMana->setPosition(Vec2(origin.x + imgMana->getContentSize().width / 2, origin.y + visibleSize.height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
+    addChild(imgMana);
 }
 
-void UI::printText(cocos2d::Label* text) {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    paper = Sprite::create();
-    paper->initWithFile("paper.png");
-    paper->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    paper->setScale(text->getContentSize().width / 160, text->getContentSize().height / 180);
-    addChild(paper);
-
-    text->setPosition(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y);
-    addChild(text);
-}
-
-void UI::showPers() {
+void HUD::showPers() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -138,14 +118,14 @@ void UI::showPers() {
     addChild(namePers3);
 }
 
-void UI::setHp(int _hp) {
-    _hp = _hp;
+void HUD::setHp(int hp) {
+    _hp = hp;
     hpImgLife->setScale((hpImgLife->getContentSize().width / 400) * ((float)_hp / 100), hpImgLife->getContentSize().height / 13);
     hpImgLife->setPosition(Vec2(hpImgLife->getContentSize().width / 2 - ((hpImgLife->getContentSize().width) * ((100 - _hp) / 100.f)) / 2,
         Director::getInstance()->getVisibleOrigin().y + Director::getInstance()->getVisibleSize().height - hpImgLife->getContentSize().height / 2));
 }
 
-void UI::setMana(int mana) {
+void HUD::setMana(int mana) {
     _mana = mana;
     imgMana->setScale((imgMana->getContentSize().width / 400) * ((float)_mana / 100), imgMana->getContentSize().height / 13);
     imgMana->setPosition(Vec2(imgMana->getContentSize().width / 2 - ((imgMana->getContentSize().width) * ((100 - _mana) / 100.f)) / 2,

@@ -1,15 +1,13 @@
 #include "cocos2d.h"
 
 
-class UI : public cocos2d::Node {
+class HUD : public cocos2d::Node {
 public:
-    void beginLife(int hp);
-    void beginMana(int mana);
+    void beginLife(int hp, int mana);
     void setHp(int hp);
     void setMana(int mana);
-    void printText(cocos2d::Label* text);
     void showPers();
-    CREATE_FUNC(UI);
+    CREATE_FUNC(HUD);
 private:
     int _hp;
     int _mana;
@@ -19,5 +17,4 @@ private:
     cocos2d::Label* text;
     cocos2d::Sprite* imgManaBase;
     cocos2d::Sprite* imgMana;
-    cocos2d::Sprite* paper;
 };
