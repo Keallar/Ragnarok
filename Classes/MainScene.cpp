@@ -109,6 +109,7 @@ void MainScene::update(float dt) {
     if (_player) {
         if (_player->isDied()) {
             _player->removeFromParent();
+            //WTF ПЕРЕДЕЛАТЬ ИБО FPS КАТИТЬСЯ ВНИЗ
             _hud->gameOver(_player);
 
             return;
