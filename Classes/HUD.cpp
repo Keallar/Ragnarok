@@ -131,3 +131,13 @@ void HUD::setMana(int mana) {
     imgMana->setPosition(Vec2(imgMana->getContentSize().width / 2 - ((imgMana->getContentSize().width) * ((100 - _mana) / 100.f)) / 2,
         Director::getInstance()->getVisibleOrigin().y + Director::getInstance()->getVisibleSize().height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
 }
+
+void HUD::gameOver(bool player) {
+    if (player) {
+        const Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        DrawNode* background = DrawNode::create();
+        const Vec2 backSize{ 5000, 5000 };
+        background->drawSolidRect(origin - backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(0, 0, 0, 1));
+        addChild(background);
+    }
+}

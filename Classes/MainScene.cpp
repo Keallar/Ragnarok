@@ -84,6 +84,8 @@ void MainScene::update(float dt) {
         if (_player->isDied()) {
             _player->cleanFunc();
             _player->removeFromParent();
+            _hud->gameOver(_player);
+
             return;
         }
         _player->update(dt);
@@ -111,6 +113,7 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _hud->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
+
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
@@ -136,7 +139,7 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 
 void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
-    const Vec2 pos = { 5000, 5000 };
+    const Vec2 pos = { 8000, 22000 };
     auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy);
     enemies.push_back(enemy);
 }

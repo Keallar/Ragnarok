@@ -7,6 +7,7 @@ public:
     void setHp(int hp);
     void setMana(int mana);
     void showPers();
+    void gameOver(bool player);
     CREATE_FUNC(HUD);
 private:
     int _hp;

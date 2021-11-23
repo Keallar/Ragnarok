@@ -231,6 +231,6 @@ bool Player::isDied() const {
 	return _isDied;
 }
 
-void Player::setDied(bool state) noexcept {
+void Player::setDied(bool state) noexcept {	
 	_isDied = state;
 }
