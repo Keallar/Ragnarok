@@ -78,7 +78,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\Box2D\include;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\Box2D\include;$(EngineRoot)extensions;../Classes/ui;../Classes/bullets;../Classes/enemies;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_BOX2D_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -151,24 +151,25 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Classes\AgressiveBehaviour.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\BigBullet.cpp" />
-    <ClCompile Include="..\Classes\Boss.cpp" />
     <ClCompile Include="..\Classes\box2d\b2dRootWorldNode.cpp" />
     <ClCompile Include="..\Classes\box2d\b2dSprite.cpp" />
     <ClCompile Include="..\Classes\box2d\GameVars.cpp" />
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp" />
-    <ClCompile Include="..\Classes\Bullet.cpp" />
-    <ClCompile Include="..\Classes\BulletFactory.cpp" />
+    <ClCompile Include="..\Classes\bullets\BigBullet.cpp" />
+    <ClCompile Include="..\Classes\bullets\Bullet.cpp" />
+    <ClCompile Include="..\Classes\bullets\BulletFactory.cpp" />
+    <ClCompile Include="..\Classes\bullets\IBulletMoveBehavior.cpp" />
+    <ClCompile Include="..\Classes\bullets\IBulletTypeCreator.cpp" />
+    <ClCompile Include="..\Classes\bullets\Ray.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
-    <ClCompile Include="..\Classes\EnemyFactory.cpp" />
-    <ClCompile Include="..\Classes\IBulletMoveBehavior.cpp" />
-    <ClCompile Include="..\Classes\IBulletTypeCreator.cpp" />
-    <ClCompile Include="..\Classes\IdleBehaviour.cpp" />
-    <ClCompile Include="..\Classes\IEnemy.cpp" />
-    <ClCompile Include="..\Classes\MessageBox.cpp" />
-    <ClCompile Include="..\Classes\IShootingPattern.cpp" />
+    <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp" />
+    <ClCompile Include="..\Classes\enemies\Boss.cpp" />
+    <ClCompile Include="..\Classes\enemies\Enemy.cpp" />
+    <ClCompile Include="..\Classes\enemies\EnemyFactory.cpp" />
+    <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp" />
+    <ClCompile Include="..\Classes\enemies\IEnemy.cpp" />
+    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp" />
     <ClCompile Include="..\Classes\imgui\CCIMGUI.cpp" />
     <ClCompile Include="..\Classes\imgui\CCIMGUIGLViewImpl.cpp" />
     <ClCompile Include="..\Classes\imgui\CCImGuiLayer.cpp" />
@@ -177,38 +178,38 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Classes\imgui\imgui_impl_cocos2dx.cpp" />
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
+    <ClCompile Include="..\Classes\IShootingPattern.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
+    <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\PlayerHookBullet.cpp" />
-    <ClCompile Include="..\Classes\Ray.cpp" />
     <ClCompile Include="..\Classes\ShootingCharacter.cpp" />
-    <ClCompile Include="..\Classes\Enemy.cpp" />
-    <ClCompile Include="..\Classes\SimpleEnemy.cpp" />
-    <ClCompile Include="..\Classes\HUD.cpp" />
+    <ClCompile Include="..\Classes\TileMapManager.cpp" />
+    <ClCompile Include="..\Classes\ui\HUD.cpp" />
+    <ClCompile Include="..\Classes\ui\MessageBox.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TileMapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Classes\AgressiveBehaviour.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\BigBullet.h" />
-    <ClInclude Include="..\Classes\Boss.h" />
     <ClInclude Include="..\Classes\box2d\b2dRootWorldNode.h" />
     <ClInclude Include="..\Classes\box2d\b2dSprite.h" />
     <ClInclude Include="..\Classes\box2d\GameVars.h" />
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h" />
-    <ClInclude Include="..\Classes\Bullet.h" />
-    <ClInclude Include="..\Classes\BulletFactory.h" />
+    <ClInclude Include="..\Classes\bullets\BigBullet.h" />
+    <ClInclude Include="..\Classes\bullets\Bullet.h" />
+    <ClInclude Include="..\Classes\bullets\BulletFactory.h" />
+    <ClInclude Include="..\Classes\bullets\IBulletMoveBehavior.h" />
+    <ClInclude Include="..\Classes\bullets\IBulletTypeCreator.h" />
+    <ClInclude Include="..\Classes\bullets\Ray.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
-    <ClInclude Include="..\Classes\IBulletMoveBehavior.h" />
-    <ClInclude Include="..\Classes\IBulletTypeCreator.h" />
-    <ClInclude Include="..\Classes\IdleBehaviour.h" />
-    <ClInclude Include="..\Classes\IEnemyBehaviour.h" />
-    <ClInclude Include="..\Classes\EnemyFactory.h" />
-    <ClInclude Include="..\Classes\IEnemy.h" />
-    <ClInclude Include="..\Classes\IEnemyType.h" />
-    <ClInclude Include="..\Classes\MessageBox.h" />
-    <ClInclude Include="..\Classes\IShootingPattern.h" />
+    <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h" />
+    <ClInclude Include="..\Classes\enemies\Boss.h" />
+    <ClInclude Include="..\Classes\enemies\Enemy.h" />
+    <ClInclude Include="..\Classes\enemies\EnemyFactory.h" />
+    <ClInclude Include="..\Classes\enemies\IdleBehaviour.h" />
+    <ClInclude Include="..\Classes\enemies\IEnemy.h" />
+    <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h" />
+    <ClInclude Include="..\Classes\enemies\IEnemyType.h" />
+    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h" />
     <ClInclude Include="..\Classes\imgui\CCIMGUI.h" />
     <ClInclude Include="..\Classes\imgui\CCIMGUIGLViewImpl.h" />
     <ClInclude Include="..\Classes\imgui\CCImGuiLayer.h" />
@@ -219,16 +220,15 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\Classes\imgui\imstb_textedit.h" />
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h" />
-    <ClInclude Include="..\Classes\Player.h" />
+    <ClInclude Include="..\Classes\IShootingPattern.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
+    <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\PlayerHookBullet.h" />
-    <ClInclude Include="..\Classes\Ray.h" />
     <ClInclude Include="..\Classes\ShootingCharacter.h" />
-    <ClInclude Include="..\Classes\Enemy.h" />
-    <ClInclude Include="..\Classes\SimpleEnemy.h" />
-    <ClInclude Include="..\Classes\HUD.h" />
+    <ClInclude Include="..\Classes\TileMapManager.h" />
+    <ClInclude Include="..\Classes\ui\HUD.h" />
+    <ClInclude Include="..\Classes\ui\MessageBox.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="TileMapManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">

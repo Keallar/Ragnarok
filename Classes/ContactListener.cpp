@@ -11,10 +11,16 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		//Player jump
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::platform) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
-			const auto minYPlayer = SpriteB->getTextureRect().getMinY();
-			const auto maxYPlatoform = SpriteA->getTextureRect().getMaxY();
-			if (minYPlayer <= maxYPlatoform) {
-				CCLOG("JUMP!");
+			//UNDONE
+			const auto playerY = SpriteB->getPosition().y + SpriteA->getTextureRect().getMaxY();
+			const auto platformY = SpriteA->getPosition().y - SpriteA->getTextureRect().getMaxY();
+			if (playerY >= platformY) {
+				static_cast<Player*>(SpriteB)->setJumpState(eJumpState::Fall);
+			}
+			const auto playerY2 = SpriteB->getPosition().y;
+			const auto platformY2 = SpriteA->getPosition().y/* + SpriteA->getTextureRect().getMaxY()*/;
+			if (playerY2 >= platformY2) {
+				static_cast<Player*>(SpriteB)->setJumpState(eJumpState::None);
 			}
 		}
 		//Enemy with bullets

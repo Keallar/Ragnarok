@@ -5,8 +5,7 @@
 enum class eJumpState {
 	None,
 	Jump,
-	Fall,
-	DoubleJump
+	Fall
 };
 
 enum class eAnimState {
@@ -55,6 +54,9 @@ public:
 	static const int PLAYER_SPEED;
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
+
+	//functions for testing
+	int getJumpCount() const;
 private:
 	void changePos(int delta);
 	cocos2d::Vec2 clickPosCalculate(cocos2d::EventMouse* mouse);
@@ -65,6 +67,7 @@ private:
 	float _jumpSpeed;
 	int _jumpBegin;
 	bool _isDied;
+	int _jumpCount;
 
 	PlayerHookBullet* _hook;
 	cocos2d::DrawNode* _hookBody;
