@@ -79,7 +79,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 	{
 		if (getJumpState() == eJumpState::None || _jumpCount != 2) {
 			setJumpState(eJumpState::Jump);
-			_jumpCount++;
+			//_jumpCount++;
 		}
 		if (_hook && _hook->isHooked()) {
 			_hook->setOnRemove();
