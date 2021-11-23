@@ -25,15 +25,6 @@
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp">
       <Filter>src\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp">
-      <Filter>src\enemies\enemyBehaviour</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\enemies\Boss.cpp">
       <Filter>src\enemies</Filter>
     </ClCompile>
@@ -82,16 +73,10 @@
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp">
       <Filter>src\box2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerHookBullet.cpp">
-      <Filter>src\bullets</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ContactListener.cpp">
       <Filter>src\contactListener</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\IShootingPattern.cpp">
@@ -108,6 +93,21 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
+      <Filter>src\enemies\enemyType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp">
+      <Filter>src\enemies\enemyBehaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp">
+      <Filter>src\enemies\enemyBehaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp">
+      <Filter>src\enemies\enemyType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerHookBullet.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,21 +140,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h">
       <Filter>src\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\IdleBehaviour.h">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\IEnemyType.h">
-      <Filter>src\enemies\enemyBehaviour</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h">
-      <Filter>src\enemies\enemyBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\Boss.h">
       <Filter>src\enemies</Filter>
@@ -204,16 +189,10 @@
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h">
       <Filter>src\box2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlayerHookBullet.h">
-      <Filter>src\bullets</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ContactListener.h">
       <Filter>src\contactListener</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\IShootingPattern.h">
@@ -230,6 +209,27 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
+      <Filter>src\enemies\enemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h">
+      <Filter>src\enemies\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IdleBehaviour.h">
+      <Filter>src\enemies\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h">
+      <Filter>src\enemies\enemyBehaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\IEnemyType.h">
+      <Filter>src\enemies\enemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h">
+      <Filter>src\enemies\enemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerHookBullet.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
