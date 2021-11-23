@@ -11,14 +11,14 @@ void ContactListener::BeginContact(b2Contact* contact) {
 		//Player jump
 		if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::platform) &&
 			SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
-			//UNDONE
+			//Check up and botton collision player with platforms for jumping
 			const auto playerY = SpriteB->getPosition().y + SpriteA->getTextureRect().getMaxY();
 			const auto platformY = SpriteA->getPosition().y - SpriteA->getTextureRect().getMaxY();
 			if (playerY >= platformY) {
 				static_cast<Player*>(SpriteB)->setJumpState(eJumpState::Fall);
 			}
 			const auto playerY2 = SpriteB->getPosition().y;
-			const auto platformY2 = SpriteA->getPosition().y/* + SpriteA->getTextureRect().getMaxY()*/;
+			const auto platformY2 = SpriteA->getPosition().y;
 			if (playerY2 >= platformY2) {
 				static_cast<Player*>(SpriteB)->setJumpState(eJumpState::None);
 			}
@@ -54,7 +54,6 @@ void ContactListener::EndContact(b2Contact* contact) {
 }
 
 void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
-	
 }
 
 void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {

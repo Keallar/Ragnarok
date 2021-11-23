@@ -3,6 +3,8 @@
 
 USING_NS_CC;
 
+int Enemy::id = -1;
+
 Enemy::Enemy(IEnemyType* type, IEnemyBehaviour* behaviour)
 	: IEnemy(type, behaviour) {
 	init();
@@ -11,13 +13,19 @@ Enemy::Enemy(IEnemyType* type, IEnemyBehaviour* behaviour)
 Enemy::~Enemy() {
 }
 
-Enemy* Enemy::create(b2BodyType bodyType, float32 friction, float32 restitution, IEnemyType* type, IEnemyBehaviour* behaviour) {
+Enemy* Enemy::create(Node* node, Vec2 pos, IEnemyType* type, IEnemyBehaviour* behaviour) {
+	id++;
 	Enemy* enemyObj = new (std::nothrow) Enemy(type, behaviour);
 	if (enemyObj && enemyObj->initWithFile(type->getFileName())) {
-		enemyObj->initBody(bodyType, friction, restitution);
+		enemyObj->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		enemyObj->autorelease();
 		enemyObj->setName(type->getName());
 		enemyObj->getFixtureDef()->filter = type->getFilter();
+		enemyObj->setName(enemyObj->getName() + std::to_string(id));
+		node->addChild(enemyObj);
+		enemyObj->getBody()->SetFixedRotation(true);
+		enemyObj->setPosition(pos);
+		enemyObj->createHpLabel();
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);

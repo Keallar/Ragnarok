@@ -46,9 +46,6 @@
     <ClCompile Include="..\Classes\enemies\Enemy.cpp">
       <Filter>enemies</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\enemies\EnemyFactory.cpp">
-      <Filter>enemies</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\enemies\IEnemy.cpp">
       <Filter>enemies</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\bullets\Bullet.cpp">
       <Filter>bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
+      <Filter>src\enemy\enemyTypes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\bullets\BulletFactory.cpp">
       <Filter>bullets</Filter>
@@ -154,9 +154,6 @@
       <Filter>enemies</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\Enemy.h">
-      <Filter>enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\EnemyFactory.h">
       <Filter>enemies</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\IEnemy.h">
