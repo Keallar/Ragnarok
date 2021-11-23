@@ -132,9 +132,6 @@
     <ClCompile Include="..\Classes\enemies\Enemy.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\enemies\EnemyFactory.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\enemies\IEnemy.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
@@ -252,9 +249,6 @@
       <Filter>src\enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\Enemy.h">
-      <Filter>src\enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\EnemyFactory.h">
       <Filter>src\enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\IEnemy.h">

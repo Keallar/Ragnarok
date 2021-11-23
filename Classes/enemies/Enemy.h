@@ -6,9 +6,9 @@ class Enemy : public IEnemy {
 public:
 	Enemy(IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
 	~Enemy();
-	static Enemy* create(b2BodyType bodyType, float32 friction, float32 restitution, IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
+	static Enemy* create(Node* node, Vec2 pos, IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
 	bool init() override;
 private:
-	
+	static int id;
 };
 

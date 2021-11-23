@@ -3,12 +3,12 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
-#include "EnemyFactory.h"
 #include <TileMapManager.h>
 #include "imgui/CCIMGUI.h"
 #include "imgui/imgui.h"
 #include "SimpleEnemy.h"
 #include "IdleBehaviour.h"
+#include "Enemy.h"
 
 USING_NS_CC;
 
@@ -161,7 +161,7 @@ void MainScene::createSomeEnemy(float dt) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
         const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-        auto enemy = EnemyFactory::getInstance()->createEnemy(_world, pos, new SimpleEnemy, new IdleBehaviour);
+        auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
         enemies.push_back(enemy);
     }
 }

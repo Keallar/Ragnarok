@@ -160,10 +160,6 @@ void Player::changePos(int delta) {
 }
 
 void Player::jump() {
-	/*if (getJumpState() == eJumpState::Fall && getBody()->GetLinearVelocity().y <= 1 && getBody()->GetLinearVelocity().y >= -1) {
-		setJumpState(eJumpState::None);
-		_jumpBegin = 0;
-	}*/
 	if (getJumpState() == eJumpState::Jump) {
 		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
 	}
