@@ -109,6 +109,8 @@ void MainScene::update(float dt) {
     if (_player) {
         if (_player->isDied()) {
             _player->removeFromParent();
+            _hud->gameOver(_player);
+
             return;
         }
         _player->update(dt);
@@ -136,6 +138,7 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _hud->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
+
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
