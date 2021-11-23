@@ -31,13 +31,14 @@ bool MainScene::init() {
     //addChild(background);
 
     //DrawNode* background = DrawNode::create();
-    const Vec2 backSize{ 5000, 5000 };
-    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
+    //const Vec2 backSize{ 5000, 5000 };
+    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(0, 0, 0, 1));
     //addChild(background);
 
     //World init
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
+    BulletFactory::getInstance()->setWorld(_world);
 
     //World->debugDraw();
 
@@ -95,7 +96,7 @@ bool MainScene::init() {
 
     scheduleUpdate();
 
-    createSomeEnemy(0);
+    //createSomeEnemy(0);
 
     return true;
 }
@@ -104,9 +105,10 @@ void MainScene::update(float dt) {
     _world->update(dt);
     _world->removeIsDeletingChildren();
 
+    BulletFactory::getInstance()->update(dt);
+
     if (_player) {
         if (_player->isDied()) {
-            _player->cleanFunc();
             _player->removeFromParent();
             return;
         }
@@ -125,7 +127,6 @@ void MainScene::update(float dt) {
         enemy->update(dt);
         if (enemy) {
             if (enemy->isDestroyed()) {
-                enemy->cleanFunc();
                 enemy->setOnRemove();
             }
         }

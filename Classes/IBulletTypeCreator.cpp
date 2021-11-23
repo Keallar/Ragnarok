@@ -1,48 +1,44 @@
 #include "IBulletTypeCreator.h" 
+#include "BigBullet.h"
+#include "PlayerHookBullet.h"
 
-//WTF
-void playerOrdinaryOptions(Bullet* bullet, b2WorldNode* world, Vec2 pos, Vec2 dest) {
-	world->addChild(bullet);
-	bullet->setPosition(pos);
-	bullet->getBody()->SetGravityScale(0);
-}
-
-void playerPhysMask(Bullet* bullet) {
+b2Filter IBulletTypeCreator::playerPhysMask() {
 	b2Filter filter;
 	filter.categoryBits = static_cast<uint16>(eColCategory::bullet);
 	filter.maskBits = static_cast<uint16>(eColMask::playerBullet);
-	bullet->getFixtureDef()->filter = filter;
+	return filter;
 }
 
-void enemyPhysMask(Bullet* bullet) {
+b2Filter IBulletTypeCreator::enemyPhysMask() {
 	b2Filter filter;
 	filter.categoryBits = static_cast<uint16>(eColCategory::bullet);
 	filter.maskBits = static_cast<uint16>(eColMask::enemyBullet);
-	bullet->getFixtureDef()->filter = filter;
+	return filter;
+}
+
+b2Filter IBulletTypeCreator::hookPhysMask() {
+	b2Filter filter;
+	filter.categoryBits = static_cast<uint16>(eColCategory::bullet);
+	filter.maskBits = static_cast<uint16>(eColMask::hook);
+	return filter;
 }
 
 Bullet* PlayerIdleBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
-	auto bullet = Bullet::createBullet(pos, dest);
-	bullet->setName("bulletPlayerOrdinary");
-	playerPhysMask(bullet);
-	playerOrdinaryOptions(bullet, world, pos, dest);
+	auto bullet = Bullet::create(world, pos, dest, playerPhysMask());
 	return bullet;
 }
 
 Bullet* PlayerBigBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
-	auto bullet = BigBullet::createBullet(pos, dest);
-	bullet->setName("bulletPlayerBig");
-	playerPhysMask(bullet);
-	playerOrdinaryOptions(bullet, world, pos, dest);
+	auto bullet = BigBullet::create(world, pos, dest, playerPhysMask());
 	return bullet;
 }
 
 Bullet* EnemyIdleBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
-	auto bullet = Bullet::createBullet(pos, dest);
-	bullet->setName("bulletEnemyOrdinary");
-	enemyPhysMask(bullet);
-	world->addChild(bullet);
-	bullet->setPosition(pos);
-	bullet->getBody()->SetGravityScale(0);
+	auto bullet = Bullet::create(world, pos, dest, enemyPhysMask());
+	return bullet;
+}
+
+Bullet* PlayerHookBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
+	auto bullet = PlayerHookBullet::create(world, pos, dest, hookPhysMask());
 	return bullet;
 }

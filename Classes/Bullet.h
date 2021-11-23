@@ -10,8 +10,7 @@ public:
 	Bullet();
 	~Bullet();
 
-	static Bullet* createBullet(Vec2 pos, Vec2 dest);
-	static Bullet* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
+	static Bullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
 
 	virtual bool init();
 
@@ -19,9 +18,14 @@ public:
 	void ordinaryUpdate(float dt);
 
 	float getMoveTime();
+	float getLifeTime();
+
+	virtual void collideFunc();
 
 	void setOnRemove();
 	bool isRemoving();
+
+	void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
 	Vec2 getDest();
 	void setNewBehavior(IBulletMoveBehavior* behavior);
@@ -31,9 +35,13 @@ public:
 protected:
 	static float BULLET_MOVE_TIME;
 	static float BIG_BULLET_MOVE_TIME;
+	static float HOOK_BULLET_MOVE_TIME;
+	static float HOOK_BULLET_LIFE_TIME;
 
 	static int BULLET_DAMAGE;
 	static int BIG_BULLET_DAMAGE;
+
+	void ordinaryOptions(cocos2d::Node* world, Vec2 pos);
 
 	void setCoords(Vec2 pos, Vec2 dest);
 

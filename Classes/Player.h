@@ -1,5 +1,6 @@
 #pragma once
 #include "ShootingCharacter.h"
+#include "PlayerHookBullet.h"
 
 enum class eJumpState {
 	None,
@@ -64,6 +65,12 @@ private:
 	float _jumpSpeed;
 	int _jumpBegin;
 	bool _isDied;
+
+	PlayerHookBullet* _hook;
+	cocos2d::DrawNode* _hookBody;
+	b2RopeJoint* _hookJuint;
+
+	void hookBodyUpdate(float dt);
 
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;

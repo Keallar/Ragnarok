@@ -10,3 +10,7 @@ void BulletIdleBehavior::move(float dt) {
 		_parent->getBody()->SetLinearVelocity(b2Vec2(_parent->getDest().x, _parent->getDest().y));
 	}
 }
+
+void BulletStopBehavior::move(float dt) {
+	_parent->getBody()->SetLinearVelocity(b2Vec2(0, 0));
+}

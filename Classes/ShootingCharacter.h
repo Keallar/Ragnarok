@@ -9,8 +9,7 @@ class ShootingCharacter : public b2Sprite {
 public:
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) = 0;
 	void createBulletOnParent(IBulletTypeCreator* bulletCreator, Vec2 pos, Vec2 dest);
-	void shootingCharacterUpdate(float dt);
-	void cleanFunc();
+	void ShootingCharacter::shootingCharacterUpdate(float dt);
 
 	float getCooldown();
 	void setCooldown(float cooldown);
@@ -23,6 +22,5 @@ protected:
 	float _attackCooldown;
 
 	IShootingPattern* _shootingPattern;
-	std::vector<Bullet*> bullets;
 };
 
