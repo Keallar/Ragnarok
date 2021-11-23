@@ -7,6 +7,7 @@
 #include "imgui/CCIMGUI.h"
 #include "imgui/imgui.h"
 #include "SimpleEnemy.h"
+#include "FlyingEnemy.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 
@@ -157,12 +158,14 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
-void MainScene::createSomeEnemy(float dt) {
+void MainScene::createSomeEnemy(int count) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
-        const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-        auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
-        enemies.push_back(enemy);
+        for (auto i = 0; i < count; ++i) {
+            const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
+            auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
+            enemies.push_back(enemy);
+        }
     }
 }
 
@@ -198,8 +201,10 @@ void MainScene::showImGui() {
     }
     //Enemies info
     if (ImGui::TreeNode("Enemies")) {
+        static int countOfEnemy = 1;
+        ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
         if (ImGui::Button("CreateEnemy")) {
-            createSomeEnemy(0);
+            createSomeEnemy(countOfEnemy);
         }
         if (ImGui::Button("DeleteLastEnemy")) {
             if (!enemies.empty()) {
@@ -222,6 +227,18 @@ void MainScene::showImGui() {
     }
     if (isToucedMetric) {
         ImGui::ShowMetricsWindow();
+    }
+    static bool isToucedStyleEditor = false;
+    if (ImGui::Button("StyleEditor")) {
+        if (!isToucedStyleEditor) {
+            isToucedStyleEditor = true;
+        }
+        else {
+            isToucedStyleEditor = false;
+        }
+    }
+    if (isToucedStyleEditor) {
+        ImGui::ShowStyleEditor();
     }
     ImGui::End();
 }

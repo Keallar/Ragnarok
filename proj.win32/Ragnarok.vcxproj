@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -166,6 +166,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\Boss.cpp" />
     <ClCompile Include="..\Classes\enemies\Enemy.cpp" />
+    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp" />
     <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\IEnemy.cpp" />
     <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp" />
@@ -184,6 +185,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\TileMapManager.cpp" />
     <ClCompile Include="..\Classes\ui\HUD.cpp" />
     <ClCompile Include="..\Classes\ui\MessageBox.cpp" />
+    <ClCompile Include="FlyingEnemy.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +204,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\Boss.h" />
     <ClInclude Include="..\Classes\enemies\Enemy.h" />
+    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h" />
     <ClInclude Include="..\Classes\enemies\IdleBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\IEnemy.h" />
     <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h" />
@@ -224,6 +227,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\TileMapManager.h" />
     <ClInclude Include="..\Classes\ui\HUD.h" />
     <ClInclude Include="..\Classes\ui\MessageBox.h" />
+    <ClInclude Include="FlyingEnemy.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

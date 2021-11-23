@@ -144,6 +144,10 @@
     <ClCompile Include="..\Classes\TileMapManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="FlyingEnemy.cpp" />
+    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
+      <Filter>src\enemy\enemyTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -262,6 +266,10 @@
     </ClInclude>
     <ClInclude Include="..\Classes\TileMapManager.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyingEnemy.h" />
+    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
+      <Filter>src\enemy\enemyTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
