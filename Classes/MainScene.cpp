@@ -25,9 +25,9 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    //_background = Sprite::create("background.png");
-    //_background->setContentSize(Director::getInstance()->getWinSize());
-    //addChild(_background);
+    _background = Sprite::create("background.png");
+    _background->setContentSize(Director::getInstance()->getWinSize());
+    addChild(_background);
 
     //DrawNode* background = DrawNode::create();
     //const Vec2 backSize{ 5000, 5000 };
@@ -37,6 +37,7 @@ bool MainScene::init() {
     //World init
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
+    BulletFactory::getInstance()->setWorld(_world);
 
     //ContactListener init
     auto contactListener = new ContactListener;
@@ -99,9 +100,10 @@ void MainScene::update(float dt) {
     _world->update(dt);
     _world->removeIsDeletingChildren();
 
+    BulletFactory::getInstance()->update(dt);
+
     if (_player) {
         if (_player->isDied()) {
-            _player->cleanFunc();
             _player->removeFromParent();
             return;
         }
@@ -120,7 +122,6 @@ void MainScene::update(float dt) {
         enemy->update(dt);
         if (enemy) {
             if (enemy->isDestroyed()) {
-                enemy->cleanFunc();
                 enemy->setOnRemove();
             }
         }
@@ -130,7 +131,7 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _ui->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
-    //_background->setPosition(_cameraTarget->getPosition());
+    _background->setPosition(_cameraTarget->getPosition());
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {

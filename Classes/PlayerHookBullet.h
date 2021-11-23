@@ -4,8 +4,7 @@
 
 class PlayerHookBullet : public Bullet {
 public:
-	static PlayerHookBullet* createBullet(Vec2 pos, Vec2 dest);
-	static PlayerHookBullet* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
+	static PlayerHookBullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
 
 	virtual void collideFunc();
 	virtual bool init();

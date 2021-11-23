@@ -101,8 +101,11 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			_hook = nullptr;
 		}
 		else {
+			if (_hook) {
+				_hook->setOnRemove();
+			}
 			shoot(getPosition() + Vec2(45 * getScaleX(), -45), new PlayerHookBulletCreator);
-			_hook = dynamic_cast<PlayerHookBullet*>(bullets.back());
+			_hook = dynamic_cast<PlayerHookBullet*>(BulletFactory::getInstance()->getLastBullet());
 			break;
 		}
 		break;

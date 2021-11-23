@@ -24,25 +24,22 @@ void PlayerHookBullet::collideFunc() {
 	_hooked = true;
 }
 
-PlayerHookBullet* PlayerHookBullet::createBullet(Vec2 pos, Vec2 dest) {
+PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	if (_hook) {
 		_hook->setOnRemove();
 	}
-	_hook = PlayerHookBullet::create("BigBullet.png", b2BodyType::b2_dynamicBody, 0.f, 0);
-	_hook->init();
-	_hook->setCoords(pos, dest);
-	_hook->setNewBehavior(new BulletIdleBehavior(_hook));
-	return _hook;
-}
-
-PlayerHookBullet* PlayerHookBullet::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
-	PlayerHookBullet* sprite = new (std::nothrow) PlayerHookBullet();
-	if (sprite && sprite->initWithFile(filename)) {
-		sprite->initBody(type, friction, restitution);
-		sprite->autorelease();
-		return sprite;
+	PlayerHookBullet* _hook = new (std::nothrow) PlayerHookBullet();
+	if (_hook && _hook->initWithFile("BigBullet.png")) {
+		_hook->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
+		_hook->autorelease();
+		_hook->init();
+		_hook->setCoords(pos, dest);
+		_hook->setNewBehavior(new BulletIdleBehavior(_hook));
+		_hook->getFixtureDef()->filter = filter;
+		_hook->ordinaryOptions(world, pos);
+		return _hook;
 	}
-	CC_SAFE_DELETE(sprite);
+	CC_SAFE_DELETE(_hook);
 	return nullptr;
 }
 

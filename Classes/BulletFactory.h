@@ -3,20 +3,28 @@
 #include "box2d/b2dRootWorldNode.h"
 #include "IBulletTypeCreator.h"
 
-enum class eBulletType {
-	playerOrdinary,
-	enemyOrdinary,
-	playerBig
-};
-
 class BulletFactory
 {
 public:
 	static BulletFactory* getInstance();
 
-	Bullet* createBullet(IBulletTypeCreator* bulletCreator, b2WorldNode* world, Vec2 pos, Vec2 dest);
+	void update(float dt);
+
+	void setWorld(cocos2d::Node* world);
+
+	//temp
+	Bullet* getLastBullet();
+
+	void createBullet(IBulletTypeCreator* bulletCreator, Vec2 pos, Vec2 dest);
 private:
 	static BulletFactory* instance;
+
+	void clean();
+
+	float _timer;
+
+	b2WorldNode* _world;
+	std::vector<Bullet*> _bullets;
 	static int id;
 };
 

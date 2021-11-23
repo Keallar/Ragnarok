@@ -17,22 +17,19 @@ Bullet::~Bullet() {
 
 }
 
-Bullet* Bullet::createBullet(Vec2 pos, Vec2 dest) {
-	auto bullet = Bullet::create("bullet.png", b2BodyType::b2_dynamicBody, 0.f, 0);
-	bullet->init();
-	bullet->setCoords(pos, dest);
-	bullet->setNewBehavior(new BulletIdleBehavior(bullet));
-	return bullet;
-}
-
-Bullet* Bullet::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
-	Bullet* sprite = new (std::nothrow) Bullet();
-	if (sprite && sprite->initWithFile(filename)) {
-		sprite->initBody(type, friction, restitution);
-		sprite->autorelease();
-		return sprite;
+Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+	Bullet* bullet = new (std::nothrow) Bullet();
+	if (bullet && bullet->initWithFile("bullet.png")) {
+		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
+		bullet->autorelease();
+		bullet->init();
+		bullet->setCoords(pos, dest);
+		bullet->setNewBehavior(new BulletIdleBehavior(bullet));
+		bullet->getFixtureDef()->filter = filter;
+		bullet->ordinaryOptions(world, pos);
+		return bullet;
 	}
-	CC_SAFE_DELETE(sprite);
+	CC_SAFE_DELETE(bullet);
 	return nullptr;
 }
 
@@ -50,6 +47,12 @@ void Bullet::ordinaryUpdate(float dt) {
 	if (_lifeTime <= 0) {
 		setOnRemove();
 	}
+}
+
+void Bullet::ordinaryOptions(cocos2d::Node* world, Vec2 pos) {
+	world->addChild(this);
+	this->setPosition(pos);
+	this->getBody()->SetGravityScale(0);
 }
 
 bool Bullet::init() {
@@ -77,6 +80,10 @@ float Bullet::getLifeTime() {
 
 void Bullet::setOnRemove() {
 	_isOnRemove = true;
+	b2Filter filter;
+	filter.categoryBits = 0;
+	filter.maskBits = 0;
+	getBody()->GetFixtureList()->SetFilterData(filter);
 }
 
 bool Bullet::isRemoving() {
@@ -97,4 +104,10 @@ void Bullet::setNewBehavior(IBulletMoveBehavior* behavior) {
 
 Vec2 Bullet::getDest() {
 	return _dest;
+}
+
+void Bullet::draw(Renderer* renderer, const Mat4& transform, uint32_t flags) {
+	if (!_isOnRemove) {
+		b2Sprite::draw(renderer, transform, flags);
+	}
 }
