@@ -3,12 +3,21 @@
 #include "box2d/b2dRootWorldNode.h"
 
 FlyingEnemy::FlyingEnemy() {
+	//File
 	_fileName = "Flying_enemy.png";
+	//Animation
+	//Idle animation
 	animFrames.reserve(4);	
-	animFrames.push_back(SpriteFrame::create(_fileName, Rect(0, 0, 64, 64)));
-	animFrames.push_back(SpriteFrame::create(_fileName, Rect(64, 64, 64, 64)));
-	animFrames.push_back(SpriteFrame::create(_fileName, Rect(128, 128, 64, 64)));
-	animFrames.push_back(SpriteFrame::create(_fileName, Rect(192, 192, 64, 64)));
+	Vector<SpriteFrame*> idleAnimFrames;
+	idleAnimFrames.reserve(4);
+	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(0, 0, 64, 64)));
+	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(64, 0, 64, 64)));
+	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(128, 0, 64, 64)));
+	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(192, 0, 64, 64)));
+	Animation* _idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.13f);
+	Animate* _idleAnim = Animate::create(_idleAnimation);
+	_idleAction = RepeatForever::create(_idleAnim);
+	//References
 	_enemyName = "FlyingEnemy_";
 	_filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
 	_filter.maskBits = static_cast<uint16>(eColMask::enemy);

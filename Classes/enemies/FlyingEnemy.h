@@ -8,4 +8,5 @@ public:
 	std::string getTypeName() const override;
 private:
 	std::vector<SpriteFrame*> animFrames;
+	Action* _idleAction;
 };

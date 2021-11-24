@@ -10,7 +10,7 @@ enum class eJumpState {
 
 enum class eAnimState {
 	None,
-	Run,
+	Move,
 	Jump,
 	Attack
 };
@@ -77,5 +77,8 @@ private:
 
 	eJumpState playerJumpState;
 	eAnimState playerAnimState;
+
+	Animate* _idleAnim;
+	Animate* _attackAnim;
 };
 
