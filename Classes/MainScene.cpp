@@ -81,7 +81,7 @@ bool MainScene::init() {
 
     scheduleUpdate();
     //schedule(schedule_selector(MainScene::removeSomePlayer), 2.5f);
-    schedule(schedule_selector(MainScene::removeSomeEnemy), 0.5f);
+    //schedule(schedule_selector(MainScene::removeSomeEnemy), 0.5f);
 
     return true;
 }

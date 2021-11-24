@@ -46,8 +46,8 @@ void TileMapManager::CollidableLayerInit(Node* node, CCTMXLayer* layer) {
 		for (float j = 0; j < layer->getLayerSize().width; j++){
 			if (layer->getTileAt({ j, i })) {
 				if (isTileFirst) {
-					_b2test->initWithSprite(layer->getTileAt({ j, i }));
 					_b2test->setVisible(false);
+					_b2test->initWithSprite(layer->getTileAt({ j, i }));
 					startPoint.set({ j,i });
 					isTileFirst = false;
 					_b2test->setAnchorPoint({0, 0.5});
