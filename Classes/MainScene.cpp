@@ -27,7 +27,7 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    DrawNode* background = DrawNode::create();
+    //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
 
@@ -68,7 +68,7 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
     _player->setPosition(8000, 22000);
-    _player->getBody()->SetBullet(true);
+    //_player->getBody()->SetBullet(true);
 
     //Camera setup
     _cameraTarget = getDefaultCamera();
@@ -96,6 +96,9 @@ bool MainScene::init() {
 
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
+
+    _test = DrawNode::create();
+    addChild(_test);
 
     return true;
 }
