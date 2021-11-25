@@ -41,4 +41,11 @@ private:
 	bool _destroyed;
 	bool _damaged;
 	Label* _hpLabel;
+
+	enum class eAnimState {
+		None, 
+		Move,
+		Attack
+	};
+	eAnimState _animState;
 };

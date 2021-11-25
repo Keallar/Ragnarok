@@ -26,6 +26,10 @@ Enemy* Enemy::create(Node* node, Vec2 pos, IEnemyType* type, IEnemyBehaviour* be
 		enemyObj->getBody()->SetFixedRotation(true);
 		enemyObj->setPosition(pos);
 		enemyObj->createHpLabel();
+		if (type->getIdleAnimate()) {
+			Action* idleAction = RepeatForever::create(type->getIdleAnimate());
+			enemyObj->runAction(idleAction);
+		}
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);
@@ -36,9 +40,9 @@ bool Enemy::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	/*if (!_behaviour) {
+	if (!_behaviour) {
 		return false;
-	}*/
+	}
 	if (!_type) {
 		return false;
 	}
