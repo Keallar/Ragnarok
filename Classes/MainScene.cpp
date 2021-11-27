@@ -10,6 +10,7 @@
 #include "FlyingEnemy.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
+#include "NoticeBox.h"
 
 USING_NS_CC;
 
@@ -92,10 +93,16 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-    scheduleUpdate();
-
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
+
+    scheduleUpdate();
+
+    NoticeBox* nBox = NoticeBox::create();
+    auto tempLabel = Label::create();
+    tempLabel->setString("Hello World!");
+    nBox->printText(tempLabel);
+    addChild(nBox);
 
     return true;
 }
@@ -221,6 +228,13 @@ void MainScene::showImGui() {
         }
         ImGui::TreePop();
     }
+    /*if(ImGui::Button("NoticeBox")) {
+        NoticeBox* nBox = NoticeBox::create();
+        auto tempLabel = Label::create();
+        tempLabel->setString("Hello World!");
+        nBox->printText(tempLabel);
+        addChild(nBox);
+    }*/
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {
         if (!isToucedMetric) {
