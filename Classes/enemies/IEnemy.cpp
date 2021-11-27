@@ -32,7 +32,7 @@ void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 		Vec2 pos = getPosition();
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
-		//dest *= BULLET_SPEED;
+		dest *= BULLET_SPEED;
 		//dest *= 10;
 
 		_shootingPattern->shoot(pos, dest, bulletCreator);

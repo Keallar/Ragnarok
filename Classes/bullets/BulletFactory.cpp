@@ -43,7 +43,16 @@ void BulletFactory::update(float dt) {
 }
 
 void BulletFactory::clean() {
+
+	for (auto bullet : _bullets) {
+		if (bullet) {
+			if (bullet->isRemoving()) {
+				_world->removeChild(bullet);
+				bullet = nullptr;
+			}
+		}
+	}
 	_bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(),
-		[](Bullet* bullet) { return bullet->isRemoving(); }),
+		[](Bullet* bullet) { return (!bullet || bullet->isRemoving()); }),
 	_bullets.end());
 }
