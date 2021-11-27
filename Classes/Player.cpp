@@ -43,8 +43,8 @@ bool Player::init() {
 	_mana = 100;
 	_speed = 0.f;
 	_jumpBegin = 0;
-	playerJumpState = eJumpState::None;
-	playerAnimState = eAnimState::None;
+	_playerJumpState = eJumpState::None;
+	_playerAnimState = eAnimState::None;
 	_isDied = false;
 	_jumpCount = 0;
 	//Hook
@@ -54,27 +54,23 @@ bool Player::init() {
 
 	//Animation
 	//Idle animation
-	Vector<SpriteFrame*> idleAnimFrames;
-	idleAnimFrames.reserve(8);
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(0, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(64, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(128, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(192, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(256, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(320, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(384, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(448, 0, 64, 64)));
-	Animation* _idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.13f);
-	Animate* _idleAnim = Animate::create(_idleAnimation);
-	Action* idleAction = RepeatForever::create(_idleAnim);
-	idleAction->setTag(0);
+	_idleAnimFrames.reserve(8);
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(128, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(192, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(256, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(320, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(384, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(448, 0, 64, 64)));
+	Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
+	Animate* idleAnim = Animate::create(idleAnimation);
+	Action* idleAction = RepeatForever::create(idleAnim);
+	idleAction->setTag(static_cast<int>(eAnimState::None));
 	runAction(idleAction);
-	//Move animation
-	Vector<SpriteFrame*> attackAnimFrames;
-	attackAnimFrames.reserve(1);
-	attackAnimFrames.pushBack(SpriteFrame::create("Hero.png", Rect(0, 0, 32, 32)));
-	Animation* _attackAnimation = Animation::createWithSpriteFrames(attackAnimFrames, 0.1f);
-	_attackAnim = Animate::create(_attackAnimation);
+	//Attack animation
+	_attackAnimFrames.reserve(1);
+	_attackAnimFrames.pushBack(SpriteFrame::create("Tur.png", Rect(0, 0, 64, 64)));
 
 	return true;
 }
@@ -243,7 +239,7 @@ void Player::setJumpState(eJumpState state) {
 		_jumpCount = 0;
 		_jumpBegin = 0;
 	}
-	playerJumpState = state;
+	_playerJumpState = state;
 }
 
 void Player::hookBodyUpdate(float dt) {
@@ -270,32 +266,36 @@ void Player::hookBodyUpdate(float dt) {
 
 void Player::setAnimState(eAnimState state) {
 	if (state == eAnimState::None) {
-		/*stopAllActions();
-		Action* idleAction = RepeatForever::create(_idleAnim);
-		idleAction->setTag(0);
-		runAction(idleAction);*/
+		stopAllActions();
+		Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
+		Animate* idleAnim = Animate::create(idleAnimation);
+		Action* idleAction = RepeatForever::create(idleAnim);
+		runAction(idleAction);
 	}
 	if (state == eAnimState::Move) {
 		//stopActionByTag(0);
 	}
-	if (state == eAnimState::Attack) {
-		/*stopActionByTag(0);
-		Action* attackAction = Repeat::create(_attackAnim, 1);
-		attackAction->setTag(2);
-		runAction(attackAction);*/
-	}
-	if (state == eAnimState::Attack) {
+	if (state == eAnimState::Jump) {
 
 	}
-	playerAnimState = state;
+	if (state == eAnimState::Attack) {
+		stopAllActions();
+		Animation* attackAnimation = Animation::createWithSpriteFrames(_attackAnimFrames);
+		Animate* attackAnim = Animate::create(attackAnimation);
+		Action* attackAction = Repeat::create(attackAnim, 1);
+		attackAction->setTag(static_cast<int>(eAnimState::Attack));
+		runAction(attackAction);
+		setAnimState(eAnimState::None);
+	}
+	_playerAnimState = state;
 }
 
 eAnimState Player::getAnimState() noexcept {
-	return playerAnimState;
+	return _playerAnimState;
 }
 
 eJumpState Player::getJumpState() noexcept {
-	return playerJumpState;
+	return _playerJumpState;
 }
 
 int Player::getMana() const {
