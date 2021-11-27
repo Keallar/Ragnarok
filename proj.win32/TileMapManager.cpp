@@ -1,5 +1,6 @@
 #include "TileMapManager.h"
 #include "box2d/b2dRootWorldNode.h"
+#include <iostream>
 TileMapManager::TileMapManager() {
 
 }
@@ -92,4 +93,18 @@ void TileMapManager::TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer) {
 
 void TileMapManager::TileMapObjectLayerInit(Node* node, CCTMXLayer* layer) {
 
+}
+
+void TileMapManager::testRay(b2WorldNode* _world) {
+	b2Vec2 RayStart = { 7800, 25000 };
+	b2Vec2 RayEnd = { 8200, 25000 };
+	DefaultCallback callback;
+	_world->getb2World()->RayCast(&callback, RayStart, RayEnd);
+}
+
+float32 DefaultCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& point,
+	const b2Vec2& normal, float32 fraction)
+{
+	std::cout<<"callback works";
+	return 0;
 }

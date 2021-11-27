@@ -1,6 +1,7 @@
 #pragma once
 #include "box2d/b2dSprite.h"
 #include <vector>
+#include "Box2D/Dynamics/b2WorldCallbacks.h"
 class TileMapManager : public b2Sprite
 {
 private:
@@ -17,5 +18,12 @@ public:
     void TileMapObjectLayerInit(Node* node, CCTMXLayer* layer);
     void TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer);
     void CollidableLayerInit(Node* node, CCTMXLayer* layer);
+    void testRay(b2WorldNode* _world);  
 };
 
+class DefaultCallback : public b2RayCastCallback
+{
+public:
+    float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point,
+        const b2Vec2& normal, float32 fraction) override;
+};

@@ -40,6 +40,7 @@ bool MainScene::init() {
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
 
 
+
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
     //auto floor = b2Sprite::create("pinky.png", Rect(0, 0, visibleSize.width, 4), b2BodyType::b2_staticBody, 0.0, 0.0);
     //auto wallL = b2Sprite::create("pinky.png", Rect(0, 0, 4, visibleSize.height), b2BodyType::b2_staticBody, 0.0, 0.0);
@@ -70,6 +71,7 @@ bool MainScene::init() {
     _player->setName("player");
 
     _player->setPosition(8000, 25000);
+    _firstTileMap->testRay(_world);
 
     //camera setup
     _cameraTarget = getDefaultCamera();
