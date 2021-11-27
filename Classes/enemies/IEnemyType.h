@@ -16,6 +16,7 @@ public:
 	int getDamage() const noexcept { return _damage; }
 	float getSpeed() const noexcept { return _speed; }
 	float getAttackCooldown() const noexcept { return _attackCooldown; }
+	Animate* getIdleAnimate() const noexcept { if (_idleAnim) return _idleAnim;  }
 protected:
 	std::string _fileName;
 	std::string _enemyName;
@@ -25,4 +26,5 @@ protected:
 	float _speed;
 	float _attackCooldown;
 	int _bulletSpeed;
+	Animate* _idleAnim;
 };

@@ -36,21 +36,50 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
+	//References
 	_shootingPattern = new IdleShootingPattern(this);
 	_attackCooldown = 0;
 	_hp = 100;
 	_mana = 100;
 	_speed = 0.f;
 	_jumpBegin = 0;
-	playerJumpState = eJumpState::None;
-	playerAnimState = eAnimState::None;
+	_playerJumpState = eJumpState::None;
+	_playerAnimState = eAnimState::None;
 	_isDied = false;
 	_jumpCount = 0;
-
+	//Hook
 	_hook = nullptr;
 	_hookBody = DrawNode::create();
 	addChild(_hookBody);
+
+	//Animation
+	//Idle animation
+	_idleAnimFrames.reserve(8);
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(128, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(192, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(256, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(320, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(384, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(448, 0, 64, 64)));
+	Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
+	Animate* idleAnim = Animate::create(idleAnimation);
+	Action* idleAction = RepeatForever::create(idleAnim);
+	idleAction->setTag(static_cast<int>(eAnimState::None));
+	runAction(idleAction);
+	//Attack animation
+	_attackAnimFrames.reserve(1);
+	_attackAnimFrames.pushBack(SpriteFrame::create("Tur.png", Rect(0, 0, 64, 64)));
+
 	return true;
+}
+
+
+void Player::update(float dt) {
+	hookBodyUpdate(dt);
+	shootingCharacterUpdate(dt);
+	jump();
 }
 
 void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
@@ -63,6 +92,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			scaleX *= -1;
 			setScaleX(scaleX);
 		}
+		setAnimState(eAnimState::Move);
 		break;
 	}
 	case EventKeyboard::KeyCode::KEY_A:
@@ -121,9 +151,11 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	switch (keyCode) {
 	case EventKeyboard::KeyCode::KEY_A:
 		move(0);
+		setAnimState(eAnimState::None);
 		break;
 	case EventKeyboard::KeyCode::KEY_D:
 		move(0);
+		setAnimState(eAnimState::None);
 		break;
 	case EventKeyboard::KeyCode::KEY_SPACE:
 		setJumpState(eJumpState::Fall);
@@ -136,6 +168,36 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	default:
 		break;
 	}
+}
+
+Vec2 Player::clickPosCalculate(EventMouse* mouse) {
+	auto click = mouse->getLocation();
+	setAnimState(eAnimState::Attack);
+	auto director = Director::getInstance();
+	Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
+	clickPos += click;
+	return clickPos;
+}
+
+void Player::mousePressed(cocos2d::Event* event) {
+	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
+
+	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
+		shoot(clickPosCalculate(mouse), new PlayerIdleBulletCreator);
+		setAnimState(eAnimState::Attack);
+	}
+	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
+		shoot(clickPosCalculate(mouse), new PlayerBigBulletCreator);
+		setAnimState(eAnimState::Attack);
+	}
+}
+
+void Player::move(int shift) {
+	changePos(shift);
+}
+
+void Player::changePos(int delta) {
+	getBody()->SetLinearVelocity(b2Vec2(delta, getBody()->GetLinearVelocity().y));
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
@@ -160,34 +222,6 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	}
 }
 
-Vec2 Player::clickPosCalculate(EventMouse* mouse) {
-	auto click = mouse->getLocation();
-	setAnimState(eAnimState::Attack);
-	auto director = Director::getInstance();
-	Vec2 clickPos = Camera::getDefaultCamera()->getPosition() - Vec2{ director->getVisibleSize() / 2 };
-	clickPos += click;
-	return clickPos;
-}
-
-void Player::mousePressed(cocos2d::Event* event) {
-	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
-
-	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), new PlayerIdleBulletCreator);
-	}
-	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
-		shoot(clickPosCalculate(mouse), new PlayerBigBulletCreator);
-	}
-}
-
-void Player::move(int shift) {
-	changePos(shift);
-}
-
-void Player::changePos(int delta) {
-	getBody()->SetLinearVelocity(b2Vec2(delta, getBody()->GetLinearVelocity().y));
-}
-
 void Player::jump() {
 	if (getJumpState() == eJumpState::Jump) {
 		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
@@ -195,6 +229,17 @@ void Player::jump() {
 	if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
 	}
+}
+
+void Player::setJumpState(eJumpState state) {
+	if (state == eJumpState::Jump) {
+		_jumpBegin = getPosition().y + PLAYER_JUMP_HEIGHT;
+	}
+	if (state == eJumpState::None) {
+		_jumpCount = 0;
+		_jumpBegin = 0;
+	}
+	_playerJumpState = state;
 }
 
 void Player::hookBodyUpdate(float dt) {
@@ -206,8 +251,6 @@ void Player::hookBodyUpdate(float dt) {
 		dest.x *= getScaleX();
 		_hookBody->drawLine(Vec2(getContentSize() / 2), dest, Color4F::GRAY);
 		if (_hook->isHooked()) {
-			//move(0);
-			//setJumpState(eJumpState::None);
 			dest.normalize();
 			dest.x *= getScaleX();
 			dest *= 30; //hooked player fly speed
@@ -221,33 +264,38 @@ void Player::hookBodyUpdate(float dt) {
 	}
 }
 
-void Player::update(float dt) {	
-	hookBodyUpdate(dt);
-	shootingCharacterUpdate(dt);
-	jump();
-}
-
-void Player::setJumpState(eJumpState state) {
-	if (state == eJumpState::Jump) {
-		_jumpBegin = getPosition().y + PLAYER_JUMP_HEIGHT;
-	} 
-	if (state == eJumpState::None) {
-		_jumpCount = 0;
-		_jumpBegin = 0;
-	}
-	playerJumpState = state;
-}
-
 void Player::setAnimState(eAnimState state) {
-	playerAnimState = state;
+	if (state == eAnimState::None) {
+		stopAllActions();
+		Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
+		Animate* idleAnim = Animate::create(idleAnimation);
+		Action* idleAction = RepeatForever::create(idleAnim);
+		runAction(idleAction);
+	}
+	if (state == eAnimState::Move) {
+		//stopActionByTag(0);
+	}
+	if (state == eAnimState::Jump) {
+
+	}
+	if (state == eAnimState::Attack) {
+		stopAllActions();
+		Animation* attackAnimation = Animation::createWithSpriteFrames(_attackAnimFrames);
+		Animate* attackAnim = Animate::create(attackAnimation);
+		Action* attackAction = Repeat::create(attackAnim, 1);
+		attackAction->setTag(static_cast<int>(eAnimState::Attack));
+		runAction(attackAction);
+		setAnimState(eAnimState::None);
+	}
+	_playerAnimState = state;
 }
 
 eAnimState Player::getAnimState() noexcept {
-	return playerAnimState;
+	return _playerAnimState;
 }
 
 eJumpState Player::getJumpState() noexcept {
-	return playerJumpState;
+	return _playerJumpState;
 }
 
 int Player::getMana() const {

@@ -10,7 +10,7 @@ enum class eJumpState {
 
 enum class eAnimState {
 	None,
-	Run,
+	Move,
 	Jump,
 	Attack
 };
@@ -75,7 +75,10 @@ private:
 
 	void hookBodyUpdate(float dt);
 
-	eJumpState playerJumpState;
-	eAnimState playerAnimState;
+	eJumpState _playerJumpState;
+	eAnimState _playerAnimState;
+
+	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
 };
 

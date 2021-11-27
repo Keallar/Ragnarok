@@ -26,13 +26,13 @@
       <Filter>src\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp">
-      <Filter>src\enemies\enemyType</Filter>
+      <Filter>src\enemies\enemyBehaviour</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp">
-      <Filter>src\enemies\enemyType</Filter>
+      <Filter>src\enemies\enemyBehaviour</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp">
-      <Filter>src\enemies\enemyBehaviour</Filter>
+      <Filter>src\enemies\enemyType</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\enemies\Boss.cpp">
       <Filter>src\enemies</Filter>
@@ -91,9 +91,6 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\IShootingPattern.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -108,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
+      <Filter>src\enemies\enemyType</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,19 +142,19 @@
       <Filter>src\imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h">
-      <Filter>src\enemies\enemyType</Filter>
+      <Filter>src\enemies\enemyBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\IdleBehaviour.h">
-      <Filter>src\enemies\enemyType</Filter>
+      <Filter>src\enemies\enemyBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h">
-      <Filter>src\enemies\enemyType</Filter>
+      <Filter>src\enemies\enemyBehaviour</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\IEnemyType.h">
-      <Filter>src\enemies\enemyBehaviour</Filter>
+      <Filter>src\enemies\enemyType</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\SimpleEnemy.h">
-      <Filter>src\enemies\enemyBehaviour</Filter>
+      <Filter>src\enemies\enemyType</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\Boss.h">
       <Filter>src\enemies</Filter>
@@ -213,9 +213,6 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\IShootingPattern.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -230,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
+      <Filter>src\enemies\enemyType</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,12 +251,6 @@
     <Filter Include="src\enemies">
       <UniqueIdentifier>{7c158a52-b445-4db9-aa90-7af4b8aa701b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\enemies\enemyType">
-      <UniqueIdentifier>{f95ebfbd-d35e-4bd8-854e-3f4fa2885b4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\enemies\enemyBehaviour">
-      <UniqueIdentifier>{b24354d3-61f2-4597-a9e5-44316c524f6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\imgui">
       <UniqueIdentifier>{ad515ccc-f3f5-4df3-8431-609df3126831}</UniqueIdentifier>
     </Filter>
@@ -269,10 +263,19 @@
     <Filter Include="win32">
       <UniqueIdentifier>{cd815eff-2c67-4a01-ba05-df683cc1d326}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\enemies\enemyType">
+      <UniqueIdentifier>{b24354d3-61f2-4597-a9e5-44316c524f6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\enemies\enemyBehaviour">
+      <UniqueIdentifier>{f95ebfbd-d35e-4bd8-854e-3f4fa2885b4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{71ff7850-068c-480a-97d8-b6285b7be36b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
-      <Filter>win32</Filter>
+      <Filter>Resources</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>
