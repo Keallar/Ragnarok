@@ -168,7 +168,7 @@ void MainScene::createSomeEnemy(int count) {
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-            auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
+            auto enemy = Enemy::create(_world, pos, new FlyingEnemy, new IdleBehaviour);
             enemies.push_back(enemy);
         }
     }

@@ -3,8 +3,8 @@
 
 enum class eIdleState {
 	Sleep,
-	MoveLeft,
-	MoveRight
+	MoveRight,
+	MoveLeft
 };
 
 class IdleBehaviour : public IEnemyBehaviour {

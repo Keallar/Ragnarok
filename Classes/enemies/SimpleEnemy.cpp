@@ -7,14 +7,11 @@ SimpleEnemy::SimpleEnemy() {
 	_fileName = "Turtle.png";
 	//Animation
 	//Idle animation
-	Vector<SpriteFrame*> idleAnimFrames;
-	idleAnimFrames.reserve(4);
-	idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(0, 0, 32, 32)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(32, 0, 32, 32)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(64, 0, 32, 32)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(96, 0, 32, 32)));
-	Animation* _idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.13f);
-	_idleAnim = Animate::create(_idleAnimation);
+	_idleAnimFrames.reserve(4);
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(32, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(96, 0, 64, 64)));
 	//References
 	_enemyName = "SimpleEnemy_";
 	_filter.categoryBits = static_cast<uint16>(eColCategory::enemy);
