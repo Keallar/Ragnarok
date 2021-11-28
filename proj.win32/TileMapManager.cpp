@@ -91,8 +91,13 @@ void TileMapManager::TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer) {
 	//ÂÎÇÌÎÆÍÎ ÞÇËÅÑÍÎÅ ÍÎ ÍÅ ÔÀÊÒ
 }
 
-void TileMapManager::TileMapObjectLayerInit(Node* node, CCTMXLayer* layer) {
-
+void TileMapManager::TileMapObjectLayerInit() {
+	CCTMXObjectGroup* firstGroup = _tiledMap->getObjectGroup("ObjectLayer");
+	auto obj = firstGroup->getObjects();
+	for (auto obj1 : obj) {
+		
+	}
+	auto smth = obj1.asValueMap();
 }
 
 void TileMapManager::testRay(b2WorldNode* _world) {

@@ -15,7 +15,7 @@ public:
     CCTMXLayer* getLayerByName(const std::string& layerName);
     void setTiledMap(const std::string& filename);
     void addLayer(const std::string installableName, const std::string& layerNameInMap);
-    void TileMapObjectLayerInit(Node* node, CCTMXLayer* layer);
+    void TileMapObjectLayerInit();
     void TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer);
     void CollidableLayerInit(Node* node, CCTMXLayer* layer);
     void testRay(b2WorldNode* _world);  

@@ -26,7 +26,6 @@ bool MainScene::init() {
     //addChild(background);
 
     _world = b2WorldNode::create(0, -98, 20);
-    _world->debugDraw();
     addChild(_world);
     //_world->getb2World()->SetContactListener(new ContactListener);
 
@@ -37,9 +36,10 @@ bool MainScene::init() {
     addChild(_firstTileMap->getTiledMap());
     _firstTileMap->setTiledMap("maximum.tmx");
     _firstTileMap->addLayer("Collidable", "Collidable");
+    _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
+    _firstTileMap->TileMapObjectLayerInit();
     _firstTileMap->testRay(_world);
-    _world->debugDraw();
 
 
 
