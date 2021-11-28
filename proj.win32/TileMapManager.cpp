@@ -97,14 +97,17 @@ void TileMapManager::TileMapObjectLayerInit(Node* node, CCTMXLayer* layer) {
 
 void TileMapManager::testRay(b2WorldNode* _world) {
 	b2Vec2 RayStart = { 7800, 25000 };
+	RayStart *= 1 / _world->getPTM();
 	b2Vec2 RayEnd = { 8200, 25000 };
-	DefaultCallback callback;
-	_world->getb2World()->RayCast(&callback, RayStart, RayEnd);
+	RayEnd *= 1 / _world->getPTM();
+	DefaultCallback* callback = new DefaultCallback;
+	_world->getb2World()->RayCast(callback, RayStart, RayEnd);
 }
 
 float32 DefaultCallback::ReportFixture(b2Fixture* fixture, const b2Vec2& point,
 	const b2Vec2& normal, float32 fraction)
 {
 	std::cout<<"callback works";
+	
 	return 0;
 }

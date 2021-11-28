@@ -3,7 +3,7 @@
 #include "ContactListener.h"
 #include "EnemyFactory.h"
 #include <proj.win32/TileMapManager.h>
-
+#include <iostream>
 USING_NS_CC;
 
 Scene* MainScene::createScene() {
@@ -26,6 +26,7 @@ bool MainScene::init() {
     //addChild(background);
 
     _world = b2WorldNode::create(0, -98, 20);
+    _world->debugDraw();
     addChild(_world);
     //_world->getb2World()->SetContactListener(new ContactListener);
 
@@ -33,11 +34,12 @@ bool MainScene::init() {
 
     // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
     // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
-    TileMapManager* _firstTileMap = TileMapManager::createTileMap();
     addChild(_firstTileMap->getTiledMap());
     _firstTileMap->setTiledMap("maximum.tmx");
     _firstTileMap->addLayer("Collidable", "Collidable");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
+    _firstTileMap->testRay(_world);
+    _world->debugDraw();
 
 
 
@@ -71,8 +73,6 @@ bool MainScene::init() {
     _player->setName("player");
 
     _player->setPosition(8000, 25000);
-    _firstTileMap->testRay(_world);
-
     //camera setup
     _cameraTarget = getDefaultCamera();
 
@@ -97,10 +97,12 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 }
 
 void MainScene::update(float dt) {
+
     _player->move();
     _player->jump();
     _world->update(dt);
     _world->removeIsDeletingChildren();
+    _firstTileMap->testRay(_world);
     _cameraTarget->setPosition(_player->getPosition().x, _player->getPosition().y);
 }
 

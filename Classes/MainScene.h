@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "SimpleEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
+#include <proj.win32/TileMapManager.h>
+
 
 enum class ePhysicsCategory {
     Player = 1,
@@ -29,5 +31,6 @@ private:
     Player* _player;
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
+    TileMapManager* _firstTileMap = TileMapManager::createTileMap();
 };
 
