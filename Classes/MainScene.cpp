@@ -38,7 +38,7 @@ bool MainScene::init() {
     _firstTileMap->addLayer("Collidable", "Collidable");
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
-    _firstTileMap->TileMapObjectLayerInit();
+    _firstTileMap->TileMapObjectLayerInit(_world);
     _firstTileMap->testRay(_world);
 
 

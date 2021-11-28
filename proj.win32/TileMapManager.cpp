@@ -91,19 +91,24 @@ void TileMapManager::TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer) {
 	//ÂÎÇÌÎÆÍÎ ÞÇËÅÑÍÎÅ ÍÎ ÍÅ ÔÀÊÒ
 }
 
-void TileMapManager::TileMapObjectLayerInit() {
+void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 	CCTMXObjectGroup* firstGroup = _tiledMap->getObjectGroup("ObjectLayer");
-	auto obj = firstGroup->getObjects();
-	for (auto obj1 : obj) {
-		
+	auto objects = firstGroup->getObjects();
+	for (auto obj : objects) {
+		auto objMap = obj.asValueMap();
+		float x = objMap.at("x").asFloat();
+		float y = objMap.at("y").asFloat();
+		float width = objMap.at("width").asFloat();
+		float height = objMap.at("height").asFloat();
+		b2Vec2 point1 = { x, y }, point2 = { x + width, y - height };
+		_rays.push_back({ point1, point2 });
 	}
-	auto smth = obj1.asValueMap();
 }
 
 void TileMapManager::testRay(b2WorldNode* _world) {
-	b2Vec2 RayStart = { 7800, 25000 };
+	b2Vec2 RayStart = _rays[0].first;
 	RayStart *= 1 / _world->getPTM();
-	b2Vec2 RayEnd = { 8200, 25000 };
+	b2Vec2 RayEnd = _rays[0].second;
 	RayEnd *= 1 / _world->getPTM();
 	DefaultCallback* callback = new DefaultCallback;
 	_world->getb2World()->RayCast(callback, RayStart, RayEnd);
