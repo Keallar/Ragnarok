@@ -12,7 +12,8 @@ enum class eColCategory {
 	enemy = 0x0002,
 	bullet = 0x0004,
 	platform = 0x0008,
-	hook = 0x0010
+	hook = 0x0010,
+	playerMelee = 0x0011
 };
 
 enum class eColMask {
@@ -22,6 +23,7 @@ enum class eColMask {
 	enemyBullet = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::platform),
 	platform = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::bullet),
 	hook = static_cast<int>(eColCategory::platform),
+	playerMelee = static_cast<int>(eColCategory::enemy),
 	all = -1
 };
 
