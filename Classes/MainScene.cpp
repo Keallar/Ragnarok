@@ -144,7 +144,7 @@ void MainScene::update(float dt) {
         }
     }
 
-    ccDrawLine(_player->getPosition(), { 0, 0 });
+    //ccDrawLine(_player->getPosition(), { 0, 0 });
 
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
