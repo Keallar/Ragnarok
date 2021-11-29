@@ -72,101 +72,128 @@ bool Player::init() {
 	_attackAnimFrames.reserve(1);
 	_attackAnimFrames.pushBack(SpriteFrame::create("Tur.png", Rect(0, 0, 64, 64)));
 
+	meleeInit();
+
 	return true;
 }
 
+void Player::meleeInit() {
+	_hitTime = 0.2f;
+	MeleeCharacter::_damage = 100;
+}
+
+void Player::meleeUpdate(float dt) {
+	MeleeCharacter::update(dt);
+	if (_meleeHit) {
+		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+		if (getScaleX() < 0) {
+			//_meleeHit->setRotation(30);
+			_meleeHit->setScaleX(getScaleX());
+			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		}
+	}
+}
 
 void Player::update(float dt) {
 	hookBodyUpdate(dt);
 	shootingCharacterUpdate(dt);
+	meleeUpdate(dt);
 	jump();
 }
 
+void Player::cleanHit() {
+	getParent()->removeChild(_meleeHit);
+}
+
 void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-	switch (keyCode) {
-	case EventKeyboard::KeyCode::KEY_D:
-	{
-		move(PLAYER_SPEED);
-		auto scaleX = getScaleX();
-		if (scaleX < 0) {
-			scaleX *= -1;
-			setScaleX(scaleX);
-		}
-		setAnimState(eAnimState::Move);
-		break;
-	}
-	case EventKeyboard::KeyCode::KEY_A:
-	{
-		move(-PLAYER_SPEED);
-		auto scaleX = getScaleX();
-		if (scaleX > 0) {
-			scaleX *= -1;
-			setScaleX(scaleX);
-		}
-		break;
-	}
-	case EventKeyboard::KeyCode::KEY_SPACE:
-	{
-		if (getJumpState() == eJumpState::None || _jumpCount != 2) {
-			setJumpState(eJumpState::Jump);
-			//_jumpCount++;
-		}
-		if (_hook && _hook->isHooked()) {
-			_hook->setOnRemove();
-			_hook = nullptr;
-		}
-	}
-	case EventKeyboard::KeyCode::KEY_W:
-	{
-		if (getJumpState() == eJumpState::None || _jumpCount != 2) {
-			setJumpState(eJumpState::Jump);
-			_jumpCount++;
-		}
-		if (_hook && _hook->isHooked()) {
-			_hook->setOnRemove();
-			_hook = nullptr;
-		}
-		break;
-	}
-	case EventKeyboard::KeyCode::KEY_R:
-		if (_hook && _hook->isHooked()) {
-			_hook->setOnRemove();
-			_hook = nullptr;
-		}
-		else {
-			if (_hook) {
-				_hook->setOnRemove();
+	if (!_isMeleeAttack) {
+		switch (keyCode) {
+		case EventKeyboard::KeyCode::KEY_D:
+		{
+			move(PLAYER_SPEED);
+			auto scaleX = getScaleX();
+			if (scaleX < 0) {
+				scaleX *= -1;
+				setScaleX(scaleX);
 			}
-			shoot(getPosition() + Vec2(45 * getScaleX(), -45), new PlayerHookBulletCreator);
-			_hook = dynamic_cast<PlayerHookBullet*>(BulletFactory::getInstance()->getLastBullet());
+			setAnimState(eAnimState::Move);
 			break;
 		}
-		break;
-	default:
-		break;
+		case EventKeyboard::KeyCode::KEY_A:
+		{
+			move(-PLAYER_SPEED);
+			auto scaleX = getScaleX();
+			if (scaleX > 0) {
+				scaleX *= -1;
+				setScaleX(scaleX);
+			}
+			break;
+		}
+		case EventKeyboard::KeyCode::KEY_SPACE:
+		{
+			if (getJumpState() == eJumpState::None || _jumpCount != 2) {
+				setJumpState(eJumpState::Jump);
+				//_jumpCount++;
+			}
+			if (_hook && _hook->isHooked()) {
+				_hook->setOnRemove();
+				_hook = nullptr;
+			}
+		}
+		case EventKeyboard::KeyCode::KEY_W:
+		{
+			if (getJumpState() == eJumpState::None || _jumpCount != 2) {
+				setJumpState(eJumpState::Jump);
+				_jumpCount++;
+			}
+			if (_hook && _hook->isHooked()) {
+				_hook->setOnRemove();
+				_hook = nullptr;
+			}
+			break;
+		}
+		case EventKeyboard::KeyCode::KEY_R:
+			if (_hook && _hook->isHooked()) {
+				_hook->setOnRemove();
+				_hook = nullptr;
+			}
+			else {
+				if (_hook) {
+					_hook->setOnRemove();
+				}
+				shoot(getPosition() + Vec2(45 * getScaleX(), -45), new PlayerHookBulletCreator);
+				_hook = dynamic_cast<PlayerHookBullet*>(BulletFactory::getInstance()->getLastBullet());
+				break;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-	switch (keyCode) {
-	case EventKeyboard::KeyCode::KEY_A:
-		move(0);
-		setAnimState(eAnimState::None);
-		break;
-	case EventKeyboard::KeyCode::KEY_D:
-		move(0);
-		setAnimState(eAnimState::None);
-		break;
-	case EventKeyboard::KeyCode::KEY_SPACE:
-		setJumpState(eJumpState::Fall);
-		break;
-	case EventKeyboard::KeyCode::KEY_W:
-		setJumpState(eJumpState::Fall);
-		break;
-	case EventKeyboard::KeyCode::KEY_R:
-		break;
-	default:
-		break;
+	if (!_isMeleeAttack) {
+		switch (keyCode) {
+		case EventKeyboard::KeyCode::KEY_A:
+			move(0);
+			setAnimState(eAnimState::None);
+			break;
+		case EventKeyboard::KeyCode::KEY_D:
+			move(0);
+			setAnimState(eAnimState::None);
+			break;
+		case EventKeyboard::KeyCode::KEY_SPACE:
+			setJumpState(eJumpState::Fall);
+			break;
+		case EventKeyboard::KeyCode::KEY_W:
+			setJumpState(eJumpState::Fall);
+			break;
+		case EventKeyboard::KeyCode::KEY_R:
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -183,7 +210,8 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), new PlayerIdleBulletCreator);
+		//shoot(clickPosCalculate(mouse), new PlayerIdleBulletCreator);
+		hit();
 		setAnimState(eAnimState::Attack);
 	}
 	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
@@ -288,6 +316,27 @@ void Player::setAnimState(eAnimState state) {
 		setAnimState(eAnimState::None);
 	}
 	_playerAnimState = state;
+}
+
+void Player::hit() {
+	if (_meleeHit == nullptr) {
+		_isMeleeAttack = true;
+		move(0);
+		MeleeCharacter::_time = 0;
+		_meleeHit = b2Sprite::create("melee.png");
+		b2Filter filter;
+		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
+		filter.maskBits = static_cast<int>(eColMask::playerMelee);
+		_meleeHit->getFixtureDef()->filter = filter;
+		getParent()->addChild(_meleeHit);
+		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+		if (getScaleX() < 0) {
+			//_meleeHit->setRotation(30);
+			_meleeHit->setScaleX(getScaleX());
+			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		}
+	}
+
 }
 
 eAnimState Player::getAnimState() noexcept {
