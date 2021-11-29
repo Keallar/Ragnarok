@@ -95,13 +95,20 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 	CCTMXObjectGroup* firstGroup = _tiledMap->getObjectGroup("ObjectLayer");
 	auto objects = firstGroup->getObjects();
 	for (auto obj : objects) {
+		std::vector <std::string> sub_strs;
 		auto objMap = obj.asValueMap();
 		float x = objMap.at("x").asFloat();
 		float y = objMap.at("y").asFloat();
 		float width = objMap.at("width").asFloat();
 		float height = objMap.at("height").asFloat();
+		std::string word;
+		std::string callbackProperties = objMap.at("ReturnSmth").asString();
+		std::stringstream ss(callbackProperties);
+		while (ss >> word)
+			sub_strs.push_back(word);
 		b2Vec2 point1 = { x, y }, point2 = { x + width, y - height };
 		_rays.push_back({ point1, point2 });
+		_callbackTypeProperty.push_back(sub_strs);
 	}
 }
 
