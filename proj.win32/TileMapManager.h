@@ -2,6 +2,7 @@
 #include "box2d/b2dSprite.h"
 #include <vector>
 #include "Box2D/Dynamics/b2WorldCallbacks.h"
+#include "RayCastManager.h"
 class TileMapManager : public b2Sprite
 {
 private:
@@ -9,9 +10,13 @@ private:
     std::vector <std::pair<std::string, CCTMXLayer*>> _layers;
     std::vector <std::pair<b2Vec2, b2Vec2>> _rays;
     std::vector <std::vector<std::string>> _callbackTypeProperty;
+    RayCastManager* _rayCastManager;
 public:
     TileMapManager();
     ~TileMapManager();
+    std::vector <std::pair<b2Vec2, b2Vec2>>  getRays();
+    std::vector<std::vector<std::string>> getCallbacks();
+    RayCastManager* getRayCastManager();
     static TileMapManager* createTileMap();
     CCTMXTiledMap* getTiledMap();
     CCTMXLayer* getLayerByName(const std::string& layerName);

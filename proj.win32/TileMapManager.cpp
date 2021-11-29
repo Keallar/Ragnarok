@@ -9,6 +9,18 @@ TileMapManager::~TileMapManager() {
 	delete _tiledMap;
 }
 
+std::vector<std::vector<std::string>> TileMapManager::getCallbacks() {
+	return _callbackTypeProperty;
+}
+
+std::vector <std::pair<b2Vec2, b2Vec2>>  TileMapManager::getRays() {
+	return _rays;
+}
+
+RayCastManager* TileMapManager::getRayCastManager() {
+	return _rayCastManager;
+}
+
 TileMapManager* TileMapManager::createTileMap() {
 	TileMapManager* TileMapObj = new (std::nothrow) TileMapManager();
 	return TileMapObj;
@@ -107,6 +119,8 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 		while (ss >> word)
 			sub_strs.push_back(word);
 		b2Vec2 point1 = { x, y }, point2 = { x + width, y - height };
+		point1 *= 1 / _world->getPTM();
+		point2 *= 1 / _world->getPTM();
 		_rays.push_back({ point1, point2 });
 		_callbackTypeProperty.push_back(sub_strs);
 	}
