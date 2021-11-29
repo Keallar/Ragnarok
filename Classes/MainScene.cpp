@@ -97,9 +97,8 @@ bool MainScene::init() {
         showImGui(); }, "Function ID");
 
     scheduleUpdate();
-
-    /*_test = DrawNode::create();
-    addChild(_test);*/
+    _test = DrawNode::create();
+    addChild(_test);
 
     /*NoticeBox* nBox = NoticeBox::create();
     auto tempLabel = Label::create();
