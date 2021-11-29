@@ -16,7 +16,7 @@ enum class eColCategory {
 };
 
 enum class eColMask {
-	player = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform) | static_cast<int>(eColCategory::bullet),
+	player = static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform) | static_cast<int>(eColCategory::bullet),
 	enemy = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform) | static_cast<int>(eColCategory::bullet),
 	playerBullet = static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::platform),
 	enemyBullet = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::platform),
