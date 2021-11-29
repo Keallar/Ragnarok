@@ -10,6 +10,7 @@
 #include "FlyingEnemy.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
+#include "NoticeBox.h"
 
 USING_NS_CC;
 
@@ -27,7 +28,7 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    DrawNode* background = DrawNode::create();
+    //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
 
@@ -43,12 +44,12 @@ bool MainScene::init() {
 
     //World->debugDraw();
 
-    // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
-    // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
     //ContactListener init
     auto contactListener = new ContactListener;
     _world->getb2World()->SetContactListener(contactListener);
 
+    // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
+    // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
     //TileMap init
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
     addChild(_firstTileMap->getTiledMap());
@@ -68,7 +69,7 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setName("player");
     _player->setPosition(8000, 22000);
-    _player->getBody()->SetBullet(true);
+    //_player->getBody()->SetBullet(true);
 
     //Camera setup
     _cameraTarget = getDefaultCamera();
@@ -92,10 +93,19 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-    scheduleUpdate();
-
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
+
+    scheduleUpdate();
+
+    /*_test = DrawNode::create();
+    addChild(_test);*/
+
+    /*NoticeBox* nBox = NoticeBox::create();
+    auto tempLabel = Label::create();
+    tempLabel->setString("Hello World!");
+    nBox->printText(tempLabel);
+    addChild(nBox);*/
 
     return true;
 }
@@ -133,6 +143,8 @@ void MainScene::update(float dt) {
             }
         }
     }
+
+    ccDrawLine(_player->getPosition(), { 0, 0 });
 
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
@@ -221,6 +233,13 @@ void MainScene::showImGui() {
         }
         ImGui::TreePop();
     }
+    /*if(ImGui::Button("NoticeBox")) {
+        NoticeBox* nBox = NoticeBox::create();
+        auto tempLabel = Label::create();
+        tempLabel->setString("Hello World!");
+        nBox->printText(tempLabel);
+        addChild(nBox);
+    }*/
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {
         if (!isToucedMetric) {
