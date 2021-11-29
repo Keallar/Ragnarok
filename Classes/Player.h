@@ -1,6 +1,7 @@
 #pragma once
 #include "ShootingCharacter.h"
 #include "PlayerHookBullet.h"
+#include "MeleeCharacter.h"
 
 enum class eJumpState {
 	None,
@@ -15,7 +16,7 @@ enum class eAnimState {
 	Attack
 };
 
-class Player : public ShootingCharacter {
+class Player : public ShootingCharacter, MeleeCharacter {
 public:
 	Player();
 	~Player();
@@ -54,6 +55,13 @@ public:
 	static const int PLAYER_SPEED;
 	static const int PLAYER_JUMP_SPEED;
 	static const int PLAYER_JUMP_HEIGHT;
+
+	//melee Func
+	void hit() override;
+	void cleanHit() override;
+	void meleeInit() override;
+	void meleeUpdate(float dt);
+
 
 	//functions for testing
 	int getJumpCount() const;
