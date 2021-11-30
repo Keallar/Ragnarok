@@ -13,11 +13,17 @@ void RayCastManager::castAllRaysOfTileMapManager(std::vector <std::vector<std::s
 			someSum.push_back(_callbackTypeProperty.at(i).at(j).at(1));
 			switch (callbackNameToNumber.at(someSum)) {
 			case 0:
-
+				
 			case 1:
+				break;
 			case 2:
+				break;
 			case 3:
+				break;
+			default:
+				break;
 			}
 		}
 	}
 }
+

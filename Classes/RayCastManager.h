@@ -15,3 +15,11 @@ public:
 	void castAllRaysOfTileMapManager(std::vector <std::vector<std::string>>& _callbackTypeProperty, std::vector <std::pair<b2Vec2, b2Vec2>>& _rays, b2WorldNode* _world);
 };
 
+class CallbackForSpawn : public b2RayCastCallback
+{
+public:
+	virtual ~CallbackForSpawn() {}
+
+	float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point,
+		const b2Vec2& normal, float32 fraction) override;
+};

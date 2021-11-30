@@ -128,9 +128,7 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 
 void TileMapManager::testRay(b2WorldNode* _world) {
 	b2Vec2 RayStart = _rays[0].first;
-	RayStart *= 1 / _world->getPTM();
 	b2Vec2 RayEnd = _rays[0].second;
-	RayEnd *= 1 / _world->getPTM();
 	DefaultCallback* callback = new DefaultCallback;
 	_world->getb2World()->RayCast(callback, RayStart, RayEnd);
 }
