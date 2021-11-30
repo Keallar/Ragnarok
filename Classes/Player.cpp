@@ -95,10 +95,10 @@ void Player::meleeUpdate(float dt) {
 }
 
 void Player::update(float dt) {
-	hookBodyUpdate(dt);
 	shootingCharacterUpdate(dt);
 	meleeUpdate(dt);
 	changePos(_speed);
+	hookBodyUpdate(dt);
 	jump();
 }
 
