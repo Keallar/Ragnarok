@@ -17,7 +17,7 @@ Enemy* Enemy::create(Node* node, Vec2 pos, IEnemyType* type, IEnemyBehaviour* be
 	id++;
 	Enemy* enemyObj = new (std::nothrow) Enemy(type, behaviour);
 	if (enemyObj && enemyObj->initWithFile(type->getFileName())) {
-		enemyObj->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
+		enemyObj->initBody(b2BodyType::b2_dynamicBody, 1, 0);
 		enemyObj->autorelease();
 		enemyObj->setName(type->getName());
 		enemyObj->getFixtureDef()->filter = type->getFilter();
