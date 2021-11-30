@@ -4,7 +4,7 @@
 #include "SimpleEnemy.h"
 #include "box2d/b2dRootWorldNode.h"
 #include <proj.win32/TileMapManager.h>
-
+#include "RayCastManager.h"
 
 enum class ePhysicsCategory {
     Player = 1,
@@ -32,5 +32,7 @@ private:
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
     TileMapManager* _firstTileMap = TileMapManager::createTileMap();
+    RayCastManager* _rayCastManager;
+
 };
 

@@ -10,7 +10,6 @@ private:
     std::vector <std::pair<std::string, CCTMXLayer*>> _layers;
     std::vector <std::pair<b2Vec2, b2Vec2>> _rays;
     std::vector <std::vector<std::string>> _callbackTypeProperty;
-    RayCastManager* _rayCastManager;
 public:
     TileMapManager();
     ~TileMapManager();
