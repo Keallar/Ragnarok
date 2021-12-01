@@ -22,7 +22,7 @@ public:
 
 	virtual void collideFunc();
 
-	void setOnRemove();
+	void setOnRemove() override;
 	bool isRemoving();
 
 	void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;

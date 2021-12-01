@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "box2d/b2dRootWorldNode.h"
 #include "IBulletTypeCreator.h"
+#include <list>
 
 class BulletFactory
 {
@@ -24,7 +25,7 @@ private:
 	float _timer;
 
 	b2WorldNode* _world;
-	std::vector<Bullet*> _bullets;
+	std::list<Bullet*> _bullets;
 	static int id;
 };
 

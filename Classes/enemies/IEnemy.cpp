@@ -6,7 +6,7 @@
 int IEnemy::BULLET_SPEED = 10;
 
 IEnemy::IEnemy(IEnemyType* type, IEnemyBehaviour* behaviour) {
-	_shootingPattern = new IdleShootingPattern(this);
+	_shootingPattern = new CircleShootingPattern(this);
 	_type = type;
 	_behaviour = behaviour;
 }
