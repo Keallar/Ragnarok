@@ -97,8 +97,10 @@ bool MainScene::init() {
         showImGui(); }, "Function ID");
 
     scheduleUpdate();
-    _test = DrawNode::create();
-    addChild(_test);
+
+    /*_test = DrawNode::create();
+    _test->setName("DrawNode");
+    addChild(_test);*/
 
     /*NoticeBox* nBox = NoticeBox::create();
     auto tempLabel = Label::create();
@@ -143,7 +145,7 @@ void MainScene::update(float dt) {
         }
     }
 
-    //ccDrawLine(_player->getPosition(), { 0, 0 });
+    
 
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
@@ -239,6 +241,18 @@ void MainScene::showImGui() {
         nBox->printText(tempLabel);
         addChild(nBox);
     }*/
+    static bool isTouchedDrawNode = false;
+    if (ImGui::Button("DebugNode")) {
+        if (!isTouchedDrawNode) {
+            isTouchedDrawNode = true;
+        }
+        else {
+            isTouchedDrawNode = false;
+        }
+        if (isTouchedDrawNode) {
+            ccDrawLine(_player->getPosition(), { 0, 0 });
+        }
+    }
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {
         if (!isToucedMetric) {

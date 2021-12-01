@@ -26,10 +26,7 @@ Enemy* Enemy::create(Node* node, Vec2 pos, IEnemyType* type, IEnemyBehaviour* be
 		enemyObj->getBody()->SetFixedRotation(true);
 		enemyObj->setPosition(pos);
 		enemyObj->createHpLabel();
-		Animation* idleAnimation = Animation::createWithSpriteFrames(type->getIdleFrames(), 0.13f);
-		Animate* idleAnim = Animate::create(idleAnimation);
-		Action* idleAction = RepeatForever::create(idleAnim);
-		//enemyObj->runAction(idleAction);
+		behaviour->perform(enemyObj, 0.f);
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);

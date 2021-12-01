@@ -18,7 +18,7 @@ IEnemy::~IEnemy() {
 }
 
 void IEnemy::update(float dt) {
-	_behaviour->perform(this);
+	_behaviour->perform(this, dt);
 	//if (_behaviour == )
 	shoot(_shootTarget, new EnemyIdleBulletCreator);
 	shootingCharacterUpdate(dt);
@@ -101,7 +101,7 @@ void IEnemy::createHpLabel() {
 		CCLOG("Error in createHpLabel IEnemy");
 		return;
 	}
-	_hpLabel->setTextColor(Color4B(0, 0, 0, 200));
+	_hpLabel->setTextColor(Color4B(255, 255, 255, 200));
 	addChild(_hpLabel);
 	const auto posX = getOffsetPosition().x;
 	const auto posY = getOffsetPosition().y;
