@@ -43,7 +43,6 @@ void RayCastManager::castAllRaysOfTileMapManager(
 					_tiledMap->getLayer(FG + _callbackTypeProperty.at(i).at(j).at(2))->setVisible(false);
 					callback->setIsActive(false);
 				}
-				delete callback;
 				break;
 			}
 		}

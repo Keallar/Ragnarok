@@ -97,12 +97,12 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 }
 
 void MainScene::update(float dt) {
-
+    _rayCastManager->castAllRaysOfTileMapManager(_firstTileMap->getCallbacks(), _firstTileMap->getRays(),
+                                                _world, _player, _firstTileMap->getTiledMap());
     _player->move();
     _player->jump();
     _world->update(dt);
     _world->removeIsDeletingChildren();
-    _firstTileMap->testRay(_world);
     _cameraTarget->setPosition(_player->getPosition().x, _player->getPosition().y);
 }
 
