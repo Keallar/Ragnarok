@@ -112,6 +112,9 @@
     <ClCompile Include="..\Classes\MeleeCharacter.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\RayCastManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\imgui\CCIMGUI.h">
@@ -235,6 +238,9 @@
       <Filter>src\enemies\enemyType</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MeleeCharacter.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RayCastManager.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
