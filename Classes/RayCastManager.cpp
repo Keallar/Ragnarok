@@ -34,12 +34,14 @@ void RayCastManager::castAllRaysOfTileMapManager(
 				_world->getb2World()->RayCast(callback, _rays[i].first, _rays[i].second);
 				if (callback->getIsActive()) {
 					_tiledMap->getLayer(FG + _callbackTypeProperty.at(i).at(j).at(2))->setVisible(true);
+					callback->setIsActive(false);
 				}
 				break;
 			case 3:
 				_world->getb2World()->RayCast(callback, _rays[i].first, _rays[i].second);
 				if (callback->getIsActive()) {
 					_tiledMap->getLayer(FG + _callbackTypeProperty.at(i).at(j).at(2))->setVisible(false);
+					callback->setIsActive(false);
 				}
 				delete callback;
 				break;
