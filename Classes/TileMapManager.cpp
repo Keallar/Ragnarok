@@ -50,6 +50,9 @@ void TileMapManager::CollidableLayerInit(Node* node, CCTMXLayer* layer) {
 	bool isTileFirst = true;
 	Vec2 startPoint;
 	auto _b2test = b2Sprite::create();
+	b2Filter filter;
+	filter.categoryBits = static_cast<uint16>(eColCategory::platform);
+	filter.maskBits = static_cast<uint16>(eColMask::platform);
 	layer->setVisible(false);
 	for (float i = 0; i < layer->getLayerSize().height; i++) {
 		for (float j = 0; j < layer->getLayerSize().width; j++){
@@ -70,6 +73,7 @@ void TileMapManager::CollidableLayerInit(Node* node, CCTMXLayer* layer) {
 				if (_b2test->getContentSize().width) {
 					_b2test->initBody(b2BodyType::b2_staticBody);
 					_b2test->setTiles(layer->getTileAt({ j - 1, i })->getTextureRect().size.width, node);
+					_b2test->getFixtureDef()->filter = filter;
 					node->addChild(_b2test);
 					_b2test->setPosition(startPoint.x * layer->getTileAt({ j-1, i })->getTextureRect().size.width,
 						(_tiledMap->getMapSize().height - startPoint.y) * layer->getTileAt({ j-1, i })->getTextureRect().size.width );
