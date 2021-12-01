@@ -5,6 +5,11 @@
 class IEnemyBehaviour;
 
 class IEnemy : public ShootingCharacter {
+	enum class eAnimState {
+		None,
+		Move,
+		Attack
+	};
 public:
 	IEnemy(IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
 	virtual ~IEnemy();
@@ -41,11 +46,5 @@ private:
 	bool _destroyed;
 	bool _damaged;
 	Label* _hpLabel;
-
-	enum class eAnimState {
-		None, 
-		Move,
-		Attack
-	};
 	eAnimState _animState;
 };
