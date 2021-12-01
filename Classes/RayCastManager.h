@@ -13,7 +13,12 @@ private:
 		{"LD", 3}
 	};
 public:
-	void castAllRaysOfTileMapManager(std::vector <std::vector<std::string>>& _callbackTypeProperty, std::vector <std::pair<b2Vec2, b2Vec2>>& _rays, b2WorldNode* _world, Player* _player);
+	void castAllRaysOfTileMapManager(
+		std::vector <std::vector<std::string>>& _callbackTypeProperty, 
+		std::vector <std::pair<b2Vec2, b2Vec2>>& _rays, 
+		b2WorldNode* _world, 
+		Player* _player, 
+		CCTMXTiledMap* _tiledMap);
 };
 
 class CallbackForSpawn : public b2RayCastCallback
@@ -24,9 +29,8 @@ public:
 	virtual ~CallbackForSpawn() {}
 
 	bool getIsActive();
+	void setIsActive(bool _activity);
 
 	float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point,
 		const b2Vec2& normal, float32 fraction) override;
 };
-
-class CallbackForLoadLevel {};

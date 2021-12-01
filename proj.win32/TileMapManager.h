@@ -15,7 +15,6 @@ public:
     ~TileMapManager();
     std::vector <std::pair<b2Vec2, b2Vec2>>  getRays();
     std::vector<std::vector<std::string>> getCallbacks();
-    RayCastManager* getRayCastManager();
     static TileMapManager* createTileMap();
     CCTMXTiledMap* getTiledMap();
     CCTMXLayer* getLayerByName(const std::string& layerName);

@@ -17,10 +17,6 @@ std::vector <std::pair<b2Vec2, b2Vec2>>  TileMapManager::getRays() {
 	return _rays;
 }
 
-RayCastManager* TileMapManager::getRayCastManager() {
-	return _rayCastManager;
-}
-
 TileMapManager* TileMapManager::createTileMap() {
 	TileMapManager* TileMapObj = new (std::nothrow) TileMapManager();
 	return TileMapObj;
