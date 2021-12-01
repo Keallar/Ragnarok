@@ -17,7 +17,7 @@ Player::~Player() {
 }
 
 Player* Player::createPlayer() {
-	auto playerObj = Player::create("Tur_64.png", b2BodyType::b2_dynamicBody, 0.f, 0);
+	auto playerObj = Player::create("Tur_64.png", b2BodyType::b2_dynamicBody, 0, 0);
 	return playerObj;
 }
 
@@ -95,9 +95,10 @@ void Player::meleeUpdate(float dt) {
 }
 
 void Player::update(float dt) {
-	hookBodyUpdate(dt);
 	shootingCharacterUpdate(dt);
 	meleeUpdate(dt);
+	changePos(_speed);
+	hookBodyUpdate(dt);
 	jump();
 }
 
@@ -221,7 +222,8 @@ void Player::mousePressed(cocos2d::Event* event) {
 }
 
 void Player::move(int shift) {
-	changePos(shift);
+	//changePos(shift);
+	_speed = shift;
 }
 
 void Player::changePos(int delta) {
