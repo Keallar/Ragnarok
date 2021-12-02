@@ -9,12 +9,13 @@ float Bullet::HOOK_BULLET_LIFE_TIME = 7.0f;
 int Bullet::BULLET_DAMAGE = 100;
 int Bullet::BIG_BULLET_DAMAGE = 150;
 
+
 Bullet::Bullet() {
 	b2Sprite::init();
 }
 
 Bullet::~Bullet() {
-
+	delete _moveBehavior;
 }
 
 Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
@@ -41,10 +42,10 @@ void Bullet::ordinaryUpdate(float dt) {
 	_moveTime -= dt;
 	_lifeTime -= dt;
 	_moveBehavior->move(dt);
-	if (_moveTime <= 0) {
-		getBody()->SetLinearVelocity(b2Vec2{ 0, 0 });
+	if (_moveTime <= 0 && getBody()->GetLinearVelocity() != b2Vec2(0, 0)) {
+		getBody()->SetLinearVelocity(b2Vec2( 0, 0 ));
 	}
-	if (_lifeTime <= 0) {
+	if (_lifeTime <= 0 && _isOnRemove != true) {
 		setOnRemove();
 	}
 }

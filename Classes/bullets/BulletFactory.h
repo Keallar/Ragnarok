@@ -23,6 +23,8 @@ private:
 	void clean();
 
 	float _timer;
+	
+	std::list<std::list<Bullet*>::iterator> removeList;
 
 	b2WorldNode* _world;
 	std::list<Bullet*> _bullets;

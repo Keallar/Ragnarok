@@ -1,5 +1,6 @@
 #include "BulletFactory.h"
 #include "BigBullet.h"
+
 #define CLEAR_TIMER 0
 
 BulletFactory* BulletFactory::instance = nullptr;
@@ -56,7 +57,9 @@ void BulletFactory::clean() {
 		}
 	}
 
-	_bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(),
-		[](Bullet* bullet) { return (!bullet || bullet->isRemoving()); }),
-	_bullets.end());
+	if (_bullets.size() != 0) {
+		_bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(),
+			[](Bullet* bullet) { return (!bullet || bullet->isRemoving()); }),
+		_bullets.end());
+	}
 }
