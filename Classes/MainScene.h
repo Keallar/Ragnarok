@@ -5,6 +5,8 @@
 #include "box2d/b2dRootWorldNode.h"
 #include "bullet.h"
 #include "HUD.h"
+#include "RayCastManager.h"
+#include "TileMapManager.h"
 
 class MainScene : public cocos2d::Scene {
 public:
@@ -28,6 +30,8 @@ private:
     cocos2d::Sprite* _background;
     HUD* _hud;
     cocos2d::DrawNode* _test;
+    RayCastManager* _rayCastManager;
+    TileMapManager* _firstTileMap;
 
     std::vector<IEnemy*> enemies;
 };

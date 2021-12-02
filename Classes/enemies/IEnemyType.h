@@ -16,7 +16,10 @@ public:
 	int getDamage() const noexcept { return _damage; }
 	float getSpeed() const noexcept { return _speed; }
 	float getAttackCooldown() const noexcept { return _attackCooldown; }
-	Animate* getIdleAnimate() const noexcept { if (_idleAnim) return _idleAnim;  }
+	cocos2d::Vector<SpriteFrame*> getIdleFrames() { return _idleAnimFrames; }
+	cocos2d::Vector<SpriteFrame*> getAttackFrames() { return _attackAnimFrames; }
+	cocos2d::Vector<SpriteFrame*> getMoveRightFrames() { return _moveRightAnimFrames; }
+	cocos2d::Vector<SpriteFrame*> getMoveLeftFrames() { return _moveLeftAnimFrames; }
 protected:
 	std::string _fileName;
 	std::string _enemyName;
@@ -26,5 +29,8 @@ protected:
 	float _speed;
 	float _attackCooldown;
 	int _bulletSpeed;
-	Animate* _idleAnim;
+	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _moveRightAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _moveLeftAnimFrames;
 };

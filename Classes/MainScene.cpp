@@ -3,7 +3,6 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
-#include <TileMapManager.h>
 #include "imgui/CCIMGUI.h"
 #include "imgui/imgui.h"
 #include "SimpleEnemy.h"
@@ -51,11 +50,17 @@ bool MainScene::init() {
     // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
     // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
     //TileMap init
-    TileMapManager* _firstTileMap = TileMapManager::createTileMap();
+    _firstTileMap = TileMapManager::createTileMap();
     addChild(_firstTileMap->getTiledMap());
     _firstTileMap->setTiledMap("maximum.tmx");
     _firstTileMap->addLayer("Collidable", "Collidable");
+    _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
+    _firstTileMap->TileMapObjectLayerInit(_world);
+    _firstTileMap->testRay(_world);
+
+
+
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -97,8 +102,10 @@ bool MainScene::init() {
         showImGui(); }, "Function ID");
 
     scheduleUpdate();
-    _test = DrawNode::create();
-    addChild(_test);
+
+    /*_test = DrawNode::create();
+    _test->setName("DrawNode");
+    addChild(_test);*/
 
     /*NoticeBox* nBox = NoticeBox::create();
     auto tempLabel = Label::create();
@@ -143,13 +150,14 @@ void MainScene::update(float dt) {
         }
     }
 
-    //ccDrawLine(_player->getPosition(), { 0, 0 });
-
     enemies.erase(std::remove_if(enemies.begin(), enemies.end(),
         [](IEnemy* enemy) { return enemy->isDestroyed(); }),
         enemies.end());
 
     _hud->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
+
+    //_rayCastManager->castAllRaysOfTileMapManager(_firstTileMap->getCallbacks(), _firstTileMap->getRays(),
+    //    _world, _player, _firstTileMap->getTiledMap());
 
 }
 
@@ -179,7 +187,7 @@ void MainScene::createSomeEnemy(int count) {
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-            auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
+            auto enemy = Enemy::create(_world, pos, new FlyingEnemy, new IdleBehaviour);
             enemies.push_back(enemy);
         }
     }
@@ -239,6 +247,18 @@ void MainScene::showImGui() {
         nBox->printText(tempLabel);
         addChild(nBox);
     }*/
+    static bool isTouchedDrawNode = false;
+    if (ImGui::Button("DebugNode")) {
+        if (!isTouchedDrawNode) {
+            isTouchedDrawNode = true;
+        }
+        else {
+            isTouchedDrawNode = false;
+        }
+        if (isTouchedDrawNode) {
+            ccDrawLine(_player->getPosition(), { 0, 0 });
+        }
+    }
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {
         if (!isToucedMetric) {

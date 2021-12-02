@@ -187,6 +187,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\TileMapManager.cpp" />
     <ClCompile Include="..\Classes\ui\HUD.cpp" />
     <ClCompile Include="..\Classes\ui\NoticeBox.cpp" />
+    <ClCompile Include="..\Classes\RayCastManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +231,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\TileMapManager.h" />
     <ClInclude Include="..\Classes\ui\HUD.h" />
     <ClInclude Include="..\Classes\ui\NoticeBox.h" />
+    <ClInclude Include="..\Classes\RayCastManager.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +245,17 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\background.png" />
+    <Image Include="..\Resources\Flying_enemy.png" />
+    <Image Include="..\Resources\Flying_enemy_anim.png" />
+    <Image Include="..\Resources\hpBase.png" />
+    <Image Include="..\Resources\hpLife.png" />
+    <Image Include="..\Resources\Mana.png" />
+    <Image Include="..\Resources\Turtle.png" />
+    <Image Include="..\Resources\Tur_64.png" />
+    <Image Include="..\Resources\Tur_idle_anim.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

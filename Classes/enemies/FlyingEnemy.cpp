@@ -7,14 +7,23 @@ FlyingEnemy::FlyingEnemy() {
 	_fileName = "Flying_enemy.png";
 	//Animation
 	//Idle animation
-	Vector<SpriteFrame*> idleAnimFrames;
-	idleAnimFrames.reserve(4);
-	idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 0, 64, 64)));
-	idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 0, 64, 64)));
-	Animation* _idleAnimation = Animation::createWithSpriteFrames(idleAnimFrames, 0.13f);
-	_idleAnim = Animate::create(_idleAnimation);
+	_idleAnimFrames.reserve(4);
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 0, 64, 64)));
+	//Move right animation 
+	_moveRightAnimFrames.reserve(4);
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 128, 64, 64)));
+	//Move left animation
+	_moveLeftAnimFrames.reserve(4);
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 192, 64, 64)));
 	//References
 	_enemyName = "FlyingEnemy_";
 	_filter.categoryBits = static_cast<uint16>(eColCategory::enemy);

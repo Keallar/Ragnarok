@@ -26,10 +26,7 @@ Enemy* Enemy::create(Node* node, Vec2 pos, IEnemyType* type, IEnemyBehaviour* be
 		enemyObj->getBody()->SetFixedRotation(true);
 		enemyObj->setPosition(pos);
 		enemyObj->createHpLabel();
-		if (type->getIdleAnimate()) {
-			Action* idleAction = RepeatForever::create(type->getIdleAnimate());
-			enemyObj->runAction(idleAction);
-		}
+		behaviour->perform(enemyObj, 0.f);
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);
@@ -53,5 +50,6 @@ bool Enemy::init() {
 	setSpeed(_type->getSpeed());
 	setDamaged(false);
 	setDestroyed(false);
+
 	return true;
 }
