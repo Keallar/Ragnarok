@@ -33,6 +33,6 @@ private:
     RayCastManager* _rayCastManager;
     TileMapManager* _firstTileMap;
 
-    std::vector<IEnemy*> enemies;
+    std::list<IEnemy*> enemies;
 };
 

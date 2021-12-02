@@ -272,13 +272,11 @@ void b2Sprite::setOnRemove()
 b2Body* b2Sprite::getBody()
 {
 	return _B2Body;
-
 }
 
 b2BodyDef* b2Sprite::getBodyDef()
 {
 	return &_B2BodyDef;
-
 }
 
 b2Fixture* b2Sprite::getFixture()

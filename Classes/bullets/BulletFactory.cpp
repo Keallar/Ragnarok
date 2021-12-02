@@ -9,21 +9,14 @@ BulletFactory* BulletFactory::getInstance() {
 	}
 
 	instance = new BulletFactory;
-	instance->_timer = 0;
+	instance->_timer = 0.f;
 	return instance;
 }
 
-void BulletFactory::setWorld(cocos2d::Node* world) {
-	_world = dynamic_cast<b2WorldNode*>(world);
-}
 
 void BulletFactory::createBullet(IBulletTypeCreator* bulletCreator, Vec2 pos, Vec2 dest) {
 	auto bullet = bulletCreator->create(_world, pos, dest);
 	_bullets.push_back(bullet);
-}
-
-Bullet* BulletFactory::getLastBullet() {
-	return _bullets.back();
 }
 
 void BulletFactory::update(float dt) {
@@ -35,17 +28,17 @@ void BulletFactory::update(float dt) {
 			}
 		}
 	}
+
 	_timer -= dt;
 	if (_timer <= 0) {
 		clean();
-		_timer = 0;
+		_timer = 0.f;
 	}
 }
 
 void BulletFactory::clean() {
 
-	for (std::vector<Bullet*>::iterator it = _bullets.begin(); it != _bullets.end(); it++) {
-		auto bullet = *it;
+	for (auto bullet : _bullets) {
 		if (bullet) {
 			if (bullet->isRemoving()) {
 				_world->removeChild(bullet);
@@ -58,4 +51,12 @@ void BulletFactory::clean() {
 		_bullets.erase(std::remove(_bullets.begin(), _bullets.end(), it));
 	}
 	_removeList.clear();
+}
+
+void BulletFactory::setWorld(cocos2d::Node* world) {
+	_world = dynamic_cast<b2WorldNode*>(world);
+}
+
+Bullet* BulletFactory::getLastBullet() {
+	return _bullets.back();
 }

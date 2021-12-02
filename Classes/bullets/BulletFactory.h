@@ -3,8 +3,7 @@
 #include "box2d/b2dRootWorldNode.h"
 #include "IBulletTypeCreator.h"
 
-class BulletFactory
-{
+class BulletFactory {
 public:
 	static BulletFactory* getInstance();
 
@@ -24,7 +23,7 @@ private:
 	float _timer;
 
 	b2WorldNode* _world;
-	std::vector<Bullet*> _bullets;
+	std::list<Bullet*> _bullets;
 	std::list<Bullet*> _removeList;
 	static int id;
 };
