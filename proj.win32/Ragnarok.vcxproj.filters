@@ -82,9 +82,6 @@
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp">
       <Filter>src\box2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PlayerHookBullet.cpp">
-      <Filter>src\bullets</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ContactListener.cpp">
       <Filter>src\contactListener</Filter>
     </ClCompile>
@@ -114,6 +111,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\RayCastManager.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PlayerHookBullet.cpp">
+      <Filter>src\bullets\bulletType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\FireBullet.cpp">
+      <Filter>src\bullets\bulletType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\IceBullet.cpp">
+      <Filter>src\bullets\bulletType</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +216,6 @@
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h">
       <Filter>src\box2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PlayerHookBullet.h">
-      <Filter>src\bullets</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ContactListener.h">
       <Filter>src\contactListener</Filter>
     </ClInclude>
@@ -242,6 +245,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\RayCastManager.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PlayerHookBullet.h">
+      <Filter>src\bullets\bulletType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\FireBullet.h">
+      <Filter>src\bullets\bulletType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\IceBullet.h">
+      <Filter>src\bullets\bulletType</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

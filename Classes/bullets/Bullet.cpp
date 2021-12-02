@@ -5,6 +5,9 @@ float Bullet::BULLET_MOVE_TIME = 2.0f;
 float Bullet::BIG_BULLET_MOVE_TIME = 2.0f;
 float Bullet::HOOK_BULLET_MOVE_TIME = 2;
 float Bullet::HOOK_BULLET_LIFE_TIME = 7.0f;
+float Bullet::ICE_BULLET_MOVE_TIME = 0.5f;
+float Bullet::FIRE_BULLET_MOVE_TIME = 2.0f;
+
 
 int Bullet::BULLET_DAMAGE = 100;
 int Bullet::BIG_BULLET_DAMAGE = 150;
@@ -34,6 +37,17 @@ Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filte
 	return nullptr;
 }
 
+
+bool Bullet::init() {
+	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
+
+	_moveTime = BULLET_MOVE_TIME;
+	_lifeTime = BULLET_MOVE_TIME;
+	_isOnRemove = false;
+	return true;
+}
+
+
 void Bullet::update(float dt) {
 	ordinaryUpdate(dt);
 }
@@ -54,16 +68,6 @@ void Bullet::ordinaryOptions(cocos2d::Node* world, Vec2 pos) {
 	world->addChild(this);
 	this->setPosition(pos);
 	this->getBody()->SetGravityScale(0);
-}
-
-bool Bullet::init() {
-	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
-
-
-	_moveTime = BULLET_MOVE_TIME;
-	_lifeTime = BULLET_MOVE_TIME;
-	_isOnRemove = false;
-	return true;
 }
 
 void Bullet::setCoords(Vec2 pos, Vec2 dest) {
@@ -88,7 +92,7 @@ void Bullet::setOnRemove() {
 }
 
 bool Bullet::isRemoving() {
-	return _isOnRemove;
+ 	return _isOnRemove;
 }
 
 void Bullet::collideFunc() {

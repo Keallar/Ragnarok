@@ -59,8 +59,6 @@ bool MainScene::init() {
     _firstTileMap->TileMapObjectLayerInit(_world);
     _firstTileMap->testRay(_world);
 
-
-
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -232,7 +230,7 @@ void MainScene::showImGui() {
         }
         if (ImGui::Button("DeleteLastEnemy")) {
             if (!enemies.empty()) {
-                enemies[enemies.size() - 1]->setDestroyed(true);
+                //enemies[enemies.size() - 1]->setDestroyed(true);
             }
         }
         for (const auto& enemy : enemies) {

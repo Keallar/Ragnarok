@@ -4,8 +4,7 @@
 #include "IBulletTypeCreator.h"
 #include <list>
 
-class BulletFactory
-{
+class BulletFactory {
 public:
 	static BulletFactory* getInstance();
 
@@ -28,6 +27,7 @@ private:
 
 	b2WorldNode* _world;
 	std::list<Bullet*> _bullets;
+	std::list<Bullet*> _removeList;
 	static int id;
 };
 

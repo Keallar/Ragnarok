@@ -26,3 +26,17 @@ void CircleShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulle
 		_parent->createBulletOnParent(bulletCreator, pos, newDest);
 	}
 }
+
+void TripleShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) {
+	float a = M_PI * 2 / 36;
+	for (int i = -1; i <= 2; i++) {
+		float acos = cos(a * i);
+		float asin = sin(a * i);
+		float x = dest.x * acos - dest.y * asin;
+		float y = dest.x * asin - dest.y * acos;
+		Vec2 newDest = Vec2(x, y);
+		//newDest.normalize();
+		newDest *= _parent->PLAYER_BULLET_SPEED;
+		_parent->createBulletOnParent(bulletCreator, pos, newDest);
+	}
+}

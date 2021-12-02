@@ -211,8 +211,8 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		//shoot(clickPosCalculate(mouse), new PlayerIdleBulletCreator);
-		hit();
+		shoot(clickPosCalculate(mouse), new PlayerIceBulletCreator);
+		//hit();
 		setAnimState(eAnimState::Attack);
 	}
 	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
@@ -233,7 +233,7 @@ void Player::changePos(int delta) {
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	if (_attackCooldown <= 0) {
 
-		if (auto isIdle = dynamic_cast<PlayerIdleBulletCreator*>(bulletCreator)) {
+		if (auto isIdle = dynamic_cast<PlayerIceBulletCreator*>(bulletCreator)) {
 			_attackCooldown = PLAYER_ATTACK_COOLDOWN;
 		}
 		else if (auto isBig = dynamic_cast<PlayerBigBulletCreator*>(bulletCreator)) {
