@@ -31,3 +31,13 @@ public:
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
+class PlayerIceBulletCreator : public IBulletTypeCreator {
+public:
+	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
+};
+
+class PlayerIceBlastCreator : public IBulletTypeCreator {
+public:
+	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
+};
+

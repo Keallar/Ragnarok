@@ -25,6 +25,7 @@ private:
 
 	b2WorldNode* _world;
 	std::vector<Bullet*> _bullets;
+	std::list<Bullet*> _removeList;
 	static int id;
 };
 

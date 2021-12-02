@@ -159,8 +159,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\bullets\BigBullet.cpp" />
     <ClCompile Include="..\Classes\bullets\Bullet.cpp" />
     <ClCompile Include="..\Classes\bullets\BulletFactory.cpp" />
+    <ClCompile Include="..\Classes\bullets\FireBullet.cpp" />
     <ClCompile Include="..\Classes\bullets\IBulletMoveBehavior.cpp" />
     <ClCompile Include="..\Classes\bullets\IBulletTypeCreator.cpp" />
+    <ClCompile Include="..\Classes\bullets\IceBullet.cpp" />
     <ClCompile Include="..\Classes\bullets\Ray.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
     <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp" />
@@ -199,8 +201,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\bullets\BigBullet.h" />
     <ClInclude Include="..\Classes\bullets\Bullet.h" />
     <ClInclude Include="..\Classes\bullets\BulletFactory.h" />
+    <ClInclude Include="..\Classes\bullets\FireBullet.h" />
     <ClInclude Include="..\Classes\bullets\IBulletMoveBehavior.h" />
     <ClInclude Include="..\Classes\bullets\IBulletTypeCreator.h" />
+    <ClInclude Include="..\Classes\bullets\IceBullet.h" />
     <ClInclude Include="..\Classes\bullets\Ray.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
     <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h" />

@@ -9,7 +9,7 @@ BulletFactory* BulletFactory::getInstance() {
 	}
 
 	instance = new BulletFactory;
-	instance->_timer = 10;
+	instance->_timer = 0;
 	return instance;
 }
 
@@ -38,21 +38,24 @@ void BulletFactory::update(float dt) {
 	_timer -= dt;
 	if (_timer <= 0) {
 		clean();
-		_timer = 10;
+		_timer = 0;
 	}
 }
 
 void BulletFactory::clean() {
 
-	for (auto bullet : _bullets) {
+	for (std::vector<Bullet*>::iterator it = _bullets.begin(); it != _bullets.end(); it++) {
+		auto bullet = *it;
 		if (bullet) {
 			if (bullet->isRemoving()) {
 				_world->removeChild(bullet);
-				bullet = nullptr;
+				_removeList.push_back(bullet);
 			}
 		}
 	}
-	_bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(),
-		[](Bullet* bullet) { return (!bullet || bullet->isRemoving()); }),
-	_bullets.end());
+
+	for (auto it : _removeList) {
+		_bullets.erase(std::remove(_bullets.begin(), _bullets.end(), it));
+	}
+	_removeList.clear();
 }

@@ -1,6 +1,7 @@
 #include "IBulletTypeCreator.h" 
 #include "BigBullet.h"
 #include "PlayerHookBullet.h"
+#include "IceBullet.h"
 
 b2Filter IBulletTypeCreator::playerPhysMask() {
 	b2Filter filter;
@@ -40,5 +41,15 @@ Bullet* EnemyIdleBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) 
 
 Bullet* PlayerHookBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
 	auto bullet = PlayerHookBullet::create(world, pos, dest, hookPhysMask());
+	return bullet;
+}
+
+Bullet* PlayerIceBulletCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
+	auto bullet = IceBullet::create(world, pos, dest, playerPhysMask());
+	return bullet;
+}
+
+Bullet* PlayerIceBlastCreator::create(b2WorldNode* world, Vec2 pos, Vec2 dest) {
+	auto bullet = IceBlast::create(world, pos, dest, playerPhysMask());
 	return bullet;
 }

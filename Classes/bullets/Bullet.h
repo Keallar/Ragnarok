@@ -37,6 +37,9 @@ protected:
 	static float BIG_BULLET_MOVE_TIME;
 	static float HOOK_BULLET_MOVE_TIME;
 	static float HOOK_BULLET_LIFE_TIME;
+	static float ICE_BULLET_MOVE_TIME;
+	static float FIRE_BULLET_MOVE_TIME;
+
 
 	static int BULLET_DAMAGE;
 	static int BIG_BULLET_DAMAGE;

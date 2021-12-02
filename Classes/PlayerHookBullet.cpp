@@ -29,7 +29,7 @@ PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 
 		_hook->setOnRemove();
 	}
 	PlayerHookBullet* _hook = new (std::nothrow) PlayerHookBullet();
-	if (_hook && _hook->initWithFile("BigBullet.png")) {
+	if (_hook && _hook->initWithFile("Hook.png")) {
 		_hook->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		_hook->autorelease();
 		_hook->init();

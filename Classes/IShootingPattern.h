@@ -26,3 +26,9 @@ public:
 	CircleShootingPattern(ShootingCharacter* parent) : IShootingPattern(parent) {};
 	void shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) override;
 };
+
+class TripleShootingPattern : public IShootingPattern {
+public:
+	TripleShootingPattern(ShootingCharacter* parent) : IShootingPattern(parent) {};
+	void shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) override;
+};
