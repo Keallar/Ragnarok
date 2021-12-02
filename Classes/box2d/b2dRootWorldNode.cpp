@@ -190,11 +190,13 @@ void b2WorldNode::setOnRemoveList(b2Sprite* sprite)
 
 void b2WorldNode::removeIsDeletingChildren()
 {
-	for (auto body = _onRemoveList.begin(); body != _onRemoveList.end(); body++)
-	{
-		removeChild(*body);
+	if (_onRemoveList.size() != 0) {
+		for (auto body = _onRemoveList.begin(); body != _onRemoveList.end(); body++)
+		{
+			removeChild(*body);
+		}
+		_onRemoveList.clear();
 	}
-	_onRemoveList.clear();
 }
 
 void b2WorldNode::addDynamicChild(b2Body* child)

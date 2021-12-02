@@ -120,7 +120,7 @@ public:
 
 	//WTF
 	//modification for deleting element after contact for project
-	void setOnRemove();
+	virtual void setOnRemove();
 	//bool isDeleting();
 
 	virtual void setBody(b2Body* body, b2WorldNode* world);

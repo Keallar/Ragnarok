@@ -1,5 +1,8 @@
 #include "BulletFactory.h"
 #include "BigBullet.h"
+
+#define CLEAR_TIMER 0
+
 BulletFactory* BulletFactory::instance = nullptr;
 int BulletFactory::id = -1;
 
@@ -15,6 +18,7 @@ BulletFactory* BulletFactory::getInstance() {
 
 
 void BulletFactory::createBullet(IBulletTypeCreator* bulletCreator, Vec2 pos, Vec2 dest) {
+	
 	auto bullet = bulletCreator->create(_world, pos, dest);
 	_bullets.push_back(bullet);
 }

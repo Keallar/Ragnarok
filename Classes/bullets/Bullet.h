@@ -7,8 +7,7 @@ class IBulletMoveBehavior;
 class Bullet : public b2Sprite
 {
 public:
-	Bullet();
-	~Bullet();
+	~Bullet() override;
 
 	static Bullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
 
@@ -22,7 +21,7 @@ public:
 
 	virtual void collideFunc();
 
-	void setOnRemove();
+	void setOnRemove() override;
 	bool isRemoving();
 
 	void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
@@ -33,6 +32,7 @@ public:
 	virtual int getDamage();
 
 protected:
+	Bullet();
 	static float BULLET_MOVE_TIME;
 	static float BIG_BULLET_MOVE_TIME;
 	static float HOOK_BULLET_MOVE_TIME;
