@@ -180,13 +180,19 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
-void MainScene::createSomeEnemy(int count) {
+void MainScene::createSomeEnemy(int count, std::string type) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-            auto enemy = Enemy::create(_world, pos, new FlyingEnemy, new IdleBehaviour);
-            enemies.push_back(enemy);
+            if (type == "Simple") {
+                auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
+                enemies.push_back(enemy);
+            } 
+            else if (type == "Flying") {
+                auto enemy = Enemy::create(_world, pos, new FlyingEnemy, new IdleBehaviour);
+                enemies.push_back(enemy);
+            }
         }
     }
 }
@@ -224,13 +230,22 @@ void MainScene::showImGui() {
     //Enemies info
     if (ImGui::TreeNode("Enemies")) {
         static int countOfEnemy = 1;
+        static int enemyType = 1;
+        static std::string eType;
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
+        if (ImGui::Combo("Enemy Type", &enemyType, "Simple\0Flying")) {
+            switch (enemyType)
+            {
+            case 0: eType = "Simple"; break;
+            case 1: eType = "Flying"; break;
+            }
+        }
         if (ImGui::Button("CreateEnemy")) {
-            createSomeEnemy(countOfEnemy);
+            createSomeEnemy(countOfEnemy, eType);
         }
         if (ImGui::Button("DeleteLastEnemy")) {
             if (!enemies.empty()) {
-                //enemies[enemies.size() - 1]->setDestroyed(true);
+                enemies.back()->setDestroyed(true);
             }
         }
         for (const auto& enemy : enemies) {

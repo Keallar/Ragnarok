@@ -17,7 +17,7 @@ public:
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);
-    void createSomeEnemy(int count);
+    void createSomeEnemy(int count, std::string type);
     void showImGui();
 
     void tileMapInit();

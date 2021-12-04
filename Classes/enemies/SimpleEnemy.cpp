@@ -8,10 +8,10 @@ SimpleEnemy::SimpleEnemy() {
 	//Animation
 	//Idle animation
 	_idleAnimFrames.reserve(4);
-	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(0, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(32, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(64, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle.png", Rect(96, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle_anim.png", Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle_anim.png", Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle_anim.png", Rect(128, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Turtle_anim.png", Rect(192, 0, 64, 64)));
 	//References
 	_enemyName = "SimpleEnemy_";
 	_filter.categoryBits = static_cast<uint16>(eColCategory::enemy);

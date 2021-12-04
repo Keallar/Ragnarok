@@ -19,22 +19,32 @@ void IdleBehaviour::perform(IEnemy* enemy, float dt) {
 		std::uniform_int_distribution<int> dist(0, 2);
 		auto state = dist(rd);
 		if (state == static_cast<int>(eIdleState::Sleep)) {
-
+			if (!enemy->getActionByTag(0)) {
+				Animation* idleAnimation = Animation::createWithSpriteFrames(enemy->getType()->getIdleFrames(), 0.13f);
+				Animate* idleAnim = Animate::create(idleAnimation);
+				Action* idleAction = Repeat::create(idleAnim, 1);
+				idleAction->setTag(0);
+				enemy->runAction(idleAction);
+			}
 		}
 		if (state == static_cast<int>(eIdleState::MoveRight)) {
-			//enemy->stopAllActions();
-			Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getType()->getMoveRightFrames());
-			Animate* moveRightAnim = Animate::create(moveRightAnimation);
-			Action* moveRightAct = Repeat::create(moveRightAnim, 1);
-			enemy->runAction(moveRightAct);
+			if (!enemy->getActionByTag(1)) {
+				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getType()->getMoveRightFrames(), 0.13f);
+				Animate* moveRightAnim = Animate::create(moveRightAnimation);
+				Action* moveRightAct = Repeat::create(moveRightAnim, 1);
+				moveRightAct->setTag(1);
+				enemy->runAction(moveRightAct);
+			}
 			enemy->setPositionX(enemy->getPosition().x + 3);
 		}
 		if (state == static_cast<int>(eIdleState::MoveLeft)) {
-			//enemy->stopAllActions();
-			Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getType()->getMoveLeftFrames());
-			Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
-			Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
-			enemy->runAction(moveLeftAct);
+			if (!enemy->getActionByTag(2)) {
+				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getType()->getMoveLeftFrames(), 0.13f);
+				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
+				Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
+				moveLeftAct->setTag(2);
+				enemy->runAction(moveLeftAct);
+			}
 			enemy->setPositionX(enemy->getPosition().x - 3);
 		}
 	}
@@ -73,11 +83,11 @@ void IdleBehaviour::perform(IEnemy* enemy, float dt) {
 					moveLeftAct->setTag(2);
 					enemy->runAction(moveLeftAct);
 				}
-					enemy->setPositionX(enemy->getPosition().x - 3);
+				enemy->setPositionX(enemy->getPosition().x - 3);
 			}
-			_stateCooldown -= dt;
 		}
 	}
+	_stateCooldown -= dt;
 }
 
 std::string IdleBehaviour::getBehaviourName() const {

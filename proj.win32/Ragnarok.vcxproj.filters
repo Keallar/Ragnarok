@@ -121,6 +121,9 @@
     <ClCompile Include="..\Classes\bullets\IceBullet.cpp">
       <Filter>src\bullets\bulletType</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\enemies\AbobaEnemy.cpp">
+      <Filter>src\enemies\enemyType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\imgui\CCIMGUI.h">
@@ -254,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\bullets\IceBullet.h">
       <Filter>src\bullets\bulletType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\enemies\AbobaEnemy.h">
+      <Filter>src\enemies\enemyType</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

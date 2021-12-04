@@ -165,6 +165,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\bullets\IceBullet.cpp" />
     <ClCompile Include="..\Classes\bullets\Ray.cpp" />
     <ClCompile Include="..\Classes\ContactListener.cpp" />
+    <ClCompile Include="..\Classes\enemies\AbobaEnemy.cpp" />
     <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\Boss.cpp" />
     <ClCompile Include="..\Classes\enemies\Enemy.cpp" />
@@ -207,6 +208,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\bullets\IceBullet.h" />
     <ClInclude Include="..\Classes\bullets\Ray.h" />
     <ClInclude Include="..\Classes\ContactListener.h" />
+    <ClInclude Include="..\Classes\enemies\AbobaEnemy.h" />
     <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\Boss.h" />
     <ClInclude Include="..\Classes\enemies\Enemy.h" />

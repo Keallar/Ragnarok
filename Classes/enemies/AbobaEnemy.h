@@ -1,8 +1,8 @@
-#pragma once
+#pragma once 
 #include "IEnemyType.h"
 
-class SimpleEnemy : public IEnemyType {
+class AbobaEnemy : public IEnemyType {
 public:
-	SimpleEnemy();
+	AbobaEnemy();
 	std::string getTypeName() const override;
 };
