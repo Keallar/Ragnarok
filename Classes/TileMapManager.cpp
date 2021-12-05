@@ -125,14 +125,15 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 		_trigger->setTriggerFunc(callbackProperties);
 
 		//Set trigger by size
-		width,height *= 1 / _world->getPTM();
+		height *= 1 / _world->getPTM();
+		width *= 1 / _world->getPTM();
 		_trigger->setTrigger(width, height);
 
 		//BitMask
 		_trigger->getFixtureDef()->filter = filter;
 
 		//Adding to scene
-		getParent()->addChild(_trigger);
+		_world->addChild(_trigger);
 		_trigger->setPosition(x, y);
 		_trigger = Trigger::create();
 	}

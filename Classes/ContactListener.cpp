@@ -60,7 +60,9 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::trigger) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
 				auto trigger = dynamic_cast<Trigger*>(SpriteA);
-				trigger->onCollision();
+				if (!trigger->getIsActive()) {
+					trigger->onCollision();
+				}
 			}
 		};
 
