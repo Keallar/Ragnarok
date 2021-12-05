@@ -22,6 +22,9 @@ public:
 
     void tileMapInit();
 
+    Player* getPlayer();
+    TileMapManager* getTMM();
+
     CREATE_FUNC(MainScene);
 private:
     Player* _player;

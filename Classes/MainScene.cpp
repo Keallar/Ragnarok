@@ -13,6 +13,14 @@
 
 USING_NS_CC;
 
+Player* MainScene::getPlayer() {
+    return _player;
+}
+
+TileMapManager* MainScene::getTMM() {
+    return _firstTileMap;
+}
+
 Scene* MainScene::createScene() {
     return MainScene::create();
 }

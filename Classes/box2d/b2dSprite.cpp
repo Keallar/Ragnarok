@@ -190,6 +190,16 @@ void b2Sprite::setTiles(float _tileWidth, Node* world)
 	_B2Shape.Set(vertices, 4);
 	_B2FixtureDef.shape = &_B2Shape;
 }
+
+void b2Sprite::setTrigger(float width, float height) {
+	b2Vec2 vertices[4];
+	vertices[0].Set(0, -(height / 2));
+	vertices[1].Set(0, height / 2);
+	vertices[2].Set(width, height / 2);
+	vertices[3].Set(width, -height / 2);
+	_B2Shape.Set(vertices, 4);
+	_B2FixtureDef.shape = &_B2Shape;
+}
 //		***	SET/GET	***
 
 void b2Sprite::setPosition(const Vec2 & pos)

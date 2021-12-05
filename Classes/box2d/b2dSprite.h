@@ -13,7 +13,8 @@ enum class eColCategory {
 	bullet = 0x0004,
 	platform = 0x0008,
 	hook = 0x0010,
-	playerMelee = 0x0011
+	playerMelee = 0x0011,
+	trigger = 0x0012
 };
 
 enum class eColMask {
@@ -24,6 +25,7 @@ enum class eColMask {
 	platform = static_cast<int>(eColCategory::player) | static_cast<int>(eColCategory::enemy) | static_cast<int>(eColCategory::bullet),
 	hook = static_cast<int>(eColCategory::platform),
 	playerMelee = static_cast<int>(eColCategory::enemy),
+	trigger = static_cast<int>(eColCategory::player),
 	all = -1
 };
 
@@ -112,6 +114,7 @@ public:
 	void setB2BodyPosition(float x, float y);
 	void setTriangleShape();
 	void setTiles(float _tileWidth, Node* world);
+	void setTrigger(float width, float height);
 	virtual void setRotation(float rotation) override;
 	void setB2BodyRotation(float rotation);
 

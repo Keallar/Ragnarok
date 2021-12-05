@@ -2,6 +2,7 @@
 #include "box2d/b2dSprite.h"
 #include "IEnemy.h"
 #include "Player.h"
+#include "Trigger.h"
 
 void ContactListener::BeginContact(b2Contact* contact) {
 	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL &&
@@ -55,6 +56,11 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				auto enemy = dynamic_cast<IEnemy*>(SpriteA);
 				enemy->setDamaged(true);
 				enemy->changeHp(-100);
+			}
+			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::trigger) &&
+				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
+				auto trigger = dynamic_cast<Trigger*>(SpriteA);
+				trigger->onCollision();
 			}
 		};
 
