@@ -35,4 +35,3 @@ private:
 
     std::list<IEnemy*> enemies;
 };
-

@@ -43,9 +43,6 @@
     <ClCompile Include="..\Classes\enemies\IEnemy.cpp">
       <Filter>src\enemies</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>src\player</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ui\HUD.cpp">
       <Filter>src\ui</Filter>
     </ClCompile>
@@ -82,22 +79,10 @@
     <ClCompile Include="..\Classes\box2d\GLESDebugDraw.cpp">
       <Filter>src\box2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ContactListener.cpp">
-      <Filter>src\contactListener</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\IShootingPattern.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\MainScene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ShootingCharacter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\TileMapManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -105,15 +90,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
       <Filter>src\enemies\enemyType</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\MeleeCharacter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\RayCastManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PlayerHookBullet.cpp">
-      <Filter>src\bullets\bulletType</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\bullets\FireBullet.cpp">
       <Filter>src\bullets\bulletType</Filter>
@@ -123,6 +99,30 @@
     </ClCompile>
     <ClCompile Include="..\Classes\enemies\AbobaEnemy.cpp">
       <Filter>src\enemies\enemyType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\PlayerHookBullet.cpp">
+      <Filter>src\bullets\bulletType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\bullets\IShootingPattern.cpp">
+      <Filter>src\bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\player\Player.cpp">
+      <Filter>src\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\contactListener\ContactListener.cpp">
+      <Filter>src\contactListener</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tiledMap\RayCastManager.cpp">
+      <Filter>src\tiledMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\tiledMap\TileMapManager.cpp">
+      <Filter>src\tiledMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\characters\MeleeCharacter.cpp">
+      <Filter>src\characters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\characters\ShootingCharacter.cpp">
+      <Filter>src\characters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,9 +180,6 @@
     <ClInclude Include="..\Classes\enemies\IEnemy.h">
       <Filter>src\enemies</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>src\player</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ui\HUD.h">
       <Filter>src\ui</Filter>
     </ClInclude>
@@ -219,22 +216,10 @@
     <ClInclude Include="..\Classes\box2d\GLESDebugDraw.h">
       <Filter>src\box2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ContactListener.h">
-      <Filter>src\contactListener</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\IShootingPattern.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\MainScene.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ShootingCharacter.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TileMapManager.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
@@ -242,15 +227,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
       <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\MeleeCharacter.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\RayCastManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PlayerHookBullet.h">
-      <Filter>src\bullets\bulletType</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\bullets\FireBullet.h">
       <Filter>src\bullets\bulletType</Filter>
@@ -260,6 +236,30 @@
     </ClInclude>
     <ClInclude Include="..\Classes\enemies\AbobaEnemy.h">
       <Filter>src\enemies\enemyType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\PlayerHookBullet.h">
+      <Filter>src\bullets\bulletType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\bullets\IShootingPattern.h">
+      <Filter>src\bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\player\Player.h">
+      <Filter>src\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\contactListener\ContactListener.h">
+      <Filter>src\contactListener</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tiledMap\RayCastManager.h">
+      <Filter>src\tiledMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tiledMap\TileMapManager.h">
+      <Filter>src\tiledMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\characters\MeleeCharacter.h">
+      <Filter>src\characters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\characters\ShootingCharacter.h">
+      <Filter>src\characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +301,12 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{71ff7850-068c-480a-97d8-b6285b7be36b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tiledMap">
+      <UniqueIdentifier>{3b98b72f-5d44-42ae-9d96-9d919bca99a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\characters">
+      <UniqueIdentifier>{b0e47200-681d-4536-b8e3-ed6940c5d489}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
