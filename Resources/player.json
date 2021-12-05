@@ -1,8 +1,16 @@
 {
   "player": {
-    "hp": 100,
-    "mana": 100,
-    "speed": 1,
-    "jumpSpeed": 10
+    "specifications": {
+      "hp": 100,
+      "mana": 100,
+      "speed": 1,
+      "jumpSpeed": 7,
+      "startPosition": [ 8000, 22000 ]
+    },
+    "components": {
+      "textureFile": "Tur_64.png",
+      "idleAnimFile": "Tur_idle_anim.png",
+      "attackAnimFile": ""
+    }
   }
 }

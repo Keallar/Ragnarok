@@ -169,14 +169,11 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\characters\MeleeCharacter.cpp" />
     <ClCompile Include="..\Classes\characters\ShootingCharacter.cpp" />
     <ClCompile Include="..\Classes\contactListener\ContactListener.cpp" />
-    <ClCompile Include="..\Classes\enemies\AbobaEnemy.cpp" />
     <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\Boss.cpp" />
     <ClCompile Include="..\Classes\enemies\Enemy.cpp" />
-    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp" />
     <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\IEnemy.cpp" />
-    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp" />
     <ClCompile Include="..\Classes\imgui\CCIMGUI.cpp" />
     <ClCompile Include="..\Classes\imgui\CCIMGUIGLViewImpl.cpp" />
     <ClCompile Include="..\Classes\imgui\CCImGuiLayer.cpp" />
@@ -212,16 +209,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\characters\MeleeCharacter.h" />
     <ClInclude Include="..\Classes\characters\ShootingCharacter.h" />
     <ClInclude Include="..\Classes\contactListener\ContactListener.h" />
-    <ClInclude Include="..\Classes\enemies\AbobaEnemy.h" />
     <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\Boss.h" />
     <ClInclude Include="..\Classes\enemies\Enemy.h" />
-    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h" />
     <ClInclude Include="..\Classes\enemies\IdleBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\IEnemy.h" />
     <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h" />
-    <ClInclude Include="..\Classes\enemies\IEnemyType.h" />
-    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h" />
     <ClInclude Include="..\Classes\imgui\CCIMGUI.h" />
     <ClInclude Include="..\Classes\imgui\CCIMGUIGLViewImpl.h" />
     <ClInclude Include="..\Classes\imgui\CCImGuiLayer.h" />
@@ -253,6 +246,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\enemies.json" />
     <None Include="..\Resources\player.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

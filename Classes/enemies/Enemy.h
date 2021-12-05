@@ -4,9 +4,9 @@
 
 class Enemy : public IEnemy {
 public:
-	Enemy(IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
+	Enemy(IEnemyBehaviour* behaviour = nullptr);
 	~Enemy();
-	static Enemy* create(Node* node, Vec2 pos, IEnemyType* type = nullptr, IEnemyBehaviour* behaviour = nullptr);
+	static Enemy* create(Node* node, Vec2 pos, std::string type, IEnemyBehaviour* behaviour = nullptr);
 	bool init() override;
 private:
 	static int id;

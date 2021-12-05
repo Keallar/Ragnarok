@@ -5,15 +5,13 @@
 
 int IEnemy::BULLET_SPEED = 10;
 
-IEnemy::IEnemy(IEnemyType* type, IEnemyBehaviour* behaviour) {
+IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
 	_shootingPattern = new CircleShootingPattern(this);
-	_type = type;
 	_behaviour = behaviour;
 }
 
 IEnemy::~IEnemy() {
 	delete _hpLabel;
-	delete _type;
 	delete _behaviour;
 }
 
@@ -79,6 +77,14 @@ void IEnemy::setDamage(int damage) noexcept {
 	_damage = damage;
 }
 
+void IEnemy::setAttackCooldown(float attackCooldown) {
+	_attackCooldown = attackCooldown;
+}
+
+float IEnemy::getAttackCooldown() const noexcept {
+	return _attackCooldown;
+}
+
 void IEnemy::setDestroyed(bool state) noexcept {
 	_destroyed = state;
 }
@@ -114,19 +120,23 @@ void IEnemy::updateHpLabel() {
 	_hpLabel->setString(std::to_string(_hp));
 }
 
+const cocos2d::Vector<SpriteFrame*> IEnemy::getIdleFrames() const {
+	return _idleAnimFrames;
+}
+
+const cocos2d::Vector<SpriteFrame*> IEnemy::getAttackFrames() const {
+	return _attackAnimFrames;
+}
+
+const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveRightFrames() const {
+	return _moveRightAnimFrames;
+}
+
+const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveLeftFrames() const {
+	return _moveLeftAnimFrames;
+}
+
 void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
 	delete _behaviour;
 	_behaviour = behaviour;
-}
-
-void IEnemy::setType(IEnemyType* type) {
-	delete _type;
-	_type = type;
-}
-
-IEnemyType* IEnemy::getType() const {
-	if (!_type) {
-		return nullptr;
-	}
-	return _type;
 }

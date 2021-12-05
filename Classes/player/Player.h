@@ -47,11 +47,6 @@ public:
 	//ShootingCharacter function
 	void shoot(cocos2d::Vec2 targetPos, IBulletTypeCreator* bulletCreator) override;
 
-	//get from private because they are const & i need bullet speed at scene
-	static const int PLAYER_SPEED;
-	static const int PLAYER_JUMP_SPEED;
-	static const int PLAYER_JUMP_HEIGHT;
-
 	//melee Func
 	void hit() override;
 	void cleanHit() override;
@@ -69,11 +64,15 @@ private:
 	//params
 	int _hp;
 	int _mana;
+	float _curSpeed;
 	float _speed;
 	float _jumpSpeed;
 	int _jumpBegin;
 	bool _isDied;
 	int _jumpCount;
+	//static const int SPEED;
+	static const int MAX_SPEED;
+	static const int JUMP_HEIGHT;
 
 	PlayerHookBullet* _hook;
 	cocos2d::DrawNode* _hookBody;

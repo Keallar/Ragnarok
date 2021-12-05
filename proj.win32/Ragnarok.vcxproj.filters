@@ -31,9 +31,6 @@
     <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp">
       <Filter>src\enemies\enemyBehaviour</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\enemies\Boss.cpp">
       <Filter>src\enemies</Filter>
     </ClCompile>
@@ -88,17 +85,11 @@
     <ClCompile Include="main.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\bullets\FireBullet.cpp">
       <Filter>src\bullets\bulletType</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\bullets\IceBullet.cpp">
       <Filter>src\bullets\bulletType</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\enemies\AbobaEnemy.cpp">
-      <Filter>src\enemies\enemyType</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\bullets\PlayerHookBullet.cpp">
       <Filter>src\bullets\bulletType</Filter>
@@ -165,12 +156,6 @@
     <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h">
       <Filter>src\enemies\enemyBehaviour</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\enemies\IEnemyType.h">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\enemies\Boss.h">
       <Filter>src\enemies</Filter>
     </ClInclude>
@@ -225,17 +210,11 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h">
-      <Filter>src\enemies\enemyType</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\bullets\FireBullet.h">
       <Filter>src\bullets\bulletType</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\bullets\IceBullet.h">
       <Filter>src\bullets\bulletType</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\enemies\AbobaEnemy.h">
-      <Filter>src\enemies\enemyType</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\bullets\PlayerHookBullet.h">
       <Filter>src\bullets\bulletType</Filter>
@@ -293,9 +272,6 @@
     <Filter Include="win32">
       <UniqueIdentifier>{cd815eff-2c67-4a01-ba05-df683cc1d326}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\enemies\enemyType">
-      <UniqueIdentifier>{b24354d3-61f2-4597-a9e5-44316c524f6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\enemies\enemyBehaviour">
       <UniqueIdentifier>{f95ebfbd-d35e-4bd8-854e-3f4fa2885b4e}</UniqueIdentifier>
     </Filter>
@@ -316,6 +292,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\player.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="..\Resources\enemies.json">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>

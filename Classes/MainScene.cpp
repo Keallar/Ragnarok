@@ -5,8 +5,6 @@
 #include "ContactListener.h"
 #include "CCIMGUI.h"
 #include "imgui.h"
-#include "SimpleEnemy.h"
-#include "FlyingEnemy.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 #include "NoticeBox.h"
@@ -186,11 +184,11 @@ void MainScene::createSomeEnemy(int count, std::string type) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
             if (type == "Simple") {
-                auto enemy = Enemy::create(_world, pos, new SimpleEnemy, new IdleBehaviour);
+                auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
                 enemies.push_back(enemy);
             } 
             else if (type == "Flying") {
-                auto enemy = Enemy::create(_world, pos, new FlyingEnemy, new IdleBehaviour);
+                auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
                 enemies.push_back(enemy);
             }
         }
@@ -230,14 +228,15 @@ void MainScene::showImGui() {
     //Enemies info
     if (ImGui::TreeNode("Enemies")) {
         static int countOfEnemy = 1;
-        static int enemyType = 1;
+        static int enemyType = -1;
         static std::string eType;
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
-        if (ImGui::Combo("Enemy Type", &enemyType, "Simple\0Flying")) {
+        if (ImGui::Combo("Enemy Type", &enemyType, "Simple\0Flying\0Aboba")) {
             switch (enemyType)
             {
             case 0: eType = "Simple"; break;
             case 1: eType = "Flying"; break;
+            case 2: eType = "Aboba"; break;
             }
         }
         if (ImGui::Button("CreateEnemy")) {

@@ -2,14 +2,12 @@
 #include "box2d/b2dRootWorldNode.h"
 #include "IShootingPattern.h"
 #include "external/json/document.h"
-#include "external/json/writer.h"
-#include "external/json/stringbuffer.h"
 
 USING_NS_CC;
 
-const int Player::PLAYER_SPEED = 1;
-const int Player::PLAYER_JUMP_SPEED = 10;
-const int Player::PLAYER_JUMP_HEIGHT = 90;
+//const int Player::SPEED = 10;
+const int Player::MAX_SPEED = 10;
+const int Player::JUMP_HEIGHT = 90;
 
 Player::Player() {
 	init();
@@ -49,28 +47,34 @@ bool Player::init() {
 			return false;
 
 		if (initFile.HasMember("player")) {
-			const rapidjson::Value& valueEnt = initFile["player"];
-			if (valueEnt.HasMember("hp") && valueEnt.HasMember("mana") && valueEnt.HasMember("speed") && valueEnt.HasMember("jumpSpeed")) {
-				const rapidjson::Value& hp = valueEnt["hp"];
-				_hp = hp.GetInt(); // int value obtained
+			const rapidjson::Value& playerEnt = initFile["player"];
+			if (playerEnt.HasMember("specifications")) {
+				const rapidjson::Value& valueEnt = playerEnt["specifications"];
+				if (valueEnt.HasMember("hp") && valueEnt.HasMember("mana") && valueEnt.HasMember("speed") && valueEnt.HasMember("jumpSpeed")) {
+					const rapidjson::Value& hp = valueEnt["hp"];
+					_hp = hp.GetInt(); // int value obtained
 
-				const rapidjson::Value& mana = valueEnt["mana"];
-				_mana = mana.GetInt(); // int value obtained
+					const rapidjson::Value& mana = valueEnt["mana"];
+					_mana = mana.GetInt(); // int value obtained
 
-				const rapidjson::Value& speed = valueEnt["speed"];
-				_speed = speed.GetInt(); // int value obtained
+					const rapidjson::Value& speed = valueEnt["speed"];
+					_speed = speed.GetDouble(); // int value obtained
 
-				const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
-				_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
+					const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
+					_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
 
+				}
+				/*else {
+					return false;
+				}*/
 			}
-			else {
+			/*else {
 				return false;
-			}
+			}*/
 		}
-		else {
+		/*else {
 			return false;
-		}
+		}*/
 
 		bRet = true;
 
@@ -79,8 +83,9 @@ bool Player::init() {
 	_shootingPattern = new IdleShootingPattern(this);
 	_attackCooldown = 0;
 	/*_hp = 100;
-	_mana = 100;
-	_speed = 0.f;*/
+	_mana = 100;*/
+	//_speed = 0.f
+	_curSpeed = 0.f;
 	_jumpBegin = 0;
 	_playerJumpState = eJumpState::None;
 	_playerAnimState = eAnimState::None;
@@ -150,7 +155,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_D:
 		{
-			_speed = PLAYER_SPEED;
+			_curSpeed = _speed;
 			auto scaleX = getScaleX();
 			if (scaleX < 0) {
 				scaleX *= -1;
@@ -161,7 +166,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		}
 		case EventKeyboard::KeyCode::KEY_A:
 		{
-			_speed = -PLAYER_SPEED;
+			_curSpeed = -_speed;
 			auto scaleX = getScaleX();
 			if (scaleX > 0) {
 				scaleX *= -1;
@@ -216,11 +221,11 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	if (!_isMeleeAttack) {
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_A:
-			_speed = 0;
+			_curSpeed = 0;
 			setAnimState(eAnimState::None);
 			break;
 		case EventKeyboard::KeyCode::KEY_D:
-			_speed = 0;
+			_curSpeed = 0;
 			setAnimState(eAnimState::None);
 			break;
 		case EventKeyboard::KeyCode::KEY_SPACE:
@@ -261,8 +266,9 @@ void Player::mousePressed(cocos2d::Event* event) {
 }
 
 void Player::move(float dt) {
-	//getBody()->SetLinearVelocity(b2Vec2(delta, getBody()->GetLinearVelocity().y));
-	getBody()->ApplyLinearImpulseToCenter({ _speed * 60 * dt, /*getBody()->GetLinearVelocity().y*/0 }, true);
+	//UNDONE moving 
+	getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0}, true);
+	//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
@@ -289,8 +295,8 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 
 void Player::jump(float dt) {
 	if (getJumpState() == eJumpState::Jump) {
-		//getBody()->ApplyLinearImpulseToCenter({ /*getBody()->GetLinearVelocity().x*/0 , 3 * 60 * dt }, true);
-		getBody()->SetLinearVelocity({ /*getBody()->GetLinearVelocity().x*/0, PLAYER_JUMP_SPEED /** 60 * dt*/ });
+		//getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, _jumpSpeed});
+		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
 	}
 	if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
@@ -299,7 +305,7 @@ void Player::jump(float dt) {
 
 void Player::setJumpState(eJumpState state) {
 	if (state == eJumpState::Jump) {
-		_jumpBegin = getPosition().y + PLAYER_JUMP_HEIGHT;
+		_jumpBegin = getPosition().y + JUMP_HEIGHT;
 	}
 	if (state == eJumpState::None) {
 		_jumpCount = 0;
