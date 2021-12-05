@@ -1,5 +1,4 @@
 #include "Bullet.h"
-#include "IBulletMoveBehavior.h"
 
 float Bullet::BULLET_MOVE_TIME = 2.0f;
 float Bullet::BIG_BULLET_MOVE_TIME = 2.0f;
@@ -18,7 +17,7 @@ Bullet::Bullet() {
 }
 
 Bullet::~Bullet() {
-	delete _moveBehavior;
+
 }
 
 Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
@@ -28,7 +27,6 @@ Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filte
 		bullet->autorelease();
 		bullet->init();
 		bullet->setCoords(pos, dest);
-		bullet->setNewBehavior(new BulletIdleBehavior(bullet));
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
@@ -44,18 +42,14 @@ bool Bullet::init() {
 	_moveTime = BULLET_MOVE_TIME;
 	_lifeTime = BULLET_MOVE_TIME;
 	_isOnRemove = false;
+	_startedMove = false;
 	return true;
 }
 
-
 void Bullet::update(float dt) {
-	ordinaryUpdate(dt);
-}
-
-void Bullet::ordinaryUpdate(float dt) {
 	_moveTime -= dt;
 	_lifeTime -= dt;
-	_moveBehavior->move(dt);
+	move(dt);
 	if (_moveTime <= 0 && getBody()->GetLinearVelocity() != b2Vec2(0, 0)) {
 		getBody()->SetLinearVelocity(b2Vec2( 0, 0 ));
 	}
@@ -103,8 +97,12 @@ int Bullet::getDamage() {
 	return BULLET_DAMAGE;
 }
 
-void Bullet::setNewBehavior(IBulletMoveBehavior* behavior) {
-	_moveBehavior = behavior;
+void Bullet::move(float dt) {
+	if (!_startedMove) {
+		getBody()->SetLinearVelocity(b2Vec2(getDest().x, getDest().y));
+		//_parent->setPosition(Vec2(_parent->getDest().x, _parent->getDest().y));
+	}
+	_startedMove = true;
 }
 
 Vec2 Bullet::getDest() {

@@ -1,5 +1,4 @@
 #include "IceBullet.h"
-#include "IBulletMoveBehavior.h"
 #include "IShootingPattern.h"
 #include <cmath>
 
@@ -17,18 +16,21 @@ bool IceBullet::init() {
 void IceBullet::update(float dt) {
 	_moveTime -= dt;
 	_lifeTime -= dt;
-	_moveBehavior->move(dt);
-	if (_moveTime <= 0) {
-		Bullet::getBody()->SetLinearVelocity(b2Vec2{ 0, 0 });
-	}
+	move(dt);
 	if (_lifeTime <= 0) {
 		_stoped = true;
 	}
 	if (_stoped) {
-		auto dest = Vec2(Bullet::getBody()->GetLinearVelocity().x, Bullet::getBody()->GetLinearVelocity().y);
+		auto dest = Vec2(getBody()->GetLinearVelocity().x, getBody()->GetLinearVelocity().y);
 
-		shoot(dest, new PlayerIceBlastCreator);
-		Bullet::setOnRemove();
+		b2Filter filter;
+		filter.categoryBits = getFixture()->GetFilterData().categoryBits;
+		filter.maskBits = getFixture()->GetFilterData().maskBits;
+		shoot(dest, new IceBlastCreator(filter));
+		setOnRemove();
+	}
+	if (_moveTime <= 0) {
+		getBody()->SetLinearVelocity(b2Vec2{ 0, 0 });
 	}
 }
 
@@ -38,13 +40,12 @@ void IceBullet::collideFunc() {
 
 IceBullet* IceBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	IceBullet* bullet = new (std::nothrow) IceBullet();
-	if (bullet && bullet->Bullet::initWithFile("Ice.png")) {
-		bullet->Bullet::initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
-		bullet->Bullet::autorelease();
+	if (bullet && bullet->initWithFile("Ice.png")) {
+		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
+		bullet->autorelease();
 		bullet->init();
 		bullet->setCoords(pos, dest);
-		bullet->setNewBehavior(new BulletIdleBehavior(bullet));
-		bullet->Bullet::getFixtureDef()->filter = filter;
+		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
 	}
@@ -63,11 +64,11 @@ bool IceBullet::isStoped() {
 void IceBullet::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	if (_attackCooldown <= 0) {
 
-		Vec2 pos = Bullet::getPosition();
-		Vec2 dest = targetPos - pos;
+		Vec2 pos = getPosition();
+		Vec2 dest = targetPos; //+ pos;
+		//dest.y *= -1;
 		dest.normalize();
 		dest *= PLAYER_BULLET_SPEED;
-
 		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
 }
@@ -81,7 +82,7 @@ bool IceBlast::init() {
 }
 
 void IceBlast::update(float dt) {
-	ordinaryUpdate(dt);
+	Bullet::update(dt);
 }
 
 IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
@@ -91,7 +92,6 @@ IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter f
 		bullet->autorelease();
 		bullet->init();
 		bullet->setCoords(pos, dest);
-		bullet->setNewBehavior(new BulletIdleBehavior(bullet));
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
@@ -103,3 +103,4 @@ IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter f
 int IceBlast::getDamage() {
 	return 0;
 }
+

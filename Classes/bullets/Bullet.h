@@ -14,7 +14,6 @@ public:
 	virtual bool init();
 
 	virtual void update(float dt);
-	void ordinaryUpdate(float dt);
 
 	float getMoveTime();
 	float getLifeTime();
@@ -27,7 +26,7 @@ public:
 	void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
 	Vec2 getDest();
-	void setNewBehavior(IBulletMoveBehavior* behavior);
+	//void setNewBehavior(IBulletMoveBehavior* behavior);
 
 	virtual int getDamage();
 
@@ -48,7 +47,9 @@ protected:
 
 	void setCoords(Vec2 pos, Vec2 dest);
 
-	IBulletMoveBehavior* _moveBehavior;
+	virtual void move(float dt);
+	bool _startedMove;
+	//IBulletMoveBehavior* _moveBehavior;
 	Vec2 _pos;
 	Vec2 _dest;
 	float _moveTime;

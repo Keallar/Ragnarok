@@ -5,7 +5,7 @@
 
 class IShootingPattern;
 
-class ShootingCharacter : public b2Sprite {
+class ShootingCharacter {
 public:
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) = 0;
 	void createBulletOnParent(IBulletTypeCreator* bulletCreator, Vec2 pos, Vec2 dest);
@@ -20,6 +20,10 @@ public:
 	static const int PLAYER_BULLET_SPEED;
 protected:
 	float _attackCooldown;
+
+	b2Filter playerPhysMask();
+	b2Filter enemyPhysMask();
+	b2Filter hookPhysMask();
 
 	IShootingPattern* _shootingPattern;
 };

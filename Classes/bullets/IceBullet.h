@@ -3,7 +3,7 @@
 #include "ShootingCharacter.h"
 
 
-class IceBullet : public Bullet, ShootingCharacter {
+class IceBullet : public Bullet, public ShootingCharacter {
 public:
 	static IceBullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
 

@@ -67,6 +67,7 @@ bool MainScene::init() {
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::player);
     filter.maskBits = static_cast<uint16>(eColMask::player);
+    //filter.groupIndex = -1;
     _player->getFixtureDef()->filter = filter;
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);

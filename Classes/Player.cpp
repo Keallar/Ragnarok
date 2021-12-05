@@ -162,7 +162,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				if (_hook) {
 					_hook->setOnRemove();
 				}
-				shoot(getPosition() + Vec2(45 * getScaleX(), -45), new PlayerHookBulletCreator);
+				shoot(getPosition() + Vec2(45 * getScaleX(), -45), new HookBulletCreator(playerPhysMask()));
 				_hook = dynamic_cast<PlayerHookBullet*>(BulletFactory::getInstance()->getLastBullet());
 				break;
 			}
@@ -211,12 +211,12 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), new PlayerIceBulletCreator);
+		shoot(clickPosCalculate(mouse), new FireBulletCreator(playerPhysMask()));
 		//hit();
 		setAnimState(eAnimState::Attack);
 	}
 	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
-		shoot(clickPosCalculate(mouse), new PlayerBigBulletCreator);
+		shoot(clickPosCalculate(mouse), new BigBulletCreator(playerPhysMask()));
 		setAnimState(eAnimState::Attack);
 	}
 }
@@ -233,10 +233,10 @@ void Player::changePos(int delta) {
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	if (_attackCooldown <= 0) {
 
-		if (auto isIdle = dynamic_cast<PlayerIceBulletCreator*>(bulletCreator)) {
+		if (auto isIdle = dynamic_cast<FireBulletCreator*>(bulletCreator)) {
 			_attackCooldown = PLAYER_ATTACK_COOLDOWN;
 		}
-		else if (auto isBig = dynamic_cast<PlayerBigBulletCreator*>(bulletCreator)) {
+		else if (auto isBig = dynamic_cast<BigBulletCreator*>(bulletCreator)) {
 			_attackCooldown = PLAYER_BIG_ATTACK_COOLDOWN;
 		}
 		Vec2 pos = getPosition();
