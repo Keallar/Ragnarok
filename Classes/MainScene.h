@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "IEnemy.h"
-#include "box2d/b2dRootWorldNode.h"
+#include "b2dRootWorldNode.h"
 #include "bullet.h"
 #include "HUD.h"
 #include "RayCastManager.h"

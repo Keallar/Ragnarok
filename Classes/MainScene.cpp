@@ -3,8 +3,8 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
-#include "imgui/CCIMGUI.h"
-#include "imgui/imgui.h"
+#include "CCIMGUI.h"
+#include "imgui.h"
 #include "SimpleEnemy.h"
 #include "FlyingEnemy.h"
 #include "IdleBehaviour.h"
@@ -20,7 +20,7 @@ Scene* MainScene::createScene() {
 bool MainScene::init() {
     if (!Scene::init()) {
         return false;
-    }    
+    }  
 
     GameVars::initVars();
 
@@ -62,7 +62,7 @@ bool MainScene::init() {
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
-    _player = Player::createPlayer();
+    _player = Player::create();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::player);

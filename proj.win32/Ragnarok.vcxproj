@@ -78,7 +78,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\Box2D\include;$(EngineRoot)extensions;../Classes/ui;../Classes/bullets;../Classes/player;../Classes/tiledMap;../Classes/characters;../Classes/contactListener;../Classes/imgui;../Classes/enemies;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\Box2D\include;$(EngineRoot)extensions;../Classes/ui;../Classes/bullets;../Classes/player;../Classes/tiledMap;../Classes/characters;../Classes/box2d;../Classes/contactListener;../Classes/imgui;../Classes/enemies;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_BOX2D_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -253,15 +253,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\background.png" />
-    <Image Include="..\Resources\Flying_enemy.png" />
-    <Image Include="..\Resources\Flying_enemy_anim.png" />
-    <Image Include="..\Resources\hpBase.png" />
-    <Image Include="..\Resources\hpLife.png" />
-    <Image Include="..\Resources\Mana.png" />
-    <Image Include="..\Resources\Turtle.png" />
-    <Image Include="..\Resources\Tur_64.png" />
-    <Image Include="..\Resources\Tur_idle_anim.png" />
+    <None Include="..\Resources\player.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

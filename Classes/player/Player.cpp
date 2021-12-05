@@ -1,13 +1,15 @@
 #include "Player.h"
 #include "box2d/b2dRootWorldNode.h"
 #include "IShootingPattern.h"
+#include "external/json/document.h"
+#include "external/json/writer.h"
+#include "external/json/stringbuffer.h"
 
 USING_NS_CC;
 
-const int Player::PLAYER_SPEED = 20;
-const int Player::PLAYER_JUMP_SPEED = 20;
+const int Player::PLAYER_SPEED = 1;
+const int Player::PLAYER_JUMP_SPEED = 10;
 const int Player::PLAYER_JUMP_HEIGHT = 90;
-//const int Player::BULLET_SPEED = 10;
 
 Player::Player() {
 	init();
@@ -16,19 +18,14 @@ Player::Player() {
 Player::~Player() {
 }
 
-Player* Player::createPlayer() {
-	auto playerObj = Player::create("Tur_64.png", b2BodyType::b2_dynamicBody, 0, 0);
-	return playerObj;
-}
-
-Player* Player::create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution) {
-	Player* sprite = new (std::nothrow) Player();
-	if (sprite && sprite->initWithFile(filename)) {
-		sprite->initBody(type, friction, restitution);
-		//sprite->autorelease();
-		return sprite;
+Player* Player::create() {
+	Player* playerObj = new (std::nothrow) Player();
+	if (playerObj && playerObj->initWithFile("Tur_64.png")) {
+		playerObj->initBody(b2BodyType::b2_dynamicBody, 0.025f, 0.01f);
+		playerObj->autorelease();
+		return playerObj;
 	}
-	CC_SAFE_DELETE(sprite);
+	CC_SAFE_DELETE(playerObj);
 	return nullptr;
 }
 
@@ -36,12 +33,54 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
+	rapidjson::Document initFile;
+	bool bRet = false;
+	ssize_t size = 0;
+	unsigned char* pBytes = NULL;
+	do {
+		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("player.json", "r", &size);
+		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+		std::string load_str((const char*)pBytes, size);
+		CC_SAFE_DELETE_ARRAY(pBytes);
+		initFile.Parse<0>(load_str.c_str());
+		CC_BREAK_IF(initFile.HasParseError());
+
+		if (!initFile.IsObject())
+			return false;
+
+		if (initFile.HasMember("player")) {
+			const rapidjson::Value& valueEnt = initFile["player"];
+			if (valueEnt.HasMember("hp") && valueEnt.HasMember("mana") && valueEnt.HasMember("speed") && valueEnt.HasMember("jumpSpeed")) {
+				const rapidjson::Value& hp = valueEnt["hp"];
+				_hp = hp.GetInt(); // int value obtained
+
+				const rapidjson::Value& mana = valueEnt["mana"];
+				_mana = mana.GetInt(); // int value obtained
+
+				const rapidjson::Value& speed = valueEnt["speed"];
+				_speed = speed.GetInt(); // int value obtained
+
+				const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
+				_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
+
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+
+		bRet = true;
+
+	} while (!bRet);
 	//References
 	_shootingPattern = new IdleShootingPattern(this);
 	_attackCooldown = 0;
-	_hp = 100;
+	/*_hp = 100;
 	_mana = 100;
-	_speed = 0.f;
+	_speed = 0.f;*/
 	_jumpBegin = 0;
 	_playerJumpState = eJumpState::None;
 	_playerAnimState = eAnimState::None;
@@ -97,9 +136,9 @@ void Player::meleeUpdate(float dt) {
 void Player::update(float dt) {
 	shootingCharacterUpdate(dt);
 	meleeUpdate(dt);
-	changePos(_speed);
+	move(dt);
 	hookBodyUpdate(dt);
-	jump();
+	jump(dt);
 }
 
 void Player::cleanHit() {
@@ -111,7 +150,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_D:
 		{
-			move(PLAYER_SPEED);
+			_speed = PLAYER_SPEED;
 			auto scaleX = getScaleX();
 			if (scaleX < 0) {
 				scaleX *= -1;
@@ -122,7 +161,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		}
 		case EventKeyboard::KeyCode::KEY_A:
 		{
-			move(-PLAYER_SPEED);
+			_speed = -PLAYER_SPEED;
 			auto scaleX = getScaleX();
 			if (scaleX > 0) {
 				scaleX *= -1;
@@ -177,11 +216,11 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	if (!_isMeleeAttack) {
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_A:
-			move(0);
+			_speed = 0;
 			setAnimState(eAnimState::None);
 			break;
 		case EventKeyboard::KeyCode::KEY_D:
-			move(0);
+			_speed = 0;
 			setAnimState(eAnimState::None);
 			break;
 		case EventKeyboard::KeyCode::KEY_SPACE:
@@ -221,13 +260,9 @@ void Player::mousePressed(cocos2d::Event* event) {
 	}
 }
 
-void Player::move(int shift) {
-	//changePos(shift);
-	_speed = shift;
-}
-
-void Player::changePos(int delta) {
-	getBody()->SetLinearVelocity(b2Vec2(delta, getBody()->GetLinearVelocity().y));
+void Player::move(float dt) {
+	//getBody()->SetLinearVelocity(b2Vec2(delta, getBody()->GetLinearVelocity().y));
+	getBody()->ApplyLinearImpulseToCenter({ _speed * 60 * dt, /*getBody()->GetLinearVelocity().y*/0 }, true);
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
@@ -252,9 +287,10 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	}
 }
 
-void Player::jump() {
+void Player::jump(float dt) {
 	if (getJumpState() == eJumpState::Jump) {
-		getBody()->ApplyLinearImpulseToCenter({ 0, 10 }, true);
+		//getBody()->ApplyLinearImpulseToCenter({ /*getBody()->GetLinearVelocity().x*/0 , 3 * 60 * dt }, true);
+		getBody()->SetLinearVelocity({ /*getBody()->GetLinearVelocity().x*/0, PLAYER_JUMP_SPEED /** 60 * dt*/ });
 	}
 	if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
@@ -384,7 +420,7 @@ bool Player::isDied() const {
 	return _isDied;
 }
 
-void Player::setDied(bool state) noexcept {	
+void Player::setDied(bool state) noexcept {
 	_isDied = state;
 }
 

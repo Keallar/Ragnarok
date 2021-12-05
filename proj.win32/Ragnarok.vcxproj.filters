@@ -315,32 +315,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\background.png">
+    <None Include="..\Resources\player.json">
       <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\Flying_enemy.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\Flying_enemy_anim.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\hpBase.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\hpLife.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\Mana.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\Tur_64.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\Tur_idle_anim.png">
-      <Filter>Resources</Filter>
-    </Image>
-    <Image Include="..\Resources\Turtle.png">
-      <Filter>Resources</Filter>
-    </Image>
+    </None>
   </ItemGroup>
 </Project>
