@@ -13,30 +13,33 @@ void ShotGunShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bull
 }
 
 void CircleShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) {
-	dest = Vec2(1, 0);
-	float a = M_PI * 2 / 27;
-	for (int i = 0; i <= 12; i ++) {
-		float acos = cos(a * i);
-		float asin = sin(a * i);
-		float x = dest.x * acos - dest.y * asin;
-		float y = dest.x * asin - dest.y * acos;
-		Vec2 newDest = Vec2(x, y);
-		//newDest.normalize();
-		newDest *= _parent->PLAYER_BULLET_SPEED;
+	float a = -0.13;
+	for (int i = 0; i < 12; i++) {
+		Vec2 newDest = dest;
+		newDest.rotate(Vec2(), a * i);
 		_parent->createBulletOnParent(bulletCreator, pos, newDest);
 	}
 }
 
 void TripleShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) {
-	float a = M_PI * 2 / 36;
-	for (int i = -1; i <= 2; i++) {
-		float acos = cos(a * i);
-		float asin = sin(a * i);
-		float x = dest.x * acos - dest.y * asin;
-		float y = dest.x * asin - dest.y * acos;
-		Vec2 newDest = Vec2(x, y);
-		//newDest.normalize();
-		newDest *= _parent->PLAYER_BULLET_SPEED;
+	float a = -0.15;
+	for (int i = -1; i < 2; i++) {
+		Vec2 newDest = dest;
+		newDest.rotate(Vec2(), a * i);
 		_parent->createBulletOnParent(bulletCreator, pos, newDest);
 	}
+}
+
+void ParalRevShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) {
+	Vec2 newDest = dest;
+	newDest.rotate(Vec2(), 0.9f);
+	newDest.normalize();
+	newDest *= _distance / 2;
+	Vec2 pos1 = pos + newDest;
+	Vec2 pos2 = pos - newDest;
+	//Vec2 dest2 = dest;
+	//dest2 *= -1;
+	//Vec2 dest1 = dest;
+	_parent->createBulletOnParent(bulletCreator, pos1, dest);
+	_parent->createBulletOnParent(bulletCreator, pos2, dest);
 }

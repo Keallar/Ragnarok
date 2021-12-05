@@ -1,5 +1,4 @@
 #include "PlayerHookBullet.h"
-#include "IBulletMoveBehavior.h"
 
 PlayerHookBullet* PlayerHookBullet::_hook = nullptr;
 
@@ -14,10 +13,9 @@ bool PlayerHookBullet::init() {
 
 void PlayerHookBullet::update(float dt) {
 	if (_hooked) {
-		_moveBehavior = new BulletStopBehavior(this);
-
+		getBody()->SetLinearVelocity(b2Vec2(0, 0));
 	}
-	ordinaryUpdate(dt);
+	Bullet::update(dt);
 }
 
 void PlayerHookBullet::collideFunc() {
@@ -34,7 +32,6 @@ PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 
 		_hook->autorelease();
 		_hook->init();
 		_hook->setCoords(pos, dest);
-		_hook->setNewBehavior(new BulletIdleBehavior(_hook));
 		_hook->getFixtureDef()->filter = filter;
 		_hook->ordinaryOptions(world, pos);
 		return _hook;

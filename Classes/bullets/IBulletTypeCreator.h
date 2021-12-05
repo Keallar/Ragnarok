@@ -5,39 +5,49 @@
 class IBulletTypeCreator {
 public:
 	virtual Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) = 0;
-
-	b2Filter playerPhysMask();
-	b2Filter enemyPhysMask();
-	b2Filter hookPhysMask();
+	IBulletTypeCreator::IBulletTypeCreator(b2Filter filter) : _filter(filter) {};
+protected:
+	b2Filter _filter;
 };
 
-class PlayerIdleBulletCreator : public IBulletTypeCreator {
+class IdleBulletCreator : public IBulletTypeCreator {
 public:
+	IdleBulletCreator::IdleBulletCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
-class PlayerBigBulletCreator : public IBulletTypeCreator {
+class BigBulletCreator : public IBulletTypeCreator {
 public:
+	BigBulletCreator::BigBulletCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
-class EnemyIdleBulletCreator : public IBulletTypeCreator {
+class HookBulletCreator : public IBulletTypeCreator {
 public:
+	HookBulletCreator::HookBulletCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
-class PlayerHookBulletCreator : public IBulletTypeCreator {
+class IceBulletCreator : public IBulletTypeCreator {
 public:
+	IceBulletCreator::IceBulletCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
-class PlayerIceBulletCreator : public IBulletTypeCreator {
+class IceBlastCreator : public IBulletTypeCreator {
 public:
+	IceBlastCreator::IceBlastCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
-class PlayerIceBlastCreator : public IBulletTypeCreator {
+class FireBulletCreator : public IBulletTypeCreator {
 public:
+	FireBulletCreator::FireBulletCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
 	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
 };
 
+class FireBlastCreator : public IBulletTypeCreator {
+public:
+	FireBlastCreator::FireBlastCreator(b2Filter filter) : IBulletTypeCreator(filter) {};
+	Bullet* create(b2WorldNode* world, Vec2 pos, Vec2 dest) override;
+};

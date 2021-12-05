@@ -1,5 +1,4 @@
 #include "BigBullet.h"
-#include "IBulletMoveBehavior.h"
 
 bool BigBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
@@ -10,7 +9,7 @@ bool BigBullet::init() {
 }
 
 void BigBullet::update(float dt) {
-	ordinaryUpdate(dt);
+	Bullet::update(dt);
 }
 
 BigBullet* BigBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
@@ -20,7 +19,6 @@ BigBullet* BigBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter
 		bullet->autorelease();
 		bullet->init();
 		bullet->setCoords(pos, dest);
-		bullet->setNewBehavior(new BulletIdleBehavior(bullet));
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;

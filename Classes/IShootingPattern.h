@@ -32,3 +32,12 @@ public:
 	TripleShootingPattern(ShootingCharacter* parent) : IShootingPattern(parent) {};
 	void shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) override;
 };
+
+class ParalRevShootingPattern : public IShootingPattern {
+public:
+	ParalRevShootingPattern(ShootingCharacter* parent, int distance) : IShootingPattern(parent), _distance(distance) {};
+	void shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) override;
+private:
+	int _distance;
+};
+

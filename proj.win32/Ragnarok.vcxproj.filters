@@ -58,9 +58,6 @@
     <ClCompile Include="..\Classes\bullets\BulletFactory.cpp">
       <Filter>src\bullets</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\bullets\IBulletMoveBehavior.cpp">
-      <Filter>src\bullets</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\bullets\IBulletTypeCreator.cpp">
       <Filter>src\bullets</Filter>
     </ClCompile>
@@ -190,9 +187,6 @@
       <Filter>src\bullets</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\bullets\BulletFactory.h">
-      <Filter>src\bullets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\bullets\IBulletMoveBehavior.h">
       <Filter>src\bullets</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\bullets\IBulletTypeCreator.h">

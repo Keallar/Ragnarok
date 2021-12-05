@@ -4,7 +4,7 @@
 
 class IEnemyBehaviour;
 
-class IEnemy : public ShootingCharacter {
+class IEnemy : public ShootingCharacter, public b2Sprite {
 	enum class eAnimState {
 		None,
 		Move,
