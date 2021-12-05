@@ -107,21 +107,35 @@ void TileMapManager::TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer) {
 
 void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 	CCTMXObjectGroup* firstGroup = _tiledMap->getObjectGroup("ObjectLayer");
+	b2Filter filter;
+	filter.categoryBits = static_cast<uint16>(eColCategory::trigger);
+	filter.maskBits = static_cast<uint16>(eColMask::trigger);
 	auto objects = firstGroup->getObjects();
 	auto _trigger = Trigger::create();
 	for (auto obj : objects) {
+		//Some variables
 		auto objMap = obj.asValueMap();
 		float x = objMap.at("x").asFloat();
 		float y = objMap.at("y").asFloat();
 		float width = objMap.at("width").asFloat();
 		float height = objMap.at("height").asFloat();
+
+		//Callback setter
 		std::string callbackProperties = objMap.at("ReturnSmth").asString();
 		_trigger->setTriggerFunc(callbackProperties);
+
+		//Set trigger by size
 		width,height *= 1 / _world->getPTM();
 		_trigger->setTrigger(width, height);
-		addChild(_trigger);
-		_trigger->setPosition(x, y)
-	}//UNDONE ÑÄÅËÀÒÜ ÁÈÒÌÀÑÊÈ
+
+		//BitMask
+		_trigger->getFixtureDef()->filter = filter;
+
+		//Adding to scene
+		getParent()->addChild(_trigger);
+		_trigger->setPosition(x, y);
+		_trigger = Trigger::create();
+	}
 }
 
 void TileMapManager::testRay(b2WorldNode* _world) {

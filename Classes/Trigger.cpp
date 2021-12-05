@@ -2,9 +2,10 @@
 #include "MainScene.h"
 
 void Trigger::onCollision() {
-	auto scene = dynamic_cast<MainScene*>(getParent()->getParent());
+	auto scene = dynamic_cast<MainScene*>(getParent());
 	auto _player = scene->getPlayer();
 	auto _TMM = scene->getTMM();
+
 }
 
 void Trigger::setIsActive(bool dt) {
