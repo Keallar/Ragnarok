@@ -1,6 +1,8 @@
 #include "TileMapManager.h"
 #include "box2d/b2dRootWorldNode.h"
 #include <iostream>
+#include "Trigger.h"
+#include "box2d/b2dSprite.h"
 TileMapManager::TileMapManager() {
 
 }
@@ -105,24 +107,35 @@ void TileMapManager::TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer) {
 
 void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 	CCTMXObjectGroup* firstGroup = _tiledMap->getObjectGroup("ObjectLayer");
+	b2Filter filter;
+	filter.categoryBits = static_cast<uint16>(eColCategory::trigger);
+	filter.maskBits = static_cast<uint16>(eColMask::trigger);
 	auto objects = firstGroup->getObjects();
+	auto _trigger = Trigger::create();
 	for (auto obj : objects) {
-		std::vector <std::string> sub_strs;
+		//Some variables
 		auto objMap = obj.asValueMap();
 		float x = objMap.at("x").asFloat();
 		float y = objMap.at("y").asFloat();
 		float width = objMap.at("width").asFloat();
 		float height = objMap.at("height").asFloat();
-		std::string word;
+
+		//Callback setter
 		std::string callbackProperties = objMap.at("ReturnSmth").asString();
-		std::stringstream ss(callbackProperties);
-		while (ss >> word)
-			sub_strs.push_back(word);
-		b2Vec2 point1 = { x, y }, point2 = { x + width, y - height };
-		point1 *= 1 / _world->getPTM();
-		point2 *= 1 / _world->getPTM();
-		_rays.push_back({ point1, point2 });
-		_callbackTypeProperty.push_back(sub_strs);
+		_trigger->setTriggerFunc(callbackProperties);
+
+		//Set trigger by size
+		height *= 1 / _world->getPTM();
+		width *= 1 / _world->getPTM();
+		_trigger->setTrigger(width, height);
+
+		//BitMask
+		_trigger->getFixtureDef()->filter = filter;
+
+		//Adding to scene
+		_world->addChild(_trigger);
+		_trigger->setPosition(x, y);
+		_trigger = Trigger::create();
 	}
 }
 
