@@ -57,13 +57,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				enemy->setDamaged(true);
 				enemy->changeHp(-100);
 			}
-			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::trigger) &&
-				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
-				auto trigger = dynamic_cast<Trigger*>(SpriteA);
-				if (!trigger->getIsActive()) {
-					trigger->onCollision();
-				}
-			}
+
 		};
 
 		f();
@@ -79,7 +73,31 @@ void ContactListener::EndContact(b2Contact* contact) {
 }
 
 void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
-}
+	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL &&
+		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
+		auto SpriteA = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		auto SpriteB = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
+
+		auto f = [&]() {
+			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::trigger) &&
+				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
+				contact->SetEnabled(false);
+				auto trigger = dynamic_cast<Trigger*>(SpriteA);
+				if (!trigger->getIsActive()) {
+					trigger->onCollision();
+				}
+			}
+		};
+
+
+		f();
+
+		SpriteB = static_cast<b2Sprite*>(contact->GetFixtureA()->GetBody()->GetUserData());
+		SpriteA = static_cast<b2Sprite*>(contact->GetFixtureB()->GetBody()->GetUserData());
+
+		f();
+	}
+};
 
 void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
 }
