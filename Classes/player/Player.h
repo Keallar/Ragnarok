@@ -20,8 +20,7 @@ class Player : public ShootingCharacter, public MeleeCharacter, public b2Sprite 
 public:
 	Player();
 	~Player();
-	static Player* create(const std::string& filename, b2BodyType type, float32 friction, float32 restitution);
-	static Player* createPlayer();
+	static Player* create();
 
 	bool init() override;
 
@@ -45,16 +44,8 @@ public:
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void mousePressed(cocos2d::Event* event);
 
-	void move(int shift);
-	void jump();
-
 	//ShootingCharacter function
 	void shoot(cocos2d::Vec2 targetPos, IBulletTypeCreator* bulletCreator) override;
-
-	//get from private because they are const & i need bullet speed at scene
-	static const int PLAYER_SPEED;
-	static const int PLAYER_JUMP_SPEED;
-	static const int PLAYER_JUMP_HEIGHT;
 
 	//melee Func
 	void hit() override;
@@ -62,26 +53,30 @@ public:
 	void meleeInit() override;
 	void meleeUpdate(float dt);
 
-
 	//functions for testing
 	int getJumpCount() const;
 private:
-	void changePos(int delta);
+	//functions
+	void move(float dt);
+	void jump(float dt);
+	void hookBodyUpdate(float dt);
 	cocos2d::Vec2 clickPosCalculate(cocos2d::EventMouse* mouse);
-
+	//params
 	int _hp;
 	int _mana;
+	float _curSpeed;
 	float _speed;
 	float _jumpSpeed;
 	int _jumpBegin;
 	bool _isDied;
 	int _jumpCount;
+	//static const int SPEED;
+	static const int MAX_SPEED;
+	static const int JUMP_HEIGHT;
 
 	PlayerHookBullet* _hook;
 	cocos2d::DrawNode* _hookBody;
 	b2RopeJoint* _hookJuint;
-
-	void hookBodyUpdate(float dt);
 
 	eJumpState _playerJumpState;
 	eAnimState _playerAnimState;

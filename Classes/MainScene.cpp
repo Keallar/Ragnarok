@@ -3,10 +3,8 @@
 #include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "ContactListener.h"
-#include "imgui/CCIMGUI.h"
-#include "imgui/imgui.h"
-#include "SimpleEnemy.h"
-#include "FlyingEnemy.h"
+#include "CCIMGUI.h"
+#include "imgui.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 #include "NoticeBox.h"
@@ -28,7 +26,7 @@ Scene* MainScene::createScene() {
 bool MainScene::init() {
     if (!Scene::init()) {
         return false;
-    }    
+    }  
 
     GameVars::initVars();
 
@@ -69,7 +67,7 @@ bool MainScene::init() {
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
-    _player = Player::createPlayer();
+    _player = Player::create();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     b2Filter filter;
     filter.categoryBits = static_cast<uint16>(eColCategory::player);
@@ -188,13 +186,19 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
-void MainScene::createSomeEnemy(int count) {
+void MainScene::createSomeEnemy(int count, std::string type) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-            auto enemy = Enemy::create(_world, pos, new FlyingEnemy, new IdleBehaviour);
-            enemies.push_back(enemy);
+            if (type == "Simple") {
+                auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
+                enemies.push_back(enemy);
+            } 
+            else if (type == "Flying") {
+                auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
+                enemies.push_back(enemy);
+            }
         }
     }
 }
@@ -232,13 +236,23 @@ void MainScene::showImGui() {
     //Enemies info
     if (ImGui::TreeNode("Enemies")) {
         static int countOfEnemy = 1;
+        static int enemyType = -1;
+        static std::string eType;
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
+        if (ImGui::Combo("Enemy Type", &enemyType, "Simple\0Flying\0Aboba")) {
+            switch (enemyType)
+            {
+            case 0: eType = "Simple"; break;
+            case 1: eType = "Flying"; break;
+            case 2: eType = "Aboba"; break;
+            }
+        }
         if (ImGui::Button("CreateEnemy")) {
-            createSomeEnemy(countOfEnemy);
+            createSomeEnemy(countOfEnemy, eType);
         }
         if (ImGui::Button("DeleteLastEnemy")) {
             if (!enemies.empty()) {
-                //enemies[enemies.size() - 1]->setDestroyed(true);
+                enemies.back()->setDestroyed(true);
             }
         }
         for (const auto& enemy : enemies) {

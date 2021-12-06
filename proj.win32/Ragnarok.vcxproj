@@ -78,7 +78,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\Box2D\include;$(EngineRoot)extensions;../Classes/ui;../Classes/bullets;../Classes/enemies;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\Box2D\include;$(EngineRoot)extensions;../Classes/ui;../Classes/bullets;../Classes/player;../Classes/tiledMap;../Classes/characters;../Classes/box2d;../Classes/contactListener;../Classes/imgui;../Classes/enemies;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_BOX2D_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -162,15 +162,17 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\bullets\FireBullet.cpp" />
     <ClCompile Include="..\Classes\bullets\IBulletTypeCreator.cpp" />
     <ClCompile Include="..\Classes\bullets\IceBullet.cpp" />
+    <ClCompile Include="..\Classes\bullets\IShootingPattern.cpp" />
+    <ClCompile Include="..\Classes\bullets\PlayerHookBullet.cpp" />
     <ClCompile Include="..\Classes\bullets\Ray.cpp" />
-    <ClCompile Include="..\Classes\ContactListener.cpp" />
+    <ClCompile Include="..\Classes\characters\MeleeCharacter.cpp" />
+    <ClCompile Include="..\Classes\characters\ShootingCharacter.cpp" />
+    <ClCompile Include="..\Classes\contactListener\ContactListener.cpp" />
     <ClCompile Include="..\Classes\enemies\AgressiveBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\Boss.cpp" />
     <ClCompile Include="..\Classes\enemies\Enemy.cpp" />
-    <ClCompile Include="..\Classes\enemies\FlyingEnemy.cpp" />
     <ClCompile Include="..\Classes\enemies\IdleBehaviour.cpp" />
     <ClCompile Include="..\Classes\enemies\IEnemy.cpp" />
-    <ClCompile Include="..\Classes\enemies\SimpleEnemy.cpp" />
     <ClCompile Include="..\Classes\imgui\CCIMGUI.cpp" />
     <ClCompile Include="..\Classes\imgui\CCIMGUIGLViewImpl.cpp" />
     <ClCompile Include="..\Classes\imgui\CCImGuiLayer.cpp" />
@@ -179,17 +181,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Classes\imgui\imgui_impl_cocos2dx.cpp" />
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="..\Classes\IShootingPattern.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
-    <ClCompile Include="..\Classes\MeleeCharacter.cpp" />
-    <ClCompile Include="..\Classes\Player.cpp" />
-    <ClCompile Include="..\Classes\PlayerHookBullet.cpp" />
-    <ClCompile Include="..\Classes\ShootingCharacter.cpp" />
-    <ClCompile Include="..\Classes\TileMapManager.cpp" />
+    <ClCompile Include="..\Classes\player\Player.cpp" />
+    <ClCompile Include="..\Classes\tiledMap\RayCastManager.cpp" />
+    <ClCompile Include="..\Classes\tiledMap\TileMapManager.cpp" />
     <ClCompile Include="..\Classes\Trigger.cpp" />
     <ClCompile Include="..\Classes\ui\HUD.cpp" />
     <ClCompile Include="..\Classes\ui\NoticeBox.cpp" />
-    <ClCompile Include="..\Classes\RayCastManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -204,17 +202,18 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\bullets\FireBullet.h" />
     <ClInclude Include="..\Classes\bullets\IBulletTypeCreator.h" />
     <ClInclude Include="..\Classes\bullets\IceBullet.h" />
+    <ClInclude Include="..\Classes\bullets\IShootingPattern.h" />
+    <ClInclude Include="..\Classes\bullets\PlayerHookBullet.h" />
     <ClInclude Include="..\Classes\bullets\Ray.h" />
-    <ClInclude Include="..\Classes\ContactListener.h" />
+    <ClInclude Include="..\Classes\characters\MeleeCharacter.h" />
+    <ClInclude Include="..\Classes\characters\ShootingCharacter.h" />
+    <ClInclude Include="..\Classes\contactListener\ContactListener.h" />
     <ClInclude Include="..\Classes\enemies\AgressiveBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\Boss.h" />
     <ClInclude Include="..\Classes\enemies\Enemy.h" />
-    <ClInclude Include="..\Classes\enemies\FlyingEnemy.h" />
     <ClInclude Include="..\Classes\enemies\IdleBehaviour.h" />
     <ClInclude Include="..\Classes\enemies\IEnemy.h" />
     <ClInclude Include="..\Classes\enemies\IEnemyBehaviour.h" />
-    <ClInclude Include="..\Classes\enemies\IEnemyType.h" />
-    <ClInclude Include="..\Classes\enemies\SimpleEnemy.h" />
     <ClInclude Include="..\Classes\imgui\CCIMGUI.h" />
     <ClInclude Include="..\Classes\imgui\CCIMGUIGLViewImpl.h" />
     <ClInclude Include="..\Classes\imgui\CCImGuiLayer.h" />
@@ -225,17 +224,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\Classes\imgui\imstb_textedit.h" />
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h" />
-    <ClInclude Include="..\Classes\IShootingPattern.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
-    <ClInclude Include="..\Classes\MeleeCharacter.h" />
-    <ClInclude Include="..\Classes\Player.h" />
-    <ClInclude Include="..\Classes\PlayerHookBullet.h" />
-    <ClInclude Include="..\Classes\ShootingCharacter.h" />
-    <ClInclude Include="..\Classes\TileMapManager.h" />
+    <ClInclude Include="..\Classes\player\Player.h" />
+    <ClInclude Include="..\Classes\tiledMap\RayCastManager.h" />
+    <ClInclude Include="..\Classes\tiledMap\TileMapManager.h" />
     <ClInclude Include="..\Classes\Trigger.h" />
     <ClInclude Include="..\Classes\ui\HUD.h" />
     <ClInclude Include="..\Classes\ui\NoticeBox.h" />
-    <ClInclude Include="..\Classes\RayCastManager.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
@@ -251,15 +246,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\background.png" />
-    <Image Include="..\Resources\Flying_enemy.png" />
-    <Image Include="..\Resources\Flying_enemy_anim.png" />
-    <Image Include="..\Resources\hpBase.png" />
-    <Image Include="..\Resources\hpLife.png" />
-    <Image Include="..\Resources\Mana.png" />
-    <Image Include="..\Resources\Turtle.png" />
-    <Image Include="..\Resources\Tur_64.png" />
-    <Image Include="..\Resources\Tur_idle_anim.png" />
+    <None Include="..\Resources\enemies.json" />
+    <None Include="..\Resources\player.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

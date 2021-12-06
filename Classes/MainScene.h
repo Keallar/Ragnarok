@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "IEnemy.h"
-#include "box2d/b2dRootWorldNode.h"
+#include "b2dRootWorldNode.h"
 #include "bullet.h"
 #include "HUD.h"
 #include "RayCastManager.h"
@@ -17,7 +17,7 @@ public:
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);
-    void createSomeEnemy(int count);
+    void createSomeEnemy(int count, std::string type);
     void showImGui();
 
     void tileMapInit();
@@ -38,4 +38,3 @@ private:
 
     std::list<IEnemy*> enemies;
 };
-
