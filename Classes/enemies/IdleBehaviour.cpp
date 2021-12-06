@@ -16,7 +16,7 @@ void IdleBehaviour::perform(IEnemy* enemy, float dt) {
 		CCLOG("ERROR IN IDLE BEHAVIOUR");
 		return;
 	}
-	if (enemy->getName() == "SimpleEnemy") {
+	if (enemy->getName().substr(0, 6) == "Simple") {
 		std::uniform_int_distribution<int> dist(0, 2);
 		auto state = dist(rd);
 		if (state == static_cast<int>(eIdleState::Sleep)) {
@@ -49,7 +49,7 @@ void IdleBehaviour::perform(IEnemy* enemy, float dt) {
 			enemy->setPositionX(enemy->getPosition().x - 3);
 		}
 	}
-	if (enemy->getName() == "FlyingEnemy") {
+	if (enemy->getName().substr(0, 6) == "Flying") {
 		if (_stateCooldown <= 0) {
 			std::random_device rd;
 			std::uniform_int_distribution<int> dist(0, 2);
@@ -85,6 +85,45 @@ void IdleBehaviour::perform(IEnemy* enemy, float dt) {
 					enemy->runAction(moveLeftAct);
 				}
 				enemy->setPositionX(enemy->getPosition().x - 3);
+			}
+		}
+		if (enemy->getName().substr(0, 5) == "Aboba") {
+			if (_stateCooldown <= 0) {
+				std::random_device rd;
+				std::uniform_int_distribution<int> dist(0, 2);
+				_state = static_cast<int>(dist(rd));
+				_stateCooldown = STATE_COOLDOWN;
+			}
+			if (_stateCooldown >= 0) {
+				if (_state == static_cast<int>(eIdleState::Sleep)) {
+					if (!enemy->getActionByTag(0)) {
+						Animation* idleAnimation = Animation::createWithSpriteFrames(enemy->getIdleFrames(), 0.13f);
+						Animate* idleAnim = Animate::create(idleAnimation);
+						Action* idleAction = Repeat::create(idleAnim, 1);
+						idleAction->setTag(0);
+						enemy->runAction(idleAction);
+					}
+				}
+				if (_state == static_cast<int>(eIdleState::MoveRight)) {
+					if (!enemy->getActionByTag(1)) {
+						Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveRightFrames(), 0.13f);
+						Animate* moveRightAnim = Animate::create(moveRightAnimation);
+						Action* moveRightAct = Repeat::create(moveRightAnim, 1);
+						moveRightAct->setTag(1);
+						enemy->runAction(moveRightAct);
+					}
+					enemy->setPositionX(enemy->getPosition().x + 3);
+				}
+				if (_state == static_cast<int>(eIdleState::MoveLeft)) {
+					if (!enemy->getActionByTag(2)) {
+						Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveLeftFrames(), 0.13f);
+						Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
+						Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
+						moveLeftAct->setTag(2);
+						enemy->runAction(moveLeftAct);
+					}
+					enemy->setPositionX(enemy->getPosition().x - 3);
+				}
 			}
 		}
 	}

@@ -60,7 +60,7 @@ Enemy* Enemy::create(Node* node, Vec2 pos, std::string type, IEnemyBehaviour* be
 					const rapidjson::Value& fileName = compEnt["textureFile"];
 					enemyObj->_fileName = fileName.GetString();
 
-					const rapidjson::Value& animationFile = compEnt["textureFile"];
+					const rapidjson::Value& animationFile = compEnt["animationFile"];
 					enemyObj->_animationFile = animationFile.GetString();
 				}
 			}
@@ -98,24 +98,25 @@ bool Enemy::init() {
 	setDamaged(false);
 	setDestroyed(false);
 
+	//UNDONE can't init frames with _animationFile variable
 	//Idle animation
 	_idleAnimFrames.reserve(4);
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 0, 64, 64)));
 	//Move right animation 
 	_moveRightAnimFrames.reserve(4);
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 128, 64, 64)));
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 128, 64, 64)));
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 128, 64, 64)));
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 128, 64, 64)));
+	_moveRightAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 128, 64, 64)));
 	//Move left animation
 	_moveLeftAnimFrames.reserve(4);
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 192, 64, 64)));
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 192, 64, 64)));
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 192, 64, 64)));
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(0, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(64, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(128, 192, 64, 64)));
+	_moveLeftAnimFrames.pushBack(SpriteFrame::create("Flying_enemy_anim.png", Rect(192, 192, 64, 64)));
 
 	return true;
 }
