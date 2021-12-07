@@ -315,6 +315,10 @@ void Player::jump(float dt) {
 		setJumpState(eJumpState::Fall);
 		setAnimState(eAnimState::Fall);
 	}
+	/*if (_jumpBegin == 0) {
+		setJumpState(eJumpState::None);
+		setAnimState(eAnimState::None);
+	}*/
 }
 
 void Player::setJumpState(eJumpState state) {
@@ -370,15 +374,15 @@ void Player::setAnimState(eAnimState state) {
 		runAction(jumpAction);
 		setAnimState(eAnimState::Fall);
 	}
-	if (state == eAnimState::Fall) {
+	/*if (state == eAnimState::Fall) {
 		stopAllActions();
-		Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames);
+		Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames, 0.13f);
 		Animate* fallAnim = Animate::create(fallAnimation);
-		Action* fallAction = Repeat::create(fallAnim, 1);
+		Action* fallAction = RepeatForever::create(fallAnim);
 		fallAction->setTag(static_cast<int>(eAnimState::Fall));
 		runAction(fallAction);
 		setAnimState(eAnimState::None);
-	}
+	}*/
 	if (state == eAnimState::Attack) {
 		stopAllActions();
 		Animation* attackAnimation = Animation::createWithSpriteFrames(_attackAnimFrames);
