@@ -64,18 +64,11 @@ bool Player::init() {
 					_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
 
 				}
-				/*else {
-					return false;
-				}*/
 			}
-			/*else {
-				return false;
-			}*/
+			if (playerEnt.HasMember("components")) {
+				const rapidjson::Value& compEnt = playerEnt["components"];
+			}
 		}
-		/*else {
-			return false;
-		}*/
-
 		bRet = true;
 
 	} while (!bRet);
@@ -115,6 +108,25 @@ bool Player::init() {
 	//Attack animation
 	_attackAnimFrames.reserve(1);
 	_attackAnimFrames.pushBack(SpriteFrame::create("Tur.png", Rect(0, 0, 64, 64)));
+	//Jump animation
+	_jumpAnimFrames.reserve(6);
+	_jumpAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(0, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(64, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(128, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(192, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(256, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(320, 0, 64, 64)));
+	_fallAnimFrames.reserve(10);
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(0, 64, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(64, 64, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(128, 0, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(192, 0, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(256, 0, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(320, 0, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(0, 0, 128, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(64, 0, 128, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(128, 0, 128, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create("Tur_jump_anim.png", Rect(192, 0, 128, 64)));
 
 	meleeInit();
 
@@ -296,10 +308,12 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 void Player::jump(float dt) {
 	if (getJumpState() == eJumpState::Jump) {
 		//getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, _jumpSpeed});
+		setAnimState(eAnimState::Jump);
 		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
 	}
 	if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
+		setAnimState(eAnimState::Fall);
 	}
 }
 
@@ -348,7 +362,22 @@ void Player::setAnimState(eAnimState state) {
 		//stopActionByTag(0);
 	}
 	if (state == eAnimState::Jump) {
-
+		stopAllActions();
+		Animation* jumpAnimation = Animation::createWithSpriteFrames(_jumpAnimFrames, 0.13f);
+		Animate* jumpAnim = Animate::create(jumpAnimation);
+		Action* jumpAction = Repeat::create(jumpAnim, 1);
+		jumpAction->setTag(static_cast<int>(eAnimState::Jump));
+		runAction(jumpAction);
+		setAnimState(eAnimState::Fall);
+	}
+	if (state == eAnimState::Fall) {
+		stopAllActions();
+		Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames);
+		Animate* fallAnim = Animate::create(fallAnimation);
+		Action* fallAction = Repeat::create(fallAnim, 1);
+		fallAction->setTag(static_cast<int>(eAnimState::Fall));
+		runAction(fallAction);
+		setAnimState(eAnimState::None);
 	}
 	if (state == eAnimState::Attack) {
 		stopAllActions();

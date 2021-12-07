@@ -13,6 +13,7 @@ enum class eAnimState {
 	None,
 	Move,
 	Jump,
+	Fall,
 	Attack
 };
 
@@ -83,5 +84,7 @@ private:
 
 	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _jumpAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _fallAnimFrames;
 };
 
