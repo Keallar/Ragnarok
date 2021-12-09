@@ -1,0 +1,42 @@
+{
+  "Simple": {
+    "name": "SimpleEnemy",
+    "specifications": {
+      "hp": 100,
+      "speed": 10.0,
+      "damage": 1,
+      "attackCooldown": 0.5,
+      "filter":  ""
+    },
+    "components": {
+      "textureFile": "Turtle.png",
+      "animationFile": "Turtle_anim.png"
+    }
+  },
+  "Flying": {
+    "name": "FlyingEnemy",
+    "specifications": {
+      "hp": 100,
+      "damage": 1,
+      "speed": 20.0,
+      "attackCooldown": 1.0
+    },
+    "components": {
+      "textureFile": "Flying_enemy.png",
+      "animationFile": "Flying_enemy_anim.png"
+    }
+  },
+  "Aboba": {
+    "name": "AbobaEnemy",
+    "specifications": {
+      "hp": 100,
+      "damage": 1,
+      "speed": 10.0,
+      "attackCooldown": 0.5
+    },
+    "components": {
+      "textureFile": "PAPAABOBA.png",
+      "animationFile": "PAPAABOBA_anim.png"
+    }
+  }
+}

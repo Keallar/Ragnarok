@@ -69,15 +69,9 @@ bool MainScene::init() {
     //Creating player
     _player = Player::create();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
-    b2Filter filter;
-    filter.categoryBits = static_cast<uint16>(eColCategory::player);
-    filter.maskBits = static_cast<uint16>(eColMask::player);
-    //filter.groupIndex = -1;
-    _player->getFixtureDef()->filter = filter;
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
-    _player->setName("player");
-    _player->setPosition(8000, 22000);
+    _player->setPosition({ 8000, 22000 });
     //_player->getBody()->SetBullet(true);
 
     //Camera setup
@@ -219,7 +213,9 @@ void MainScene::showImGui() {
                 _player->changeHp(-1);
             }
         }
+        //Position
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
+        //Double jump
         ImGui::Text("Double Jump: %i",_player->getJumpCount());
         //Player jump
         std::string jumpInfo = "None";
@@ -230,6 +226,19 @@ void MainScene::showImGui() {
         else if (_player->getJumpState() == eJumpState::Fall)
             jumpInfo = "Fall";
         ImGui::Text("JumpInfo: %s", jumpInfo.c_str());
+        //Player Anim state
+        std::string animStateInfo = "None";
+        if (_player->getAnimState() == eAnimState::None)
+            animStateInfo = "None";
+        else if (_player->getAnimState() == eAnimState::Move)
+            animStateInfo = "Move";
+        else if (_player->getAnimState() == eAnimState::Jump)
+            animStateInfo = "Jump";
+        else if (_player->getAnimState() == eAnimState::Fall)
+            animStateInfo = "Fall";
+        else if (_player->getAnimState() == eAnimState::Attack)
+            animStateInfo = "Attack";
+        ImGui::Text("AnimState: %s", animStateInfo.c_str());
 
         ImGui::TreePop();
     }

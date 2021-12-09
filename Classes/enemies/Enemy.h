@@ -4,10 +4,10 @@
 
 class Enemy : public IEnemy {
 public:
-	Enemy(IEnemyBehaviour* behaviour = nullptr);
+	Enemy(std::string type, IEnemyBehaviour* behaviour = nullptr);
 	~Enemy();
 	static Enemy* create(Node* node, Vec2 pos, std::string type, IEnemyBehaviour* behaviour = nullptr);
-	bool init() override;
+	bool init(std::string type);
 private:
 	static int id;
 };

@@ -297,14 +297,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\nodeSettings\enemies.json">
-      <Filter>Resources\nodeProperties</Filter>
-    </None>
-    <None Include="..\Resources\nodeSettings\player.json">
-      <Filter>Resources\nodeProperties</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\Resources\images\background.png">
       <Filter>Resources\images</Filter>
     </Image>
@@ -368,5 +360,16 @@
     <Image Include="..\Resources\images\Hook.png">
       <Filter>Resources\images</Filter>
     </Image>
+    <Image Include="..\Resources\images\Tur_move_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\nodeProperties\enemies.json">
+      <Filter>Resources\nodeProperties</Filter>
+    </None>
+    <None Include="..\Resources\nodeProperties\player.json">
+      <Filter>Resources\nodeProperties</Filter>
+    </None>
   </ItemGroup>
 </Project>
