@@ -14,7 +14,7 @@ void BigBullet::update(float dt) {
 
 BigBullet* BigBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	BigBullet* bullet = new (std::nothrow) BigBullet();
-	if (bullet && bullet->initWithFile("BigBullet.png")) {
+	if (bullet && bullet->initWithFile("images/BigBullet.png")) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
 		bullet->init();

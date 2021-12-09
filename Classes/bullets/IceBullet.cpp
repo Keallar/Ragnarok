@@ -40,7 +40,7 @@ void IceBullet::collideFunc() {
 
 IceBullet* IceBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	IceBullet* bullet = new (std::nothrow) IceBullet();
-	if (bullet && bullet->initWithFile("Ice.png")) {
+	if (bullet && bullet->initWithFile("images/Ice.png")) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
 		bullet->init();
@@ -87,7 +87,7 @@ void IceBlast::update(float dt) {
 
 IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	IceBlast* bullet = new (std::nothrow) IceBlast();
-	if (bullet && bullet->initWithFile("IceBlast.png")) {
+	if (bullet && bullet->initWithFile("images/IceBlast.png")) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
 		bullet->init();

@@ -27,7 +27,7 @@ void FireBullet::update(float dt) {
 
 FireBullet* FireBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	FireBullet* bullet = new (std::nothrow) FireBullet();
-	if (bullet && bullet->initWithFile("BigFire.png")) {
+	if (bullet && bullet->initWithFile("images/BigFire.png")) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
 		bullet->init();
@@ -77,7 +77,7 @@ void FireBlast::update(float dt) {
 
 FireBlast* FireBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	FireBlast* bullet = new (std::nothrow) FireBlast();
-	if (bullet && bullet->initWithFile("Fire.png")) {
+	if (bullet && bullet->initWithFile("images/Fire.png")) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
 		bullet->init();
