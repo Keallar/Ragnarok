@@ -9,8 +9,8 @@
       "filter":  ""
     },
     "components": {
-      "textureFile": "Turtle.png",
-      "animationFile": "Turtle_anim.png"
+      "textureFile": "images/Turtle.png",
+      "animationFile": "images/Turtle_anim.png"
     }
   },
   "Flying": {
@@ -22,8 +22,8 @@
       "attackCooldown": 1.0
     },
     "components": {
-      "textureFile": "Flying_enemy.png",
-      "animationFile": "Flying_enemy_anim.png"
+      "textureFile": "images/Flying_enemy.png",
+      "animationFile": "images/Flying_enemy_anim.png"
     }
   },
   "Aboba": {
@@ -35,8 +35,8 @@
       "attackCooldown": 0.5
     },
     "components": {
-      "textureFile": "PAPAABOBA.png",
-      "animationFile": "PAPAABOBA_anim.png"
+      "textureFile": "images/PAPAABOBA.png",
+      "animationFile": "images/PAPAABOBA_anim.png"
     }
   }
 }
