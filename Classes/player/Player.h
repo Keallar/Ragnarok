@@ -13,6 +13,7 @@ enum class eAnimState {
 	None,
 	Move,
 	Jump,
+	Fall,
 	Attack
 };
 
@@ -61,6 +62,13 @@ private:
 	void jump(float dt);
 	void hookBodyUpdate(float dt);
 	cocos2d::Vec2 clickPosCalculate(cocos2d::EventMouse* mouse);
+	//init files
+	std::string _fileName;
+	std::string _idleAnimFile;
+	std::string _attackAnimFile;
+	std::string _jumpAnimFile;
+	std::string _fallAnimFile;
+	std::string _moveAnimFile;
 	//params
 	int _hp;
 	int _mana;
@@ -83,5 +91,8 @@ private:
 
 	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _jumpAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _fallAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _moveAnimFrames;
 };
 
