@@ -6,9 +6,11 @@ bool FireBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 	_shootingPattern = new IdleShootingPattern(this);
 	_attackCooldown = 0;
-	_moveTime = FIRE_BULLET_MOVE_TIME;
-	_lifeTime = FIRE_BULLET_MOVE_TIME;
+	
+	initVars("FireBullet");
+
 	_isOnRemove = false;
+	_startedMove = false;
 	_fireCount = 0;
 	return true;
 }
@@ -27,10 +29,11 @@ void FireBullet::update(float dt) {
 
 FireBullet* FireBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	FireBullet* bullet = new (std::nothrow) FireBullet();
-	if (bullet && bullet->initWithFile("images/BigFire.png")) {
+	bullet->init();
+	if (bullet && bullet->initWithFile(bullet->_fileName)) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
-		bullet->init();
+		//bullet->init();
 		bullet->setCoords(pos, dest);
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
@@ -64,8 +67,10 @@ int FireBullet::getDamage() {
 
 bool FireBlast::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
-	_moveTime = FIRE_BULLET_MOVE_TIME;
-	_lifeTime = FIRE_BULLET_MOVE_TIME;
+	
+	initVars("FireBlast");
+
+	_startedMove = false;
 	_isOnRemove = false;
 	_moveDest = Vec2();
 	return true;
@@ -77,10 +82,11 @@ void FireBlast::update(float dt) {
 
 FireBlast* FireBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	FireBlast* bullet = new (std::nothrow) FireBlast();
-	if (bullet && bullet->initWithFile("images/Fire.png")) {
+	bullet->init();
+	if (bullet && bullet->initWithFile(bullet->_fileName)) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
-		bullet->init();
+		//bullet->init();
 		bullet->setCoords(pos, dest);
 		bullet->_moveDest = bullet->getDest();
 		bullet->getFixtureDef()->filter = filter;
