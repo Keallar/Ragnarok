@@ -312,8 +312,8 @@ void Player::mousePressed(cocos2d::Event* event) {
 
 void Player::move(float dt) {
 	//UNDONE moving 
-	getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0}, true);
-	//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
+	//getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 *  * dt, 0}, true);
+	getBody()->SetLinearVelocity({ _curSpeed * 20, getBody()->GetLinearVelocity().y });
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {

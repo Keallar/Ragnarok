@@ -4,6 +4,7 @@
 
 class FireBullet : public Bullet, ShootingCharacter	 {
 public:
+	FireBullet() : Bullet() {};
 	static FireBullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
 
 	bool init() override;

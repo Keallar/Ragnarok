@@ -4,8 +4,10 @@ PlayerHookBullet* PlayerHookBullet::_hook = nullptr;
 
 bool PlayerHookBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
-	_moveTime = HOOK_BULLET_MOVE_TIME;
-	_lifeTime = HOOK_BULLET_LIFE_TIME;
+	
+	initVars("PlayerHookBullet");
+
+	_startedMove = false;
 	_hooked = false;
 	_isOnRemove = false;
 	return true;
@@ -27,10 +29,11 @@ PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 
 		_hook->setOnRemove();
 	}
 	PlayerHookBullet* _hook = new (std::nothrow) PlayerHookBullet();
-	if (_hook && _hook->initWithFile("images/Hook.png")) {
+	_hook->init();
+	if (_hook && _hook->initWithFile(_hook->_fileName)) {
 		_hook->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		_hook->autorelease();
-		_hook->init();
+		//_hook->init();
 		_hook->setCoords(pos, dest);
 		_hook->getFixtureDef()->filter = filter;
 		_hook->ordinaryOptions(world, pos);

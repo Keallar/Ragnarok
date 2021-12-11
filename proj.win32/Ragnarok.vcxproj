@@ -246,32 +246,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\images\background.png" />
-    <Image Include="..\Resources\images\BigBullet.png" />
-    <Image Include="..\Resources\images\BigFire.png" />
-    <Image Include="..\Resources\images\bullet.png" />
-    <Image Include="..\Resources\images\Fire.png" />
-    <Image Include="..\Resources\images\Flying_enemy.png" />
-    <Image Include="..\Resources\images\Flying_enemy_anim.png" />
-    <Image Include="..\Resources\images\Hook.png" />
-    <Image Include="..\Resources\images\hpBase.png" />
-    <Image Include="..\Resources\images\hpLife.png" />
-    <Image Include="..\Resources\images\Ice.png" />
-    <Image Include="..\Resources\images\IceBlast.png" />
-    <Image Include="..\Resources\images\Mana.png" />
-    <Image Include="..\Resources\images\Mega.png" />
-    <Image Include="..\Resources\images\melee.png" />
-    <Image Include="..\Resources\images\PAPAABOBA_anim.png" />
-    <Image Include="..\Resources\images\paper.png" />
-    <Image Include="..\Resources\images\Turtle_anim.png" />
-    <Image Include="..\Resources\images\Tur_64.png" />
-    <Image Include="..\Resources\images\Tur_idle_anim.png" />
-    <Image Include="..\Resources\images\Tur_jump_anim.png" />
-    <Image Include="..\Resources\images\Tur_move_anim.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resources\nodeProperties\enemies.json" />
-    <None Include="..\Resources\nodeProperties\player.json" />
+    <None Include="..\Resources\bullets.json" />
+    <None Include="..\Resources\enemies.json" />
+    <None Include="..\Resources\player.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
