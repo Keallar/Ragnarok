@@ -11,12 +11,9 @@ IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
 }
 
 IEnemy::~IEnemy() {
-	//WTF
-	if (_hpLabel && _behaviour && _shootingPattern) {
-		delete _hpLabel;
-		delete _behaviour;
-		delete _shootingPattern;
-	}
+	delete _hpLabel;
+	delete _behaviour;
+	delete _shootingPattern;
 }
 
 void IEnemy::update(float dt) {

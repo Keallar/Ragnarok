@@ -246,6 +246,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\bullets.json" />
     <None Include="..\Resources\enemies.json" />
     <None Include="..\Resources\nodeProperties\bullets.json" />
     <None Include="..\Resources\nodeProperties\enemies.json" />
