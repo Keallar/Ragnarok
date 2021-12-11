@@ -4,6 +4,7 @@
       "hp": 100,
       "mana": 100,
       "speed": 1,
+      "maxSpeed": 10.0,
       "jumpSpeed": 7,
       "attackCooldown":  0,
       "startPosition": [ 8000, 22000 ]

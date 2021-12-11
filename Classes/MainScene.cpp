@@ -50,8 +50,7 @@ bool MainScene::init() {
     //World->debugDraw();
 
     //ContactListener init
-    auto contactListener = new ContactListener;
-    _world->getb2World()->SetContactListener(contactListener);
+    _world->getb2World()->SetContactListener(new ContactListener);
 
     // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
     // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
@@ -137,8 +136,8 @@ void MainScene::update(float dt) {
 
     for (auto enemy : enemies) {
         if (_player) {
-            const auto playerPos = _player->getPosition();
-            enemy->setShootTarget(playerPos);
+            const auto targetPos = _player->getPosition();
+            enemy->setShootTarget(targetPos);
         }
         enemy->update(dt);
         if (enemy) {
@@ -215,6 +214,8 @@ void MainScene::showImGui() {
         }
         //Position
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
+        //HP
+        ImGui::Text("Hp: %i", _player->getHp());
         //Double jump
         ImGui::Text("Double Jump: %i",_player->getJumpCount());
         //Player jump
@@ -248,12 +249,13 @@ void MainScene::showImGui() {
         static int enemyType = -1;
         static std::string eType;
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
-        if (ImGui::Combo("Enemy Type", &enemyType, "Simple\0Flying\0Aboba")) {
+        if (ImGui::Combo("Enemy Type", &enemyType, "Flying")) {
             switch (enemyType)
             {
             case 0: eType = "Simple"; break;
             case 1: eType = "Flying"; break;
             case 2: eType = "Aboba"; break;
+            case 3: eType = "Wolf"; break;
             }
         }
         if (ImGui::Button("CreateEnemy")) {

@@ -19,7 +19,7 @@ Player::~Player() {
 Player* Player::create() {
 	Player* playerObj = new (std::nothrow) Player();
 	if (playerObj && playerObj->initWithFile("images/Tur_64.png")) {
-		playerObj->initBody(b2BodyType::b2_dynamicBody, 0.025f, 0.01f);
+		playerObj->initBody(b2BodyType::b2_dynamicBody, 0.03f, 0.01f);
 		playerObj->autorelease();
 		b2Filter filt;
 		filt.categoryBits = static_cast<uint16>(eColCategory::player);
@@ -43,7 +43,7 @@ bool Player::init() {
 	ssize_t size = 0;
 	unsigned char* pBytes = NULL;
 	do {
-		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("./nodeProperties/player.json", "r", &size);
+		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("nodeProperties/player.json", "r", &size);
 		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
 		std::string load_str((const char*)pBytes, size);
 		CC_SAFE_DELETE_ARRAY(pBytes);
@@ -66,6 +66,9 @@ bool Player::init() {
 
 					const rapidjson::Value& speed = valueEnt["speed"];
 					_speed = speed.GetDouble(); // int value obtained
+
+					const rapidjson::Value& maxSpeed = valueEnt["maxSpeed"];
+					_maxSpeed = maxSpeed.GetDouble(); // int value obtained
 
 					const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
 					_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
@@ -312,8 +315,13 @@ void Player::mousePressed(cocos2d::Event* event) {
 
 void Player::move(float dt) {
 	//UNDONE moving 
-	getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0}, true);
-	//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
+	if (getBody()->GetLinearVelocity().x < _maxSpeed && _curSpeed > 0) {
+		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+		//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
+	}
+	else if(getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
+		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+	}
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
@@ -341,7 +349,6 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 void Player::jump(float dt) {
 	static auto tempPosY = getPositionY();
 	if (getJumpState() == eJumpState::Jump) {
-		//getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, _jumpSpeed});
 		setAnimState(eAnimState::Jump);
 		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
 	}
@@ -441,7 +448,7 @@ void Player::hit() {
 		_isMeleeAttack = true;
 		move(0);
 		MeleeCharacter::_time = 0;
-		_meleeHit = b2Sprite::create("melee.png");
+		_meleeHit = b2Sprite::create("images/melee.png");
 		b2Filter filter;
 		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
 		filter.maskBits = static_cast<int>(eColMask::playerMelee);

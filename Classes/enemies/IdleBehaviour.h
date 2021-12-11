@@ -10,7 +10,7 @@ class IdleBehaviour : public IEnemyBehaviour {
 public:
 	IdleBehaviour();
 	~IdleBehaviour() {}
-	void perform(IEnemy* enemy, float dt) override;
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
 	std::string getBehaviourName() const override;
 private:
 	eIdleState _idleState;
@@ -18,3 +18,6 @@ private:
 	bool _completed;
 	int _state;
 };
+
+//TODO Create several classes for every enemy type and
+//make IdleBehaviour is StatePattern

@@ -5,7 +5,7 @@
 class IEnemyBehaviour {
 public:
 	virtual ~IEnemyBehaviour() {}
-	virtual void perform(IEnemy* enemy, float dt) = 0;
+	virtual void perform(IEnemy* enemy, Vec2 targetPos,float dt) = 0;
 	virtual std::string getBehaviourName() const = 0;
 protected:
 	std::string _name;

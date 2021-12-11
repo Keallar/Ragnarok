@@ -16,23 +16,23 @@ void HUD::beginLife(int hp, int mana) {
 
     _hp = hp;
     hpImgBase = Sprite::create();
-    hpImgBase->initWithFile("hpBase.png");
+    hpImgBase->initWithFile("images/hpBase.png");
     hpImgBase->setPosition(Vec2(origin.x + hpImgBase->getContentSize().width / 2, origin.y + visibleSize.height - hpImgBase->getContentSize().height / 2));
     addChild(hpImgBase);
 
     hpImgLife = Sprite::create();
-    hpImgLife->initWithFile("hpLife.png");
+    hpImgLife->initWithFile("images/hpLife.png");
     hpImgLife->setPosition(Vec2(origin.x + hpImgLife->getContentSize().width / 2, origin.y + visibleSize.height - hpImgLife->getContentSize().height / 2));
     addChild(hpImgLife);
 
     _mana = mana;
     imgManaBase = Sprite::create();
-    imgManaBase->initWithFile("hpBase.png");
+    imgManaBase->initWithFile("images/hpBase.png");
     imgManaBase->setPosition(Vec2(origin.x + imgManaBase->getContentSize().width / 2, origin.y + visibleSize.height - imgManaBase->getContentSize().height / 2 - hpImgBase->getContentSize().height));
     addChild(imgManaBase);
 
     imgMana = Sprite::create();
-    imgMana->initWithFile("Mana.png");
+    imgMana->initWithFile("images/Mana.png");
     imgMana->setPosition(Vec2(origin.x + imgMana->getContentSize().width / 2, origin.y + visibleSize.height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
     addChild(imgMana);
 }
@@ -42,7 +42,7 @@ void HUD::showPers() {
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     auto paper = Sprite::create();
-    paper->initWithFile("paper.png");
+    paper->initWithFile("images/paper.png");
     paper->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 4 + origin.y));
     paper->setScale(2, 0.4);
     addChild(paper);
