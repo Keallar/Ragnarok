@@ -1,0 +1,79 @@
+{
+  "Bullet": {
+    "name": "Bullet",
+    "specifications": {
+      "damage": 100,
+      "moveTime": 2.0,
+      "lifeTime": 2.0
+    },
+    "components": {
+      "textureFile": "bullet.png"
+    }
+  },
+  "BigBullet": {
+    "name": "BigBullet",
+    "specifications": {
+      "damage": 150,
+      "moveTime": 2.0,
+      "lifeTime": 2.0
+    },
+    "components": {
+      "textureFile": "BigBullet.png"
+    }
+  },
+  "PlayerHookBullet": {
+    "name": "PlayerHookBullet",
+    "specifications": {
+      "damage": 100,
+      "moveTime": 2.0,
+      "lifeTime": 7.0
+    },
+    "components": {
+      "textureFile": "Hook.png"
+    }
+  },
+  "FireBullet": {
+    "name": "FireBullet",
+    "specifications": {
+      "damage": 100,
+      "moveTime": 2.0,
+      "lifeTime": 2.0
+    },
+    "components": {
+      "textureFile": "BigFire.png"
+    }
+  },
+  "IceBullet": {
+    "name": "IceBullet",
+    "specifications": {
+      "damage": 100,
+      "moveTime": 2.0,
+      "lifeTime": 2.0
+    },
+    "components": {
+      "textureFile": "Ice.png"
+    }
+  },
+  "IceBlast": {
+    "name": "IceBlast",
+    "specifications": {
+      "damage": 50,
+      "moveTime": 2.0,
+      "lifeTime": 2.0
+    },
+    "components": {
+      "textureFile": "IceBlast.png"
+    }
+  },
+  "FireBlast": {
+    "name": "FireBlast",
+    "specifications": {
+      "damage": 50,
+      "moveTime": 2.0,
+      "lifeTime": 2.0
+    },
+    "components": {
+      "textureFile": "Fire.png"
+    }
+  }
+}

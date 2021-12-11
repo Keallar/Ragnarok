@@ -297,5 +297,8 @@
     <None Include="..\Resources\enemies.json">
       <Filter>Resources</Filter>
     </None>
+    <None Include="..\Resources\bullets.json">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

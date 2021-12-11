@@ -1,4 +1,7 @@
 #include "Bullet.h"
+#include "external/json/document.h"
+
+std::map<std::string, BulletVars> Bullet::_bulletsProp;
 
 float Bullet::BULLET_MOVE_TIME = 2.0f;
 float Bullet::BIG_BULLET_MOVE_TIME = 2.0f;
@@ -13,7 +16,11 @@ int Bullet::BIG_BULLET_DAMAGE = 150;
 
 
 Bullet::Bullet() {
+	if (_bulletsProp.size() == 0) {
+
+	}
 	b2Sprite::init();
+	init();
 }
 
 Bullet::~Bullet() {
@@ -22,10 +29,10 @@ Bullet::~Bullet() {
 
 Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	Bullet* bullet = new (std::nothrow) Bullet();
-	if (bullet && bullet->initWithFile("bullet.png")) {
+	if (bullet && bullet->initWithFile(bullet->_fileName)) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
-		bullet->init();
+		//bullet->init();
 		bullet->setCoords(pos, dest);
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
@@ -36,11 +43,81 @@ Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filte
 }
 
 
+bool Bullet::loadJson() {
+	rapidjson::Document initFile;
+	bool bRet = false;
+	ssize_t size = 0;
+	unsigned char* pBytes = NULL;
+	do {
+		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("bullets.json", "r", &size);
+		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+		std::string load_str((const char*)pBytes, size);
+		CC_SAFE_DELETE_ARRAY(pBytes);
+		initFile.Parse<0>(load_str.c_str());
+		CC_BREAK_IF(initFile.HasParseError());
+
+		if (!initFile.IsObject())
+			return false;
+		
+		auto func = [&](std::string type) {
+			BulletVars Vars;
+			const rapidjson::Value& ent = initFile[type.c_str()];
+			if (ent.HasMember("name")) {
+				const rapidjson::Value& name = ent["name"];
+				Vars.name = name.GetString();
+			}
+			if (ent.HasMember("specifications")) {
+				const rapidjson::Value& valueEnt = ent["specifications"];
+				if (valueEnt.HasMember("damage") && valueEnt.HasMember("lifeTime") && valueEnt.HasMember("moveTime")) {
+
+					const rapidjson::Value& damage = valueEnt["damage"];
+					Vars.damage = damage.GetInt();
+
+					const rapidjson::Value& lifeTime = valueEnt["lifeTime"];
+					Vars.lifeTime = lifeTime.GetDouble();
+
+					const rapidjson::Value& moveTime = valueEnt["moveTime"];
+					Vars.moveTime = moveTime.GetDouble();
+				}
+			}
+			if (ent.HasMember("components")) {
+				const rapidjson::Value& compEnt = ent["components"];
+				if (compEnt.HasMember("textureFile")) {
+					const rapidjson::Value& fileName = compEnt["textureFile"];
+					Vars.fileName = fileName.GetString();
+				}
+			}
+			_bulletsProp[type] = Vars;
+		};
+
+		func("Bullet");
+		func("BigBullet");
+		func("PlayerHookBullet");
+		func("FireBullet");
+		func("IceBullet");
+		func("FireBlast");
+		func("IceBlast");
+
+		bRet = true;
+
+	} while (!bRet);
+}
+
 bool Bullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 
-	_moveTime = BULLET_MOVE_TIME;
-	_lifeTime = BULLET_MOVE_TIME;
+	//_moveTime = BULLET_MOVE_TIME;
+	//_lifeTime = BULLET_MOVE_TIME;
+
+	if (_bulletsProp.size() == 0) {
+		loadJson();
+	}
+
+	_moveTime = _bulletsProp["Bullet"].moveTime;
+	_lifeTime = _bulletsProp["Bullet"].lifeTime;
+	_damage = _bulletsProp["Bullet"].damage;
+	_fileName = _bulletsProp["Bullet"].fileName;
+
 	_isOnRemove = false;
 	_startedMove = false;
 	return true;

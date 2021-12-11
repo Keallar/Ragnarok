@@ -4,6 +4,15 @@
 
 class IBulletMoveBehavior;
 
+struct BulletVars {
+	int damage;
+	float moveTime;
+	float lifeTime;
+	std::string name;
+	std::string fileName;
+	std::string animationName;
+};
+
 class Bullet : public b2Sprite
 {
 public:
@@ -32,6 +41,8 @@ public:
 
 protected:
 	Bullet();
+	static std::map<std::string, BulletVars> _bulletsProp;
+
 	static float BULLET_MOVE_TIME;
 	static float BIG_BULLET_MOVE_TIME;
 	static float HOOK_BULLET_MOVE_TIME;
@@ -47,12 +58,20 @@ protected:
 
 	void setCoords(Vec2 pos, Vec2 dest);
 
+	virtual bool loadJson();
+
 	virtual void move(float dt);
 	bool _startedMove;
 	//IBulletMoveBehavior* _moveBehavior;
 	Vec2 _pos;
 	Vec2 _dest;
+
 	float _moveTime;
 	float _lifeTime;
+	int _damage;
+
 	bool _isOnRemove;
+
+	std::string _fileName;
+	//std::string _animationFile;
 };

@@ -80,7 +80,7 @@ bool Player::init() {
 
 	} while (!bRet);
 	//References
-	_shootingPattern = new IdleShootingPattern(this);
+	_shootingPattern = new CircleShootingPattern(this);
 	_attackCooldown = 0;
 	/*_hp = 100;
 	_mana = 100;*/
@@ -255,7 +255,7 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), new FireBulletCreator(playerPhysMask()));
+		shoot(clickPosCalculate(mouse), new IdleBulletCreator(playerPhysMask()));
 		//hit();
 		setAnimState(eAnimState::Attack);
 	}
@@ -267,8 +267,8 @@ void Player::mousePressed(cocos2d::Event* event) {
 
 void Player::move(float dt) {
 	//UNDONE moving 
-	getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0}, true);
-	//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
+	//getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 *  * dt, 0}, true);
+	getBody()->SetLinearVelocity({ _curSpeed * 20, getBody()->GetLinearVelocity().y });
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
