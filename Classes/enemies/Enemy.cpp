@@ -29,7 +29,7 @@ Enemy* Enemy::create(Node* node, Vec2 pos, std::string type, IEnemyBehaviour* be
 		enemyObj->getBody()->SetFixedRotation(true);
 		enemyObj->setPosition(pos);
 		enemyObj->createHpLabel();
-		behaviour->perform(enemyObj, 0.f);
+		behaviour->perform(enemyObj, Vec2( 0, 0 ), 0.f);
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);
@@ -78,7 +78,10 @@ bool Enemy::init(std::string type) {
 					setDamage(damage.GetInt());
 
 					const rapidjson::Value& attackCooldown = valueEnt["attackCooldown"];
-					setAttackCooldown(speed.GetDouble());
+					_attackCooldown = attackCooldown.GetDouble();
+
+					const rapidjson::Value& bulletSpeed = valueEnt["bulletSpeed"];
+					_bulletSpeed = bulletSpeed.GetInt();
 				}
 			}
 			if (ent.HasMember("components")) {
@@ -96,27 +99,31 @@ bool Enemy::init(std::string type) {
 		bRet = true;
 
 	} while (!bRet);
+
 	setDamaged(false);
 	setDestroyed(false);
+	setAgressive(false);
 
-	//Idle animation
-	_idleAnimFrames.reserve(4);
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 0, 64, 64)));
-	//Move right animation 
-	_moveRightAnimFrames.reserve(4);
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 128, 64, 64)));
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 128, 64, 64)));
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 128, 64, 64)));
-	_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 128, 64, 64)));
-	//Move left animation
-	_moveLeftAnimFrames.reserve(4);
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 192, 64, 64)));
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 192, 64, 64)));
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 192, 64, 64)));
-	_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 192, 64, 64)));
+	if (_animationFile != "") {
+		//Idle animation
+		_idleAnimFrames.reserve(4);
+		_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 0, 64, 64)));
+		_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 0, 64, 64)));
+		_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 0, 64, 64)));
+		_idleAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 0, 64, 64)));
+		//Move right animation 
+		_moveRightAnimFrames.reserve(4);
+		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 128, 64, 64)));
+		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 128, 64, 64)));
+		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 128, 64, 64)));
+		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 128, 64, 64)));
+		//Move left animation
+		_moveLeftAnimFrames.reserve(4);
+		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(0, 192, 64, 64)));
+		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(64, 192, 64, 64)));
+		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(128, 192, 64, 64)));
+		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationFile, Rect(192, 192, 64, 64)));
+	}
 
 	return true;
 }

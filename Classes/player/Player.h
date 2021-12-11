@@ -74,6 +74,7 @@ private:
 	int _mana;
 	float _curSpeed;
 	float _speed;
+	float _maxSpeed;
 	float _jumpSpeed;
 	int _jumpBegin;
 	bool _isDied;
