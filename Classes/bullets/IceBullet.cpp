@@ -6,8 +6,10 @@ bool IceBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 	_shootingPattern = new TripleShootingPattern(this);
 	_attackCooldown = 0;
-	_moveTime = ICE_BULLET_MOVE_TIME;
-	_lifeTime = ICE_BULLET_MOVE_TIME;
+	
+	initVars("IceBullet");
+
+	_startedMove = false;
 	_stoped = false;
 	_isOnRemove = false;
 	return true;
@@ -40,10 +42,11 @@ void IceBullet::collideFunc() {
 
 IceBullet* IceBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	IceBullet* bullet = new (std::nothrow) IceBullet();
-	if (bullet && bullet->initWithFile("Ice.png")) {
+	bullet->init();
+	if (bullet && bullet->initWithFile(bullet->_fileName)) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
-		bullet->init();
+		//bullet->init();
 		bullet->setCoords(pos, dest);
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
@@ -75,8 +78,10 @@ void IceBullet::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 
 bool IceBlast::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
-	_moveTime = BIG_BULLET_MOVE_TIME;
-	_lifeTime = BIG_BULLET_MOVE_TIME;
+	
+	initVars("IceBlast");
+
+	_startedMove = false;
 	_isOnRemove = false;
 	return true;
 }
@@ -87,10 +92,11 @@ void IceBlast::update(float dt) {
 
 IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	IceBlast* bullet = new (std::nothrow) IceBlast();
-	if (bullet && bullet->initWithFile("IceBlast.png")) {
+	bullet->init();
+	if (bullet && bullet->initWithFile(bullet->_fileName)) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
-		bullet->init();
+		//bullet->init();
 		bullet->setCoords(pos, dest);
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);

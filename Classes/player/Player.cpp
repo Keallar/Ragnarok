@@ -18,9 +18,15 @@ Player::~Player() {
 
 Player* Player::create() {
 	Player* playerObj = new (std::nothrow) Player();
-	if (playerObj && playerObj->initWithFile("Tur_64.png")) {
-		playerObj->initBody(b2BodyType::b2_dynamicBody, 0.025f, 0.01f);
+	if (playerObj && playerObj->initWithFile("images/Tur_64.png")) {
+		playerObj->initBody(b2BodyType::b2_dynamicBody, 0.03f, 0.01f);
 		playerObj->autorelease();
+		b2Filter filt;
+		filt.categoryBits = static_cast<uint16>(eColCategory::player);
+		filt.maskBits = static_cast<uint16>(eColMask::player);
+		//filter.groupIndex = -1;
+		playerObj->getFixtureDef()->filter = filt;
+		playerObj->setName("Player");
 		return playerObj;
 	}
 	CC_SAFE_DELETE(playerObj);
@@ -31,12 +37,13 @@ bool Player::init() {
 	if (!b2Sprite::init()) {
 		return false;
 	}
+	//Json init
 	rapidjson::Document initFile;
 	bool bRet = false;
 	ssize_t size = 0;
 	unsigned char* pBytes = NULL;
 	do {
-		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("player.json", "r", &size);
+		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("nodeProperties/player.json", "r", &size);
 		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
 		std::string load_str((const char*)pBytes, size);
 		CC_SAFE_DELETE_ARRAY(pBytes);
@@ -60,31 +67,43 @@ bool Player::init() {
 					const rapidjson::Value& speed = valueEnt["speed"];
 					_speed = speed.GetDouble(); // int value obtained
 
+					const rapidjson::Value& maxSpeed = valueEnt["maxSpeed"];
+					_maxSpeed = maxSpeed.GetDouble(); // int value obtained
+
 					const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
 					_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
 
 				}
-				/*else {
-					return false;
-				}*/
 			}
-			/*else {
-				return false;
-			}*/
-		}
-		/*else {
-			return false;
-		}*/
+			if (playerEnt.HasMember("components")) {
+				const rapidjson::Value& compEnt = playerEnt["components"];
+				if (compEnt.HasMember("textureFile")) {
+					const rapidjson::Value& fileName = compEnt["textureFile"];
+					_fileName = fileName.GetString();
 
+					const rapidjson::Value& idleAnimFile = compEnt["idleAnimFile"];
+					_idleAnimFile = idleAnimFile.GetString();
+
+					const rapidjson::Value& attackAnimFile = compEnt["attackAnimFile"];
+					_attackAnimFile = attackAnimFile.GetString();
+
+					const rapidjson::Value& jumpAnimFile = compEnt["jumpAnimFile"];
+					_jumpAnimFile = jumpAnimFile.GetString();
+
+					const rapidjson::Value& fallAnimFile = compEnt["fallAnimFile"];
+					_fallAnimFile = fallAnimFile.GetString();
+
+					const rapidjson::Value& moveAnimFile = compEnt["moveAnimFile"];
+					_moveAnimFile = moveAnimFile.GetString();
+				}
+			}
+		}
 		bRet = true;
 
 	} while (!bRet);
 	//References
 	_shootingPattern = new IdleShootingPattern(this);
 	_attackCooldown = 0;
-	/*_hp = 100;
-	_mana = 100;*/
-	//_speed = 0.f
 	_curSpeed = 0.f;
 	_jumpBegin = 0;
 	_playerJumpState = eJumpState::None;
@@ -99,14 +118,14 @@ bool Player::init() {
 	//Animation
 	//Idle animation
 	_idleAnimFrames.reserve(8);
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(0, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(64, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(128, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(192, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(256, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(320, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(384, 0, 64, 64)));
-	_idleAnimFrames.pushBack(SpriteFrame::create("Tur_idle_anim.png", Rect(448, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(0, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(64, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(128, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(192, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(256, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(320, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(384, 0, 64, 64)));
+	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(448, 0, 64, 64)));
 	Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
 	Animate* idleAnim = Animate::create(idleAnimation);
 	Action* idleAction = RepeatForever::create(idleAnim);
@@ -114,7 +133,35 @@ bool Player::init() {
 	runAction(idleAction);
 	//Attack animation
 	_attackAnimFrames.reserve(1);
-	_attackAnimFrames.pushBack(SpriteFrame::create("Tur.png", Rect(0, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(0, 0, 64, 64)));
+	//Jump animation
+	_jumpAnimFrames.reserve(12);
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(0, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(64, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(128, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(192, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(256, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(320, 0, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(0, 64, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(64, 64, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(128, 64, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(192, 64, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(256, 64, 64, 64)));
+	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(320, 64, 64, 64)));
+	//Fall animation
+	_fallAnimFrames.reserve(4);
+	_fallAnimFrames.pushBack(SpriteFrame::create(_fallAnimFile, Rect(0, 128, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create(_fallAnimFile, Rect(64, 128, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create(_fallAnimFile, Rect(128, 128, 64, 64)));
+	_fallAnimFrames.pushBack(SpriteFrame::create(_fallAnimFile, Rect(192, 128, 64, 64)));
+	//Move animation
+	_moveAnimFrames.reserve(6);
+	_moveAnimFrames.pushBack(SpriteFrame::create(_moveAnimFile, Rect(0, 0, 64, 64)));
+	_moveAnimFrames.pushBack(SpriteFrame::create(_moveAnimFile, Rect(64, 0, 64, 64)));
+	_moveAnimFrames.pushBack(SpriteFrame::create(_moveAnimFile, Rect(128, 0, 64, 64)));
+	_moveAnimFrames.pushBack(SpriteFrame::create(_moveAnimFile, Rect(192, 0, 64, 64)));
+	_moveAnimFrames.pushBack(SpriteFrame::create(_moveAnimFile, Rect(256, 0, 64, 64)));
+	_moveAnimFrames.pushBack(SpriteFrame::create(_moveAnimFile, Rect(320, 0, 64, 64)));
 
 	meleeInit();
 
@@ -155,17 +202,18 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_D:
 		{
+			setAnimState(eAnimState::Move);
 			_curSpeed = _speed;
 			auto scaleX = getScaleX();
 			if (scaleX < 0) {
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
-			setAnimState(eAnimState::Move);
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_A:
 		{
+			setAnimState(eAnimState::Move);
 			_curSpeed = -_speed;
 			auto scaleX = getScaleX();
 			if (scaleX > 0) {
@@ -267,8 +315,13 @@ void Player::mousePressed(cocos2d::Event* event) {
 
 void Player::move(float dt) {
 	//UNDONE moving 
-	getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0}, true);
-	//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
+	if (getBody()->GetLinearVelocity().x < _maxSpeed && _curSpeed > 0) {
+		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+		//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
+	}
+	else if(getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
+		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+	}
 }
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
@@ -294,12 +347,20 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 }
 
 void Player::jump(float dt) {
+	static auto tempPosY = getPositionY();
 	if (getJumpState() == eJumpState::Jump) {
-		//getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, _jumpSpeed});
+		setAnimState(eAnimState::Jump);
 		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
 	}
-	if (getPosition().y >= _jumpBegin) {
+	if (_jumpBegin == 0 && _jumpCount == 0) {
+		setJumpState(eJumpState::None);
+	}
+	else if (getPosition().y >= _jumpBegin) {
 		setJumpState(eJumpState::Fall);
+		setAnimState(eAnimState::Fall);
+	}
+	if (tempPosY == getPositionY()) {
+		setJumpState(eJumpState::None);
 	}
 }
 
@@ -342,13 +403,33 @@ void Player::setAnimState(eAnimState state) {
 		Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
 		Animate* idleAnim = Animate::create(idleAnimation);
 		Action* idleAction = RepeatForever::create(idleAnim);
+		idleAction->setTag(static_cast<int>(eAnimState::None));
 		runAction(idleAction);
 	}
 	if (state == eAnimState::Move) {
-		//stopActionByTag(0);
+		stopAllActions();
+		Animation* moveAnimation = Animation::createWithSpriteFrames(_moveAnimFrames, 0.13f);
+		Animate* moveAnim = Animate::create(moveAnimation);
+		Action* moveAction = RepeatForever::create(moveAnim);
+		moveAction->setTag(static_cast<int>(eAnimState::Move));
+		runAction(moveAction);
 	}
 	if (state == eAnimState::Jump) {
-
+		stopAllActions();
+		Animation* jumpAnimation = Animation::createWithSpriteFrames(_jumpAnimFrames, 0.1f);
+		Animate* jumpAnim = Animate::create(jumpAnimation);
+		Action* jumpAction = Repeat::create(jumpAnim, 1);
+		jumpAction->setTag(static_cast<int>(eAnimState::Jump));
+		runAction(jumpAction);
+	}
+	if (state == eAnimState::Fall) {
+		//UNDONE need to change state to none after falling
+		stopAllActions();
+		Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames, 0.13f);
+		Animate* fallAnim = Animate::create(fallAnimation);
+		Action* fallAction = RepeatForever::create(fallAnim);
+		fallAction->setTag(static_cast<int>(eAnimState::Fall));
+		runAction(fallAction);
 	}
 	if (state == eAnimState::Attack) {
 		stopAllActions();
@@ -367,7 +448,7 @@ void Player::hit() {
 		_isMeleeAttack = true;
 		move(0);
 		MeleeCharacter::_time = 0;
-		_meleeHit = b2Sprite::create("melee.png");
+		_meleeHit = b2Sprite::create("images/melee.png");
 		b2Filter filter;
 		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
 		filter.maskBits = static_cast<int>(eColMask::playerMelee);

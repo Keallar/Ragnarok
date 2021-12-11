@@ -8,7 +8,7 @@
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 #include "NoticeBox.h"
-
+#include "Bullet.h"
 USING_NS_CC;
 
 Player* MainScene::getPlayer() {
@@ -50,8 +50,7 @@ bool MainScene::init() {
     //World->debugDraw();
 
     //ContactListener init
-    auto contactListener = new ContactListener;
-    _world->getb2World()->SetContactListener(contactListener);
+    _world->getb2World()->SetContactListener(new ContactListener);
 
     // TILEMAP INITION СЮДА НЕ СМОТРЕТЬ
     // И НИЧЕГО НЕ ТРОГАТЬ, МОЁ
@@ -69,16 +68,13 @@ bool MainScene::init() {
     //Creating player
     _player = Player::create();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
-    b2Filter filter;
-    filter.categoryBits = static_cast<uint16>(eColCategory::player);
-    filter.maskBits = static_cast<uint16>(eColMask::player);
-    //filter.groupIndex = -1;
-    _player->getFixtureDef()->filter = filter;
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
-    _player->setName("player");
-    _player->setPosition(8000, 22000);
+    _player->setPosition({ 8000, 22000 });
     //_player->getBody()->SetBullet(true);
+
+    //bullet json loading
+    Bullet::loadJson();
 
     //Camera setup
     _cameraTarget = getDefaultCamera();
@@ -143,8 +139,8 @@ void MainScene::update(float dt) {
 
     for (auto enemy : enemies) {
         if (_player) {
-            const auto playerPos = _player->getPosition();
-            enemy->setShootTarget(playerPos);
+            const auto targetPos = _player->getPosition();
+            enemy->setShootTarget(targetPos);
         }
         enemy->update(dt);
         if (enemy) {
@@ -219,7 +215,11 @@ void MainScene::showImGui() {
                 _player->changeHp(-1);
             }
         }
+        //Position
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
+        //HP
+        ImGui::Text("Hp: %i", _player->getHp());
+        //Double jump
         ImGui::Text("Double Jump: %i",_player->getJumpCount());
         //Player jump
         std::string jumpInfo = "None";
@@ -230,6 +230,19 @@ void MainScene::showImGui() {
         else if (_player->getJumpState() == eJumpState::Fall)
             jumpInfo = "Fall";
         ImGui::Text("JumpInfo: %s", jumpInfo.c_str());
+        //Player Anim state
+        std::string animStateInfo = "None";
+        if (_player->getAnimState() == eAnimState::None)
+            animStateInfo = "None";
+        else if (_player->getAnimState() == eAnimState::Move)
+            animStateInfo = "Move";
+        else if (_player->getAnimState() == eAnimState::Jump)
+            animStateInfo = "Jump";
+        else if (_player->getAnimState() == eAnimState::Fall)
+            animStateInfo = "Fall";
+        else if (_player->getAnimState() == eAnimState::Attack)
+            animStateInfo = "Attack";
+        ImGui::Text("AnimState: %s", animStateInfo.c_str());
 
         ImGui::TreePop();
     }
@@ -239,12 +252,13 @@ void MainScene::showImGui() {
         static int enemyType = -1;
         static std::string eType;
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
-        if (ImGui::Combo("Enemy Type", &enemyType, "Simple\0Flying\0Aboba")) {
+        if (ImGui::Combo("Enemy Type", &enemyType, "Flying")) {
             switch (enemyType)
             {
-            case 0: eType = "Simple"; break;
-            case 1: eType = "Flying"; break;
+            case 0: eType = "Flying"; break;
+            case 1: eType = "Simple"; break;
             case 2: eType = "Aboba"; break;
+            case 3: eType = "Wolf"; break;
             }
         }
         if (ImGui::Button("CreateEnemy")) {

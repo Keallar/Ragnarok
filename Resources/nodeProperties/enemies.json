@@ -1,0 +1,62 @@
+{
+  "Simple": {
+    "name": "SimpleEnemy",
+    "specifications": {
+      "hp": 100,
+      "speed": 10.0,
+      "damage": 1,
+      "attackCooldown": 0.5,
+      "bulletSpeed": 10,
+      "filter": ""
+    },
+    "components": {
+      "textureFile": "images/Turtle.png",
+      "animationFile": "images/Turtle_anim.png"
+    }
+  },
+  "Flying": {
+    "name": "FlyingEnemy",
+    "specifications": {
+      "hp": 100,
+      "damage": 1,
+      "speed": 20.0,
+      "attackCooldown": 1.0,
+      "bulletSpeed": 10,
+      "filter": ""
+    },
+    "components": {
+      "textureFile": "images/Flying_enemy.png",
+      "animationFile": "images/Flying_enemy_anim.png"
+    }
+  },
+  "Aboba": {
+    "name": "AbobaEnemy",
+    "specifications": {
+      "hp": 100,
+      "damage": 1,
+      "speed": 10.0,
+      "attackCooldown": 0.5,
+      "bulletSpeed": 10,
+      "filter": ""
+    },
+    "components": {
+      "textureFile": "images/PAPAABOBA.png",
+      "animationFile": "images/PAPAABOBA_anim.png"
+    }
+  },
+  "Wolf": {
+    "name": "WolfEnemy",
+    "specifications": {
+      "hp": 100,
+      "damage": 1,
+      "speed": 10.0,
+      "attackCooldown": 0.5,
+      "bulletSpeed": 10,
+      "filter": ""
+    },
+    "components": {
+      "textureFile": "images/Wolf.png",
+      "animationFile": ""
+    }
+  }
+}

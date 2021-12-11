@@ -284,6 +284,12 @@
     <Filter Include="src\characters">
       <UniqueIdentifier>{b0e47200-681d-4536-b8e3-ed6940c5d489}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\images">
+      <UniqueIdentifier>{a3eb80d7-8e80-485a-89a4-21beb19f899d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\nodeProperties">
+      <UniqueIdentifier>{d3f0ad76-9a1f-4c59-a49d-226a63f4df63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -291,11 +297,87 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\player.json">
-      <Filter>Resources</Filter>
+    <None Include="..\Resources\enemies.json" />
+    <None Include="..\Resources\player.json" />
+    <None Include="..\Resources\nodeProperties\bullets.json">
+      <Filter>Resources\nodeProperties</Filter>
     </None>
-    <None Include="..\Resources\enemies.json">
-      <Filter>Resources</Filter>
+    <None Include="..\Resources\nodeProperties\enemies.json">
+      <Filter>Resources\nodeProperties</Filter>
     </None>
+    <None Include="..\Resources\nodeProperties\player.json">
+      <Filter>Resources\nodeProperties</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\images\background.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\BigBullet.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\BigFire.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\bullet.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Fire.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Flying_enemy.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Flying_enemy_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Hook.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\hpBase.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\hpLife.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Ice.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\IceBlast.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Mana.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Mega.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\melee.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\PAPAABOBA_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\paper.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Tur_64.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Tur_idle_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Tur_jump_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Tur_move_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Turtle_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Wolf.png">
+      <Filter>Resources\images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

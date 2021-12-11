@@ -13,6 +13,7 @@ public:
 	IEnemy(IEnemyBehaviour* behaviour = nullptr);
 	virtual ~IEnemy();
 	void setBehaviour(IEnemyBehaviour* behaviour);
+	IEnemyBehaviour* getBehaviour() const noexcept;
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp);
 	int getHp() const noexcept;
@@ -20,12 +21,16 @@ public:
 	float getSpeed() const noexcept;
 	int getDamage() const noexcept;
 	void setDamage(int damage) noexcept;
-	void setAttackCooldown(float attackCooldown);
+	void setAttackCooldown(float attackCooldown) noexcept;
 	float getAttackCooldown() const noexcept;
+	void setBulletSpeed(int bulletSpeed);
 	void setDestroyed(bool state) noexcept;
 	bool isDestroyed() const noexcept;
 	void setDamaged(bool state) noexcept;
 	bool isDamaged() const noexcept;
+	void setAgressive(bool agressive) noexcept;
+	bool isAgressive() const noexcept;
+	void checkAgressive();
 	void createHpLabel();
 	void updateHpLabel();
 	const cocos2d::Vector<SpriteFrame*> getIdleFrames() const;
@@ -36,8 +41,6 @@ public:
 	virtual void update(float dt);
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
 	virtual void setShootTarget(Vec2 target);
-
-	static int BULLET_SPEED;
 protected:
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;
@@ -46,6 +49,7 @@ protected:
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _moveRightAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _moveLeftAnimFrames;
+	int _bulletSpeed;
 private:
 	Vec2 _shootTarget;
 	int _hp;
@@ -53,7 +57,7 @@ private:
 	int _damage;
 	bool _destroyed;
 	bool _damaged;
-	float _attackCooldown;
 	Label* _hpLabel;
 	eAnimState _animState;
+	bool _agressive;
 };

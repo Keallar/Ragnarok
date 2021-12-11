@@ -2,8 +2,8 @@
 #include "IEnemy.h"
 #include "IShootingPattern.h"
 #include "IEnemyBehaviour.h"
-
-int IEnemy::BULLET_SPEED = 10;
+#include "AgressiveBehaviour.h"
+#include "IdleBehaviour.h"
 
 IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
 	_shootingPattern = new CircleShootingPattern(this);
@@ -11,13 +11,23 @@ IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
 }
 
 IEnemy::~IEnemy() {
-	delete _hpLabel;
-	delete _behaviour;
+	//WTF
+	if (_hpLabel && _behaviour && _shootingPattern) {
+		delete _hpLabel;
+		delete _behaviour;
+		delete _shootingPattern;
+	}
 }
 
 void IEnemy::update(float dt) {
-	_behaviour->perform(this, dt);
-	//if (_behaviour == )
+	if (isAgressive() && getBehaviour()->getBehaviourName() != "Agressive") {
+		setBehaviour(new AgressiveBehaviour);
+	}
+	else if (!isAgressive() && getBehaviour()->getBehaviourName() == "Agressive"){
+		setBehaviour(new IdleBehaviour);
+	}
+	_behaviour->perform(this, _shootTarget, dt);
+	checkAgressive();
 	shoot(_shootTarget, new IdleBulletCreator(enemyPhysMask()));
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
@@ -30,7 +40,7 @@ void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 		Vec2 pos = getPosition();
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
-		dest *= BULLET_SPEED;
+		dest *= _bulletSpeed;
 		//dest *= 10;
 
 		_shootingPattern->shoot(pos, dest, bulletCreator);
@@ -77,12 +87,16 @@ void IEnemy::setDamage(int damage) noexcept {
 	_damage = damage;
 }
 
-void IEnemy::setAttackCooldown(float attackCooldown) {
+void IEnemy::setAttackCooldown(float attackCooldown) noexcept {
 	_attackCooldown = attackCooldown;
 }
 
 float IEnemy::getAttackCooldown() const noexcept {
 	return _attackCooldown;
+}
+
+void IEnemy::setBulletSpeed(int bulletSpeed) {
+	_bulletSpeed = bulletSpeed;
 }
 
 void IEnemy::setDestroyed(bool state) noexcept {
@@ -101,6 +115,25 @@ bool IEnemy::isDamaged() const noexcept{
 	return _damaged;
 }
 
+void IEnemy::setAgressive(bool agressive) noexcept {
+	_agressive = agressive;
+}
+
+bool IEnemy::isAgressive() const noexcept {
+	return _agressive;
+}
+
+void IEnemy::checkAgressive() {
+	auto tempX = getPositionX() - _shootTarget.x;
+	auto tempY = getPositionY() - _shootTarget.y;
+	if (getPositionX() - _shootTarget.x < 400 && getPositionY() - _shootTarget.y < 400 &&
+			getPositionX() - _shootTarget.x > -400 && getPositionY() - _shootTarget.y > -400) {
+		setAgressive(true);
+	}
+	else {
+		setAgressive(false);
+	}
+}
 void IEnemy::createHpLabel() {
 	_hpLabel = Label::createWithTTF(std::to_string(_hp), "fonts/Marker Felt.ttf", 16);
 	if (!_hpLabel) {
@@ -139,4 +172,8 @@ const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveLeftFrames() const {
 void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
 	delete _behaviour;
 	_behaviour = behaviour;
+}
+
+IEnemyBehaviour* IEnemy::getBehaviour() const noexcept {
+	return _behaviour;
 }
