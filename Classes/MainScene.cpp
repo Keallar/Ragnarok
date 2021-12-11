@@ -8,7 +8,7 @@
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 #include "NoticeBox.h"
-
+#include "Bullet.h"
 USING_NS_CC;
 
 Player* MainScene::getPlayer() {
@@ -79,6 +79,9 @@ bool MainScene::init() {
     _player->setName("player");
     _player->setPosition(8000, 22000);
     //_player->getBody()->SetBullet(true);
+
+    //bullet json loading
+    Bullet::loadJson();
 
     //Camera setup
     _cameraTarget = getDefaultCamera();

@@ -18,6 +18,7 @@ class Bullet : public b2Sprite
 public:
 	~Bullet() override;
 
+	static bool loadJson();
 	static Bullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
 
 	virtual bool init();
@@ -58,7 +59,7 @@ protected:
 
 	void setCoords(Vec2 pos, Vec2 dest);
 
-	virtual bool loadJson();
+	void initVars(std::string type);
 
 	virtual void move(float dt);
 	bool _startedMove;

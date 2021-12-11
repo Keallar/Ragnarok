@@ -80,7 +80,7 @@ bool Player::init() {
 
 	} while (!bRet);
 	//References
-	_shootingPattern = new CircleShootingPattern(this);
+	_shootingPattern = new IdleShootingPattern(this);
 	_attackCooldown = 0;
 	/*_hp = 100;
 	_mana = 100;*/
@@ -255,7 +255,7 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), new IdleBulletCreator(playerPhysMask()));
+		shoot(clickPosCalculate(mouse), new FireBulletCreator(playerPhysMask()));
 		//hit();
 		setAnimState(eAnimState::Attack);
 	}

@@ -16,11 +16,7 @@ int Bullet::BIG_BULLET_DAMAGE = 150;
 
 
 Bullet::Bullet() {
-	if (_bulletsProp.size() == 0) {
-
-	}
 	b2Sprite::init();
-	init();
 }
 
 Bullet::~Bullet() {
@@ -29,6 +25,7 @@ Bullet::~Bullet() {
 
 Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
 	Bullet* bullet = new (std::nothrow) Bullet();
+	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
 		bullet->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
 		bullet->autorelease();
@@ -109,18 +106,22 @@ bool Bullet::init() {
 	//_moveTime = BULLET_MOVE_TIME;
 	//_lifeTime = BULLET_MOVE_TIME;
 
-	if (_bulletsProp.size() == 0) {
-		loadJson();
-	}
+	//if (_bulletsProp.size() == 0) {
+	//	loadJson();
+	//}
 
-	_moveTime = _bulletsProp["Bullet"].moveTime;
-	_lifeTime = _bulletsProp["Bullet"].lifeTime;
-	_damage = _bulletsProp["Bullet"].damage;
-	_fileName = _bulletsProp["Bullet"].fileName;
+	initVars("Bullet");
 
 	_isOnRemove = false;
 	_startedMove = false;
 	return true;
+}
+
+void Bullet::initVars(std::string type) {
+	_moveTime = _bulletsProp[type].moveTime;
+	_lifeTime = _bulletsProp[type].lifeTime;
+	_damage = _bulletsProp[type].damage;
+	_fileName = _bulletsProp[type].fileName;
 }
 
 void Bullet::update(float dt) {
