@@ -27,11 +27,13 @@ void Trigger::onCollision() {
 		break;
 	case 2:
 		isActivated = true;
-		_TMM->getTiledMap()->getLayer(FG + triggerFunc.at(2))->setVisible(true);
+		triggerFunc.erase(0,2);
+		_TMM->getTiledMap()->getLayer(FG + triggerFunc)->setVisible(true);
 		break;
 	case 3:
 		isActivated = true;
-		_TMM->getTiledMap()->getLayer(FG + triggerFunc.at(2))->setVisible(false);
+		triggerFunc.erase(0, 2);
+		_TMM->getTiledMap()->getLayer(FG + triggerFunc)->setVisible(false);
 		break;
 	case 4:
 		if (_player->getJumpState() == eJumpState::Jump) {
