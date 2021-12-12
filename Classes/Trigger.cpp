@@ -33,6 +33,15 @@ void Trigger::onCollision() {
 		isActivated = true;
 		_TMM->getTiledMap()->getLayer(FG + triggerFunc.at(2))->setVisible(false);
 		break;
+	case 4:
+		if (_player->getJumpState() == eJumpState::Jump) {
+			_player->getBody()->ApplyLinearImpulseToCenter({ 0, -_player->getJumpSpeed() * 10 }, true);
+		}
+		else if (_player->getJumpState() == eJumpState::Fall || _player->getJumpState() == eJumpState::None) {
+			_player->getBody()->ApplyLinearImpulseToCenter({ 0, _player->getJumpSpeed() * 5 }, true);
+		}
+		_player->changeHp(-10);
+		break;
 	}
 }
 

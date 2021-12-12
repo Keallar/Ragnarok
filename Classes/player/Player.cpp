@@ -517,3 +517,7 @@ void Player::setDied(bool state) noexcept {
 int Player::getJumpCount() const {
 	return _jumpCount;
 }
+
+float Player::getJumpSpeed() {
+	return _jumpSpeed;
+}
