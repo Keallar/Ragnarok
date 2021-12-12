@@ -203,7 +203,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		case EventKeyboard::KeyCode::KEY_D:
 		{
 			setAnimState(eAnimState::Move);
-			_curSpeed = _speed;
+			_curSpeed += _speed;
 			auto scaleX = getScaleX();
 			if (scaleX < 0) {
 				scaleX *= -1;
@@ -214,7 +214,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		case EventKeyboard::KeyCode::KEY_A:
 		{
 			setAnimState(eAnimState::Move);
-			_curSpeed = -_speed;
+			_curSpeed += -_speed;
 			auto scaleX = getScaleX();
 			if (scaleX > 0) {
 				scaleX *= -1;
@@ -269,11 +269,11 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 	if (!_isMeleeAttack) {
 		switch (keyCode) {
 		case EventKeyboard::KeyCode::KEY_A:
-			_curSpeed = 0;
+			_curSpeed -= -_speed;
 			setAnimState(eAnimState::None);
 			break;
 		case EventKeyboard::KeyCode::KEY_D:
-			_curSpeed = 0;
+			_curSpeed -= _speed;
 			setAnimState(eAnimState::None);
 			break;
 		case EventKeyboard::KeyCode::KEY_SPACE:
@@ -321,6 +321,9 @@ void Player::move(float dt) {
 	}
 	else if(getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
 		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+	}
+	else if (_curSpeed == 0) {
+		getBody()->SetLinearVelocity({ 0, getBody()->GetLinearVelocity().y });
 	}
 }
 
