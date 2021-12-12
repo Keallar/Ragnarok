@@ -40,6 +40,7 @@ public:
 	bool isDied() const;
 	void setDied(bool state) noexcept;
 
+	float getJumpSpeed();
 	//key callbacks
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
