@@ -79,8 +79,6 @@ private:
 	int _jumpBegin;
 	bool _isDied;
 	int _jumpCount;
-	//static const int SPEED;
-	static const int MAX_SPEED;
 	static const int JUMP_HEIGHT;
 
 	PlayerHookBullet* _hook;
