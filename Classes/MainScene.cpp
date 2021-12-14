@@ -90,8 +90,8 @@ bool MainScene::init() {
 
     //HandleEvents init
     auto keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
+    keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(MainScene::mousePressed, this);
 

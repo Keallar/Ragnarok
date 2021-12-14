@@ -20,7 +20,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		std::uniform_int_distribution<int> dist(0, 2);
 		auto state = dist(rd);
 		if (state == static_cast<int>(eIdleState::Sleep)) {
-			if (!enemy->getActionByTag(0)) {
+			if (!enemy->getActionByTag(0) && enemy->getIdleFrames().size() != 0) {
 				Animation* idleAnimation = Animation::createWithSpriteFrames(enemy->getIdleFrames(), 0.13f);
 				Animate* idleAnim = Animate::create(idleAnimation);
 				Action* idleAction = Repeat::create(idleAnim, 1);
