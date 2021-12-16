@@ -13,7 +13,9 @@ public:
 
 	void shoot(cocos2d::Vec2 targetPos, IBulletTypeCreator* bulletCreator) override;
 private:
+	void setCooldown();
 	int _fireCount; //created fires
+	float _attackConstCooldown;
 };
 
 class FireBlast : public Bullet {
@@ -27,5 +29,7 @@ public:
 	int getDamage() override;
 
 private:
+	void setAngleMoveParam();
 	Vec2 _moveDest;
+	double _moveAngle;
 };

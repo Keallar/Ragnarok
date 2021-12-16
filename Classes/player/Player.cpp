@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "box2d/b2dRootWorldNode.h"
-#include "IShootingPattern.h"
+//#include "IShootingPattern.h"
 #include "external/json/document.h"
 
 USING_NS_CC;
@@ -113,7 +113,10 @@ bool Player::init() {
 	//Hook
 	_hook = nullptr;
 	_hookBody = DrawNode::create();
+	_hookPattern = new IdleShootingPattern(this);
 	addChild(_hookBody);
+	//shoot
+	_bulletCreator = new IdleBulletCreator(playerPhysMask());
 
 	//Animation
 	//Idle animation
@@ -303,7 +306,8 @@ void Player::mousePressed(cocos2d::Event* event) {
 	EventMouse* mouse = dynamic_cast<EventMouse*>(event);
 
 	if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_LEFT) {
-		shoot(clickPosCalculate(mouse), new FireBulletCreator(playerPhysMask()));
+		//shoot(clickPosCalculate(mouse), _bulletCreator);
+		shoot(clickPosCalculate(mouse), _bulletCreator);
 		//hit();
 		setAnimState(eAnimState::Attack);
 	}
@@ -311,6 +315,10 @@ void Player::mousePressed(cocos2d::Event* event) {
 		shoot(clickPosCalculate(mouse), new BigBulletCreator(playerPhysMask()));
 		setAnimState(eAnimState::Attack);
 	}
+}
+
+void Player::changeBulletCreator(IBulletTypeCreator* bulletCreator) {
+	_bulletCreator = bulletCreator;
 }
 
 void Player::move(float dt) {
@@ -340,12 +348,15 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest.y *= -1;
-		dest *= PLAYER_BULLET_SPEED;
-		if (auto isHook = dynamic_cast<PlayerHookBullet*>(bulletCreator)) {
-			dest *= PLAYER_BULLET_SPEED;
+		if (auto isHook = dynamic_cast<HookBulletCreator*>(bulletCreator)) {
+			dest *= PLAYER_HOOK_SPEED;
+			//dest += {getBody()->GetLinearVelocity().x, getBody()->GetLinearVelocity().y};
+			_hookPattern->shoot(pos, dest, bulletCreator);
 		}
-
-		_shootingPattern->shoot(pos, dest, bulletCreator);
+		else {
+			dest *= PLAYER_BULLET_SPEED;
+			_shootingPattern->shoot(pos, dest, bulletCreator);
+		}
 	}
 }
 

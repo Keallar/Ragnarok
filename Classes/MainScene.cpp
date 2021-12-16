@@ -215,6 +215,21 @@ void MainScene::showImGui() {
                 _player->changeHp(-1);
             }
         }
+        if (ImGui::Button("FireBullet")) {
+            if (_player) {
+                _player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask()));
+            }
+        }
+        if (ImGui::Button("IdleBullet")) {
+            if (_player) {
+                _player->changeBulletCreator(new IdleBulletCreator(ShootingCharacter::playerPhysMask()));
+            }
+        }
+        if (ImGui::Button("IceBullet")) {
+            if (_player) {
+                _player->changeBulletCreator(new IceBulletCreator(ShootingCharacter::playerPhysMask()));
+            }
+        }
         //Position
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
         //HP

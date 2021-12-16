@@ -18,13 +18,14 @@ public:
 	static const float PLAYER_BIG_ATTACK_COOLDOWN;
 	static const float ENEMY_ATTACK_COOLDOWN;
 	static const int PLAYER_BULLET_SPEED;
+	static const int PLAYER_HOOK_SPEED;
+
+	static b2Filter playerPhysMask();
+	static b2Filter enemyPhysMask();
+	static b2Filter hookPhysMask();
+
 protected:
 	float _attackCooldown;
-
-	b2Filter playerPhysMask();
-	b2Filter enemyPhysMask();
-	b2Filter hookPhysMask();
-
 	IShootingPattern* _shootingPattern;
 };
 

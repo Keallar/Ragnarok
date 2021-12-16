@@ -33,6 +33,9 @@ void Trigger::onCollision() {
 		isActivated = true;
 		_TMM->getTiledMap()->getLayer(FG + triggerFunc.at(2))->setVisible(false);
 		break;
+	case 5:
+		isActivated = true;
+		_player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask()));
 	}
 }
 
