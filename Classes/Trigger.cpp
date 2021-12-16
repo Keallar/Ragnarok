@@ -37,10 +37,10 @@ void Trigger::onCollision() {
 		break;
 	case 4:
 		if (_player->getJumpState() == eJumpState::Jump) {
-			_player->getBody()->ApplyLinearImpulseToCenter({ 0, -_player->getJumpSpeed() * 10 }, true);
+			_player->getBody()->ApplyLinearImpulseToCenter({ 0, -35 }, true);
 		}
 		else if (_player->getJumpState() == eJumpState::Fall || _player->getJumpState() == eJumpState::None) {
-			_player->getBody()->ApplyLinearImpulseToCenter({ 0, _player->getJumpSpeed() * 5 }, true);
+			_player->getBody()->ApplyLinearImpulseToCenter({ 0, 35 }, true);
 		}
 		_player->changeHp(-10);
 		break;
