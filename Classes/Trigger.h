@@ -9,7 +9,9 @@ private:
 		{"SM", 1},
 		{"LL", 2},
 		{"LD", 3},
-		{"SP", 4}
+		{"SP", 4},
+		{"FC", 5},
+		{"SV", 6}
 		};
 	bool isActivated = false;
 	std::string triggerFunc;

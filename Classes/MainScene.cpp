@@ -134,7 +134,8 @@ void MainScene::update(float dt) {
             //_player->removeFromParent();
             //WTF ПЕРЕДЕЛАТЬ ИБО FPS КАТИТЬСЯ ВНИЗ
             //_hud->gameOver(_player);
-            _hud->gameOver(_player);
+            //_hud->gameOver(_player);
+            load();
             return;
         }
         _player->update(dt);

@@ -34,6 +34,7 @@ void Trigger::onCollision() {
 		isActivated = true;
 		triggerFunc.erase(0, 2);
 		_TMM->getTiledMap()->getLayer(FG + triggerFunc)->setVisible(false);
+		scene->save();
 		break;
 	case 4:
 		if (_player->getJumpState() == eJumpState::Fall || _player->getJumpState() == eJumpState::None) {
@@ -44,6 +45,10 @@ void Trigger::onCollision() {
 	case 5:
 		isActivated = true;
 		_player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask()));
+		break;
+	case 6:
+		isActivated = true;
+		scene->save();
 	}
 }
 

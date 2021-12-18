@@ -556,4 +556,5 @@ void Player::load(PlayerSave save) {
 	_bulletCreator = save.bulletCreator;
 	_hp = save.hp;
 	_mana = save.mana;
+	_isDied = false;
 }
