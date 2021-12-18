@@ -18,11 +18,21 @@ enum class eAnimState {
 	Attack
 };
 
+struct PlayerSave {
+	Vec2 pos;
+	IBulletTypeCreator* bulletCreator;
+	int hp;
+	int mana;
+};
+
 class Player : public ShootingCharacter, public MeleeCharacter, public b2Sprite {
 public:
 	Player();
 	~Player();
 	static Player* create();
+
+	PlayerSave save();
+	void load(PlayerSave save);
 
 	bool init() override;
 

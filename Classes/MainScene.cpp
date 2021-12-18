@@ -73,6 +73,8 @@ bool MainScene::init() {
     _player->setPosition({ 9000, 24000 });
     //_player->getBody()->SetBullet(true);
 
+    save();
+
     //bullet json loading
     Bullet::loadJson();
 
@@ -124,10 +126,10 @@ void MainScene::update(float dt) {
 
     if (_player) {
         if (_player->isDied()) {
-            _player->removeFromParent();
+            //_player->removeFromParent();
             //WTF ПЕРЕДЕЛАТЬ ИБО FPS КАТИТЬСЯ ВНИЗ
+            //_hud->gameOver(_player);
             _hud->gameOver(_player);
-
             return;
         }
         _player->update(dt);
@@ -213,7 +215,15 @@ void MainScene::showImGui() {
         if (ImGui::Button("DownHp")) {
             if (_player) {
                 _player->changeHp(-1);
+            }   
+        }
+        if (ImGui::Button("Save")) {
+            if (!_player->isDied()) {
+                save();
             }
+        }
+        if (ImGui::Button("Load")) {
+            load();
         }
         if (ImGui::Button("FireBullet")) {
             if (_player) {
@@ -333,4 +343,12 @@ void MainScene::showImGui() {
         ImGui::ShowStyleEditor();
     }
     ImGui::End();
+}
+
+void MainScene::save() {
+    _save.playerSave = _player->save();
+}
+
+void MainScene::load() {
+    _player->load(_save.playerSave);
 }
