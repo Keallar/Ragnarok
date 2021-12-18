@@ -8,6 +8,10 @@
 #include "RayCastManager.h"
 #include "TileMapManager.h"
 
+struct Save {
+    PlayerSave playerSave;
+};
+
 class MainScene : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
@@ -22,12 +26,17 @@ public:
 
     void tileMapInit();
 
+    void save();
+    void load();
+
     Player* getPlayer();
     TileMapManager* getTMM();
 
     CREATE_FUNC(MainScene);
 private:
     Player* _player;
+    Save _save;
+
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
     cocos2d::Sprite* _background;

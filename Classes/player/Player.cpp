@@ -541,3 +541,19 @@ int Player::getJumpCount() const {
 float Player::getJumpSpeed() {
 	return _jumpSpeed;
 }
+
+PlayerSave Player::save() {
+	PlayerSave save;
+	save.pos = getPosition();
+	save.bulletCreator = _bulletCreator;
+	save.hp = _hp;
+	save.mana = _mana;
+	return save;
+}
+
+void Player::load(PlayerSave save) {
+	setPosition(save.pos);
+	_bulletCreator = save.bulletCreator;
+	_hp = save.hp;
+	_mana = save.mana;
+}
