@@ -35,6 +35,23 @@ void HUD::beginLife(int hp, int mana) {
     imgMana->initWithFile("Mana.png");
     imgMana->setPosition(Vec2(origin.x + imgMana->getContentSize().width / 2, origin.y + visibleSize.height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
     addChild(imgMana);
+
+    message = nullptr;
+}
+
+void HUD::messageOpen(std::string text) {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    if (message != nullptr) {
+        message->cleanPaper();
+        getParent()->removeChild(message);
+    }
+    message = NoticeBox::create();
+    addChild(message);
+    message->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+
+    message->printText(text);
 }
 
 void HUD::showPers() {

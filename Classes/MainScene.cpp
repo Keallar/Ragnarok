@@ -10,7 +10,6 @@
 #include "FlyingEnemy.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
-#include "NoticeBox.h"
 
 USING_NS_CC;
 
@@ -233,13 +232,9 @@ void MainScene::showImGui() {
         }
         ImGui::TreePop();
     }
-    /*if(ImGui::Button("NoticeBox")) {
-        NoticeBox* nBox = NoticeBox::create();
-        auto tempLabel = Label::create();
-        tempLabel->setString("Hello World!");
-        nBox->printText(tempLabel);
-        addChild(nBox);
-    }*/
+    if(ImGui::Button("NoticeBox")) {
+        _hud->messageOpen("hello world!");
+    }
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {
         if (!isToucedMetric) {

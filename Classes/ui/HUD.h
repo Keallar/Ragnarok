@@ -1,5 +1,5 @@
 #include "cocos2d.h"
-
+#include "NoticeBox.h"
 
 class HUD : public cocos2d::Node {
 public:
@@ -8,6 +8,7 @@ public:
     void setMana(int mana);
     void showPers();
     void gameOver(bool player);
+    void messageOpen(std::string text);
     CREATE_FUNC(HUD);
 private:
     int _hp;
@@ -18,4 +19,7 @@ private:
     cocos2d::Label* text;
     cocos2d::Sprite* imgManaBase;
     cocos2d::Sprite* imgMana;
+
+    NoticeBox* message;
+
 };
