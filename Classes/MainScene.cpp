@@ -58,6 +58,9 @@ bool MainScene::init() {
     _firstTileMap = TileMapManager::createTileMap();
     addChild(_firstTileMap->getTiledMap());
     _firstTileMap->setTiledMap("maximum.tmx");
+    _firstTileMap->getTiledMap()->getLayer("FG3")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG3.1")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG4")->setVisible(false);
     _firstTileMap->addLayer("Collidable", "Collidable");
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
