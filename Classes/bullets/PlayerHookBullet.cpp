@@ -17,6 +17,9 @@ void PlayerHookBullet::update(float dt) {
 	if (_hooked) {
 		getBody()->SetLinearVelocity(b2Vec2(0, 0));
 	}
+	if (!_hooked && _moveTime <= 0) {
+		setOnRemove();
+	}
 	Bullet::update(dt);
 }
 

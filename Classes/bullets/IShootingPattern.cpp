@@ -14,7 +14,7 @@ void ShotGunShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bull
 
 void CircleShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) {
 	float a = -0.13;
-	for (int i = 0; i < 12; i++) {
+	for (int i = -6; i < 6; i++) {
 		Vec2 newDest = dest;
 		newDest.rotate(Vec2(), a * i);
 		_parent->createBulletOnParent(bulletCreator, pos, newDest);

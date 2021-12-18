@@ -2,6 +2,7 @@
 #include "ShootingCharacter.h"
 #include "PlayerHookBullet.h"
 #include "MeleeCharacter.h"
+#include "IShootingPattern.h"
 
 enum class eJumpState {
 	None,
@@ -56,7 +57,14 @@ public:
 
 	//functions for testing
 	int getJumpCount() const;
+
+	//for change bullets
+	void changeBulletCreator(IBulletTypeCreator* bulletCreator);
 private:
+	//shoot
+	IBulletTypeCreator* _bulletCreator;
+	IdleShootingPattern* _hookPattern;
+
 	//functions
 	void move(float dt);
 	void jump(float dt);

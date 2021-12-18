@@ -25,7 +25,7 @@
     "name": "PlayerHookBullet",
     "specifications": {
       "damage": 100,
-      "moveTime": 2.0,
+      "moveTime": 0.8,
       "lifeTime": 7.0
     },
     "components": {
