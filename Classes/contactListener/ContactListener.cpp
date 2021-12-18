@@ -4,6 +4,10 @@
 #include "Player.h"
 #include "Trigger.h"
 
+#define scp static_cast<Player*>
+#define scb static_cast<Bullet*>
+#define sce static_cast<IEnemy*>
+
 void ContactListener::BeginContact(b2Contact* contact) {
 	if (contact->GetFixtureA()->GetBody()->GetUserData() != NULL &&
 		contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
@@ -18,43 +22,43 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				const auto playerY2 = SpriteB->getPosition().y;
 				const auto platformY2 = SpriteA->getPosition().y;
 				if (playerY2 >= platformY2) {
-					static_cast<Player*>(SpriteB)->setJumpState(eJumpState::None);
-					static_cast<Player*>(SpriteB)->setJumpState(eJumpState::None);
+					scp(SpriteB)->setJumpState(eJumpState::None);
+					//static_cast<Player*>(SpriteB)->setAnimState(eAnimState::Move);
 				}
 				const auto playerY = SpriteB->getPosition().y + SpriteA->getTextureRect().getMaxY();
 				const auto platformY = SpriteA->getPosition().y - SpriteA->getTextureRect().getMaxY();
 				/*if (playerY >= platformY) {
-					static_cast<Player*>(SpriteB)->setJumpState(eJumpState::Fall);
+					scp(SpriteB)->setJumpState(eJumpState::None);
 				}*/
 			}
 			//Enemy with bullets
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
-				auto enemy = dynamic_cast<IEnemy*>(SpriteA);
+				auto enemy = sce(SpriteA);
 				enemy->setDamaged(true);
 				enemy->changeHp(-100);
 			} //Player with bullets
 			else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
-				auto player = dynamic_cast<Player*>(SpriteA);
+				auto player = scp(SpriteA);
 				player->changeHp(-1);
 			} //Bullets with platforms
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
 				SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet) ||
 				SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::hook)) {
-				auto bullet = dynamic_cast<Bullet*>(SpriteA);
+				auto bullet = scb(SpriteA);
 				bullet->collideFunc();
 			}
 			else if (SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet) ||
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::hook)) {
-				auto bullet = dynamic_cast<Bullet*>(SpriteB);
+				auto bullet = scb(SpriteB);
 				bullet->collideFunc();
 			}
 			//melee attack
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerMelee)) {
-				auto enemy = dynamic_cast<IEnemy*>(SpriteA);
+				auto enemy = sce(SpriteA);
 				enemy->setDamaged(true);
 				enemy->changeHp(-100);
 			}
@@ -83,13 +87,12 @@ void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::trigger) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
 				contact->SetEnabled(false);
-				auto trigger = dynamic_cast<Trigger*>(SpriteA);
+				auto trigger = static_cast<Trigger*>(SpriteA);
 				if (!trigger->getIsActive()) {
 					trigger->onCollision();
 				}
 			}
 		};
-
 
 		f();
 

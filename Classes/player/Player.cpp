@@ -5,8 +5,6 @@
 
 USING_NS_CC;
 
-//const int Player::SPEED = 10;
-const int Player::MAX_SPEED = 10;
 const int Player::JUMP_HEIGHT = 90;
 
 Player::Player() {
@@ -194,6 +192,9 @@ void Player::update(float dt) {
 	move(dt);
 	hookBodyUpdate(dt);
 	jump(dt);
+	if (getJumpState() == eJumpState::None && _curSpeed != 0) {
+		setAnimState(eAnimState::Move);
+	}
 }
 
 void Player::cleanHit() {
@@ -337,7 +338,6 @@ void Player::move(float dt) {
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	if (_attackCooldown <= 0) {
-
 		if (auto isIdle = dynamic_cast<FireBulletCreator*>(bulletCreator)) {
 			_attackCooldown = PLAYER_ATTACK_COOLDOWN;
 		}
@@ -362,6 +362,10 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 
 void Player::jump(float dt) {
 	static auto tempPosY = getPositionY();
+	//UNDINE _jumpCount == 1
+	if (_jumpCount == 1) {
+
+	}
 	if (getJumpState() == eJumpState::Jump) {
 		setAnimState(eAnimState::Jump);
 		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
@@ -413,20 +417,24 @@ void Player::hookBodyUpdate(float dt) {
 
 void Player::setAnimState(eAnimState state) {
 	if (state == eAnimState::None) {
-		stopAllActions();
-		Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
-		Animate* idleAnim = Animate::create(idleAnimation);
-		Action* idleAction = RepeatForever::create(idleAnim);
-		idleAction->setTag(static_cast<int>(eAnimState::None));
-		runAction(idleAction);
+		if (!getActionByTag(static_cast<int>(eAnimState::None))) {
+			stopAllActions();
+			Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
+			Animate* idleAnim = Animate::create(idleAnimation);
+			Action* idleAction = RepeatForever::create(idleAnim);
+			idleAction->setTag(static_cast<int>(eAnimState::None));
+			runAction(idleAction);
+		}
 	}
 	if (state == eAnimState::Move) {
-		stopAllActions();
-		Animation* moveAnimation = Animation::createWithSpriteFrames(_moveAnimFrames, 0.13f);
-		Animate* moveAnim = Animate::create(moveAnimation);
-		Action* moveAction = RepeatForever::create(moveAnim);
-		moveAction->setTag(static_cast<int>(eAnimState::Move));
-		runAction(moveAction);
+		if (!getActionByTag(static_cast<int>(eAnimState::Move))) {
+			stopAllActions();
+			Animation* moveAnimation = Animation::createWithSpriteFrames(_moveAnimFrames, 0.13f);
+			Animate* moveAnim = Animate::create(moveAnimation);
+			Action* moveAction = RepeatForever::create(moveAnim);
+			moveAction->setTag(static_cast<int>(eAnimState::Move));
+			runAction(moveAction);
+		}
 	}
 	if (state == eAnimState::Jump) {
 		stopAllActions();
@@ -437,13 +445,14 @@ void Player::setAnimState(eAnimState state) {
 		runAction(jumpAction);
 	}
 	if (state == eAnimState::Fall) {
-		//UNDONE need to change state to none after falling
-		stopAllActions();
-		Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames, 0.13f);
-		Animate* fallAnim = Animate::create(fallAnimation);
-		Action* fallAction = RepeatForever::create(fallAnim);
-		fallAction->setTag(static_cast<int>(eAnimState::Fall));
-		runAction(fallAction);
+		if (!getActionByTag(static_cast<int>(eAnimState::Fall))) {
+			stopAllActions();
+			Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames, 0.13f);
+			Animate* fallAnim = Animate::create(fallAnimation);
+			Action* fallAction = RepeatForever::create(fallAnim);
+			fallAction->setTag(static_cast<int>(eAnimState::Fall));
+			runAction(fallAction);
+		}
 	}
 	if (state == eAnimState::Attack) {
 		stopAllActions();
@@ -527,4 +536,8 @@ void Player::setDied(bool state) noexcept {
 
 int Player::getJumpCount() const {
 	return _jumpCount;
+}
+
+float Player::getJumpSpeed() {
+	return _jumpSpeed;
 }

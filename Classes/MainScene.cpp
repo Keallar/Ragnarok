@@ -70,7 +70,7 @@ bool MainScene::init() {
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
-    _player->setPosition({ 8000, 22000 });
+    _player->setPosition({ 9000, 24000 });
     //_player->getBody()->SetBullet(true);
 
     //bullet json loading
@@ -90,8 +90,8 @@ bool MainScene::init() {
 
     //HandleEvents init
     auto keyboardListener = EventListenerKeyboard::create();
-    keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);
+    keyboardListener->onKeyReleased = CC_CALLBACK_2(MainScene::onKeyReleased, this);
     auto mouseListener = EventListenerMouse::create();
     mouseListener->onMouseDown = CC_CALLBACK_1(MainScene::mousePressed, this);
 
