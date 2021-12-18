@@ -112,6 +112,7 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 	filter.maskBits = static_cast<uint16>(eColMask::trigger);
 	auto objects = firstGroup->getObjects();
 	auto _trigger = Trigger::create();
+	auto _tileSize = _tiledMap->getTileSize().width;
 	for (auto obj : objects) {
 		//Some variables
 		auto objMap = obj.asValueMap();
@@ -123,7 +124,7 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 		//Callback setter
 		std::string callbackProperties = objMap.at("ReturnSmth").asString();
 		_trigger->setTriggerFunc(callbackProperties);
-
+		_trigger->setAnchorPoint({ 0, 1});
 		//Set trigger by size
 		height *= 1 / _world->getPTM();
 		width *= 1 / _world->getPTM();
@@ -134,7 +135,7 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 
 		//Adding to scene
 		_world->addChild(_trigger);
-		_trigger->setPosition(x, y);
+		_trigger->setPosition(x, y+_tileSize/2);
 		_trigger = Trigger::create();
 	}
 }

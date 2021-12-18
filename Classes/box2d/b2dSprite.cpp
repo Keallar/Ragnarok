@@ -194,10 +194,10 @@ void b2Sprite::setTiles(float _tileWidth, Node* world)
 void b2Sprite::setTrigger(float width, float height) {
 	_B2BodyDef.type = b2BodyType::b2_kinematicBody;
 	b2Vec2 vertices[4];
-	vertices[0].Set(0, -(height / 2));
-	vertices[1].Set(0, height / 2);
-	vertices[2].Set(width, height / 2);
-	vertices[3].Set(width, -height / 2);
+	vertices[0].Set(0, 0);
+	vertices[1].Set(0, height);
+	vertices[2].Set(width, height);
+	vertices[3].Set(width, 0);
 	_B2Shape.Set(vertices, 4);
 	_B2FixtureDef.shape = &_B2Shape;
 }

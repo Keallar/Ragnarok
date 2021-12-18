@@ -70,7 +70,7 @@ bool MainScene::init() {
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
-    _player->setPosition({ 8000, 22000 });
+    _player->setPosition({ 9000, 24000 });
     //_player->getBody()->SetBullet(true);
 
     //bullet json loading
