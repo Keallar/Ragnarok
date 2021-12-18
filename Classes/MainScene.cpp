@@ -62,6 +62,7 @@ bool MainScene::init() {
     _firstTileMap->getTiledMap()->getLayer("FG3.1")->setVisible(false);
     _firstTileMap->getTiledMap()->getLayer("FG4")->setVisible(false);
     _firstTileMap->getTiledMap()->getLayer("FG5")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG6")->setVisible(false);
     _firstTileMap->addLayer("Collidable", "Collidable");
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
