@@ -17,20 +17,9 @@ bool MainMenu::init() {
 	background->setPosition(origin + background->getContentSize()/2);
 	addChild(background);
 
-	auto button = ui::Button::create("startButton.png");
+	auto start = ui::Button::create("startButton.png");
 
-	/*auto buttonText = Label::create();
-
-	buttonText->setString("Start");
-	TTFConfig textConfig;
-	textConfig.fontFilePath = "fonts/OptimusPrinceps.ttf";
-	textConfig.fontSize = 48;
-	buttonText->setTTFConfig(textConfig);
-
-	button->addChild(buttonText);
-	buttonText->setPosition({ 0, 0 });*/
-
-	button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+	start->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type) {
 		case ui::Widget::TouchEventType::BEGAN:
 			createMainScene();
@@ -42,8 +31,28 @@ bool MainMenu::init() {
 		}
 	});
 
-	addChild(button);
-	button->setPosition(origin + visibleSize / 2);
+	addChild(start);
+	start->setPosition(origin + visibleSize / 2);
+
+	auto options = ui::Button::create("optionsButton.png");
+	addChild(options);
+	options->setPosition(start->getPosition() - Vec2(0, options->getContentSize().height + 20));
+
+	auto exit = ui::Button::create("exitButton.png");
+	addChild(exit);
+	exit->setPosition(options->getPosition() - Vec2(0, options->getContentSize().height + 20));
+
+	exit->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			Director::getInstance()->end();
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+		});
 
 	scheduleUpdate();
 
