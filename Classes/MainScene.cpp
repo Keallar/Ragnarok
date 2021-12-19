@@ -7,7 +7,6 @@
 #include "imgui.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
-#include "NoticeBox.h"
 
 USING_NS_CC;
 

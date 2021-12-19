@@ -91,7 +91,7 @@ bool Enemy::init(std::string type) {
 					setShootingPattern(shootingPatternInfo);
 				}
 			}
-a			if (ent.HasMember("components")) {
+			if (ent.HasMember("components")) {
 				const rapidjson::Value& compEnt = ent["components"];
 				if (compEnt.HasMember("textureFile")) {
 					const rapidjson::Value& fileName = compEnt["textureFile"];

@@ -211,6 +211,10 @@ void IEnemy::createHpLabel() {
 
 void IEnemy::updateHpLabel() {
 	_hpLabel->setString(std::to_string(_hp));
+	if (getScaleX() > 0 && _hpLabel->getScaleX() > 0) {
+		auto hpLabelScaleX = _hpLabel->getScaleX();
+		_hpLabel->setScaleX(-hpLabelScaleX);
+	}
 }
 
 const cocos2d::Vector<SpriteFrame*> IEnemy::getIdleFrames() const {
@@ -226,7 +230,9 @@ const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveFrames() const {
 }
 
 void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
-	delete _behaviour;
+	if (!_behaviour) {
+		delete _behaviour;
+	}
 	_behaviour = behaviour;
 }
 
