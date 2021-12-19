@@ -361,6 +361,12 @@
     <Image Include="..\Resources\images\Wolf.png">
       <Filter>Resources\images</Filter>
     </Image>
+    <Image Include="..\Resources\images\PAPAABOBA.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Turtle.png">
+      <Filter>Resources\images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\nodeProperties\bullets.json">

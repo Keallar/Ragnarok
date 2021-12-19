@@ -44,7 +44,10 @@ public:
 protected:
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;
-	std::string _animationFile;
+	std::string _animationIdleFile;
+	std::string _animationMoveLFile;
+	std::string _animationMoveRFile;
+	std::string _animationAttackFile;
 	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _moveRightAnimFrames;

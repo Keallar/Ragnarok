@@ -11,7 +11,10 @@
     },
     "components": {
       "textureFile": "images/Turtle.png",
-      "animationFile": "images/Turtle_anim.png"
+      "animIdleFile": "",
+      "animMoveLFile": "",
+      "animMoveRFile": "",
+      "animAttackFile": "images/Turtle_attack_anim.png"
     }
   },
   "Flying": {
@@ -26,7 +29,10 @@
     },
     "components": {
       "textureFile": "images/Flying_enemy.png",
-      "animationFile": "images/Flying_enemy_anim.png"
+      "animIdleFile": "images/Flying_enemy_idle_anim.png",
+      "animMoveLFile": "images/Flying_enemy_moveL_anim.png",
+      "animMoveRFile": "images/Flying_enemy_moveR_anim.png",
+      "animAttackFile": "images/Flying_enemy_idle_anim.png"
     }
   },
   "Aboba": {
@@ -41,7 +47,10 @@
     },
     "components": {
       "textureFile": "images/PAPAABOBA.png",
-      "animationFile": "images/PAPAABOBA_anim.png"
+      "animIdleFile": "",
+      "animMoveLFile": "",
+      "animMoveRFile": "",
+      "animAttackFile": "images/PAPAABOBA_attack_anim.png"
     }
   },
   "Wolf": {
@@ -56,7 +65,10 @@
     },
     "components": {
       "textureFile": "images/Wolf.png",
-      "animationFile": ""
+      "animIdleFile": "",
+      "animMoveLFile": "",
+      "animMoveRFile": "",
+      "animAttackFile": ""
     }
   }
 }

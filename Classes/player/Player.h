@@ -98,7 +98,7 @@ private:
 	int _jumpBegin;
 	bool _isDied;
 	int _jumpCount;
-	static const int JUMP_HEIGHT;
+	int _jumpHeight;
 
 	PlayerHookBullet* _hook;
 	cocos2d::DrawNode* _hookBody;

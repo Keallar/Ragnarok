@@ -5,8 +5,6 @@
 
 USING_NS_CC;
 
-const int Player::JUMP_HEIGHT = 90;
-
 Player::Player() {
 	init();
 }
@@ -71,6 +69,9 @@ bool Player::init() {
 
 					const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
 					_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
+
+					const rapidjson::Value& jumpHeight = valueEnt["jumpHeight"];
+					_jumpHeight = jumpHeight.GetInt(); // int value obtained
 
 				}
 			}
@@ -363,13 +364,18 @@ void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 
 void Player::jump(float dt) {
 	static auto tempPosY = getPositionY();
-	//UNDINE _jumpCount == 1
-	if (_jumpCount == 1) {
-
-	}
+	auto a = getPositionY() - tempPosY;
 	if (getJumpState() == eJumpState::Jump) {
 		setAnimState(eAnimState::Jump);
 		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
+		/*auto posX = getPositionX();
+		auto posY = getPositionY();
+		if (!getActionByTag(10)) {
+			stopAllActions();
+			Action* jumpAction = JumpBy::create(2.0f, { 0, 0 }, 700, 1);
+			jumpAction->setTag(10);
+			runAction(jumpAction);
+		}*/
 	}
 	if (_jumpBegin == 0 && _jumpCount == 0) {
 		setJumpState(eJumpState::None);
@@ -384,8 +390,11 @@ void Player::jump(float dt) {
 }
 
 void Player::setJumpState(eJumpState state) {
-	if (state == eJumpState::Jump) {
-		_jumpBegin = getPosition().y + JUMP_HEIGHT;
+	/*if (_jumpCount == 1) {
+		_jumpBegin += _jumpHeight;
+	}*/
+	if (state == eJumpState::Jump /*&& _jumpCount == 0*/) {
+		_jumpBegin = getPosition().y + _jumpHeight;
 	}
 	if (state == eJumpState::None) {
 		_jumpCount = 0;

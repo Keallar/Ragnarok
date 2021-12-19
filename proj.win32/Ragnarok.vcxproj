@@ -261,8 +261,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <Image Include="..\Resources\images\Mana.png" />
     <Image Include="..\Resources\images\Mega.png" />
     <Image Include="..\Resources\images\melee.png" />
+    <Image Include="..\Resources\images\PAPAABOBA.png" />
     <Image Include="..\Resources\images\PAPAABOBA_anim.png" />
     <Image Include="..\Resources\images\paper.png" />
+    <Image Include="..\Resources\images\Turtle.png" />
     <Image Include="..\Resources\images\Turtle_anim.png" />
     <Image Include="..\Resources\images\Tur_64.png" />
     <Image Include="..\Resources\images\Tur_idle_anim.png" />
