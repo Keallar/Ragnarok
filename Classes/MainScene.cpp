@@ -8,7 +8,6 @@
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 #include "NoticeBox.h"
-#include "Bullet.h"
 
 USING_NS_CC;
 
@@ -80,6 +79,7 @@ bool MainScene::init() {
     //_player->getBody()->SetBullet(true);
 
     save();
+    _deathCount = 0;
 
     //bullet json loading
     Bullet::loadJson();
@@ -124,6 +124,37 @@ bool MainScene::init() {
     return true;
 }
 
+void MainScene::restart() {
+    const auto visibleSize = Director::getInstance()->getVisibleSize();
+    const Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    _firstTileMap->getTiledMap()->getLayer("FG1")->setVisible(true);
+    _firstTileMap->getTiledMap()->getLayer("FG1.2")->setVisible(true);
+    _firstTileMap->getTiledMap()->getLayer("FG1.3")->setVisible(true);
+    _firstTileMap->getTiledMap()->getLayer("FG3")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG3.1")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG4")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG5")->setVisible(false);
+    _firstTileMap->getTiledMap()->getLayer("FG6")->setVisible(false);
+    
+    _player->restart();
+
+    _player->setPosition({ 9000, 24000 });
+
+    save();
+    _deathCount = 0;
+
+    const auto playerHp = _player->getHp();
+    const auto playerMana = _player->getMana();
+    _hud->beginLife(playerHp, playerMana);
+
+    BulletFactory::cleanAll();
+
+    for (auto t : _triggers) {
+        t->setIsActive(false);
+    }
+}
+
 void MainScene::update(float dt) {
     _world->update(dt);
     _world->removeIsDeletingChildren();
@@ -136,7 +167,13 @@ void MainScene::update(float dt) {
             //WTF ПЕРЕДЕЛАТЬ ИБО FPS КАТИТЬСЯ ВНИЗ
             //_hud->gameOver(_player);
             //_hud->gameOver(_player);
-            load();
+            if (_deathCount < 1) {
+                load();
+                _deathCount++;
+            }
+            else {
+                _hud->gameOver(_player);
+            }
             return;
         }
         _player->update(dt);
@@ -309,13 +346,9 @@ void MainScene::showImGui() {
         }
         ImGui::TreePop();
     }
-    /*if(ImGui::Button("NoticeBox")) {
-        NoticeBox* nBox = NoticeBox::create();
-        auto tempLabel = Label::create();
-        tempLabel->setString("Hello World!");
-        nBox->printText(tempLabel);
-        addChild(nBox);
-    }*/
+    if(ImGui::Button("NoticeBox")) {
+        _hud->messageOpen("hello world!\n hello world!\n hello world!");
+    }
     static bool isTouchedDrawNode = false;
     if (ImGui::Button("DebugNode")) {
         if (!isTouchedDrawNode) {
@@ -353,4 +386,8 @@ void MainScene::showImGui() {
         ImGui::ShowStyleEditor();
     }
     ImGui::End();
+}
+
+void MainScene::addTrigger(Trigger* trigger) {
+    _triggers.push_back(trigger);
 }

@@ -1,7 +1,6 @@
-#pragma once
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "HUD.h"
+#include "MainScene.h"
 
 USING_NS_CC;
 
@@ -35,6 +34,61 @@ void HUD::beginLife(int hp, int mana) {
     imgMana->initWithFile("images/Mana.png");
     imgMana->setPosition(Vec2(origin.x + imgMana->getContentSize().width / 2, origin.y + visibleSize.height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
     addChild(imgMana);
+
+    message = nullptr;
+    buttonCreate();
+    gameOverCreate();
+}
+
+void HUD::messageOpen(std::string text) {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    if (message != nullptr) {
+        message->cleanPaper();
+        removeChild(message);
+        message = nullptr;
+    }
+    message = NoticeBox::create();
+    addChild(message);
+    message->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+
+    message->printText(text);
+    button->setVisible(true);
+
+    button->setPosition({ origin.x + visibleSize.width / 2 + message->getSize().x, origin.y + visibleSize.height / 2 + message->getSize().y });
+}
+
+void HUD::messageClose() {
+    if (message != nullptr) {
+        message->cleanPaper();
+        removeChild(message);
+        message = nullptr;
+    }
+}
+
+void HUD::buttonCreate() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    button = ui::Button::create("Button.png");
+    button->setPosition({ origin.x + visibleSize.width - button->getContentSize().width, origin.y + visibleSize.height - button->getContentSize().height });
+    addChild(button);
+
+    button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            messageClose();
+            button->setVisible(false);
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            break;
+        default:
+            break;
+        }
+    });
+
+    button->setVisible(false);
 }
 
 void HUD::showPers() {
@@ -133,11 +187,37 @@ void HUD::setMana(int mana) {
 }
 
 void HUD::gameOver(bool player) {
-    if (player) {
-        const Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        DrawNode* background = DrawNode::create();
-        const Vec2 backSize{ 5000, 5000 };
-        background->drawSolidRect(origin - backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(0, 0, 0, 1));
-        addChild(background);
-    }
+    gameOverScreen->setVisible(true);
+    restartButton->setVisible(true);
+}
+
+void HUD::gameOverCreate() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    gameOverScreen = GameOverScreen::create();
+    gameOverScreen->createLabel();
+    addChild(gameOverScreen);
+    gameOverScreen->setVisible(false);
+
+    restartButton = ui::Button::create("Button.png");
+    restartButton->setPosition({ origin.x + visibleSize.width/2, origin.y + visibleSize.height/2 });
+    addChild(restartButton);
+
+    restartButton->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        auto scene = dynamic_cast<MainScene*>(getParent());
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            gameOverScreen->setVisible(false);
+            restartButton->setVisible(false);
+            scene->restart();
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            break;
+        default:
+            break;
+        }
+    });
+
+    restartButton->setVisible(false);
 }

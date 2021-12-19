@@ -33,6 +33,7 @@ public:
 
 	PlayerSave save();
 	void load(PlayerSave save);
+	void restart();
 
 	bool init() override;
 

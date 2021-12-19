@@ -172,6 +172,58 @@ bool Player::init() {
 	return true;
 }
 
+void Player::restart() {
+	_shootingPattern = new IdleShootingPattern(this);
+	_attackCooldown = 0;
+	_curSpeed = 0.f;
+	_jumpBegin = 0;
+	_playerJumpState = eJumpState::None;
+	_playerAnimState = eAnimState::None;
+	_isDied = false;
+	_jumpCount = 0;
+	//Hook
+	_hook = nullptr;
+	_hookBody->clear();
+	//shoot
+	_bulletCreator = new IdleBulletCreator(playerPhysMask());
+
+	rapidjson::Document initFile;
+
+	bool bRet = false;
+	ssize_t size = 0;
+	unsigned char* pBytes = NULL;
+	pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData("nodeProperties/player.json", "r", &size);
+	if (pBytes == NULL || strcmp((char*)pBytes, "") == 0) {
+		throw("player suck");
+	}
+
+	std::string load_str((const char*)pBytes, size);
+	CC_SAFE_DELETE_ARRAY(pBytes);
+
+	initFile.Parse<0>(load_str.c_str());
+	if (initFile.HasParseError()) {
+		throw("player suck");
+	}
+
+	if (initFile.IsObject()) {
+		if (initFile.HasMember("player")) {
+			const rapidjson::Value& playerEnt = initFile["player"];
+			if (playerEnt.HasMember("specifications")) {
+				const rapidjson::Value& valueEnt = playerEnt["specifications"];
+				if (valueEnt.HasMember("hp") && valueEnt.HasMember("mana")) {
+					const rapidjson::Value& hp = valueEnt["hp"];
+					_hp = hp.GetInt(); // int value obtained
+
+					const rapidjson::Value& mana = valueEnt["mana"];
+					_mana = mana.GetInt(); // int value obtained
+				}
+			}
+		}
+	}
+
+
+}
+
 void Player::meleeInit() {
 	_hitTime = 0.2f;
 	MeleeCharacter::_damage = 100;

@@ -186,6 +186,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\tiledMap\RayCastManager.cpp" />
     <ClCompile Include="..\Classes\tiledMap\TileMapManager.cpp" />
     <ClCompile Include="..\Classes\Trigger.cpp" />
+    <ClCompile Include="..\Classes\ui\GameOverScreen.cpp" />
     <ClCompile Include="..\Classes\ui\HUD.cpp" />
     <ClCompile Include="..\Classes\ui\NoticeBox.cpp" />
     <ClCompile Include="main.cpp" />
@@ -229,6 +230,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\tiledMap\RayCastManager.h" />
     <ClInclude Include="..\Classes\tiledMap\TileMapManager.h" />
     <ClInclude Include="..\Classes\Trigger.h" />
+    <ClInclude Include="..\Classes\ui\GameOverScreen.h" />
     <ClInclude Include="..\Classes\ui\HUD.h" />
     <ClInclude Include="..\Classes\ui\NoticeBox.h" />
     <ClInclude Include="main.h" />

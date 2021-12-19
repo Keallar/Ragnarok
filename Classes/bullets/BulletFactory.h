@@ -7,6 +7,7 @@
 class BulletFactory {
 public:
 	static BulletFactory* getInstance();
+	static void cleanAll();
 
 	void update(float dt);
 
