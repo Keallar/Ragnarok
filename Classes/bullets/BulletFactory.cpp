@@ -16,6 +16,21 @@ BulletFactory* BulletFactory::getInstance() {
 	return instance;
 }
 
+void BulletFactory::cleanAll() {
+	if (instance != nullptr) {
+		for (auto bullet : instance->_bullets) {
+			if (bullet) {
+				instance->_world->removeChild(bullet);
+				instance->_removeList.push_back(bullet);
+			}
+		}
+
+		for (auto it : instance->_removeList) {
+			instance->_bullets.erase(std::remove(instance->_bullets.begin(), instance->_bullets.end(), it));
+		}
+		instance->_removeList.clear();
+	}
+}
 
 void BulletFactory::createBullet(IBulletTypeCreator* bulletCreator, Vec2 pos, Vec2 dest) {
 	

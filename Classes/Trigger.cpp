@@ -11,9 +11,11 @@ void Trigger::onCollision() {
 	auto _player = scene->getPlayer();
 	auto _TMM = scene->getTMM();
 
+	std::string funcStr = triggerFunc;
+
 	std::string _someStr;
-	_someStr.push_back(triggerFunc.at(0));
-	_someStr.push_back(triggerFunc.at(1));
+	_someStr.push_back(funcStr.at(0));
+	_someStr.push_back(funcStr.at(1));
 
 	std::string FG = "FG";
 	switch (callbackNameToNumber.at(_someStr))
@@ -27,13 +29,13 @@ void Trigger::onCollision() {
 		break;
 	case 2:
 		isActivated = true;
-		triggerFunc.erase(0,2);
-		_TMM->getTiledMap()->getLayer(FG + triggerFunc)->setVisible(true);
+		funcStr.erase(0,2);
+		_TMM->getTiledMap()->getLayer(FG + funcStr)->setVisible(true);
 		break;
 	case 3:
 		isActivated = true;
-		triggerFunc.erase(0, 2);
-		_TMM->getTiledMap()->getLayer(FG + triggerFunc)->setVisible(false);
+		funcStr.erase(0, 2);
+		_TMM->getTiledMap()->getLayer(FG + funcStr)->setVisible(false);
 		scene->save();
 		break;
 	case 4:

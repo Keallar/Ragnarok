@@ -1,5 +1,7 @@
+#pragma once
 #include "cocos2d.h"
 #include "NoticeBox.h"
+#include "GameOverScreen.h"
 #include "ui/CocosGUI.h"
 
 class HUD : public cocos2d::Node {
@@ -13,6 +15,7 @@ public:
     void messageClose();
     CREATE_FUNC(HUD);
 private:
+    void gameOverCreate();
     void buttonCreate();
 
     int _hp;
@@ -26,4 +29,8 @@ private:
 
     NoticeBox* message;
     cocos2d::ui::Button* button;
+    GameOverScreen* gameOverScreen;
+    cocos2d::ui::Button* restartButton;
+
+    //cocos2d::DrawNode* background;
 };
