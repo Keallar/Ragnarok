@@ -292,9 +292,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\images\background.png">
-      <Filter>Resources\images</Filter>
-    </Image>
     <Image Include="..\Resources\images\BigBullet.png">
       <Filter>Resources\images</Filter>
     </Image>
@@ -365,6 +362,18 @@
       <Filter>Resources\images</Filter>
     </Image>
     <Image Include="..\Resources\images\Turtle.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Clouds.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Mountain_back.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Mountains.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Sky.png">
       <Filter>Resources\images</Filter>
     </Image>
   </ItemGroup>

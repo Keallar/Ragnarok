@@ -246,10 +246,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\images\background.png" />
     <Image Include="..\Resources\images\BigBullet.png" />
     <Image Include="..\Resources\images\BigFire.png" />
     <Image Include="..\Resources\images\bullet.png" />
+    <Image Include="..\Resources\images\Clouds.png" />
     <Image Include="..\Resources\images\Fire.png" />
     <Image Include="..\Resources\images\Flying_enemy.png" />
     <Image Include="..\Resources\images\Flying_enemy_anim.png" />
@@ -261,9 +261,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <Image Include="..\Resources\images\Mana.png" />
     <Image Include="..\Resources\images\Mega.png" />
     <Image Include="..\Resources\images\melee.png" />
+    <Image Include="..\Resources\images\Mountains.png" />
+    <Image Include="..\Resources\images\Mountain_back.png" />
     <Image Include="..\Resources\images\PAPAABOBA.png" />
     <Image Include="..\Resources\images\PAPAABOBA_anim.png" />
     <Image Include="..\Resources\images\paper.png" />
+    <Image Include="..\Resources\images\Sky.png" />
     <Image Include="..\Resources\images\Turtle.png" />
     <Image Include="..\Resources\images\Turtle_anim.png" />
     <Image Include="..\Resources\images\Tur_64.png" />

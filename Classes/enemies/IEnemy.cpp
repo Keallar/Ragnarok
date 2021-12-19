@@ -44,6 +44,25 @@ void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	}
 }
 
+//void IEnemy::hit() {
+//	if (_meleeHit == nullptr) {
+//		_isMeleeAttack = true;
+//		MeleeCharacter::_time = 0;
+//		_meleeHit = b2Sprite::create("images/melee.png");
+//		b2Filter filter;
+//		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
+//		filter.maskBits = static_cast<int>(eColMask::playerMelee);
+//		_meleeHit->getFixtureDef()->filter = filter;
+//		getParent()->addChild(_meleeHit);
+//		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+//		if (getScaleX() < 0) {
+//			//_meleeHit->setRotation(30);
+//			_meleeHit->setScaleX(getScaleX());
+//			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+//		}
+//	}
+//}
+
 void IEnemy::setShootTarget(Vec2 target) {
 	_shootTarget = target;
 }
