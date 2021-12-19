@@ -6,7 +6,6 @@
 #include "IdleBehaviour.h"
 
 IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
-	_shootingPattern = new CircleShootingPattern(this);
 	_behaviour = behaviour;
 }
 
@@ -172,6 +171,29 @@ void IEnemy::checkAgressive() {
 		setAgressive(false);
 	}
 }
+
+void IEnemy::setShootingPattern(std::string shootingPatternInfo) {
+	if (!_shootingPattern) {
+		delete _shootingPattern;
+	}
+
+	if (shootingPatternInfo == "Idle") {
+		_shootingPattern = new IdleShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "ShotGun") {
+		_shootingPattern = new ShotGunShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "Circle") {
+		_shootingPattern = new CircleShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "Triple") {
+		_shootingPattern = new TripleShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "ParalRev") {
+		//_shootingPattern = new ParalRevShootingPattern(this);
+	}
+}
+
 void IEnemy::createHpLabel() {
 	_hpLabel = Label::createWithTTF(std::to_string(_hp), "fonts/Marker Felt.ttf", 16);
 	if (!_hpLabel) {

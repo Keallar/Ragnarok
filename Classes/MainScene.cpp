@@ -203,7 +203,7 @@ void MainScene::createSomeEnemy(int count, std::string type) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
         for (auto i = 0; i < count; ++i) {
-            const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
+            const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
 			auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
 			enemies.push_back(enemy);
         }

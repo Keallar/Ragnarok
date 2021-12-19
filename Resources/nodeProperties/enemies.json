@@ -7,7 +7,8 @@
       "damage": 1,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": "Idle"
     },
     "components": {
       "textureFile": "images/Turtle.png",
@@ -24,7 +25,8 @@
       "speed": 20.0,
       "attackCooldown": 1.0,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": "Triple"
     },
     "components": {
       "textureFile": "images/Flying_enemy.png",
@@ -41,7 +43,8 @@
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": ""
     },
     "components": {
       "textureFile": "images/PAPAABOBA.png",
@@ -58,7 +61,8 @@
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": "ShotGun"
     },
     "components": {
       "textureFile": "images/Wolf.png",
@@ -75,7 +79,8 @@
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": ""
     },
     "components": {
       "textureFile": "images/Boss.png",

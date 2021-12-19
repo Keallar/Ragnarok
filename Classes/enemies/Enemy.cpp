@@ -82,9 +82,16 @@ bool Enemy::init(std::string type) {
 
 					const rapidjson::Value& bulletSpeed = valueEnt["bulletSpeed"];
 					_bulletSpeed = bulletSpeed.GetInt();
+
+					const rapidjson::Value& filter = valueEnt["filter"];
+					auto tempFilter = filter.GetString();
+
+					const rapidjson::Value& shootingPattern = valueEnt["shootingPattern"];
+					auto shootingPatternInfo = shootingPattern.GetString();
+					setShootingPattern(shootingPatternInfo);
 				}
 			}
-			if (ent.HasMember("components")) {
+a			if (ent.HasMember("components")) {
 				const rapidjson::Value& compEnt = ent["components"];
 				if (compEnt.HasMember("textureFile")) {
 					const rapidjson::Value& fileName = compEnt["textureFile"];

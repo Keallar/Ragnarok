@@ -27,6 +27,7 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			enemy->runAction(spawn);
 		}
 		_moveCooldown -= dt;
+		enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask()));
 	}
 	if (enemy->getName().substr(0, 6) == "Flying") {
 		if (_moveCooldown <= 0) {
@@ -74,6 +75,7 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			enemy->runAction(moveAction);
 		}
 		_moveCooldown -= dt;
+		enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask()));
 	}
  	if (enemy->getName().substr(0, 4) == "Boss") {
 		if (_moveCooldown <= 0) {

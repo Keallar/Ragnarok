@@ -32,6 +32,7 @@ public:
 	void setAgressive(bool agressive) noexcept;
 	bool isAgressive() const noexcept;
 	void checkAgressive();
+	void setShootingPattern(std::string shootingPatternInfo);
 
 	//Label
 	void createHpLabel();
