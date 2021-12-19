@@ -33,6 +33,14 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    _background = Sprite::create("images/Sky1.png");
+    _background1 = Sprite::create("images/Sky2.png");
+    _background2 = Sprite::create("images/Mounts1.png");
+    _background3 = Sprite::create("images/Mounts2.png");
+    addChild(_background);
+    addChild(_background1);
+    addChild(_background2);
+    addChild(_background3);
     //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
@@ -67,7 +75,6 @@ bool MainScene::init() {
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
     _firstTileMap->TileMapObjectLayerInit(_world);
-
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -142,6 +149,10 @@ void MainScene::update(float dt) {
         const auto playerHp = _player->getHp();
         _hud->setHp(playerHp);
         const auto cameraPos = _player->getPosition();
+        _background->setPosition(cameraPos);
+        _background1->setPosition(cameraPos);
+        _background2->setPosition(cameraPos);
+        _background3->setPosition(cameraPos);
         _cameraTarget->setPosition(cameraPos);
     }
 

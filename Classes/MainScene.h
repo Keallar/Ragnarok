@@ -40,6 +40,9 @@ private:
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
     cocos2d::Sprite* _background;
+    cocos2d::Sprite* _background1;
+    cocos2d::Sprite* _background2;
+    cocos2d::Sprite* _background3;
     HUD* _hud;
     cocos2d::DrawNode* _test;
     RayCastManager* _rayCastManager;
