@@ -1,9 +1,10 @@
 #pragma once
 #include "ShootingCharacter.h"
+#include "MeleeCharacter.h"
 
 class IEnemyBehaviour;
 
-class IEnemy : public ShootingCharacter, public b2Sprite {
+class IEnemy : public ShootingCharacter, /*public MeleeCharacter,*/ public b2Sprite {
 	enum class eAnimState {
 		None,
 		Move,
@@ -41,6 +42,7 @@ public:
 	virtual void update(float dt);
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
 	virtual void setShootTarget(Vec2 target);
+	//virtual void hit() override;
 protected:
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;
