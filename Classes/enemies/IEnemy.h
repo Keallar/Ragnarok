@@ -39,6 +39,7 @@ public:
 
 	virtual void update(float dt);
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
+	virtual Vec2 getShootTarget() const;
 	virtual void setShootTarget(Vec2 target);
 
 	//Animation

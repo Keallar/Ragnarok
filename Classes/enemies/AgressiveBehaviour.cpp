@@ -1,5 +1,9 @@
 #pragma once
 #include "AgressiveBehaviour.h"
+#include "IBulletTypeCreator.h"
+#include "ShootingCharacter.h"
+#include "MeleeCharacter.h"
+
 constexpr auto MOVE_COOLDOWN = 2.f;
 
 AgressiveBehaviour::AgressiveBehaviour() {
@@ -42,6 +46,7 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			enemy->runAction(spawn);
 		}
 		_moveCooldown -= dt;
+		enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask()));
 	}
 	if (enemy->getName().substr(0, 5) == "Aboba") {
 		if (_moveCooldown <= 0) {

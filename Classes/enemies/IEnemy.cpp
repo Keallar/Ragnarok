@@ -30,7 +30,7 @@ void IEnemy::update(float dt) {
 	}
 	_behaviour->perform(this, _shootTarget, dt);
 	checkAgressive();
-	shoot(_shootTarget, new IdleBulletCreator(enemyPhysMask()));
+	//shoot(_shootTarget, new IdleBulletCreator(enemyPhysMask()));
 	shootingCharacterUpdate(dt);
 	updateHpLabel();
 	_attackCooldown -= dt;
@@ -80,6 +80,10 @@ void IEnemy::hit() {
 
 void IEnemy::cleanHit() {
 	getParent()->removeChild(_meleeHit);
+}
+
+Vec2 IEnemy::getShootTarget() const {
+	return _shootTarget;
 }
 
 void IEnemy::setShootTarget(Vec2 target) {
