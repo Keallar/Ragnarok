@@ -70,6 +70,21 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		}
 		_moveCooldown -= dt;
 	}
+ 	if (enemy->getName().substr(0, 4) == "Boss") {
+		if (_moveCooldown <= 0) {
+			_moveCooldown = MOVE_COOLDOWN;
+			Vec2 pos = enemy->getPosition();
+			Vec2 dest = targetPos - pos;
+			auto moveAction = MoveBy::create(1.5f, dest);
+			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
+			Animate* attackAnim = Animate::create(attackAnimation);
+			auto attackAction = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackAction);
+
+			enemy->runAction(spawn);
+		}
+		_moveCooldown -= dt;
+	}
 }
 
 std::string AgressiveBehaviour::getBehaviourName() const {

@@ -70,5 +70,23 @@
       "animMoveRFile": "",
       "animAttackFile": ""
     }
+  },
+  "Boss": {
+    "name": "Boss",
+    "specifications": {
+      "hp": 1000,
+      "damage": 10,
+      "speed": 10.0,
+      "attackCooldown": 0.5,
+      "bulletSpeed": 10,
+      "filter": ""
+    },
+    "components": {
+      "textureFile": "images/Boss.png",
+      "animIdleFile": "",
+      "animMoveLFile": "",
+      "animMoveRFile": "",
+      "animAttackFile": "images/Boss_attack_anim.png"
+    }
   }
 }

@@ -285,14 +285,14 @@ void MainScene::showImGui() {
         static int enemyType = -1;
         static std::string eType = "Flying";
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
-        if (ImGui::Combo("Enemy Type", &enemyType, "Flying\0Simple\0Aboba\0Wolf")) {
+        if (ImGui::Combo("Enemy Type", &enemyType, "Flying\0Simple\0Aboba\0Wolf\0Boss")) {
             switch (enemyType)
             {
             case 0: eType = "Flying"; break;
             case 1: eType = "Simple"; break;
             case 2: eType = "Aboba"; break;
             case 3: eType = "Wolf"; break;
-            //case 4: eType = "Boss"; break;
+            case 4: eType = "Boss"; break;
             }
         }
         if (ImGui::Button("CreateEnemy")) {

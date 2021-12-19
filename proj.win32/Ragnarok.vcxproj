@@ -248,6 +248,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
   <ItemGroup>
     <Image Include="..\Resources\images\BigBullet.png" />
     <Image Include="..\Resources\images\BigFire.png" />
+    <Image Include="..\Resources\images\Boss.png" />
+    <Image Include="..\Resources\images\Boss_attack_anim.png" />
     <Image Include="..\Resources\images\bullet.png" />
     <Image Include="..\Resources\images\Clouds.png" />
     <Image Include="..\Resources\images\Fire.png" />
