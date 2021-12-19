@@ -27,9 +27,9 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				}
 				const auto playerY = SpriteB->getPosition().y + SpriteA->getTextureRect().getMaxY();
 				const auto platformY = SpriteA->getPosition().y - SpriteA->getTextureRect().getMaxY();
-				/*if (playerY >= platformY) {
+				if (playerY >= platformY) {
 					scp(SpriteB)->setJumpState(eJumpState::None);
-				}*/
+				}
 			}
 			//Enemy with bullets
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
