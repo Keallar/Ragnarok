@@ -4,7 +4,7 @@
 
 class IEnemyBehaviour;
 
-class IEnemy : public ShootingCharacter, /*public MeleeCharacter,*/ public b2Sprite {
+class IEnemy : public ShootingCharacter, public MeleeCharacter, public b2Sprite {
 	enum class eAnimState {
 		None,
 		Move,
@@ -32,17 +32,26 @@ public:
 	void setAgressive(bool agressive) noexcept;
 	bool isAgressive() const noexcept;
 	void checkAgressive();
+
+	//Label
 	void createHpLabel();
 	void updateHpLabel();
+
+	virtual void update(float dt);
+	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
+	virtual void setShootTarget(Vec2 target);
+
+	//Animation
 	const cocos2d::Vector<SpriteFrame*> getIdleFrames() const;
 	const cocos2d::Vector<SpriteFrame*> getAttackFrames() const;
 	const cocos2d::Vector<SpriteFrame*> getMoveRightFrames() const;
 	const cocos2d::Vector<SpriteFrame*> getMoveLeftFrames() const;
 
-	virtual void update(float dt);
-	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
-	virtual void setShootTarget(Vec2 target);
-	//virtual void hit() override;
+	//Melee Func
+	void hit() override;
+	void cleanHit() override;
+	void meleeInit() override;
+	void meleeUpdate(float dt);
 protected:
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;

@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "box2d/b2dRootWorldNode.h"
-//#include "IShootingPattern.h"
 #include "external/json/document.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -215,6 +215,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
+			//_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3", true);
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_A:
@@ -226,6 +227,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
+			//_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3", true);
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_SPACE:
@@ -277,10 +279,12 @@ void Player::KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event
 		case EventKeyboard::KeyCode::KEY_A:
 			_curSpeed -= -_speed;
 			setAnimState(eAnimState::None);
+			//CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_stepSound);
 			break;
 		case EventKeyboard::KeyCode::KEY_D:
 			_curSpeed -= _speed;
 			setAnimState(eAnimState::None);
+			//CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_stepSound);
 			break;
 		case EventKeyboard::KeyCode::KEY_SPACE:
 			setJumpState(eJumpState::Fall);
@@ -325,10 +329,8 @@ void Player::changeBulletCreator(IBulletTypeCreator* bulletCreator) {
 }
 
 void Player::move(float dt) {
-	//UNDONE moving 
 	if (getBody()->GetLinearVelocity().x < _maxSpeed && _curSpeed > 0) {
 		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
-		//getBody()->SetLinearVelocity({ _curSpeed, getBody()->GetLinearVelocity().y });
 	}
 	else if(getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
 		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);

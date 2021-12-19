@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "NoticeBox.h"
 #include "Bullet.h"
+
 USING_NS_CC;
 
 Player* MainScene::getPlayer() {

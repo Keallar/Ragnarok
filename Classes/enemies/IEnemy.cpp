@@ -16,6 +16,11 @@ IEnemy::~IEnemy() {
 	delete _shootingPattern;
 }
 
+void IEnemy::meleeInit() {
+	_hitTime = 0.2f;
+	MeleeCharacter::_damage = 10;
+}
+
 void IEnemy::update(float dt) {
 	if (isAgressive() && getBehaviour()->getBehaviourName() != "Agressive") {
 		setBehaviour(new AgressiveBehaviour);
@@ -31,6 +36,17 @@ void IEnemy::update(float dt) {
 	_attackCooldown -= dt;
 }
 
+void IEnemy::meleeUpdate(float dt) {
+	MeleeCharacter::update(dt);
+	if (_meleeHit) {
+		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+		if (getScaleX() < 0) {
+			_meleeHit->setScaleX(getScaleX());
+			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		}
+	}
+}
+
 void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	if (_attackCooldown <= 0) {
 		_attackCooldown = ENEMY_ATTACK_COOLDOWN;
@@ -44,24 +60,27 @@ void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	}
 }
 
-//void IEnemy::hit() {
-//	if (_meleeHit == nullptr) {
-//		_isMeleeAttack = true;
-//		MeleeCharacter::_time = 0;
-//		_meleeHit = b2Sprite::create("images/melee.png");
-//		b2Filter filter;
-//		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
-//		filter.maskBits = static_cast<int>(eColMask::playerMelee);
-//		_meleeHit->getFixtureDef()->filter = filter;
-//		getParent()->addChild(_meleeHit);
-//		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
-//		if (getScaleX() < 0) {
-//			//_meleeHit->setRotation(30);
-//			_meleeHit->setScaleX(getScaleX());
-//			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
-//		}
-//	}
-//}
+void IEnemy::hit() {
+	if (_meleeHit == nullptr) {
+		_isMeleeAttack = true;
+		MeleeCharacter::_time = 0;
+		_meleeHit = b2Sprite::create("images/melee.png");
+		b2Filter filter;
+		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
+		filter.maskBits = static_cast<int>(eColMask::playerMelee);
+		_meleeHit->getFixtureDef()->filter = filter;
+		getParent()->addChild(_meleeHit);
+		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+		if (getScaleX() < 0) {
+			_meleeHit->setScaleX(getScaleX());
+			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		}
+	}
+}
+
+void IEnemy::cleanHit() {
+	getParent()->removeChild(_meleeHit);
+}
 
 void IEnemy::setShootTarget(Vec2 target) {
 	_shootTarget = target;
