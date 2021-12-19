@@ -1,6 +1,5 @@
 #pragma once
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "HUD.h"
 
 USING_NS_CC;
@@ -37,6 +36,7 @@ void HUD::beginLife(int hp, int mana) {
     addChild(imgMana);
 
     message = nullptr;
+    buttonCreate();
 }
 
 void HUD::messageOpen(std::string text) {
@@ -45,13 +45,49 @@ void HUD::messageOpen(std::string text) {
 
     if (message != nullptr) {
         message->cleanPaper();
-        getParent()->removeChild(message);
+        removeChild(message);
+        message = nullptr;
     }
     message = NoticeBox::create();
     addChild(message);
     message->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 
     message->printText(text);
+    button->setVisible(true);
+
+    button->setPosition({ origin.x + visibleSize.width / 2 + message->getSize().x, origin.y + visibleSize.height / 2 + message->getSize().y });
+}
+
+void HUD::messageClose() {
+    if (message != nullptr) {
+        message->cleanPaper();
+        removeChild(message);
+        message = nullptr;
+    }
+}
+
+void HUD::buttonCreate() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    button = ui::Button::create("Button.png");
+    button->setPosition({ origin.x + visibleSize.width - button->getContentSize().width, origin.y + visibleSize.height - button->getContentSize().height });
+    addChild(button);
+
+    button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            messageClose();
+            button->setVisible(false);
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            break;
+        default:
+            break;
+        }
+    });
+
+    button->setVisible(false);
 }
 
 void HUD::showPers() {

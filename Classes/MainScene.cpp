@@ -233,7 +233,7 @@ void MainScene::showImGui() {
         ImGui::TreePop();
     }
     if(ImGui::Button("NoticeBox")) {
-        _hud->messageOpen("hello world!");
+        _hud->messageOpen("hello world!\n hello world!\n hello world!");
     }
     static bool isToucedMetric = false;
     if (ImGui::Button("Metrics")) {

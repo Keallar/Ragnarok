@@ -5,6 +5,7 @@ public:
 	void printText(std::string text);
 	void cleanPaper();
 	void addTouchEvent();
+	cocos2d::Vec2 getSize();
 
 	CREATE_FUNC(NoticeBox);
 private:

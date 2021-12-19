@@ -1,5 +1,6 @@
 #include "cocos2d.h"
 #include "NoticeBox.h"
+#include "ui/CocosGUI.h"
 
 class HUD : public cocos2d::Node {
 public:
@@ -9,8 +10,11 @@ public:
     void showPers();
     void gameOver(bool player);
     void messageOpen(std::string text);
+    void messageClose();
     CREATE_FUNC(HUD);
 private:
+    void buttonCreate();
+
     int _hp;
     int _mana;
     cocos2d::Label* hpChange;
@@ -21,5 +25,5 @@ private:
     cocos2d::Sprite* imgMana;
 
     NoticeBox* message;
-
+    cocos2d::ui::Button* button;
 };

@@ -14,11 +14,12 @@ void NoticeBox::printText(std::string text) {
     _paper->setPosition({origin.x, origin.y});
 
     Vec2 a = _paper->getPosition();
-    auto _textLabel = Label::create();
+    _textLabel = Label::create();
     _textLabel->setString(text);
     TTFConfig textConfig;
-    textConfig.fontFilePath = "fonts/arial.png";
+    textConfig.fontFilePath = "fonts/arial.ttf";
     textConfig.fontSize = 18;
+    _textLabel->setTTFConfig(textConfig);
 
     _paper->setScale(_textLabel->getContentSize().width / 160, _textLabel->getContentSize().height / 180);
 
@@ -33,4 +34,8 @@ void NoticeBox::printText(std::string text) {
 void NoticeBox::cleanPaper() {
     removeChild(_paper);
     removeChild(_textLabel);
+}
+
+Vec2 NoticeBox::getSize() {
+    return { _paper->getContentSize().width * _paper->getScaleX(),  _paper->getContentSize().height * _paper->getScaleY() };
 }
