@@ -49,6 +49,8 @@ void Trigger::onCollision() {
 	case 6:
 		isActivated = true;
 		scene->save();
+	case 7:
+		_player->changeHp(-1000);
 	}
 }
 
