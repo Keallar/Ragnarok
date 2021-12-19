@@ -7,6 +7,7 @@
 #include "imgui.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
+#include "NoticeBox.h"
 
 USING_NS_CC;
 
@@ -239,7 +240,7 @@ void MainScene::createSomeEnemy(int count, std::string type) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
         for (auto i = 0; i < count; ++i) {
-            const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
+            const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
 			auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
 			enemies.push_back(enemy);
         }
@@ -322,14 +323,14 @@ void MainScene::showImGui() {
         static int enemyType = -1;
         static std::string eType = "Flying";
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
-        if (ImGui::Combo("Enemy Type", &enemyType, "Flying\0Simple\0Aboba\0Wolf")) {
+        if (ImGui::Combo("Enemy Type", &enemyType, "Flying\0Simple\0Aboba\0Wolf\0Boss")) {
             switch (enemyType)
             {
             case 0: eType = "Flying"; break;
             case 1: eType = "Simple"; break;
             case 2: eType = "Aboba"; break;
             case 3: eType = "Wolf"; break;
-            //case 4: eType = "Boss"; break;
+            case 4: eType = "Boss"; break;
             }
         }
         if (ImGui::Button("CreateEnemy")) {

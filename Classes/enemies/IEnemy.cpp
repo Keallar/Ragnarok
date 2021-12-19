@@ -6,7 +6,6 @@
 #include "IdleBehaviour.h"
 
 IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
-	_shootingPattern = new CircleShootingPattern(this);
 	_behaviour = behaviour;
 }
 
@@ -14,6 +13,11 @@ IEnemy::~IEnemy() {
 	delete _hpLabel;
 	delete _behaviour;
 	delete _shootingPattern;
+}
+
+void IEnemy::meleeInit() {
+	_hitTime = 0.2f;
+	MeleeCharacter::_damage = 10;
 }
 
 void IEnemy::update(float dt) {
@@ -25,10 +29,21 @@ void IEnemy::update(float dt) {
 	}
 	_behaviour->perform(this, _shootTarget, dt);
 	checkAgressive();
-	shoot(_shootTarget, new IdleBulletCreator(enemyPhysMask()));
 	shootingCharacterUpdate(dt);
+	meleeUpdate(dt);
 	updateHpLabel();
 	_attackCooldown -= dt;
+}
+
+void IEnemy::meleeUpdate(float dt) {
+	MeleeCharacter::update(dt);
+	if (_meleeHit) {
+		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+		if (getScaleX() < 0) {
+			_meleeHit->setScaleX(getScaleX());
+			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		}
+	}
 }
 
 void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
@@ -38,30 +53,36 @@ void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest *= _bulletSpeed;
-		//dest *= 10;
 
 		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
 }
 
-//void IEnemy::hit() {
-//	if (_meleeHit == nullptr) {
-//		_isMeleeAttack = true;
-//		MeleeCharacter::_time = 0;
-//		_meleeHit = b2Sprite::create("images/melee.png");
-//		b2Filter filter;
-//		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
-//		filter.maskBits = static_cast<int>(eColMask::playerMelee);
-//		_meleeHit->getFixtureDef()->filter = filter;
-//		getParent()->addChild(_meleeHit);
-//		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
-//		if (getScaleX() < 0) {
-//			//_meleeHit->setRotation(30);
-//			_meleeHit->setScaleX(getScaleX());
-//			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
-//		}
-//	}
-//}
+void IEnemy::hit() {
+	if (_meleeHit == nullptr) {
+		_isMeleeAttack = true;
+		MeleeCharacter::_time = 0;
+		_meleeHit = b2Sprite::create("images/melee.png");
+		b2Filter filter;
+		filter.categoryBits = static_cast<int>(eColCategory::enemyMelee);
+		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
+		_meleeHit->getFixtureDef()->filter = filter;
+		getParent()->addChild(_meleeHit);
+		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+		if (getScaleX() < 0) {
+			_meleeHit->setScaleX(getScaleX());
+			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		}
+	}
+}
+
+void IEnemy::cleanHit() {
+	getParent()->removeChild(_meleeHit);
+}
+
+Vec2 IEnemy::getShootTarget() const {
+	return _shootTarget;
+}
 
 void IEnemy::setShootTarget(Vec2 target) {
 	_shootTarget = target;
@@ -150,6 +171,29 @@ void IEnemy::checkAgressive() {
 		setAgressive(false);
 	}
 }
+
+void IEnemy::setShootingPattern(std::string shootingPatternInfo) {
+	if (!_shootingPattern) {
+		delete _shootingPattern;
+	}
+
+	if (shootingPatternInfo == "Idle") {
+		_shootingPattern = new IdleShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "ShotGun") {
+		_shootingPattern = new ShotGunShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "Circle") {
+		_shootingPattern = new CircleShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "Triple") {
+		_shootingPattern = new TripleShootingPattern(this);
+	}
+	else if (shootingPatternInfo == "ParalRev") {
+		//_shootingPattern = new ParalRevShootingPattern(this);
+	}
+}
+
 void IEnemy::createHpLabel() {
 	_hpLabel = Label::createWithTTF(std::to_string(_hp), "fonts/Marker Felt.ttf", 16);
 	if (!_hpLabel) {
@@ -177,12 +221,8 @@ const cocos2d::Vector<SpriteFrame*> IEnemy::getAttackFrames() const {
 	return _attackAnimFrames;
 }
 
-const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveRightFrames() const {
-	return _moveRightAnimFrames;
-}
-
-const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveLeftFrames() const {
-	return _moveLeftAnimFrames;
+const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveFrames() const {
+	return _moveAnimFrames;
 }
 
 void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {

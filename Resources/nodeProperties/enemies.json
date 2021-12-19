@@ -7,13 +7,13 @@
       "damage": 1,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": "Idle"
     },
     "components": {
       "textureFile": "images/Turtle.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": "images/Turtle_attack_anim.png"
     }
   },
@@ -25,13 +25,13 @@
       "speed": 20.0,
       "attackCooldown": 1.0,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": "Triple"
     },
     "components": {
       "textureFile": "images/Flying_enemy.png",
       "animIdleFile": "images/Flying_enemy_idle_anim.png",
-      "animMoveLFile": "images/Flying_enemy_moveL_anim.png",
-      "animMoveRFile": "images/Flying_enemy_moveR_anim.png",
+      "animMoveFile": "images/Flying_enemy_move_anim.png",
       "animAttackFile": "images/Flying_enemy_idle_anim.png"
     }
   },
@@ -43,13 +43,13 @@
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": ""
     },
     "components": {
       "textureFile": "images/PAPAABOBA.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": "images/PAPAABOBA_attack_anim.png"
     }
   },
@@ -61,14 +61,32 @@
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
-      "filter": ""
+      "filter": "",
+      "shootingPattern": "ShotGun"
     },
     "components": {
       "textureFile": "images/Wolf.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": ""
+    }
+  },
+  "Boss": {
+    "name": "Boss",
+    "specifications": {
+      "hp": 1000,
+      "damage": 10,
+      "speed": 10.0,
+      "attackCooldown": 0.5,
+      "bulletSpeed": 10,
+      "filter": "",
+      "shootingPattern": ""
+    },
+    "components": {
+      "textureFile": "images/Boss.png",
+      "animIdleFile": "",
+      "animMoveFile": "",
+      "animAttackFile": "images/Boss_attack_anim.png"
     }
   }
 }

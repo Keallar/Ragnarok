@@ -17,6 +17,10 @@ void MeleeCharacter::update(float dt) {
 	}
 }
 
+int MeleeCharacter::getMeleeDamage() const {
+	return _damage;
+}
+
 void MeleeCharacter::meleeInit() {
 	_hitTime = 0.2f;
 	_damage = 100;

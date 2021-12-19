@@ -382,6 +382,12 @@
     <Image Include="..\Resources\images\Sky.png">
       <Filter>Resources\images</Filter>
     </Image>
+    <Image Include="..\Resources\images\Boss.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Boss_attack_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\nodeProperties\bullets.json">

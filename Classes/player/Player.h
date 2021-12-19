@@ -51,8 +51,8 @@ public:
 	void changeMana(int difMana) noexcept;
 	bool isDied() const;
 	void setDied(bool state) noexcept;
-
 	float getJumpSpeed();
+
 	//key callbacks
 	void keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	void KeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
@@ -113,5 +113,9 @@ private:
 	cocos2d::Vector<SpriteFrame*> _jumpAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _fallAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _moveAnimFrames;
+
+	//Sound id
+	unsigned int _stepSound;
+	unsigned int _fallSound;
 };
 

@@ -4,7 +4,7 @@
 
 class IEnemyBehaviour;
 
-class IEnemy : public ShootingCharacter, /*public MeleeCharacter,*/ public b2Sprite {
+class IEnemy : public ShootingCharacter, public MeleeCharacter, public b2Sprite {
 	enum class eAnimState {
 		None,
 		Move,
@@ -32,28 +32,36 @@ public:
 	void setAgressive(bool agressive) noexcept;
 	bool isAgressive() const noexcept;
 	void checkAgressive();
+	void setShootingPattern(std::string shootingPatternInfo);
+
+	//Label
 	void createHpLabel();
 	void updateHpLabel();
-	const cocos2d::Vector<SpriteFrame*> getIdleFrames() const;
-	const cocos2d::Vector<SpriteFrame*> getAttackFrames() const;
-	const cocos2d::Vector<SpriteFrame*> getMoveRightFrames() const;
-	const cocos2d::Vector<SpriteFrame*> getMoveLeftFrames() const;
 
 	virtual void update(float dt);
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator);
+	virtual Vec2 getShootTarget() const;
 	virtual void setShootTarget(Vec2 target);
-	//virtual void hit() override;
+
+	//Animation
+	const cocos2d::Vector<SpriteFrame*> getIdleFrames() const;
+	const cocos2d::Vector<SpriteFrame*> getAttackFrames() const;
+	const cocos2d::Vector<SpriteFrame*> getMoveFrames() const;
+
+	//Melee Func
+	void hit() override;
+	void cleanHit() override;
+	void meleeInit() override;
+	void meleeUpdate(float dt);
 protected:
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;
 	std::string _animationIdleFile;
-	std::string _animationMoveLFile;
-	std::string _animationMoveRFile;
+	std::string _animationMoveFile;
 	std::string _animationAttackFile;
 	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
-	cocos2d::Vector<SpriteFrame*> _moveRightAnimFrames;
-	cocos2d::Vector<SpriteFrame*> _moveLeftAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _moveAnimFrames;
 	int _bulletSpeed;
 private:
 	Vec2 _shootTarget;
