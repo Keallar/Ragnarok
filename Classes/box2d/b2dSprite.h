@@ -114,6 +114,7 @@ public:
 	void setB2BodyPosition(float x, float y);
 	void setTriangleShape();
 	void setTiles(float _tileWidth, Node* world);
+	void setPlayerBody();
 	void setTrigger(float width, float height);
 	virtual void setRotation(float rotation) override;
 	void setB2BodyRotation(float rotation);

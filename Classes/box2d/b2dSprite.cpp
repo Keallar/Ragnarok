@@ -191,6 +191,18 @@ void b2Sprite::setTiles(float _tileWidth, Node* world)
 	_B2FixtureDef.shape = &_B2Shape;
 }
 
+void b2Sprite::setPlayerBody() 
+{
+	b2Vec2 vertices[4];
+	vertices[0].Set(-0.47, -0.5);
+	vertices[1].Set(-0.47, 0.45);
+	vertices[2].Set(0.47, 0.45);
+	vertices[3].Set(0.47, -0.5);
+	_B2Shape.Set(vertices, 4);
+	_B2FixtureDef.shape = &_B2Shape;
+	_B2FixtureDef.density = 1.9f;
+}
+
 void b2Sprite::setTrigger(float width, float height) {
 	_B2BodyDef.type = b2BodyType::b2_kinematicBody;
 	b2Vec2 vertices[4];

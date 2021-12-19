@@ -25,6 +25,7 @@ Player* Player::create() {
 		//filter.groupIndex = -1;
 		playerObj->getFixtureDef()->filter = filt;
 		playerObj->setName("Player");
+		playerObj->setPlayerBody();
 		return playerObj;
 	}
 	CC_SAFE_DELETE(playerObj);
