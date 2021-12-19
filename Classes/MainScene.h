@@ -7,6 +7,7 @@
 #include "HUD.h"
 #include "RayCastManager.h"
 #include "TileMapManager.h"
+#include "Trigger.h"
 
 struct Save {
     PlayerSave playerSave;
@@ -28,14 +29,19 @@ public:
 
     void save();
     void load();
+    void restart();
 
     Player* getPlayer();
     TileMapManager* getTMM();
+
+    void addTrigger(Trigger* trigger);
 
     CREATE_FUNC(MainScene);
 private:
     Player* _player;
     Save _save;
+
+    int _deathCount;
 
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
@@ -46,4 +52,5 @@ private:
     TileMapManager* _firstTileMap;
 
     std::list<IEnemy*> enemies;
+    std::list<Trigger*> _triggers;
 };

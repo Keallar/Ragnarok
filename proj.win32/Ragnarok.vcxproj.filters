@@ -115,6 +115,9 @@
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ui\GameOverScreen.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ui\GameOverScreen.h">
+      <Filter>src\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

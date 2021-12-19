@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Trigger.h"
 #include "box2d/b2dSprite.h"
+#include "MainScene.h"
+
 TileMapManager::TileMapManager() {
 
 }
@@ -106,6 +108,7 @@ void TileMapManager::TileMapBackgroundLayerInit(Node* node, CCTMXLayer* layer) {
 }
 
 void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
+	auto scene = dynamic_cast<MainScene*>(_world->getParent());
 	CCTMXObjectGroup* firstGroup = _tiledMap->getObjectGroup("ObjectLayer");
 	b2Filter filter;
 	filter.categoryBits = static_cast<uint16>(eColCategory::trigger);
@@ -135,6 +138,8 @@ void TileMapManager::TileMapObjectLayerInit(b2WorldNode* _world) {
 
 		//Adding to scene
 		_world->addChild(_trigger);
+		scene->addTrigger(_trigger);
+
 		_trigger->setPosition(x, y+_tileSize/2);
 		_trigger = Trigger::create();
 	}
