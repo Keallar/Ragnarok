@@ -1,6 +1,5 @@
 #pragma once
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "HUD.h"
 
 USING_NS_CC;
@@ -35,6 +34,60 @@ void HUD::beginLife(int hp, int mana) {
     imgMana->initWithFile("images/Mana.png");
     imgMana->setPosition(Vec2(origin.x + imgMana->getContentSize().width / 2, origin.y + visibleSize.height - imgMana->getContentSize().height / 2 - hpImgBase->getContentSize().height));
     addChild(imgMana);
+
+    message = nullptr;
+    buttonCreate();
+}
+
+void HUD::messageOpen(std::string text) {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    if (message != nullptr) {
+        message->cleanPaper();
+        removeChild(message);
+        message = nullptr;
+    }
+    message = NoticeBox::create();
+    addChild(message);
+    message->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+
+    message->printText(text);
+    button->setVisible(true);
+
+    button->setPosition({ origin.x + visibleSize.width / 2 + message->getSize().x, origin.y + visibleSize.height / 2 + message->getSize().y });
+}
+
+void HUD::messageClose() {
+    if (message != nullptr) {
+        message->cleanPaper();
+        removeChild(message);
+        message = nullptr;
+    }
+}
+
+void HUD::buttonCreate() {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+    button = ui::Button::create("Button.png");
+    button->setPosition({ origin.x + visibleSize.width - button->getContentSize().width, origin.y + visibleSize.height - button->getContentSize().height });
+    addChild(button);
+
+    button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+        switch (type) {
+        case ui::Widget::TouchEventType::BEGAN:
+            messageClose();
+            button->setVisible(false);
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            break;
+        default:
+            break;
+        }
+    });
+
+    button->setVisible(false);
 }
 
 void HUD::showPers() {

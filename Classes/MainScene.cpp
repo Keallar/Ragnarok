@@ -7,8 +7,7 @@
 #include "imgui.h"
 #include "IdleBehaviour.h"
 #include "Enemy.h"
-#include "NoticeBox.h"
-#include "Bullet.h"
+
 USING_NS_CC;
 
 Player* MainScene::getPlayer() {
@@ -308,13 +307,9 @@ void MainScene::showImGui() {
         }
         ImGui::TreePop();
     }
-    /*if(ImGui::Button("NoticeBox")) {
-        NoticeBox* nBox = NoticeBox::create();
-        auto tempLabel = Label::create();
-        tempLabel->setString("Hello World!");
-        nBox->printText(tempLabel);
-        addChild(nBox);
-    }*/
+    if(ImGui::Button("NoticeBox")) {
+        _hud->messageOpen("hello world!\n hello world!\n hello world!");
+    }
     static bool isTouchedDrawNode = false;
     if (ImGui::Button("DebugNode")) {
         if (!isTouchedDrawNode) {
