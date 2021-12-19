@@ -48,7 +48,7 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (enemy->getName().substr(0, 5) == "Aboba") {
 		if (_moveCooldown <= 0) {
 			_moveCooldown = MOVE_COOLDOWN;
-			if (enemy->getShootTarget().x > enemy->getPositionX()) {
+			if (enemy->getShootTarget().x > enemy->getPositionX() && enemy->getScaleX() > 0) {
 				auto scale = enemy->getScaleX();
 				enemy->setScaleX(-scale);
 			}
@@ -63,7 +63,7 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			enemy->runAction(spawn);
 		}
 		_moveCooldown -= dt;
-		//enemy->hit();
+		enemy->hit();
 	}
 	if (enemy->getName().substr(0, 4) == "Wolf") {
 		if (_moveCooldown <= 0) {

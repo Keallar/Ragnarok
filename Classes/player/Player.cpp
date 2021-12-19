@@ -56,22 +56,22 @@ bool Player::init() {
 				const rapidjson::Value& valueEnt = playerEnt["specifications"];
 				if (valueEnt.HasMember("hp") && valueEnt.HasMember("mana") && valueEnt.HasMember("speed") && valueEnt.HasMember("jumpSpeed")) {
 					const rapidjson::Value& hp = valueEnt["hp"];
-					_hp = hp.GetInt(); // int value obtained
+					_hp = hp.GetInt();
 
 					const rapidjson::Value& mana = valueEnt["mana"];
-					_mana = mana.GetInt(); // int value obtained
+					_mana = mana.GetInt();
 
 					const rapidjson::Value& speed = valueEnt["speed"];
-					_speed = speed.GetDouble(); // int value obtained
+					_speed = speed.GetDouble();
 
 					const rapidjson::Value& maxSpeed = valueEnt["maxSpeed"];
-					_maxSpeed = maxSpeed.GetDouble(); // int value obtained
+					_maxSpeed = maxSpeed.GetDouble();
 
 					const rapidjson::Value& jumpSpeed = valueEnt["jumpSpeed"];
-					_jumpSpeed = jumpSpeed.GetInt(); // int value obtained
+					_jumpSpeed = jumpSpeed.GetInt();
 
 					const rapidjson::Value& jumpHeight = valueEnt["jumpHeight"];
-					_jumpHeight = jumpHeight.GetInt(); // int value obtained
+					_jumpHeight = jumpHeight.GetInt();
 
 				}
 			}
@@ -117,6 +117,9 @@ bool Player::init() {
 	addChild(_hookBody);
 	//shoot
 	_bulletCreator = new IdleBulletCreator(playerPhysMask());
+
+	//Sound effects
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sounds/Step.mp3");
 
 	//Animation
 	//Idle animation
@@ -212,16 +215,14 @@ void Player::restart() {
 				const rapidjson::Value& valueEnt = playerEnt["specifications"];
 				if (valueEnt.HasMember("hp") && valueEnt.HasMember("mana")) {
 					const rapidjson::Value& hp = valueEnt["hp"];
-					_hp = hp.GetInt(); // int value obtained
+					_hp = hp.GetInt();
 
 					const rapidjson::Value& mana = valueEnt["mana"];
-					_mana = mana.GetInt(); // int value obtained
+					_mana = mana.GetInt();
 				}
 			}
 		}
 	}
-
-
 }
 
 void Player::meleeInit() {
@@ -267,7 +268,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
-			//_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3", true);
+			_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3");
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_A:
@@ -279,7 +280,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
-			//_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3", true);
+			_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3");
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_SPACE:
