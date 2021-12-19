@@ -190,19 +190,21 @@ void MainScene::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
     _player->KeyReleased(keyCode, event);
 }
 
+void MainScene::save() {
+    _save.playerSave = _player->save();
+}
+
+void MainScene::load() {
+    _player->load(_save.playerSave);
+}
+
 void MainScene::createSomeEnemy(int count, std::string type) {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 100, _player->getPosition().y + 100 };
-            if (type == "Simple") {
-                auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
-                enemies.push_back(enemy);
-            } 
-            else if (type == "Flying") {
-                auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
-                enemies.push_back(enemy);
-            }
+			auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
+			enemies.push_back(enemy);
         }
     }
 }
@@ -281,15 +283,16 @@ void MainScene::showImGui() {
     if (ImGui::TreeNode("Enemies")) {
         static int countOfEnemy = 1;
         static int enemyType = -1;
-        static std::string eType;
+        static std::string eType = "Flying";
         ImGui::InputInt("Count of create enemies", &countOfEnemy, 0, 10);
-        if (ImGui::Combo("Enemy Type", &enemyType, "Flying")) {
+        if (ImGui::Combo("Enemy Type", &enemyType, "Flying\0Simple\0Aboba\0Wolf")) {
             switch (enemyType)
             {
             case 0: eType = "Flying"; break;
             case 1: eType = "Simple"; break;
             case 2: eType = "Aboba"; break;
             case 3: eType = "Wolf"; break;
+            //case 4: eType = "Boss"; break;
             }
         }
         if (ImGui::Button("CreateEnemy")) {
@@ -349,12 +352,4 @@ void MainScene::showImGui() {
         ImGui::ShowStyleEditor();
     }
     ImGui::End();
-}
-
-void MainScene::save() {
-    _save.playerSave = _player->save();
-}
-
-void MainScene::load() {
-    _player->load(_save.playerSave);
 }
