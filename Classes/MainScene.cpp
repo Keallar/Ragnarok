@@ -35,12 +35,19 @@ bool MainScene::init() {
 
     _background = Sprite::create("images/Sky1.png");
     _background1 = Sprite::create("images/Sky2.png");
+    _background1->setScaleX(1.2);
     _background2 = Sprite::create("images/Mounts1.png");
+    _background2->setScaleX(1.35);
     _background3 = Sprite::create("images/Mounts2.png");
+    _background3->setScaleX(1.5);
     addChild(_background);
     addChild(_background1);
     addChild(_background2);
     addChild(_background3);
+    _background->setPosition({ 9000, 24000 });
+    _background1->setPosition({ 9000, 24000 });
+    _background2->setPosition({ 9000, 24000 });
+    _background3->setPosition({ 9000, 24000 });
     //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
@@ -150,9 +157,12 @@ void MainScene::update(float dt) {
         _hud->setHp(playerHp);
         const auto cameraPos = _player->getPosition();
         _background->setPosition(cameraPos);
-        _background1->setPosition(cameraPos);
-        _background2->setPosition(cameraPos);
-        _background3->setPosition(cameraPos);
+        _background1->setPositionX(cameraPos.x+(9000-cameraPos.x)/115);
+        _background1->setPositionY(cameraPos.y);
+        _background2->setPositionX(cameraPos.x+(9000-cameraPos.x)/65);
+        _background2->setPositionY(cameraPos.y);
+        _background3->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 45);
+        _background3->setPositionY(cameraPos.y);
         _cameraTarget->setPosition(cameraPos);
     }
 
