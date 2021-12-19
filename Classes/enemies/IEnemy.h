@@ -45,8 +45,7 @@ public:
 	//Animation
 	const cocos2d::Vector<SpriteFrame*> getIdleFrames() const;
 	const cocos2d::Vector<SpriteFrame*> getAttackFrames() const;
-	const cocos2d::Vector<SpriteFrame*> getMoveRightFrames() const;
-	const cocos2d::Vector<SpriteFrame*> getMoveLeftFrames() const;
+	const cocos2d::Vector<SpriteFrame*> getMoveFrames() const;
 
 	//Melee Func
 	void hit() override;
@@ -57,13 +56,11 @@ protected:
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;
 	std::string _animationIdleFile;
-	std::string _animationMoveLFile;
-	std::string _animationMoveRFile;
+	std::string _animationMoveFile;
 	std::string _animationAttackFile;
 	cocos2d::Vector<SpriteFrame*> _idleAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
-	cocos2d::Vector<SpriteFrame*> _moveRightAnimFrames;
-	cocos2d::Vector<SpriteFrame*> _moveLeftAnimFrames;
+	cocos2d::Vector<SpriteFrame*> _moveAnimFrames;
 	int _bulletSpeed;
 private:
 	Vec2 _shootTarget;

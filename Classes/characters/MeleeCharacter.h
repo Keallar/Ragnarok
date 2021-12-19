@@ -11,14 +11,12 @@ public:
 	virtual void meleeInit();
 	void update(float dt);
 	virtual void cleanHit() = 0;
+
+	int getMeleeDamage() const;
 protected:
 	b2Sprite* _meleeHit;
-
 	bool _isMeleeAttack;
-
 	float _hitTime; 
 	float _time;
-
 	int _damage;
-
 };

@@ -129,6 +129,7 @@ bool Player::init() {
 	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(320, 0, 64, 64)));
 	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(384, 0, 64, 64)));
 	_idleAnimFrames.pushBack(SpriteFrame::create(_idleAnimFile, Rect(448, 0, 64, 64)));
+	//Start animation
 	Animation* idleAnimation = Animation::createWithSpriteFrames(_idleAnimFrames, 0.13f);
 	Animate* idleAnim = Animate::create(idleAnimation);
 	Action* idleAction = RepeatForever::create(idleAnim);
@@ -181,7 +182,6 @@ void Player::meleeUpdate(float dt) {
 	if (_meleeHit) {
 		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
 		if (getScaleX() < 0) {
-			//_meleeHit->setRotation(30);
 			_meleeHit->setScaleX(getScaleX());
 			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
 		}

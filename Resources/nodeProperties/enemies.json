@@ -12,8 +12,7 @@
     "components": {
       "textureFile": "images/Turtle.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": "images/Turtle_attack_anim.png"
     }
   },
@@ -30,8 +29,7 @@
     "components": {
       "textureFile": "images/Flying_enemy.png",
       "animIdleFile": "images/Flying_enemy_idle_anim.png",
-      "animMoveLFile": "images/Flying_enemy_moveL_anim.png",
-      "animMoveRFile": "images/Flying_enemy_moveR_anim.png",
+      "animMoveFile": "images/Flying_enemy_move_anim.png",
       "animAttackFile": "images/Flying_enemy_idle_anim.png"
     }
   },
@@ -48,8 +46,7 @@
     "components": {
       "textureFile": "images/PAPAABOBA.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": "images/PAPAABOBA_attack_anim.png"
     }
   },
@@ -66,8 +63,7 @@
     "components": {
       "textureFile": "images/Wolf.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": ""
     }
   },
@@ -84,8 +80,7 @@
     "components": {
       "textureFile": "images/Boss.png",
       "animIdleFile": "",
-      "animMoveLFile": "",
-      "animMoveRFile": "",
+      "animMoveFile": "",
       "animAttackFile": "images/Boss_attack_anim.png"
     }
   }

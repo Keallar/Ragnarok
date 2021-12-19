@@ -93,11 +93,8 @@ bool Enemy::init(std::string type) {
 					const rapidjson::Value& animIdleFile = compEnt["animIdleFile"];
 					_animationIdleFile = animIdleFile.GetString();
 
-					const rapidjson::Value& animMoveLFile = compEnt["animMoveLFile"];
-					_animationMoveLFile = animMoveLFile.GetString();
-
-					const rapidjson::Value& animMoveRFile = compEnt["animMoveRFile"];
-					_animationMoveRFile = animMoveRFile.GetString();
+					const rapidjson::Value& animMoveFile = compEnt["animMoveFile"];
+					_animationMoveFile = animMoveFile.GetString();
 
 					const rapidjson::Value& animAttackFile = compEnt["animAttackFile"];
 					_animationAttackFile = animAttackFile.GetString();
@@ -133,7 +130,7 @@ bool Enemy::init(std::string type) {
 		_idleAnimFrames.reserve(1);
 		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 64, 64)));
 	}
-	//Attack animation
+	//Attack left animation
 	if (_fileName == "images/Boss.png") {
 		_attackAnimFrames.reserve(1);
 		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(0, 0, 961, 614)));
@@ -144,22 +141,14 @@ bool Enemy::init(std::string type) {
 		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(64, 0, 64, 64)));
 		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(128, 0, 64, 64)));
 		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(192, 0, 64, 64)));
-	} 
-	//Move right animation 
-	if (_animationMoveRFile != "") {
-		_moveRightAnimFrames.reserve(4);
-		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationMoveRFile, Rect(0, 0, 64, 64)));
-		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationMoveRFile, Rect(64, 0, 64, 64)));
-		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationMoveRFile, Rect(128, 0, 64, 64)));
-		_moveRightAnimFrames.pushBack(SpriteFrame::create(_animationMoveRFile, Rect(192, 0, 64, 64)));
 	}
-	//Move left animation
-	if (_animationMoveLFile != "") {
-		_moveLeftAnimFrames.reserve(4);
-		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationMoveLFile, Rect(0, 0, 64, 64)));
-		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationMoveLFile, Rect(64, 0, 64, 64)));
-		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationMoveLFile, Rect(128, 0, 64, 64)));
-		_moveLeftAnimFrames.pushBack(SpriteFrame::create(_animationMoveLFile, Rect(192, 0, 64, 64)));
+	//Move animation
+	if (_animationMoveFile != "") {
+		_moveAnimFrames.reserve(4);
+		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(0, 0, 64, 64)));
+		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(64, 0, 64, 64)));
+		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(128, 0, 64, 64)));
+		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(192, 0, 64, 64)));
 	}
 
 	return true;

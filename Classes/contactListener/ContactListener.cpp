@@ -55,14 +55,20 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				auto bullet = scb(SpriteB);
 				bullet->collideFunc();
 			}
-			//melee attack
+			//melee attack player
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerMelee)) {
 				auto enemy = sce(SpriteA);
 				enemy->setDamaged(true);
 				enemy->changeHp(-100);
 			}
-
+			//melee attack enemy
+			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
+				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
+				auto player = scp(SpriteA);
+				auto enemy = sce(SpriteB);
+				player->changeHp(-enemy->getMeleeDamage());
+			}
 		};
 
 		f();

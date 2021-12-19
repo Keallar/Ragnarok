@@ -30,7 +30,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		}
 		if (state == static_cast<int>(eIdleState::MoveRight)) {
 			if (!enemy->getActionByTag(1)) {
-				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveRightFrames(), 0.13f);
+				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveRightAnim = Animate::create(moveRightAnimation);
 				Action* moveRightAct = Repeat::create(moveRightAnim, 1);
 				moveRightAct->setTag(1);
@@ -40,7 +40,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		}
 		if (state == static_cast<int>(eIdleState::MoveLeft)) {
 			if (!enemy->getActionByTag(2)) {
-				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveLeftFrames(), 0.13f);
+				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 				Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
 				moveLeftAct->setTag(2);
@@ -68,7 +68,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				if (!enemy->getActionByTag(1)) {
-					Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveRightFrames(), 0.13f);
+					Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 					Animate* moveRightAnim = Animate::create(moveRightAnimation);
 					Action* moveRightAct = Repeat::create(moveRightAnim, 1);
 					moveRightAct->setTag(1);
@@ -78,7 +78,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				if (!enemy->getActionByTag(2)) {
-					Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveLeftFrames(), 0.13f);
+					Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 					Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 					Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
 					moveLeftAct->setTag(2);
@@ -107,7 +107,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				if (!enemy->getActionByTag(1)) {
-					Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveRightFrames(), 0.13f);
+					Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 					Animate* moveRightAnim = Animate::create(moveRightAnimation);
 					Action* moveRightAct = Repeat::create(moveRightAnim, 1);
 					moveRightAct->setTag(1);
@@ -117,7 +117,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				if (!enemy->getActionByTag(2)) {
-					Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveLeftFrames(), 0.13f);
+					Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 					Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 					Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
 					moveLeftAct->setTag(2);
@@ -146,7 +146,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				if (!enemy->getActionByTag(1)) {
-					Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveRightFrames(), 0.13f);
+					Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 					Animate* moveRightAnim = Animate::create(moveRightAnimation);
 					Action* moveRightAct = Repeat::create(moveRightAnim, 1);
 					moveRightAct->setTag(1);
@@ -156,7 +156,7 @@ void IdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				if (!enemy->getActionByTag(2)) {
-					Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveLeftFrames(), 0.13f);
+					Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 					Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 					Action* moveLeftAct = Repeat::create(moveLeftAnim, 1);
 					moveLeftAct->setTag(2);

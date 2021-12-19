@@ -30,8 +30,8 @@ void IEnemy::update(float dt) {
 	}
 	_behaviour->perform(this, _shootTarget, dt);
 	checkAgressive();
-	//shoot(_shootTarget, new IdleBulletCreator(enemyPhysMask()));
 	shootingCharacterUpdate(dt);
+	meleeUpdate(dt);
 	updateHpLabel();
 	_attackCooldown -= dt;
 }
@@ -54,7 +54,6 @@ void IEnemy::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest *= _bulletSpeed;
-		//dest *= 10;
 
 		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
@@ -66,8 +65,8 @@ void IEnemy::hit() {
 		MeleeCharacter::_time = 0;
 		_meleeHit = b2Sprite::create("images/melee.png");
 		b2Filter filter;
-		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
-		filter.maskBits = static_cast<int>(eColMask::playerMelee);
+		filter.categoryBits = static_cast<int>(eColCategory::enemyMelee);
+		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
 		_meleeHit->getFixtureDef()->filter = filter;
 		getParent()->addChild(_meleeHit);
 		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
@@ -200,12 +199,8 @@ const cocos2d::Vector<SpriteFrame*> IEnemy::getAttackFrames() const {
 	return _attackAnimFrames;
 }
 
-const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveRightFrames() const {
-	return _moveRightAnimFrames;
-}
-
-const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveLeftFrames() const {
-	return _moveLeftAnimFrames;
+const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveFrames() const {
+	return _moveAnimFrames;
 }
 
 void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
