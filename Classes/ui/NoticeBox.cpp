@@ -17,7 +17,7 @@ void NoticeBox::printText(std::string text) {
     _textLabel = Label::create();
     _textLabel->setString(text);
     TTFConfig textConfig;
-    textConfig.fontFilePath = "fonts/arial.ttf";
+    textConfig.fontFilePath = "fonts/OptimusPrinceps.ttf";
     textConfig.fontSize = 18;
     _textLabel->setTTFConfig(textConfig);
 

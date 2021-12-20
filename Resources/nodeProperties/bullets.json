@@ -2,7 +2,7 @@
   "Bullet": {
     "name": "Bullet",
     "specifications": {
-      "damage": 100,
+      "damage": 1,
       "moveTime": 2.0,
       "lifeTime": 2.0
     },
@@ -13,7 +13,7 @@
   "BigBullet": {
     "name": "BigBullet",
     "specifications": {
-      "damage": 150,
+      "damage": 1,
       "moveTime": 2.0,
       "lifeTime": 2.0
     },
@@ -24,7 +24,7 @@
   "PlayerHookBullet": {
     "name": "PlayerHookBullet",
     "specifications": {
-      "damage": 100,
+      "damage": 1,
       "moveTime": 0.8,
       "lifeTime": 7.0
     },
@@ -35,7 +35,7 @@
   "FireBullet": {
     "name": "FireBullet",
     "specifications": {
-      "damage": 100,
+      "damage": 1,
       "moveTime": 2.0,
       "lifeTime": 2.0
     },
@@ -46,7 +46,7 @@
   "IceBullet": {
     "name": "IceBullet",
     "specifications": {
-      "damage": 100,
+      "damage": 1,
       "moveTime": 2.0,
       "lifeTime": 2.0
     },
@@ -57,7 +57,7 @@
   "IceBlast": {
     "name": "IceBlast",
     "specifications": {
-      "damage": 50,
+      "damage": 1,
       "moveTime": 2.0,
       "lifeTime": 2.0
     },
@@ -68,7 +68,7 @@
   "FireBlast": {
     "name": "FireBlast",
     "specifications": {
-      "damage": 50,
+      "damage": 1,
       "moveTime": 2.0,
       "lifeTime": 2.0
     },
