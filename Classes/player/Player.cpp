@@ -383,10 +383,10 @@ void Player::changeBulletCreator(IBulletTypeCreator* bulletCreator) {
 
 void Player::move(float dt) {
 	if (getBody()->GetLinearVelocity().x < _maxSpeed && _curSpeed > 0) {
-		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 120 * dt, 0 }, true);
 	}
 	else if(getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
-		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 60 * dt, 0 }, true);
+		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 120 * dt, 0 }, true);
 	}
 	else if (_curSpeed == 0) {
 		getBody()->SetLinearVelocity({ 0, getBody()->GetLinearVelocity().y });

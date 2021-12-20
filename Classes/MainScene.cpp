@@ -8,6 +8,9 @@
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 
+#include "imgui/CCIMGUIGLViewImpl.h"
+#include "imgui/CCImGuiLayer.h"
+#include "imgui/CCIMGUI.h"
 USING_NS_CC;
 
 Player* MainScene::getPlayer() {
@@ -107,6 +110,15 @@ bool MainScene::init() {
 
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
+
+    Director::getInstance()->getScheduler()->schedule([=](float dt)
+        {
+            auto runningScene = Director::getInstance()->getRunningScene();
+            if (runningScene && !runningScene->getChildByName("ImGUILayer"))
+            {
+                runningScene->addChild(ImGuiLayer::create(), INT_MAX, "ImGUILayer");
+            }
+        }, this, 0, false, "checkIMGUI");
 
     scheduleUpdate();
 
