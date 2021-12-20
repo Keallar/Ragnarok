@@ -12,12 +12,14 @@ IEnemy::IEnemy(IEnemyBehaviour* behaviour) {
 IEnemy::~IEnemy() {
 	delete _hpLabel;
 	delete _behaviour;
-	delete _shootingPattern;
+	if (!_shootingPattern) {
+		delete _shootingPattern;
+	}
 }
 
 void IEnemy::meleeInit() {
-	_hitTime = 0.2f;
-	MeleeCharacter::_damage = 10;
+	_hitTime = 2.f;
+	MeleeCharacter::_damage = 1;
 }
 
 void IEnemy::update(float dt) {
@@ -191,6 +193,9 @@ void IEnemy::setShootingPattern(std::string shootingPatternInfo) {
 	}
 	else if (shootingPatternInfo == "ParalRev") {
 		//_shootingPattern = new ParalRevShootingPattern(this);
+	}
+	else {
+		_shootingPattern = nullptr;
 	}
 }
 

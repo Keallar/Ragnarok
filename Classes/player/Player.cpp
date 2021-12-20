@@ -268,7 +268,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
-			_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3");
+			//_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3");
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_A:
@@ -280,7 +280,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				scaleX *= -1;
 				setScaleX(scaleX);
 			}
-			_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3");
+			//_stepSound = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sounds/Step.mp3");
 			break;
 		}
 		case EventKeyboard::KeyCode::KEY_SPACE:
@@ -423,14 +423,6 @@ void Player::jump(float dt) {
 	if (getJumpState() == eJumpState::Jump) {
 		setAnimState(eAnimState::Jump);
 		getBody()->ApplyLinearImpulseToCenter({ 0, _jumpSpeed * 60 * dt }, true);
-		/*auto posX = getPositionX();
-		auto posY = getPositionY();
-		if (!getActionByTag(10)) {
-			stopAllActions();
-			Action* jumpAction = JumpBy::create(2.0f, { 0, 0 }, 700, 1);
-			jumpAction->setTag(10);
-			runAction(jumpAction);
-		}*/
 	}
 	if (_jumpBegin == 0 && _jumpCount == 0) {
 		setJumpState(eJumpState::None);
@@ -445,10 +437,7 @@ void Player::jump(float dt) {
 }
 
 void Player::setJumpState(eJumpState state) {
-	/*if (_jumpCount == 1) {
-		_jumpBegin += _jumpHeight;
-	}*/
-	if (state == eJumpState::Jump /*&& _jumpCount == 0*/) {
+	if (state == eJumpState::Jump) {
 		_jumpBegin = getPosition().y + _jumpHeight;
 	}
 	if (state == eJumpState::None) {
