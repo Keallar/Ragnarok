@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "MainScene.h"
+#include "MainMenu.h"
 
 #include "imgui/CCIMGUIGLViewImpl.h"
 #include "imgui/CCImGuiLayer.h"
@@ -123,18 +123,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
 
-    auto scene = MainScene::createScene();
+    auto scene = MainMenu::create();
     // run
     director->runWithScene(scene);
 
-    director->getScheduler()->schedule([=](float dt)
+    /*director->getScheduler()->schedule([=](float dt)
         {
             auto runningScene = Director::getInstance()->getRunningScene();
             if (runningScene && !runningScene->getChildByName("ImGUILayer"))
             {
                 runningScene->addChild(ImGuiLayer::create(), INT_MAX, "ImGUILayer");
             }
-        }, this, 0, false, "checkIMGUI");
+        }, this, 0, false, "checkIMGUI");*/
 
     return true;
 }

@@ -14,7 +14,7 @@ void GameOverScreen::createLabel() {
     _text = Label::create();
     _text->setString("Restart");
     TTFConfig textConfig;
-    textConfig.fontFilePath = "fonts/arial.ttf";
+    textConfig.fontFilePath = "fonts/OptimusPrinceps.ttf";
     textConfig.fontSize = 28;
     _text->setTTFConfig(textConfig);
     _text->setPosition(origin.x + visibleSize.x / 2, origin.y + visibleSize.y / 4);
