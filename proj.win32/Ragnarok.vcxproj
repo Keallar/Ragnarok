@@ -284,6 +284,10 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <None Include="..\Resources\nodeProperties\enemies.json" />
     <None Include="..\Resources\nodeProperties\player.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Resources\sounds\Fall.mp3" />
+    <Media Include="..\Resources\sounds\Step.mp3" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
