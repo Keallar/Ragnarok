@@ -14,6 +14,8 @@ public:
 	IEnemy(IEnemyBehaviour* behaviour = nullptr);
 	virtual ~IEnemy();
 	void setBehaviour(IEnemyBehaviour* behaviour);
+	void setIdleBehaviour();
+	void setAgressiveBehaviour();
 	IEnemyBehaviour* getBehaviour() const noexcept;
 	void setHp(int hp) noexcept;
 	void changeHp(float difHp);
@@ -54,6 +56,7 @@ public:
 	void meleeInit() override;
 	void meleeUpdate(float dt);
 protected:
+	std::string _type;
 	IEnemyBehaviour* _behaviour;
 	std::string _fileName;
 	std::string _animationIdleFile;
@@ -63,6 +66,7 @@ protected:
 	cocos2d::Vector<SpriteFrame*> _attackAnimFrames;
 	cocos2d::Vector<SpriteFrame*> _moveAnimFrames;
 	int _bulletSpeed;
+	int _agressiveZone;
 private:
 	Vec2 _shootTarget;
 	int _hp;

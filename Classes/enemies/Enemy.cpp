@@ -29,7 +29,7 @@ Enemy* Enemy::create(Node* node, Vec2 pos, std::string type, IEnemyBehaviour* be
 		enemyObj->getBody()->SetFixedRotation(true);
 		enemyObj->setPosition(pos);
 		enemyObj->createHpLabel();
-		behaviour->perform(enemyObj, Vec2( 0, 0 ), 0.f);
+		enemyObj->_behaviour->perform(enemyObj, Vec2( 0, 0 ), 0.f);
 		return enemyObj;
 	}
 	CC_SAFE_DELETE(enemyObj);
@@ -40,9 +40,10 @@ bool Enemy::init(std::string type) {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	if (!_behaviour) {
+	/*if (!_behaviour) {
 		return false;
-	}
+	}*/
+	_type = type;
 	//Json init
 	rapidjson::Document initFile;
 	bool bRet = false;
@@ -89,6 +90,9 @@ bool Enemy::init(std::string type) {
 					const rapidjson::Value& shootingPattern = valueEnt["shootingPattern"];
 					auto shootingPatternInfo = shootingPattern.GetString();
 					setShootingPattern(shootingPatternInfo);
+
+					const rapidjson::Value& agressivezone = valueEnt["agressiveZone"];
+					_agressiveZone = agressivezone.GetInt();
 				}
 			}
 			if (ent.HasMember("components")) {
@@ -116,6 +120,7 @@ bool Enemy::init(std::string type) {
 	setDamaged(false);
 	setDestroyed(false);
 	setAgressive(false);
+	setIdleBehaviour();
 
 	//Idle animation
 	if (_fileName == "images/Wolf.png") {

@@ -35,6 +35,21 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    _background = Sprite::create("images/Sky1.png");
+    _background1 = Sprite::create("images/Sky2.png");
+    _background1->setScaleX(1.2);
+    _background2 = Sprite::create("images/Mounts1.png");
+    _background2->setScaleX(1.35);
+    _background3 = Sprite::create("images/Mounts2.png");
+    _background3->setScaleX(1.5);
+    addChild(_background);
+    addChild(_background1);
+    addChild(_background2);
+    addChild(_background3);
+    _background->setPosition({ 9000, 24000 });
+    _background1->setPosition({ 9000, 24000 });
+    _background2->setPosition({ 9000, 24000 });
+    _background3->setPosition({ 9000, 24000 });
     //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
@@ -69,7 +84,6 @@ bool MainScene::init() {
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
     _firstTileMap->TileMapObjectLayerInit(_world);
-
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -108,6 +122,8 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background.mp3", true);
+
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
 
@@ -121,16 +137,6 @@ bool MainScene::init() {
         }, this, 0, false, "checkIMGUI");
 
     scheduleUpdate();
-
-    /*_test = DrawNode::create();
-    _test->setName("DrawNode");
-    addChild(_test);*/
-
-    /*NoticeBox* nBox = NoticeBox::create();
-    auto tempLabel = Label::create();
-    tempLabel->setString("Hello World!");
-    nBox->printText(tempLabel);
-    addChild(nBox);*/
 
     return true;
 }
@@ -191,6 +197,13 @@ void MainScene::update(float dt) {
         const auto playerHp = _player->getHp();
         _hud->setHp(playerHp);
         const auto cameraPos = _player->getPosition();
+        _background->setPosition(cameraPos);
+        _background1->setPositionX(cameraPos.x+(9000-cameraPos.x)/115);
+        _background1->setPositionY(cameraPos.y);
+        _background2->setPositionX(cameraPos.x+(9000-cameraPos.x)/65);
+        _background2->setPositionY(cameraPos.y);
+        _background3->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 45);
+        _background3->setPositionY(cameraPos.y);
         _cameraTarget->setPosition(cameraPos);
     }
 
@@ -252,7 +265,7 @@ void MainScene::createSomeEnemy(int count, std::string type) {
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
-			auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
+			auto enemy = Enemy::create(_world, pos, type);
 			enemies.push_back(enemy);
         }
     }

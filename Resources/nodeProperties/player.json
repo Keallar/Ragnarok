@@ -6,7 +6,7 @@
       "speed": 1,
       "maxSpeed": 10.0,
       "jumpSpeed": 7,
-      "jumpHeight": 90,
+      "jumpHeight": 70,
       "attackCooldown":  0,
       "startPosition": [ 8000, 22000 ]
     },

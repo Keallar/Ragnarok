@@ -1,12 +1,42 @@
 #pragma once
 #include "IEnemyBehaviour.h"
 
-class AgressiveBehaviour : public IEnemyBehaviour {
+class SimpleAgressiveBehaviour : public IEnemyBehaviour {
 public:
-	AgressiveBehaviour();
-	~AgressiveBehaviour() {}
+	SimpleAgressiveBehaviour();
+	~SimpleAgressiveBehaviour() {}
 	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
 	std::string getBehaviourName() const override;
-private:
-	float _moveCooldown;
+};
+
+class FlyingAgressiveBehaviour : public IEnemyBehaviour {
+public:
+	FlyingAgressiveBehaviour();
+	~FlyingAgressiveBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+};
+
+class AbobaAgressiveBehaviour : public IEnemyBehaviour {
+public:
+	AbobaAgressiveBehaviour();
+	~AbobaAgressiveBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+};
+
+class WolfAgressiveBehaviour : public IEnemyBehaviour {
+public:
+	WolfAgressiveBehaviour();
+	~WolfAgressiveBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+};
+
+class BossAgressiveBehaviour : public IEnemyBehaviour {
+public:
+	BossAgressiveBehaviour();
+	~BossAgressiveBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
 };

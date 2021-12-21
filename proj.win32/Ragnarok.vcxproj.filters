@@ -302,6 +302,9 @@
     <Filter Include="main">
       <UniqueIdentifier>{b76d419f-7822-4647-b3cf-b4b0e71e6172}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\sounds">
+      <UniqueIdentifier>{7ce96362-ffed-472d-ac95-4dc615e46f20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\images\BigBullet.png">
@@ -410,5 +413,13 @@
     <ResourceCompile Include="game.rc">
       <Filter>Resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Resources\sounds\Fall.mp3">
+      <Filter>Resources\sounds</Filter>
+    </Media>
+    <Media Include="..\Resources\sounds\Step.mp3">
+      <Filter>Resources\sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>
