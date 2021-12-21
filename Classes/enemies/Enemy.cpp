@@ -40,9 +40,6 @@ bool Enemy::init(std::string type) {
 	if (!b2Sprite::init()) {
 		return false;
 	}
-	/*if (!_behaviour) {
-		return false;
-	}*/
 	_type = type;
 	//Json init
 	rapidjson::Document initFile;
@@ -121,6 +118,9 @@ bool Enemy::init(std::string type) {
 	setDestroyed(false);
 	setAgressive(false);
 	setIdleBehaviour();
+	if (!_behaviour) {
+		return false;
+	}
 
 	//Idle animation
 	if (_fileName == "images/Wolf.png") {
