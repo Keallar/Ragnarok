@@ -28,25 +28,35 @@ void SimpleIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				enemy->stopAllActions();
-				Vec2 dest = { 150, 0 };
+				if (enemy->getScaleX() > 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				} 
+				Vec2 dest { 150, 0 };
 				auto moveRightAct = MoveBy::create(2.0f, dest);
 				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveRightAnim = Animate::create(moveRightAnimation);
 				auto moveRightActAnim = RepeatForever::create(moveRightAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveRightActAnim, moveRightAct);
+				Vector<FiniteTimeAction*> movingRight{ moveRightActAnim, moveRightAct };
+
+				auto spawn = Spawn::create(movingRight);
 
 				enemy->runAction(spawn);
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				enemy->stopAllActions();
-				Vec2 dest = { -150, 0 };
+				if (enemy->getScaleX() < 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest { -150, 0 };
 				auto moveLeftAct = MoveBy::create(2.0f, dest);
 				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 				auto moveLeftActAnim = RepeatForever::create(moveLeftAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveLeftActAnim, moveLeftAct);
+				Vector<FiniteTimeAction*> movingLeft{ moveLeftActAnim, moveLeftAct };
+
+				auto spawn = Spawn::create(movingLeft);
 
 				enemy->runAction(spawn);
 			}
@@ -87,25 +97,35 @@ void FlyingIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				enemy->stopAllActions();
-				Vec2 dest = { 150, 0 };
+				if (enemy->getScaleX() > 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ 150, 0 };
 				auto moveRightAct = MoveBy::create(2.0f, dest);
 				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveRightAnim = Animate::create(moveRightAnimation);
 				auto moveRightActAnim = RepeatForever::create(moveRightAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveRightActAnim, moveRightAct);
+				Vector<FiniteTimeAction*> movingRight{ moveRightActAnim, moveRightAct };
+
+				auto spawn = Spawn::create(movingRight);
 
 				enemy->runAction(spawn);
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				enemy->stopAllActions();
-				Vec2 dest = { -150, 0 };
+				if (enemy->getScaleX() < 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ -150, 0 };
 				auto moveLeftAct = MoveBy::create(2.0f, dest);
 				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 				auto moveLeftActAnim = RepeatForever::create(moveLeftAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveLeftActAnim, moveLeftAct);
+				Vector<FiniteTimeAction*> movingLeft{ moveLeftActAnim, moveLeftAct };
+
+				auto spawn = Spawn::create(movingLeft);
 
 				enemy->runAction(spawn);
 			}
@@ -147,25 +167,35 @@ void AbobaIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				enemy->stopAllActions();
-				Vec2 dest = { 150, 0 };
+				if (enemy->getScaleX() > 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ 150, 0 };
 				auto moveRightAct = MoveBy::create(2.0f, dest);
 				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveRightAnim = Animate::create(moveRightAnimation);
 				auto moveRightActAnim = RepeatForever::create(moveRightAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveRightActAnim, moveRightAct);
+				Vector<FiniteTimeAction*> movingRight{ moveRightActAnim, moveRightAct };
+
+				auto spawn = Spawn::create(movingRight);
 
 				enemy->runAction(spawn);
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				enemy->stopAllActions();
-				Vec2 dest = { -150, 0 };
+				if (enemy->getScaleX() < 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ -150, 0 };
 				auto moveLeftAct = MoveBy::create(2.0f, dest);
 				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 				auto moveLeftActAnim = RepeatForever::create(moveLeftAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveLeftActAnim, moveLeftAct);
+				Vector<FiniteTimeAction*> movingLeft{ moveLeftActAnim, moveLeftAct };
+
+				auto spawn = Spawn::create(movingLeft);
 
 				enemy->runAction(spawn);
 			}
@@ -206,25 +236,35 @@ void WolfIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				enemy->stopAllActions();
-				Vec2 dest = { 150, 0 };
+				if (enemy->getScaleX() > 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ 150, 0 };
 				auto moveRightAct = MoveBy::create(2.0f, dest);
 				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveRightAnim = Animate::create(moveRightAnimation);
 				auto moveRightActAnim = RepeatForever::create(moveRightAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveRightActAnim, moveRightAct);
+				Vector<FiniteTimeAction*> movingRight{ moveRightActAnim, moveRightAct };
+
+				auto spawn = Spawn::create(movingRight);
 
 				enemy->runAction(spawn);
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				enemy->stopAllActions();
-				Vec2 dest = { -150, 0 };
+				if (enemy->getScaleX() < 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ -150, 0 };
 				auto moveLeftAct = MoveBy::create(2.0f, dest);
 				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 				auto moveLeftActAnim = RepeatForever::create(moveLeftAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveLeftActAnim, moveLeftAct);
+				Vector<FiniteTimeAction*> movingLeft{ moveLeftActAnim, moveLeftAct };
+
+				auto spawn = Spawn::create(movingLeft);
 
 				enemy->runAction(spawn);
 			}
@@ -265,25 +305,35 @@ void BossIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveRight)) {
 				enemy->stopAllActions();
-				Vec2 dest = { 150, 0 };
+				if (enemy->getScaleX() > 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ 150, 0 };
 				auto moveRightAct = MoveBy::create(2.0f, dest);
 				Animation* moveRightAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveRightAnim = Animate::create(moveRightAnimation);
 				auto moveRightActAnim = RepeatForever::create(moveRightAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveRightActAnim, moveRightAct);
+				Vector<FiniteTimeAction*> movingRight{ moveRightActAnim, moveRightAct };
+
+				auto spawn = Spawn::create(movingRight);
 
 				enemy->runAction(spawn);
 			}
 			else if (_state == static_cast<int>(eIdleState::MoveLeft)) {
 				enemy->stopAllActions();
-				Vec2 dest = { -150, 0 };
+				if (enemy->getScaleX() < 0) {
+					enemy->setScaleX(-enemy->getScaleX());
+				}
+				Vec2 dest{ -150, 0 };
 				auto moveLeftAct = MoveBy::create(2.0f, dest);
 				Animation* moveLeftAnimation = Animation::createWithSpriteFrames(enemy->getMoveFrames(), 0.13f);
 				Animate* moveLeftAnim = Animate::create(moveLeftAnimation);
 				auto moveLeftActAnim = RepeatForever::create(moveLeftAnim);
 
-				auto spawn = Spawn::createWithTwoActions(moveLeftActAnim, moveLeftAct);
+				Vector<FiniteTimeAction*> movingLeft{ moveLeftActAnim, moveLeftAct };
+
+				auto spawn = Spawn::create(movingLeft);
 
 				enemy->runAction(spawn);
 			}

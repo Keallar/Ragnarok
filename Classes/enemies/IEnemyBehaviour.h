@@ -16,6 +16,5 @@ protected:
 
 	std::string _name;
 	float _stateCooldown;
-	eIdleState _idleState;
 	int _state;
 };
