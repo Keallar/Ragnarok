@@ -122,6 +122,8 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background.mp3", true);
+
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
 
@@ -135,16 +137,6 @@ bool MainScene::init() {
         }, this, 0, false, "checkIMGUI");
 
     scheduleUpdate();
-
-    /*_test = DrawNode::create();
-    _test->setName("DrawNode");
-    addChild(_test);*/
-
-    /*NoticeBox* nBox = NoticeBox::create();
-    auto tempLabel = Label::create();
-    tempLabel->setString("Hello World!");
-    nBox->printText(tempLabel);
-    addChild(nBox);*/
 
     return true;
 }
@@ -273,7 +265,7 @@ void MainScene::createSomeEnemy(int count, std::string type) {
     if (_player) {
         for (auto i = 0; i < count; ++i) {
             const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
-			auto enemy = Enemy::create(_world, pos, type, new IdleBehaviour);
+			auto enemy = Enemy::create(_world, pos, type);
 			enemies.push_back(enemy);
         }
     }

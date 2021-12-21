@@ -1,23 +1,52 @@
 #pragma once
 #include "IEnemyBehaviour.h"
 
-class IdleBehaviour : public IEnemyBehaviour {
-	enum class eIdleState {
-		Sleep,
-		MoveRight,
-		MoveLeft
-	};
+class SimpleIdleBehaviour : public IEnemyBehaviour {
 public:
-	IdleBehaviour();
-	~IdleBehaviour() {}
+	SimpleIdleBehaviour();
+	~SimpleIdleBehaviour() {}
 	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
 	std::string getBehaviourName() const override;
 private:
 	eIdleState _idleState;
-	int _startPos;
-	bool _completed;
-	int _state;
 };
 
-//TODO Create several classes for every enemy type and
-//make IdleBehaviour is StatePattern
+class FlyingIdleBehaviour : public IEnemyBehaviour {
+public:
+	FlyingIdleBehaviour();
+	~FlyingIdleBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+private:
+	eIdleState _idleState;
+};
+
+class AbobaIdleBehaviour : public IEnemyBehaviour {
+public:
+	AbobaIdleBehaviour();
+	~AbobaIdleBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+private:
+	eIdleState _idleState;
+};
+
+class WolfIdleBehaviour : public IEnemyBehaviour {
+public:
+	WolfIdleBehaviour();
+	~WolfIdleBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+private:
+	eIdleState _idleState;
+};
+
+class BossIdleBehaviour : public IEnemyBehaviour {
+public:
+	BossIdleBehaviour();
+	~BossIdleBehaviour() {}
+	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
+	std::string getBehaviourName() const override;
+private:
+	eIdleState _idleState;
+};

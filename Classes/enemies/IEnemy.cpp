@@ -23,11 +23,11 @@ void IEnemy::meleeInit() {
 }
 
 void IEnemy::update(float dt) {
-	if (isAgressive() && getBehaviour()->getBehaviourName() != "Agressive") {
-		setBehaviour(new AgressiveBehaviour);
+	if (isAgressive() && getBehaviour()->getBehaviourName().substr(0, 9) != "Agressive") {
+		setAgressiveBehaviour();
 	}
-	else if (!isAgressive() && getBehaviour()->getBehaviourName() == "Agressive"){
-		setBehaviour(new IdleBehaviour);
+	else if (!isAgressive() && getBehaviour()->getBehaviourName().substr(0, 9) == "Agressive"){
+		setIdleBehaviour();
 	}
 	_behaviour->perform(this, _shootTarget, dt);
 	checkAgressive();
@@ -165,8 +165,8 @@ bool IEnemy::isAgressive() const noexcept {
 void IEnemy::checkAgressive() {
 	auto tempX = getPositionX() - _shootTarget.x;
 	auto tempY = getPositionY() - _shootTarget.y;
-	if (getPositionX() - _shootTarget.x < 400 && getPositionY() - _shootTarget.y < 400 &&
-			getPositionX() - _shootTarget.x > -400 && getPositionY() - _shootTarget.y > -400) {
+	if (getPositionX() - _shootTarget.x < _agressiveZone && getPositionY() - _shootTarget.y < _agressiveZone &&
+			getPositionX() - _shootTarget.x > -_agressiveZone && getPositionY() - _shootTarget.y > -_agressiveZone) {
 		setAgressive(true);
 	}
 	else {
@@ -216,10 +216,10 @@ void IEnemy::createHpLabel() {
 
 void IEnemy::updateHpLabel() {
 	_hpLabel->setString(std::to_string(_hp));
-	if (getScaleX() > 0 && _hpLabel->getScaleX() > 0) {
+	/*if (getScaleX() > 0 && _hpLabel->getScaleX() > 0) {
 		auto hpLabelScaleX = _hpLabel->getScaleX();
 		_hpLabel->setScaleX(-hpLabelScaleX);
-	}
+	}*/
 }
 
 const cocos2d::Vector<SpriteFrame*> IEnemy::getIdleFrames() const {
@@ -232,6 +232,42 @@ const cocos2d::Vector<SpriteFrame*> IEnemy::getAttackFrames() const {
 
 const cocos2d::Vector<SpriteFrame*> IEnemy::getMoveFrames() const {
 	return _moveAnimFrames;
+}
+
+void IEnemy::setIdleBehaviour() {
+	if (_type == "Simple") {
+		setBehaviour(new SimpleIdleBehaviour);
+	}
+	else if (_type == "Flying") {
+		setBehaviour(new FlyingIdleBehaviour);
+	}
+	else if (_type == "Aboba") {
+		setBehaviour(new AbobaIdleBehaviour);
+	}
+	else if (_type == "Wolf") {
+		setBehaviour(new WolfIdleBehaviour);
+	}
+	else if (_type == "Boss") {
+		setBehaviour(new BossIdleBehaviour);
+	}
+}
+
+void IEnemy::setAgressiveBehaviour() {
+	if (_type == "Simple") {
+		setBehaviour(new SimpleAgressiveBehaviour);
+	}
+	else if (_type == "Flying") {
+		setBehaviour(new FlyingAgressiveBehaviour);
+	}
+	else if (_type == "Aboba") {
+		setBehaviour(new AbobaAgressiveBehaviour);
+	}
+	else if (_type == "Wolf") {
+		setBehaviour(new WolfAgressiveBehaviour);
+	}
+	else if (_type == "Boss") {
+		setBehaviour(new BossAgressiveBehaviour);
+	}
 }
 
 void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
