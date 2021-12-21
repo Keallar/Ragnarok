@@ -9,6 +9,7 @@ int Enemy::id = -1;
 Enemy::Enemy(std::string type, IEnemyBehaviour* behaviour)
 	: IEnemy(behaviour) {
 	init(type);
+	meleeInit();
 }
 
 Enemy::~Enemy() {

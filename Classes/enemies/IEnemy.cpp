@@ -70,10 +70,10 @@ void IEnemy::hit() {
 		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
 		_meleeHit->getFixtureDef()->filter = filter;
 		getParent()->addChild(_meleeHit);
-		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
-		if (getScaleX() < 0) {
+		_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		if (getScaleX() > 0) {
 			_meleeHit->setScaleX(getScaleX());
-			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+			_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
 		}
 	}
 }
