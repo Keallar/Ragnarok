@@ -293,6 +293,8 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			if (_hook && _hook->isHooked()) {
 				_hook->setOnRemove();
 				_hook = nullptr;
+				getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, 3 });
+				setJumpState(eJumpState::Jump);
 			}
 		}
 		case EventKeyboard::KeyCode::KEY_W:
@@ -305,6 +307,8 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			if (_hook && _hook->isHooked()) {
 				_hook->setOnRemove();
 				_hook = nullptr;
+				getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, 3 });
+				setJumpState(eJumpState::Jump);
 			}
 			break;
 		}
