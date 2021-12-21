@@ -1,5 +1,6 @@
 #include "Trigger.h"
 #include "MainScene.h"
+#include "Enemy.h"
 
 Trigger::~Trigger() {
 
@@ -26,6 +27,26 @@ void Trigger::onCollision() {
 		break;
 	case 1:
 		isActivated = true;
+		funcStr.erase(0, 2);
+		int typeOfEnemy = (int)funcStr[0]-48;
+		std::string type;
+		switch (typeOfEnemy)
+		{
+		case 0:
+			type = "Simple";
+			break;
+		case 1:
+			type = "Flying";
+			break;
+		case 2:
+			type = "Wolf";
+			break;
+		}
+		funcStr.erase(0, 1);
+		int xpos = std::stoi(funcStr.substr(0, 4));
+		int ypos = std::stoi(funcStr.substr(4, 8));
+		Vec2 pos = Vec2(_player->getPosition().x - xpos, _player->getPosition().y + ypos);
+		scene->createEnemyByTrigger(type, pos);
 		break;
 	case 2:
 		isActivated = true;
@@ -51,8 +72,10 @@ void Trigger::onCollision() {
 	case 6:
 		isActivated = true;
 		scene->save();
+		break;
 	case 7:
 		_player->changeHp(-1000);
+		break;
 	}
 }
 

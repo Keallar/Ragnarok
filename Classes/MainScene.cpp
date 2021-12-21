@@ -272,6 +272,10 @@ void MainScene::createSomeEnemy(int count, std::string type) {
     }
 }
 
+void MainScene::createEnemyByTrigger(std::string type, Vec2 pos) {
+    auto enemy = Enemy::create(_world, pos, type);
+    enemies.push_back(enemy);
+}
 void MainScene::showImGui() {
     if (!ImGui::Begin("Debug")) {
         ImGui::End();
