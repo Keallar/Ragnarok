@@ -2,9 +2,6 @@
 #include "ui/CocosGUI.h"
 #include "MainScene.h"
 
-#include "imgui/CCIMGUIGLViewImpl.h"
-#include "imgui/CCImGuiLayer.h"
-#include "imgui/CCIMGUI.h"
 
 USING_NS_CC;
 
@@ -78,12 +75,4 @@ void SplashScene::update(float dt) {
 	auto scene = MainScene::createScene();
 	Director::getInstance()->replaceScene(scene);
 
-	Director::getInstance()->getScheduler()->schedule([=](float dt)
-		{
-			auto runningScene = Director::getInstance()->getRunningScene();
-			if (runningScene && !runningScene->getChildByName("ImGUILayer"))
-			{
-				runningScene->addChild(ImGuiLayer::create(), INT_MAX, "ImGUILayer");
-			}
-		}, this, 0, false, "checkIMGUI");
 }
