@@ -148,6 +148,7 @@ void MainScene::restart() {
     _firstTileMap->getTiledMap()->getLayer("FG1")->setVisible(true);
     _firstTileMap->getTiledMap()->getLayer("FG1.2")->setVisible(true);
     _firstTileMap->getTiledMap()->getLayer("FG1.3")->setVisible(true);
+    _firstTileMap->getTiledMap()->getLayer("FG2")->setVisible(true);
     _firstTileMap->getTiledMap()->getLayer("FG3")->setVisible(false);
     _firstTileMap->getTiledMap()->getLayer("FG3.1")->setVisible(false);
     _firstTileMap->getTiledMap()->getLayer("FG4")->setVisible(false);
