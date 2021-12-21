@@ -245,11 +245,11 @@ void Player::update(float dt) {
 	shootingCharacterUpdate(dt);
 	meleeUpdate(dt);
 	move(dt);
-	hookBodyUpdate(dt);
 	jump(dt);
 	if (getJumpState() == eJumpState::None && _curSpeed != 0) {
 		setAnimState(eAnimState::Move);
 	}
+	hookBodyUpdate(dt);
 }
 
 void Player::cleanHit() {
@@ -286,6 +286,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		case EventKeyboard::KeyCode::KEY_SPACE:
 		{
 			if (getJumpState() == eJumpState::None || _jumpCount != 2) {
+				getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, 3 });
 				setJumpState(eJumpState::Jump);
 				//_jumpCount++;
 			}
@@ -297,6 +298,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		case EventKeyboard::KeyCode::KEY_W:
 		{
 			if (getJumpState() == eJumpState::None || _jumpCount != 2) {
+				getBody()->SetLinearVelocity({getBody()->GetLinearVelocity().x, 3});
 				setJumpState(eJumpState::Jump);
 				_jumpCount++;
 			}
@@ -372,7 +374,7 @@ void Player::mousePressed(cocos2d::Event* event) {
 		setAnimState(eAnimState::Attack);
 	}
 	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
-		shoot(clickPosCalculate(mouse), new BigBulletCreator(playerPhysMask()));
+		shoot(clickPosCalculate(mouse), new HookBulletCreator(hookPhysMask()));
 		setAnimState(eAnimState::Attack);
 	}
 }
@@ -395,25 +397,26 @@ void Player::move(float dt) {
 
 void Player::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	if (_attackCooldown <= 0) {
-		if (auto isIdle = dynamic_cast<FireBulletCreator*>(bulletCreator)) {
-			_attackCooldown = PLAYER_ATTACK_COOLDOWN;
-		}
-		else if (auto isBig = dynamic_cast<BigBulletCreator*>(bulletCreator)) {
-			_attackCooldown = PLAYER_BIG_ATTACK_COOLDOWN;
-		}
+		_attackCooldown = PLAYER_ATTACK_COOLDOWN;
+
 		Vec2 pos = getPosition();
 		Vec2 dest = targetPos - pos;
 		dest.normalize();
 		dest.y *= -1;
-		if (auto isHook = dynamic_cast<HookBulletCreator*>(bulletCreator)) {
+
+		if (dynamic_cast<HookBulletCreator*>(bulletCreator)) {
+			if (_hook) {
+				_hook->setOnRemove();
+				_hook = nullptr;
+			}
 			dest *= PLAYER_HOOK_SPEED;
-			//dest += {getBody()->GetLinearVelocity().x, getBody()->GetLinearVelocity().y};
 			_hookPattern->shoot(pos, dest, bulletCreator);
+			_hook = dynamic_cast<PlayerHookBullet*>(BulletFactory::getInstance()->getLastBullet());
+			return;
 		}
-		else {
-			dest *= PLAYER_BULLET_SPEED;
-			_shootingPattern->shoot(pos, dest, bulletCreator);
-		}
+
+		dest *= PLAYER_BULLET_SPEED;
+		_shootingPattern->shoot(pos, dest, bulletCreator);
 	}
 }
 
@@ -448,6 +451,31 @@ void Player::setJumpState(eJumpState state) {
 }
 
 void Player::hookBodyUpdate(float dt) {
+	/*if (_hook && _hook->getLifeTime() > 0) {
+		_hookBody->clear();
+		Vec2 dest = _hook->getPosition() - getPosition();
+		dest.y += getContentSize().width / 2;
+		dest.x += getContentSize().height / 2 * getScaleX();
+		dest.x *= getScaleX();
+		_hookBody->drawLine(Vec2(getContentSize() / 2), dest, Color4F::GRAY);
+		if (_hook->isHooked()) {
+			dest.normalize();
+			dest.x *= getScaleX();
+			dest *= 30; //hooked player fly speed
+			b2Vec2 playerVel = { dest.x, dest.y };
+			if (_hook->getVelDest() == b2Vec2(0, 0)) {
+				_hook->setVelDest(playerVel);
+			}
+			if (playerVel.x / _hook->getVelDest().x <= 0 || playerVel.y / _hook->getVelDest().y <= 0) {
+				playerVel *= -1;
+			}
+			getBody()->SetLinearVelocity(playerVel);
+		}
+	}
+	else {
+		_hook = nullptr;
+		_hookBody->clear();
+	}*/
 	if (_hook && _hook->getLifeTime() > 0) {
 		_hookBody->clear();
 		Vec2 dest = _hook->getPosition() - getPosition();
@@ -460,6 +488,10 @@ void Player::hookBodyUpdate(float dt) {
 			dest.x *= getScaleX();
 			dest *= 30; //hooked player fly speed
 			b2Vec2 playerVel = { dest.x, dest.y };
+			if (_hook->getVelDest() == b2Vec2(0, 0)) {
+				_hook->setVelDest(playerVel);
+			}
+
 			getBody()->SetLinearVelocity(playerVel);
 		}
 	}
