@@ -10,7 +10,7 @@ AgressiveBehaviour::AgressiveBehaviour() {
 
 void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (!enemy) {
-		CCLOG("ERROR IN IDLE BEHAVIOUR");
+		CCLOG("ERROR IN AGRESSIVE BEHAVIOUR");
 		return;
 	}
 	if (enemy->getName().substr(0, 6) == "Simple") {
@@ -21,8 +21,8 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			auto moveAction = MoveBy::create(1.5f, dest);
 			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 			Animate* attackAnim = Animate::create(attackAnimation);
-			auto attackAction = Repeat::create(attackAnim, 3);
-			Action* spawn = Spawn::createWithTwoActions(moveAction, attackAction);
+			auto attackActionAnim = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
 			
 			enemy->runAction(spawn);
 		}
@@ -37,8 +37,8 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			auto moveAction = MoveBy::create(1.5f, dest);
 			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 			Animate* attackAnim = Animate::create(attackAnimation);
-			auto attackAction = Repeat::create(attackAnim, 3);
-			Action* spawn = Spawn::createWithTwoActions(moveAction, attackAction);
+			auto attackActionAnim = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
 
 			enemy->runAction(spawn);
 		}
@@ -57,8 +57,8 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			auto moveAction = MoveBy::create(1.5f, dest);
 			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 			Animate* attackAnim = Animate::create(attackAnimation);
-			auto attackAction = Repeat::create(attackAnim, 3);
-			Action* spawn = Spawn::createWithTwoActions(moveAction, attackAction);
+			auto attackActionAnim = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
 
 			enemy->runAction(spawn);
 		}
@@ -70,7 +70,7 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			_moveCooldown = MOVE_COOLDOWN;
 			Vec2 pos = enemy->getPosition();
 			Vec2 dest = targetPos - pos;
-			auto moveAction = MoveBy::create(1.5f, dest);
+			auto moveAction = JumpBy::create(1.5f, dest, 200, 1);
 
 			enemy->runAction(moveAction);
 		}
@@ -85,8 +85,8 @@ void AgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			auto moveAction = MoveBy::create(1.5f, dest);
 			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 			Animate* attackAnim = Animate::create(attackAnimation);
-			auto attackAction = Repeat::create(attackAnim, 3);
-			Action* spawn = Spawn::createWithTwoActions(moveAction, attackAction);
+			auto attackActionAnim = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
 
 			enemy->runAction(spawn);
 		}

@@ -8,7 +8,8 @@
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": "Idle"
+      "shootingPattern": "Idle",
+      "agressiveZone": 100
     },
     "components": {
       "textureFile": "images/Turtle.png",
@@ -26,7 +27,8 @@
       "attackCooldown": 1.0,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": "Triple"
+      "shootingPattern": "Triple",
+      "agressiveZone": 100
     },
     "components": {
       "textureFile": "images/Flying_enemy.png",
@@ -44,7 +46,8 @@
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": ""
+      "shootingPattern": "",
+      "agressiveZone": 100
     },
     "components": {
       "textureFile": "images/PAPAABOBA.png",
@@ -56,13 +59,14 @@
   "Wolf": {
     "name": "WolfEnemy",
     "specifications": {
-      "hp": 100,
+      "hp": 200,
       "damage": 1,
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": "ShotGun"
+      "shootingPattern": "ShotGun",
+      "agressiveZone": 100
     },
     "components": {
       "textureFile": "images/Wolf.png",
@@ -80,7 +84,8 @@
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": ""
+      "shootingPattern": "",
+      "agressiveZone": 100
     },
     "components": {
       "textureFile": "images/Boss.png",
