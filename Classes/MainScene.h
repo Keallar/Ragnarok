@@ -22,6 +22,8 @@ public:
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);
+
+    void createEnemyByTrigger(std::string type, Vec2 pos);
     void createSomeEnemy(int count, std::string type);
     void showImGui();
 
@@ -34,6 +36,7 @@ public:
     Player* getPlayer();
     TileMapManager* getTMM();
 
+    void setFuncStr(std::string _funcStr);
     void addTrigger(Trigger* trigger);
 
     CREATE_FUNC(MainScene);
@@ -42,6 +45,8 @@ private:
     Save _save;
 
     int _deathCount;
+
+    std::string funcStr;
 
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;
