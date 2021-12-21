@@ -36,6 +36,7 @@ public:
     Player* getPlayer();
     TileMapManager* getTMM();
 
+    void setFuncStr(std::string _funcStr);
     void addTrigger(Trigger* trigger);
 
     CREATE_FUNC(MainScene);
@@ -44,6 +45,8 @@ private:
     Save _save;
 
     int _deathCount;
+
+    std::string funcStr;
 
     b2WorldNode* _world;
     cocos2d::Camera* _cameraTarget;

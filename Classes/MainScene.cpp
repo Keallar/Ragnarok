@@ -25,6 +25,10 @@ Scene* MainScene::createScene() {
     return MainScene::create();
 }
 
+void MainScene::setFuncStr(std::string _funcStr) {
+    funcStr = _funcStr;
+}
+
 bool MainScene::init() {
     if (!Scene::init()) {
         return false;
@@ -206,6 +210,34 @@ void MainScene::update(float dt) {
         _background3->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 45);
         _background3->setPositionY(cameraPos.y);
         _cameraTarget->setPosition(cameraPos);
+
+
+        if (funcStr != "") {
+            funcStr.erase(0, 2);
+            {
+                int typeOfEnemy = (int)funcStr[0] - 48;
+                static std::string type;
+                switch (typeOfEnemy)
+                {
+                case 0:
+                    type = "Simple";
+                    break;
+                case 1:
+                    type = "Flying";
+                    break;
+                case 2:
+                    type = "Wolf";
+                    break;
+                }
+                funcStr.erase(0, 1);
+                int xpos = std::stoi(funcStr.substr(0, 5));
+                int ypos = std::stoi(funcStr.substr(5, 10));
+                Vec2 pos = Vec2(_player->getPosition().x - xpos, _player->getPosition().y + ypos);
+                createEnemyByTrigger(type, pos);
+                funcStr = "";
+            }
+        }
+
     }
 
     for (auto enemy : enemies) {
@@ -276,6 +308,7 @@ void MainScene::createEnemyByTrigger(std::string type, Vec2 pos) {
     auto enemy = Enemy::create(_world, pos, type);
     enemies.push_back(enemy);
 }
+
 void MainScene::showImGui() {
     if (!ImGui::Begin("Debug")) {
         ImGui::End();
