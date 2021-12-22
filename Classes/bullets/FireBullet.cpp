@@ -1,6 +1,7 @@
 #include "FireBullet.h"
 #include <cmath>
 #include "IShootingPattern.h"
+#include "ShootingCharacter.h"
 
 bool FireBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
@@ -21,13 +22,13 @@ void FireBullet::update(float dt) {
 		b2Filter filter;
 		filter.categoryBits = getFixture()->GetFilterData().categoryBits;
 		filter.maskBits = getFixture()->GetFilterData().maskBits;
-		shoot(newDest, new FireBlastCreator(filter));
+		shoot(newDest, new FireBlastCreator(filter, this));
 	}
 	shootingCharacterUpdate(dt);
 	Bullet::update(dt);
 }
 
-FireBullet* FireBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+FireBullet* FireBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	FireBullet* bullet = new (std::nothrow) FireBullet();
 	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
@@ -35,6 +36,9 @@ FireBullet* FireBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filt
 		bullet->autorelease();
 		//bullet->init();
 		bullet->setCoords(pos, dest);
+		bullet->_parent = parent;
+		bullet->_damage = parent->getDamage();
+		bullet->_bulletDamage = bullet->_damage / 2;
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		bullet->setCooldown();
@@ -70,10 +74,6 @@ void FireBullet::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	}
 }
 
-int FireBullet::getDamage() {
-	return 0;
-}
-
 bool FireBlast::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
 	
@@ -89,7 +89,7 @@ void FireBlast::update(float dt) {
 	Bullet::update(dt);
 }
 
-FireBlast* FireBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+FireBlast* FireBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	FireBlast* bullet = new (std::nothrow) FireBlast();
 	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
@@ -97,6 +97,8 @@ FireBlast* FireBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter
 		bullet->autorelease();
 		//bullet->init();
 		bullet->setCoords(pos, dest);
+		bullet->_parent = parent;
+		bullet->_damage = parent->getDamage();
 		bullet->_moveDest = bullet->getDest();
 		bullet->_moveDest.rotate(Vec2(), M_PI/2);
 		bullet->setAngleMoveParam();
@@ -115,10 +117,6 @@ void FireBlast::setAngleMoveParam() {
 	double k = getDest().x / nDest.x;
 	_moveDest *= (0.66f);
 	_moveAngle = M_PI * 2 / (30*(1/k));
-}
-
-int FireBlast::getDamage() {
-	return 0;
 }
 
 void FireBlast::move(float dt) {

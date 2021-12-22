@@ -1,10 +1,9 @@
 #pragma once
 #include "Bullet.h"
-#include "ShootingCharacter.h"
 
 class PlayerHookBullet : public Bullet {
 public:
-	static PlayerHookBullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
+	static PlayerHookBullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent);
 
 	virtual void collideFunc();
 	virtual bool init();

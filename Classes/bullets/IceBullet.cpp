@@ -28,7 +28,7 @@ void IceBullet::update(float dt) {
 		b2Filter filter;
 		filter.categoryBits = getFixture()->GetFilterData().categoryBits;
 		filter.maskBits = getFixture()->GetFilterData().maskBits;
-		shoot(dest, new IceBlastCreator(filter));
+		shoot(dest, new IceBlastCreator(filter, this));
 		setOnRemove();
 	}
 	if (_moveTime <= 0) {
@@ -40,7 +40,7 @@ void IceBullet::collideFunc() {
 	_stoped = true;
 }
 
-IceBullet* IceBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+IceBullet* IceBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	IceBullet* bullet = new (std::nothrow) IceBullet();
 	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
@@ -48,16 +48,15 @@ IceBullet* IceBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter
 		bullet->autorelease();
 		//bullet->init();
 		bullet->setCoords(pos, dest);
+		bullet->_parent = parent;
+		bullet->_damage = parent->getDamage();
+		bullet->_bulletDamage = bullet->_damage / 3;
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
 	}
 	CC_SAFE_DELETE(bullet);
 	return nullptr;
-}
-
-int IceBullet::getDamage() {
-	return 0;
 }
 
 bool IceBullet::isStoped() {
@@ -90,7 +89,7 @@ void IceBlast::update(float dt) {
 	Bullet::update(dt);
 }
 
-IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	IceBlast* bullet = new (std::nothrow) IceBlast();
 	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
@@ -98,15 +97,13 @@ IceBlast* IceBlast::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter f
 		bullet->autorelease();
 		//bullet->init();
 		bullet->setCoords(pos, dest);
+		bullet->_parent = parent;
+		bullet->_damage = parent->getDamage();
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
 	}
 	CC_SAFE_DELETE(bullet);
 	return nullptr;
-}
-
-int IceBlast::getDamage() {
-	return 0;
 }
 

@@ -24,6 +24,7 @@ public:
 	float getSpeed() const noexcept;
 	int getDamage() const noexcept;
 	void setDamage(int damage) noexcept;
+	void setBulletDamage(int damage) noexcept;
 	void setAttackCooldown(float attackCooldown) noexcept;
 	float getAttackCooldown() const noexcept;
 	void setBulletSpeed(int bulletSpeed);

@@ -48,7 +48,7 @@ void Trigger::onCollision() {
 		break;
 	case 5:
 		isActivated = true;
-		_player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask()));
+		_player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask(), _player));
 		break;
 	case 6:
 		isActivated = true;

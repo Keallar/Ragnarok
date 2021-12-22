@@ -1,4 +1,5 @@
 #include "BigBullet.h"
+#include "ShootingCharacter.h"
 
 bool BigBullet::init() {
 	setCoords(Vec2{ 0, 0 }, Vec2{ 0, 0 });
@@ -14,7 +15,7 @@ void BigBullet::update(float dt) {
 	Bullet::update(dt);
 }
 
-BigBullet* BigBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+BigBullet* BigBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	BigBullet* bullet = new (std::nothrow) BigBullet();
 	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
@@ -22,14 +23,12 @@ BigBullet* BigBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter
 		bullet->autorelease();
 		//bullet->init();
 		bullet->setCoords(pos, dest);
+		bullet->_parent = parent;
+		bullet->_damage = parent->getDamage();
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
 	}
 	CC_SAFE_DELETE(bullet);
 	return nullptr;
-}
-
-int BigBullet::getDamage() {
-	return BIG_BULLET_DAMAGE;
 }

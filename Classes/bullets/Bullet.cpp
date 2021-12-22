@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "external/json/document.h"
+#include "ShootingCharacter.h"
 
 std::map<std::string, BulletVars> Bullet::_bulletsProp;
 
@@ -23,7 +24,7 @@ Bullet::~Bullet() {
 
 }
 
-Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	Bullet* bullet = new (std::nothrow) Bullet();
 	bullet->init();
 	if (bullet && bullet->initWithFile(bullet->_fileName)) {
@@ -31,6 +32,8 @@ Bullet* Bullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filte
 		bullet->autorelease();
 		//bullet->init();
 		bullet->setCoords(pos, dest);
+		bullet->_parent = parent;
+		bullet->_damage = parent->getDamage();
 		bullet->getFixtureDef()->filter = filter;
 		bullet->ordinaryOptions(world, pos);
 		return bullet;
@@ -120,7 +123,7 @@ bool Bullet::init() {
 void Bullet::initVars(std::string type) {
 	_moveTime = _bulletsProp[type].moveTime;
 	_lifeTime = _bulletsProp[type].lifeTime;
-	_damage = _bulletsProp[type].damage;
+	//_damage = _bulletsProp[type].damage;
 	_fileName = _bulletsProp[type].fileName;
 }
 
@@ -172,7 +175,7 @@ void Bullet::collideFunc() {
 }
 
 int Bullet::getDamage() {
-	return BULLET_DAMAGE;
+	return _damage;
 }
 
 void Bullet::move(float dt) {

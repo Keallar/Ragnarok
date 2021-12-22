@@ -175,6 +175,10 @@ void MainScene::restart() {
     for (auto t : _triggers) {
         t->setIsActive(false);
     }
+
+    for (auto enemy : enemies) {
+        enemy->setDestroyed(true);
+    }
 }
 
 void MainScene::update(float dt) {
@@ -189,7 +193,7 @@ void MainScene::update(float dt) {
             //WTF ПЕРЕДЕЛАТЬ ИБО FPS КАТИТЬСЯ ВНИЗ
             //_hud->gameOver(_player);
             //_hud->gameOver(_player);
-            if (_deathCount < 1) {
+            if (_deathCount < 3) {
                 load();
                 _deathCount++;
             }
@@ -356,17 +360,17 @@ void MainScene::showImGui() {
         }
         if (ImGui::Button("FireBullet")) {
             if (_player) {
-                _player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask()));
+                _player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask(), _player));
             }
         }
         if (ImGui::Button("IdleBullet")) {
             if (_player) {
-                _player->changeBulletCreator(new IdleBulletCreator(ShootingCharacter::playerPhysMask()));
+                _player->changeBulletCreator(new IdleBulletCreator(ShootingCharacter::playerPhysMask(), _player));
             }
         }
         if (ImGui::Button("IceBullet")) {
             if (_player) {
-                _player->changeBulletCreator(new IceBulletCreator(ShootingCharacter::playerPhysMask()));
+                _player->changeBulletCreator(new IceBulletCreator(ShootingCharacter::playerPhysMask(), _player));
             }
         }
         //Position
