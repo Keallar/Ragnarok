@@ -69,6 +69,8 @@ public:
 
 	//functions for testing
 	int getJumpCount() const;
+	void setDeathless(bool state);
+	bool isDeathless();
 
 	//for change bullets
 	void changeBulletCreator(IBulletTypeCreator* bulletCreator);
@@ -117,5 +119,8 @@ private:
 	//Sound id
 	unsigned int _stepSound;
 	unsigned int _fallSound;
+
+
+	bool _deathless;
 };
 

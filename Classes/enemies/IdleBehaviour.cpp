@@ -60,7 +60,6 @@ void SimpleIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 
 				enemy->runAction(spawn);
 			}
-			std::random_device rd;
 			std::uniform_int_distribution<int> dist(0, 2);
 			_state = static_cast<int>(dist(rd));
 			_stateCooldown = STATE_COOLDOWN;
@@ -129,7 +128,6 @@ void FlyingIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 
 				enemy->runAction(spawn);
 			}
-			std::random_device rd;
 			std::uniform_int_distribution<int> dist(0, 2);
 			_state = static_cast<int>(dist(rd));
 			_stateCooldown = STATE_COOLDOWN;
@@ -199,7 +197,6 @@ void AbobaIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 
 				enemy->runAction(spawn);
 			}
-			std::random_device rd;
 			std::uniform_int_distribution<int> dist(0, 2);
 			_state = static_cast<int>(dist(rd));
 			_stateCooldown = STATE_COOLDOWN;
@@ -268,7 +265,6 @@ void WolfIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 
 				enemy->runAction(spawn);
 			}
-			std::random_device rd;
 			std::uniform_int_distribution<int> dist(0, 2);
 			_state = static_cast<int>(dist(rd));
 			_stateCooldown = STATE_COOLDOWN;
@@ -337,7 +333,6 @@ void BossIdleBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 
 				enemy->runAction(spawn);
 			}
-			std::random_device rd;
 			std::uniform_int_distribution<int> dist(0, 2);
 			_state = static_cast<int>(dist(rd));
 			_stateCooldown = STATE_COOLDOWN;

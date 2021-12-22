@@ -118,6 +118,8 @@ bool Player::init() {
 	//shoot
 	_bulletCreator = new IdleBulletCreator(playerPhysMask());
 
+	_deathless = false;
+
 	//Sound effects
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sounds/Step.mp3");
 
@@ -608,11 +610,13 @@ void Player::setHp(int hp) noexcept {
 }
 
 void Player::changeHp(float difHp) noexcept {
-	if (_hp <= 0) {
-		_isDied = true;
-		return;
+	if (!_deathless) {
+		if (_hp <= 0) {
+			_isDied = true;
+			return;
+		}
+		_hp += difHp;
 	}
-	_hp += difHp;
 }
 
 bool Player::isDied() const {
@@ -621,10 +625,6 @@ bool Player::isDied() const {
 
 void Player::setDied(bool state) noexcept {
 	_isDied = state;
-}
-
-int Player::getJumpCount() const {
-	return _jumpCount;
 }
 
 float Player::getJumpSpeed() {
@@ -646,4 +646,16 @@ void Player::load(PlayerSave save) {
 	_hp = save.hp;
 	_mana = save.mana;
 	_isDied = false;
+}
+
+int Player::getJumpCount() const {
+	return _jumpCount;
+}
+
+void Player::setDeathless(bool state) {
+	_deathless = state;
+}
+
+bool Player::isDeathless() {
+	return _deathless;
 }

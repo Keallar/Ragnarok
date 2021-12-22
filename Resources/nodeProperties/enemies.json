@@ -78,13 +78,13 @@
   "Boss": {
     "name": "Boss",
     "specifications": {
-      "hp": 1000,
+      "hp": 5000,
       "damage": 10,
       "speed": 10.0,
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": "",
+      "shootingPattern": "ShotGun",
       "agressiveZone": 1000
     },
     "components": {
