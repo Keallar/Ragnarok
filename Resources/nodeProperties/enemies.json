@@ -91,7 +91,7 @@
       "textureFile": "images/Boss.png",
       "animIdleFile": "",
       "animMoveFile": "",
-      "animAttackFile": "images/Boss_attack_anim.png"
+      "animAttackFile": ""
     }
   }
 }

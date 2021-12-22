@@ -18,7 +18,7 @@ IEnemy::~IEnemy() {
 }
 
 void IEnemy::meleeInit() {
-	_hitTime = 2.f;
+	_hitTime = 0.3f;
 	MeleeCharacter::_damage = 1;
 }
 
@@ -70,10 +70,10 @@ void IEnemy::hit() {
 		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
 		_meleeHit->getFixtureDef()->filter = filter;
 		getParent()->addChild(_meleeHit);
-		_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
-		if (getScaleX() < 0) {
+		_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		if (getScaleX() > 0) {
 			_meleeHit->setScaleX(getScaleX());
-			_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+			_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
 		}
 	}
 }
@@ -216,10 +216,14 @@ void IEnemy::createHpLabel() {
 
 void IEnemy::updateHpLabel() {
 	_hpLabel->setString(std::to_string(_hp));
-	/*if (getScaleX() > 0 && _hpLabel->getScaleX() > 0) {
+	if (getScaleX() < 0 && _hpLabel->getScaleX() > 0) {
 		auto hpLabelScaleX = _hpLabel->getScaleX();
 		_hpLabel->setScaleX(-hpLabelScaleX);
-	}*/
+	}
+	else if (getScaleX() > 0 && _hpLabel->getScaleX() < 0) {
+		auto hpLabelScaleX = _hpLabel->getScaleX();
+		_hpLabel->setScaleX(-hpLabelScaleX);
+	}
 }
 
 const cocos2d::Vector<SpriteFrame*> IEnemy::getIdleFrames() const {

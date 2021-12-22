@@ -8,6 +8,7 @@
 #include "RayCastManager.h"
 #include "TileMapManager.h"
 #include "Trigger.h"
+#include "Boss.h"
 
 struct Save {
     PlayerSave playerSave;
@@ -25,6 +26,7 @@ public:
 
     void createEnemyByTrigger(std::string type, Vec2 pos);
     void createSomeEnemy(int count, std::string type);
+    void createBoss();
     void showImGui();
 
     void tileMapInit();
@@ -64,4 +66,5 @@ private:
 
     std::list<IEnemy*> enemies;
     std::list<Trigger*> _triggers;
+    Boss* _boss;
 };
