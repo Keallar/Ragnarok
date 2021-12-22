@@ -95,6 +95,7 @@ void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold
 
 		auto f = [&]() {
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::trigger) &&
+				SpriteA->getFixtureDef()->filter.categoryBits == static_cast<uint16>(eColCategory::trigger) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player)) {
 				contact->SetEnabled(false);
 				auto trigger = static_cast<Trigger*>(SpriteA);

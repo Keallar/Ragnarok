@@ -72,7 +72,33 @@ bool SplashScene::init() {
 }
 
 void SplashScene::update(float dt) {
-	auto scene = MainScene::createScene();
+	auto scene = MainScene::create();
 	Director::getInstance()->replaceScene(scene);
+}
 
+bool WinScene::init() {
+	auto origin = Director::getInstance()->getVisibleOrigin();
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	auto back = Sprite::create("images/win.png");
+	addChild(back);
+	back->setPosition(origin + back->getContentSize()/2);
+
+	auto exit = ui::Button::create("exitButton.png");
+	addChild(exit);
+	exit->setPosition(origin + visibleSize/2);
+
+	exit->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			Director::getInstance()->end();
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+
+	return true;
 }

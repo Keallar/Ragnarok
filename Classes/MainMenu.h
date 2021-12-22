@@ -23,3 +23,10 @@ public:
 private:
 
 };
+
+class WinScene : public cocos2d::Scene {
+public:
+	bool init() override;
+
+	CREATE_FUNC(WinScene);
+};

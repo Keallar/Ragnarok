@@ -2,13 +2,25 @@
 #include "external/json/document.h"
 #include "Boss.h"
 #include "IdleBehaviour.h"
-#include "IdleBehaviour.h"
 #include "IShootingPattern.h"
+#include "MainMenu.h"
+#include "MainScene.h"
 
 Boss::Boss() : 
 	IEnemy(new BossIdleBehaviour) {
 	init();
 	meleeInit();
+}
+Boss::~Boss() {
+	
+}
+
+void Boss::setOnRemove() {
+	cleanHit();
+	getWorldNode()->setOnRemoveList(this);
+	//static_cast<MainScene*>(Director::getInstance()->getRunningScene())->cleanAll();
+	auto scene = WinScene::create();
+	Director::getInstance()->replaceScene(scene);
 }
 
 Boss* Boss::create(Node* node, Vec2 pos, IEnemyBehaviour* behaviour) {
@@ -149,7 +161,7 @@ void Boss::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 }
 
 void Boss::meleeInit() {
-	_hitTime = 0.5f;
+	_hitTime = 5;
 	MeleeCharacter::_damage = 2;
 }
 
@@ -163,10 +175,41 @@ void Boss::hit() {
 		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
 		_meleeHit->getFixtureDef()->filter = filter;
 		getParent()->addChild(_meleeHit);
-		_meleeHit->setPosition(getPositionX() - 64, getPositionY());
+		_meleeHit->setScaleX(_meleeHit->getScaleX() * -1);
+		_meleeHit->setScaleX(_meleeHit->getScaleX() * -1);
+		_meleeHit->setPosition(getPositionX() - /*510*3*/ - 64, getPositionY());
 		if (getScaleX() > 0) {
-			_meleeHit->setScaleX(getScaleX());
-			_meleeHit->setPosition(getPositionX() + 64, getPositionY());
+			_meleeHit->setScaleX(getScaleX() * -1);
+			_meleeHit->setPosition(getPositionX() - getContentSize().width, getPositionY());
+		}
+	}
+}
+
+void Boss::update(float dt) {
+	/*if (_meleeHit != nullptr) {
+		_meleeHit->setPosition(_meleeHit->getPosition().x - 64, _meleeHit->getPosition().y);
+	}*/
+	if (isAgressive() && getBehaviour()->getBehaviourName().substr(0, 9) != "Agressive") {
+		setAgressiveBehaviour();
+	}
+	else if (!isAgressive() && getBehaviour()->getBehaviourName().substr(0, 9) == "Agressive") {
+		setIdleBehaviour();
+	}
+	_behaviour->perform(this, _shootTarget, dt);
+	checkAgressive();
+	shootingCharacterUpdate(dt);
+	meleeUpdate(dt);
+	updateHpLabel();
+	_attackCooldown -= dt;
+}
+
+void Boss::meleeUpdate(float dt) {
+	MeleeCharacter::update(dt);
+	if (_meleeHit) {
+		_meleeHit->setPosition(getPosition().x - getContentSize().width/2, getPosition().y - 32);
+		if (getScaleX() < 0) {
+			_meleeHit->setScaleX(_meleeHit->getScaleX() * -1);
+			_meleeHit->setPosition(getPosition().x + getContentSize().width/2, getPosition().y + 32);
 		}
 	}
 }
