@@ -119,7 +119,7 @@
       <Filter>src\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MainMenu.cpp">
-      <Filter>src</Filter>
+      <Filter>src\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,7 +250,7 @@
       <Filter>src\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainMenu.h">
-      <Filter>src</Filter>
+      <Filter>src\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
