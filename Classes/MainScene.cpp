@@ -166,6 +166,16 @@ void MainScene::restart() {
     save();
     _deathCount = 0;
 
+    removeChild(_background4);
+    _background->setTexture("images/Sky1.png");
+    _background1->setTexture("images/Sky2.png");
+    _background1->setScaleX(1.2);
+    _background2->setTexture("images/Mounts1.png");
+    _background2->setScaleX(1.35);
+    _background3->setTexture("images/Mounts2.png");
+    _background3->setScaleX(1.5);
+    _background4 = nullptr;
+
     const auto playerHp = _player->getHp();
     const auto playerMana = _player->getMana();
     _hud->beginLife(playerHp, playerMana);
