@@ -57,6 +57,9 @@ void Trigger::onCollision() {
 	case 7:
 		_player->changeHp(-1000);
 		break;
+	case 8:
+		isActivated = true;
+		scene->setCaveBG();
 	}
 }
 

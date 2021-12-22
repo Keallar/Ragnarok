@@ -209,6 +209,10 @@ void MainScene::update(float dt) {
         _background2->setPositionY(cameraPos.y);
         _background3->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 45);
         _background3->setPositionY(cameraPos.y);
+        if (_background4) {
+            _background4->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 30);
+            _background4->setPositionY(cameraPos.y);
+        }
         _cameraTarget->setPosition(cameraPos);
 
 
@@ -452,4 +456,19 @@ void MainScene::showImGui() {
 
 void MainScene::addTrigger(Trigger* trigger) {
     _triggers.push_back(trigger);
+}
+
+void MainScene::setCaveBG() {
+    _background->setTexture("images/cave0.png");
+    _background1->setTexture("images/cave1.png");
+    _background2->setTexture("images/cave2.png");
+    _background3->setTexture("images/cave3.png");
+    _background4 = Sprite::create("images/cave4.png");
+    _background4->setScaleX(1.6);
+    addChild(_background4);
+    _background->setZOrder(_player->getZOrder() - 5);
+    _background1->setZOrder(_player->getZOrder() - 4);
+    _background2->setZOrder(_player->getZOrder() - 3);
+    _background3->setZOrder(_player->getZOrder() - 2);
+    _background4->setZOrder(_player->getZOrder() - 1);
 }

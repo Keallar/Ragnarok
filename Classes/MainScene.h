@@ -33,6 +33,8 @@ public:
     void load();
     void restart();
 
+    void setCaveBG();
+
     Player* getPlayer();
     TileMapManager* getTMM();
 
@@ -54,6 +56,7 @@ private:
     cocos2d::Sprite* _background1;
     cocos2d::Sprite* _background2;
     cocos2d::Sprite* _background3;
+    cocos2d::Sprite* _background4;
     HUD* _hud;
     cocos2d::DrawNode* _test;
     RayCastManager* _rayCastManager;
