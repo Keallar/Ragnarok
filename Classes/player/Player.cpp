@@ -293,6 +293,9 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			if (_hook && _hook->isHooked()) {
 				_hook->setOnRemove();
 				_hook = nullptr;
+				getBody()->SetGravityScale(1);
+				getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, 3 });
+				setJumpState(eJumpState::Jump);
 			}
 		}
 		case EventKeyboard::KeyCode::KEY_W:
@@ -305,6 +308,9 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 			if (_hook && _hook->isHooked()) {
 				_hook->setOnRemove();
 				_hook = nullptr;
+				getBody()->SetGravityScale(1);
+				getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, 3 });
+				setJumpState(eJumpState::Jump);
 			}
 			break;
 		}
@@ -451,39 +457,26 @@ void Player::setJumpState(eJumpState state) {
 }
 
 void Player::hookBodyUpdate(float dt) {
-	/*if (_hook && _hook->getLifeTime() > 0) {
-		_hookBody->clear();
-		Vec2 dest = _hook->getPosition() - getPosition();
-		dest.y += getContentSize().width / 2;
-		dest.x += getContentSize().height / 2 * getScaleX();
-		dest.x *= getScaleX();
-		_hookBody->drawLine(Vec2(getContentSize() / 2), dest, Color4F::GRAY);
-		if (_hook->isHooked()) {
-			dest.normalize();
-			dest.x *= getScaleX();
-			dest *= 30; //hooked player fly speed
-			b2Vec2 playerVel = { dest.x, dest.y };
-			if (_hook->getVelDest() == b2Vec2(0, 0)) {
-				_hook->setVelDest(playerVel);
-			}
-			if (playerVel.x / _hook->getVelDest().x <= 0 || playerVel.y / _hook->getVelDest().y <= 0) {
-				playerVel *= -1;
-			}
-			getBody()->SetLinearVelocity(playerVel);
-		}
-	}
-	else {
-		_hook = nullptr;
-		_hookBody->clear();
-	}*/
 	if (_hook && _hook->getLifeTime() > 0) {
 		_hookBody->clear();
+
+		if (_hook->isHooked()) {
+			if (_hook->getDest().x / getScaleX() <= 0) {
+				setScaleX(getScaleX() * -1);
+			}
+		}
+
 		Vec2 dest = _hook->getPosition() - getPosition();
 		dest.y += getContentSize().width / 2;
 		dest.x += getContentSize().height / 2 * getScaleX();
 		dest.x *= getScaleX();
+		
 		_hookBody->drawLine(Vec2(getContentSize() / 2), dest, Color4F::GRAY);
+
 		if (_hook->isHooked()) {
+			if (_hook->getDest().x / getScaleX() <= 0) {
+				setScaleX(getScaleX() * -1);
+			}
 			dest.normalize();
 			dest.x *= getScaleX();
 			dest *= 30; //hooked player fly speed
@@ -491,11 +484,21 @@ void Player::hookBodyUpdate(float dt) {
 			if (_hook->getVelDest() == b2Vec2(0, 0)) {
 				_hook->setVelDest(playerVel);
 			}
-
-			getBody()->SetLinearVelocity(playerVel);
+			if (_hook->getPosition().x - getPosition().x < _hook->getContentSize().width*2 &&
+				_hook->getPosition().x - getPosition().x > -_hook->getContentSize().width*2 &&
+				_hook->getPosition().y - getPosition().y > -_hook->getContentSize().height*2 &&
+				_hook->getPosition().y - getPosition().y < _hook->getContentSize().height*2) {
+				getBody()->SetLinearVelocity({ 0, 0 });
+				getBody()->SetGravityScale(0);
+			}
+			else {
+				getBody()->SetLinearVelocity(playerVel);
+			}
 		}
+		
 	}
 	else {
+		getBody()->SetGravityScale(1);
 		_hook = nullptr;
 		_hookBody->clear();
 	}
