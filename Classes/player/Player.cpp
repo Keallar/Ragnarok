@@ -110,7 +110,7 @@ bool Player::init() {
 	_playerAnimState = eAnimState::None;
 	_isDied = false;
 	_jumpCount = 0;
-	_bulletDamage = 100;
+	_bulletDamage = 50;
 	//Hook
 	_hook = nullptr;
 	_hookBody = DrawNode::create();

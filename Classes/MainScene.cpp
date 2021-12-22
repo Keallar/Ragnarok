@@ -193,7 +193,7 @@ void MainScene::update(float dt) {
             //WTF ПЕРЕДЕЛАТЬ ИБО FPS КАТИТЬСЯ ВНИЗ
             //_hud->gameOver(_player);
             //_hud->gameOver(_player);
-            if (_deathCount < 1) {
+            if (_deathCount < 3) {
                 load();
                 _deathCount++;
             }
