@@ -181,6 +181,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClCompile Include="..\Classes\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Classes\imgui\imgui_impl_cocos2dx.cpp" />
     <ClCompile Include="..\Classes\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
     <ClCompile Include="..\Classes\player\Player.cpp" />
     <ClCompile Include="..\Classes\tiledMap\RayCastManager.cpp" />
@@ -225,6 +226,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     <ClInclude Include="..\Classes\imgui\imstb_rectpack.h" />
     <ClInclude Include="..\Classes\imgui\imstb_textedit.h" />
     <ClInclude Include="..\Classes\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\MainScene.h" />
     <ClInclude Include="..\Classes\player\Player.h" />
     <ClInclude Include="..\Classes\tiledMap\RayCastManager.h" />

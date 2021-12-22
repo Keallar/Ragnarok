@@ -9,6 +9,7 @@ bool PlayerHookBullet::init() {
 
 	_startedMove = false;
 	_hooked = false;
+	_velDest = { 0, 0 };
 	_isOnRemove = false;
 	return true;
 }
@@ -52,4 +53,12 @@ int PlayerHookBullet::getDamage() {
 
 bool PlayerHookBullet::isHooked() {
 	return _hooked;
+}
+
+void PlayerHookBullet::setVelDest(b2Vec2 dest) {
+	_velDest = dest;
+}
+
+b2Vec2 PlayerHookBullet::getVelDest() {
+	return _velDest;
 }

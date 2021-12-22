@@ -1,5 +1,6 @@
 #include "Trigger.h"
 #include "MainScene.h"
+#include "Enemy.h"
 
 Trigger::~Trigger() {
 
@@ -26,6 +27,7 @@ void Trigger::onCollision() {
 		break;
 	case 1:
 		isActivated = true;
+		scene->setFuncStr(funcStr);
 		break;
 	case 2:
 		isActivated = true;
@@ -51,8 +53,13 @@ void Trigger::onCollision() {
 	case 6:
 		isActivated = true;
 		scene->save();
+		break;
 	case 7:
 		_player->changeHp(-1000);
+		break;
+	case 8:
+		isActivated = true;
+		scene->setCaveBG();
 	}
 }
 

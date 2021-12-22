@@ -8,6 +8,9 @@
 #include "IdleBehaviour.h"
 #include "Enemy.h"
 
+#include "imgui/CCIMGUIGLViewImpl.h"
+#include "imgui/CCImGuiLayer.h"
+#include "imgui/CCIMGUI.h"
 USING_NS_CC;
 
 Player* MainScene::getPlayer() {
@@ -22,6 +25,10 @@ Scene* MainScene::createScene() {
     return MainScene::create();
 }
 
+void MainScene::setFuncStr(std::string _funcStr) {
+    funcStr = _funcStr;
+}
+
 bool MainScene::init() {
     if (!Scene::init()) {
         return false;
@@ -32,6 +39,21 @@ bool MainScene::init() {
     const auto visibleSize = Director::getInstance()->getVisibleSize();
     const Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+    _background = Sprite::create("images/Sky1.png");
+    _background1 = Sprite::create("images/Sky2.png");
+    _background1->setScaleX(1.2);
+    _background2 = Sprite::create("images/Mounts1.png");
+    _background2->setScaleX(1.35);
+    _background3 = Sprite::create("images/Mounts2.png");
+    _background3->setScaleX(1.5);
+    addChild(_background);
+    addChild(_background1);
+    addChild(_background2);
+    addChild(_background3);
+    _background->setPosition({ 9000, 24000 });
+    _background1->setPosition({ 9000, 24000 });
+    _background2->setPosition({ 9000, 24000 });
+    _background3->setPosition({ 9000, 24000 });
     //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
@@ -66,7 +88,6 @@ bool MainScene::init() {
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
     _firstTileMap->TileMapObjectLayerInit(_world);
-
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -110,6 +131,15 @@ bool MainScene::init() {
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
 
+    Director::getInstance()->getScheduler()->schedule([=](float dt)
+        {
+            auto runningScene = Director::getInstance()->getRunningScene();
+            if (runningScene && !runningScene->getChildByName("ImGUILayer"))
+            {
+                runningScene->addChild(ImGuiLayer::create(), INT_MAX, "ImGUILayer");
+            }
+        }, this, 0, false, "checkIMGUI");
+
     scheduleUpdate();
 
     return true;
@@ -122,6 +152,7 @@ void MainScene::restart() {
     _firstTileMap->getTiledMap()->getLayer("FG1")->setVisible(true);
     _firstTileMap->getTiledMap()->getLayer("FG1.2")->setVisible(true);
     _firstTileMap->getTiledMap()->getLayer("FG1.3")->setVisible(true);
+    _firstTileMap->getTiledMap()->getLayer("FG2")->setVisible(true);
     _firstTileMap->getTiledMap()->getLayer("FG3")->setVisible(false);
     _firstTileMap->getTiledMap()->getLayer("FG3.1")->setVisible(false);
     _firstTileMap->getTiledMap()->getLayer("FG4")->setVisible(false);
@@ -171,7 +202,46 @@ void MainScene::update(float dt) {
         const auto playerHp = _player->getHp();
         _hud->setHp(playerHp);
         const auto cameraPos = _player->getPosition();
+        _background->setPosition(cameraPos);
+        _background1->setPositionX(cameraPos.x+(9000-cameraPos.x)/115);
+        _background1->setPositionY(cameraPos.y);
+        _background2->setPositionX(cameraPos.x+(9000-cameraPos.x)/65);
+        _background2->setPositionY(cameraPos.y);
+        _background3->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 45);
+        _background3->setPositionY(cameraPos.y);
+        if (_background4) {
+            _background4->setPositionX(cameraPos.x + (9000 - cameraPos.x) / 30);
+            _background4->setPositionY(cameraPos.y);
+        }
         _cameraTarget->setPosition(cameraPos);
+
+
+        if (funcStr != "") {
+            funcStr.erase(0, 2);
+            {
+                int typeOfEnemy = (int)funcStr[0] - 48;
+                static std::string type;
+                switch (typeOfEnemy)
+                {
+                case 0:
+                    type = "Simple";
+                    break;
+                case 1:
+                    type = "Flying";
+                    break;
+                case 2:
+                    type = "Wolf";
+                    break;
+                }
+                funcStr.erase(0, 1);
+                int xpos = std::stoi(funcStr.substr(0, 5));
+                int ypos = std::stoi(funcStr.substr(5, 10));
+                Vec2 pos = Vec2(_player->getPosition().x - xpos, _player->getPosition().y + ypos);
+                createEnemyByTrigger(type, pos);
+                funcStr = "";
+            }
+        }
+
     }
 
     for (auto enemy : enemies) {
@@ -243,6 +313,11 @@ void MainScene::createBoss() {
         auto boss = Boss::create(_world, pos, new BossIdleBehaviour);
         enemies.push_back(boss);
     }
+}
+
+void MainScene::createEnemyByTrigger(std::string type, Vec2 pos) {
+    auto enemy = Enemy::create(_world, pos, type);
+    enemies.push_back(enemy);
 }
 
 void MainScene::showImGui() {
@@ -413,4 +488,19 @@ void MainScene::showImGui() {
 
 void MainScene::addTrigger(Trigger* trigger) {
     _triggers.push_back(trigger);
+}
+
+void MainScene::setCaveBG() {
+    _background->setTexture("images/cave0.png");
+    _background1->setTexture("images/cave1.png");
+    _background2->setTexture("images/cave2.png");
+    _background3->setTexture("images/cave3.png");
+    _background4 = Sprite::create("images/cave4.png");
+    _background4->setScaleX(1.6);
+    addChild(_background4);
+    _background->setZOrder(_player->getZOrder() - 5);
+    _background1->setZOrder(_player->getZOrder() - 4);
+    _background2->setZOrder(_player->getZOrder() - 3);
+    _background3->setZOrder(_player->getZOrder() - 2);
+    _background4->setZOrder(_player->getZOrder() - 1);
 }
