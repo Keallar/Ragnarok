@@ -2,6 +2,7 @@
 #include "IEnemy.h"
 
 class Boss : public IEnemy {
+public:
 	Boss();
 	~Boss() {}
 	static Boss* create(Node* node, Vec2 pos, IEnemyBehaviour* behaviour = nullptr);

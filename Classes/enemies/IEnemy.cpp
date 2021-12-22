@@ -18,7 +18,7 @@ IEnemy::~IEnemy() {
 }
 
 void IEnemy::meleeInit() {
-	_hitTime = 2.f;
+	_hitTime = 0.3f;
 	MeleeCharacter::_damage = 1;
 }
 

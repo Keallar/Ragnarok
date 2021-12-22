@@ -8,6 +8,7 @@
 #include "RayCastManager.h"
 #include "TileMapManager.h"
 #include "Trigger.h"
+#include "Boss.h"
 
 struct Save {
     PlayerSave playerSave;
@@ -23,6 +24,7 @@ public:
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void mousePressed(cocos2d::Event* event);
     void createSomeEnemy(int count, std::string type);
+    void createBoss();
     void showImGui();
 
     void tileMapInit();
@@ -53,4 +55,5 @@ private:
 
     std::list<IEnemy*> enemies;
     std::list<Trigger*> _triggers;
+    Boss* _boss;
 };

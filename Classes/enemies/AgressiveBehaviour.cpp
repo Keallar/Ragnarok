@@ -9,13 +9,14 @@ SimpleAgressiveBehaviour::SimpleAgressiveBehaviour() {
 
 void SimpleAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (!enemy) {
-		CCLOG("ERROR IN SIMPLEAGRESSIVE BEHAVIOUR");
+		CCLOG("ERROR IN SIMPLE AGRESSIVE BEHAVIOUR");
 		return;
 	}
 	if (_stateCooldown <= 0) {
 		_stateCooldown = MOVE_COOLDOWN;
 		Vec2 pos = enemy->getPosition();
 		Vec2 dest = targetPos - pos;
+		dest.y = 0;
 		auto moveAction = MoveBy::create(1.5f, dest);
 		Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 		Animate* attackAnim = Animate::create(attackAnimation);
@@ -38,13 +39,14 @@ FlyingAgressiveBehaviour::FlyingAgressiveBehaviour() {
 
 void FlyingAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (!enemy) {
-		CCLOG("ERROR IN FLYINGAGRESSIVE BEHAVIOUR");
+		CCLOG("ERROR IN FLYING AGRESSIVE BEHAVIOUR");
 		return;
 	}
 	if (_stateCooldown <= 0) {
 		_stateCooldown = MOVE_COOLDOWN;
 		Vec2 pos = enemy->getPosition();
 		Vec2 dest = targetPos - pos;
+		dest.y = 0;
 		auto moveAction = MoveBy::create(1.5f, dest);
 		Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 		Animate* attackAnim = Animate::create(attackAnimation);
@@ -67,7 +69,7 @@ AbobaAgressiveBehaviour::AbobaAgressiveBehaviour() {
 
 void AbobaAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (!enemy) {
-		CCLOG("ERROR IN ABOBAAGRESSIVE BEHAVIOUR");
+		CCLOG("ERROR IN ABOBA AGRESSIVE BEHAVIOUR");
 		return;
 	}
 	if (_stateCooldown <= 0) {
@@ -78,6 +80,7 @@ void AbobaAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		}
 		Vec2 pos = enemy->getPosition();
 		Vec2 dest = targetPos - pos;
+		dest.y = 0;
 		auto moveAction = MoveBy::create(1.5f, dest);
 		Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 		Animate* attackAnim = Animate::create(attackAnimation);
@@ -100,7 +103,7 @@ WolfAgressiveBehaviour::WolfAgressiveBehaviour() {
 
 void WolfAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (!enemy) {
-		CCLOG("ERROR IN WOLFAGRESSIVE BEHAVIOUR");
+		CCLOG("ERROR IN WOLF AGRESSIVE BEHAVIOUR");
 		return;
 	}
 	if (_stateCooldown <= 0) {
@@ -125,13 +128,14 @@ BossAgressiveBehaviour::BossAgressiveBehaviour() {
 
 void BossAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	if (!enemy) {
-		CCLOG("ERROR IN BOSSAGRESSIVE BEHAVIOUR");
+		CCLOG("ERROR IN BOSS AGRESSIVE BEHAVIOUR");
 		return;
 	}
 	if (_stateCooldown <= 0) {
 		_stateCooldown = MOVE_COOLDOWN;
 		Vec2 pos = enemy->getPosition();
 		Vec2 dest = targetPos - pos;
+		dest.y = 0;
 		auto moveAction = MoveBy::create(1.5f, dest);
 		Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.13f);
 		Animate* attackAnim = Animate::create(attackAnimation);
