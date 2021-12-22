@@ -77,6 +77,7 @@ bool Enemy::init(std::string type) {
 
 					const rapidjson::Value& damage = valueEnt["damage"];
 					setDamage(damage.GetInt());
+					setBulletDamage(damage.GetInt());
 
 					const rapidjson::Value& attackCooldown = valueEnt["attackCooldown"];
 					_attackCooldown = attackCooldown.GetDouble();

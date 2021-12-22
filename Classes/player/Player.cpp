@@ -110,13 +110,14 @@ bool Player::init() {
 	_playerAnimState = eAnimState::None;
 	_isDied = false;
 	_jumpCount = 0;
+	_bulletDamage = 100;
 	//Hook
 	_hook = nullptr;
 	_hookBody = DrawNode::create();
 	_hookPattern = new IdleShootingPattern(this);
 	addChild(_hookBody);
 	//shoot
-	_bulletCreator = new IdleBulletCreator(playerPhysMask());
+	_bulletCreator = new IdleBulletCreator(playerPhysMask(), this);
 
 	//Sound effects
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sounds/Step.mp3");
@@ -188,7 +189,7 @@ void Player::restart() {
 	_hook = nullptr;
 	_hookBody->clear();
 	//shoot
-	_bulletCreator = new IdleBulletCreator(playerPhysMask());
+	_bulletCreator = new IdleBulletCreator(playerPhysMask(), this);
 
 	rapidjson::Document initFile;
 
@@ -323,7 +324,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 				if (_hook) {
 					_hook->setOnRemove();
 				}
-				shoot(getPosition() + Vec2(45 * getScaleX(), -45), new HookBulletCreator(playerPhysMask()));
+				shoot(getPosition() + Vec2(45 * getScaleX(), -45), new HookBulletCreator(playerPhysMask(), this));
 				_hook = dynamic_cast<PlayerHookBullet*>(BulletFactory::getInstance()->getLastBullet());
 				break;
 			}
@@ -380,7 +381,7 @@ void Player::mousePressed(cocos2d::Event* event) {
 		setAnimState(eAnimState::Attack);
 	}
 	else if (mouse->getMouseButton() == EventMouse::MouseButton::BUTTON_RIGHT) {
-		shoot(clickPosCalculate(mouse), new HookBulletCreator(hookPhysMask()));
+		shoot(clickPosCalculate(mouse), new HookBulletCreator(hookPhysMask(), this));
 		setAnimState(eAnimState::Attack);
 	}
 }

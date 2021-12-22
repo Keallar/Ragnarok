@@ -12,7 +12,9 @@ public:
 	void ShootingCharacter::shootingCharacterUpdate(float dt);
 
 	float getCooldown();
+	int getDamage();
 	void setCooldown(float cooldown);
+	void setDamage(int damage);
 
 	static const float PLAYER_ATTACK_COOLDOWN;
 	static const float PLAYER_BIG_ATTACK_COOLDOWN;
@@ -25,6 +27,7 @@ public:
 	static b2Filter hookPhysMask();
 
 protected:
+	int _bulletDamage;
 	float _attackCooldown;
 	IShootingPattern* _shootingPattern;
 };

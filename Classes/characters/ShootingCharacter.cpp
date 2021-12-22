@@ -47,6 +47,14 @@ void ShootingCharacter::setCooldown(float cooldown) {
 	}
 }
 
+void ShootingCharacter::setDamage(int damage) {
+	_bulletDamage = damage;
+}
+
 float ShootingCharacter::getCooldown() {
 	return _attackCooldown;
+}
+
+int ShootingCharacter::getDamage() {
+	return _bulletDamage;
 }

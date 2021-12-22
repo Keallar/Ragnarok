@@ -280,3 +280,8 @@ void IEnemy::setBehaviour(IEnemyBehaviour* behaviour) {
 IEnemyBehaviour* IEnemy::getBehaviour() const noexcept {
 	return _behaviour;
 }
+
+void IEnemy::setBulletDamage(int damage) noexcept {
+	_bulletDamage = damage;
+}
+

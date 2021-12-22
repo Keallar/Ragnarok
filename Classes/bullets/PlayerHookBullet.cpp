@@ -1,4 +1,5 @@
 #include "PlayerHookBullet.h"
+#include "ShootingCharacter.h"
 
 PlayerHookBullet* PlayerHookBullet::_hook = nullptr;
 
@@ -28,7 +29,7 @@ void PlayerHookBullet::collideFunc() {
 	_hooked = true;
 }
 
-PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter) {
+PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent) {
 	if (_hook) {
 		_hook->setOnRemove();
 	}
@@ -39,6 +40,7 @@ PlayerHookBullet* PlayerHookBullet::create(cocos2d::Node* world, Vec2 pos, Vec2 
 		_hook->autorelease();
 		//_hook->init();
 		_hook->setCoords(pos, dest);
+		_hook->_parent = parent;
 		_hook->getFixtureDef()->filter = filter;
 		_hook->ordinaryOptions(world, pos);
 		return _hook;

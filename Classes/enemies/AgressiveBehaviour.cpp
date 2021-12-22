@@ -25,7 +25,7 @@ void SimpleAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) 
 		enemy->runAction(spawn);
 	}
 	_stateCooldown -= dt;
-	enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask()));
+	enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask(), enemy));
 }
 
 std::string SimpleAgressiveBehaviour::getBehaviourName() const {
@@ -54,7 +54,7 @@ void FlyingAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) 
 		enemy->runAction(spawn);
 	}
 	_stateCooldown -= dt;
-	enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask()));
+	enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask(), enemy));
 }
 
 std::string FlyingAgressiveBehaviour::getBehaviourName() const {
@@ -112,7 +112,7 @@ void WolfAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		enemy->runAction(moveAction);
 	}
 	_stateCooldown -= dt;
-	enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask()));
+	enemy->shoot(enemy->getShootTarget(), new IdleBulletCreator(enemy->enemyPhysMask(), enemy));
 }
 
 std::string WolfAgressiveBehaviour::getBehaviourName() const {

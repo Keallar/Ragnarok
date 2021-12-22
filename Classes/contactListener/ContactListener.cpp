@@ -3,6 +3,7 @@
 #include "IEnemy.h"
 #include "Player.h"
 #include "Trigger.h"
+#include "Bullet.h"
 
 #define scp static_cast<Player*>
 #define scb static_cast<Bullet*>
@@ -35,13 +36,15 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemy) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet)) {
 				auto enemy = sce(SpriteA);
+				auto bullet = scb(SpriteB);
 				enemy->setDamaged(true);
-				enemy->changeHp(-100);
+				enemy->changeHp(-1 * bullet->getDamage());
 			} //Player with bullets
 			else if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
 				auto player = scp(SpriteA);
-				player->changeHp(-1);
+				auto bullet = scb(SpriteB);
+				player->changeHp(-1 * bullet->getDamage());
 			} //Bullets with platforms
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::playerBullet) ||
 				SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet) ||
@@ -64,7 +67,8 @@ void ContactListener::BeginContact(b2Contact* contact) {
 			}
 			//melee attack enemy
 			if (SpriteA->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::player) &&
-				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyBullet)) {
+				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyMelee) &&
+				SpriteB->getFixtureDef()->filter.categoryBits == static_cast<uint16>(eColCategory::enemyMelee)) {
 				auto player = scp(SpriteA);
 				auto enemy = sce(SpriteB);
 				player->changeHp(-enemy->getMeleeDamage());

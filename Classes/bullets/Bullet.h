@@ -3,6 +3,7 @@
 #include "box2d/b2dSprite.h"
 
 class IBulletMoveBehavior;
+class ShootingCharacter;
 
 struct BulletVars {
 	int damage;
@@ -19,7 +20,7 @@ public:
 	~Bullet() override;
 
 	static bool loadJson();
-	static Bullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter);
+	static Bullet* create(cocos2d::Node* world, Vec2 pos, Vec2 dest, b2Filter filter, ShootingCharacter* parent);
 
 	virtual bool init();
 
@@ -63,6 +64,9 @@ protected:
 
 	virtual void move(float dt);
 	bool _startedMove;
+
+	ShootingCharacter* _parent;
+
 	//IBulletMoveBehavior* _moveBehavior;
 	Vec2 _pos;
 	Vec2 _dest;

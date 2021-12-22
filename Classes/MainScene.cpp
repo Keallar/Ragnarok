@@ -175,6 +175,10 @@ void MainScene::restart() {
     for (auto t : _triggers) {
         t->setIsActive(false);
     }
+
+    for (auto enemy : enemies) {
+        enemy->setDestroyed(true);
+    }
 }
 
 void MainScene::update(float dt) {
@@ -339,17 +343,17 @@ void MainScene::showImGui() {
         }
         if (ImGui::Button("FireBullet")) {
             if (_player) {
-                _player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask()));
+                _player->changeBulletCreator(new FireBulletCreator(ShootingCharacter::playerPhysMask(), _player));
             }
         }
         if (ImGui::Button("IdleBullet")) {
             if (_player) {
-                _player->changeBulletCreator(new IdleBulletCreator(ShootingCharacter::playerPhysMask()));
+                _player->changeBulletCreator(new IdleBulletCreator(ShootingCharacter::playerPhysMask(), _player));
             }
         }
         if (ImGui::Button("IceBullet")) {
             if (_player) {
-                _player->changeBulletCreator(new IceBulletCreator(ShootingCharacter::playerPhysMask()));
+                _player->changeBulletCreator(new IceBulletCreator(ShootingCharacter::playerPhysMask(), _player));
             }
         }
         //Position
