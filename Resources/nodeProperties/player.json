@@ -13,7 +13,7 @@
     "components": {
       "textureFile": "images/Tur_64.png",
       "idleAnimFile": "images/Tur_idle_anim.png",
-      "attackAnimFile": "images/Tur_64.png",
+      "attackAnimFile": "images/Tur_attack_anim.png",
       "jumpAnimFile": "images/Tur_jump_anim.png",
       "fallAnimFile": "images/Tur_jump_anim.png",
       "moveAnimFile": "images/Tur_move_anim.png"
