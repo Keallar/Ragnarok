@@ -126,7 +126,7 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background.mp3", true);
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background.mp3", true);
 
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");

@@ -141,8 +141,18 @@ bool Player::init() {
 	idleAction->setTag(static_cast<int>(eAnimState::None));
 	runAction(idleAction);
 	//Attack animation
-	_attackAnimFrames.reserve(1);
+	_attackAnimFrames.reserve(11);
 	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(0, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(64, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(128, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(192, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(256, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(320, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(384, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(448, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(512, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(576, 0, 64, 64)));
+	_attackAnimFrames.pushBack(SpriteFrame::create(_attackAnimFile, Rect(640, 0, 64, 64)));
 	//Jump animation
 	_jumpAnimFrames.reserve(12);
 	_jumpAnimFrames.pushBack(SpriteFrame::create(_jumpAnimFile, Rect(0, 0, 64, 64)));
@@ -248,7 +258,13 @@ void Player::update(float dt) {
 	meleeUpdate(dt);
 	move(dt);
 	jump(dt);
-	if (getJumpState() == eJumpState::None && _curSpeed != 0) {
+	if (getJumpState() == eJumpState::None && _curSpeed != 0 && getAnimState() != eAnimState::Attack) {
+		setAnimState(eAnimState::Move);
+	}
+	else if (!getActionByTag(static_cast<int>(eAnimState::Attack)) && _curSpeed == 0 && getJumpState() == eJumpState::None) {
+		setAnimState(eAnimState::None);
+	}
+	else if (!getActionByTag(static_cast<int>(eAnimState::Attack)) && _curSpeed != 0 && getJumpState() == eJumpState::None) {
 		setAnimState(eAnimState::Move);
 	}
 	hookBodyUpdate(dt);
@@ -303,7 +319,7 @@ void Player::keyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event*
 		case EventKeyboard::KeyCode::KEY_W:
 		{
 			if (getJumpState() == eJumpState::None || _jumpCount != 2) {
-				getBody()->SetLinearVelocity({getBody()->GetLinearVelocity().x, 3});
+				getBody()->SetLinearVelocity({ getBody()->GetLinearVelocity().x, 3 });
 				setJumpState(eJumpState::Jump);
 				_jumpCount++;
 			}
@@ -395,7 +411,7 @@ void Player::move(float dt) {
 	if (getBody()->GetLinearVelocity().x < _maxSpeed && _curSpeed > 0) {
 		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 120 * dt, 0 }, true);
 	}
-	else if(getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
+	else if (getBody()->GetLinearVelocity().x > -_maxSpeed && _curSpeed < 0) {
 		getBody()->ApplyLinearImpulseToCenter({ _curSpeed * 120 * dt, 0 }, true);
 	}
 	else if (_curSpeed == 0) {
@@ -472,7 +488,7 @@ void Player::hookBodyUpdate(float dt) {
 		dest.y += getContentSize().width / 2;
 		dest.x += getContentSize().height / 2 * getScaleX();
 		dest.x *= getScaleX();
-		
+
 		_hookBody->drawLine(Vec2(getContentSize() / 2), dest, Color4F::GRAY);
 
 		if (_hook->isHooked()) {
@@ -486,10 +502,10 @@ void Player::hookBodyUpdate(float dt) {
 			if (_hook->getVelDest() == b2Vec2(0, 0)) {
 				_hook->setVelDest(playerVel);
 			}
-			if (_hook->getPosition().x - getPosition().x < _hook->getContentSize().width*2 &&
-				_hook->getPosition().x - getPosition().x > -_hook->getContentSize().width*2 &&
-				_hook->getPosition().y - getPosition().y > -_hook->getContentSize().height*2 &&
-				_hook->getPosition().y - getPosition().y < _hook->getContentSize().height*2) {
+			if (_hook->getPosition().x - getPosition().x < _hook->getContentSize().width * 2 &&
+				_hook->getPosition().x - getPosition().x > -_hook->getContentSize().width * 2 &&
+				_hook->getPosition().y - getPosition().y > -_hook->getContentSize().height * 2 &&
+				_hook->getPosition().y - getPosition().y < _hook->getContentSize().height * 2) {
 				getBody()->SetLinearVelocity({ 0, 0 });
 				getBody()->SetGravityScale(0);
 			}
@@ -497,7 +513,6 @@ void Player::hookBodyUpdate(float dt) {
 				getBody()->SetLinearVelocity(playerVel);
 			}
 		}
-		
 	}
 	else {
 		getBody()->SetGravityScale(1);
@@ -517,17 +532,17 @@ void Player::setAnimState(eAnimState state) {
 			runAction(idleAction);
 		}
 	}
-	if (state == eAnimState::Move) {
+	else if (state == eAnimState::Move) {
 		if (!getActionByTag(static_cast<int>(eAnimState::Move))) {
 			stopAllActions();
-			Animation* moveAnimation = Animation::createWithSpriteFrames(_moveAnimFrames, 0.13f);
+			Animation* moveAnimation = Animation::createWithSpriteFrames(_moveAnimFrames, 0.1f);
 			Animate* moveAnim = Animate::create(moveAnimation);
 			Action* moveAction = RepeatForever::create(moveAnim);
 			moveAction->setTag(static_cast<int>(eAnimState::Move));
 			runAction(moveAction);
 		}
 	}
-	if (state == eAnimState::Jump) {
+	else if (state == eAnimState::Jump) {
 		stopAllActions();
 		Animation* jumpAnimation = Animation::createWithSpriteFrames(_jumpAnimFrames, 0.1f);
 		Animate* jumpAnim = Animate::create(jumpAnimation);
@@ -535,7 +550,7 @@ void Player::setAnimState(eAnimState state) {
 		jumpAction->setTag(static_cast<int>(eAnimState::Jump));
 		runAction(jumpAction);
 	}
-	if (state == eAnimState::Fall) {
+	else if (state == eAnimState::Fall) {
 		if (!getActionByTag(static_cast<int>(eAnimState::Fall))) {
 			stopAllActions();
 			Animation* fallAnimation = Animation::createWithSpriteFrames(_fallAnimFrames, 0.13f);
@@ -545,14 +560,13 @@ void Player::setAnimState(eAnimState state) {
 			runAction(fallAction);
 		}
 	}
-	if (state == eAnimState::Attack) {
+	else if (state == eAnimState::Attack) {
 		stopAllActions();
-		Animation* attackAnimation = Animation::createWithSpriteFrames(_attackAnimFrames);
+		Animation* attackAnimation = Animation::createWithSpriteFrames(_attackAnimFrames, 0.05f);
 		Animate* attackAnim = Animate::create(attackAnimation);
 		Action* attackAction = Repeat::create(attackAnim, 1);
 		attackAction->setTag(static_cast<int>(eAnimState::Attack));
 		runAction(attackAction);
-		setAnimState(eAnimState::None);
 	}
 	_playerAnimState = state;
 }
