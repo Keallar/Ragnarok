@@ -145,6 +145,8 @@ void BossAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		enemy->runAction(spawn);
 	}
 	_stateCooldown -= dt;
+	enemy->shoot(enemy->getShootTarget(), new FireBulletCreator(enemy->enemyPhysMask()));
+	enemy->hit();
 }
 
 std::string BossAgressiveBehaviour::getBehaviourName() const {

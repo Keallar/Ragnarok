@@ -128,10 +128,6 @@ bool Enemy::init(std::string type) {
 		_idleAnimFrames.reserve(1);
 		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 128, 64)));
 	}
-	else if (_fileName == "immages/Boss.png") {
-		_idleAnimFrames.reserve(1);
-		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 961, 614)));
-	}
 	else if (_animationIdleFile != "") {
 		_idleAnimFrames.reserve(4);
 		_idleAnimFrames.pushBack(SpriteFrame::create(_animationIdleFile, Rect(0, 0, 64, 64)));
@@ -144,11 +140,7 @@ bool Enemy::init(std::string type) {
 		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 64, 64)));
 	}
 	//Attack left animation
-	if (_fileName == "images/Boss.png") {
-		_attackAnimFrames.reserve(1);
-		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(0, 0, 961, 614)));
-	}
-	else if (_animationAttackFile != "") {
+	if (_animationAttackFile != "") {
 		_attackAnimFrames.reserve(4);
 		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(0, 0, 64, 64)));
 		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(64, 0, 64, 64)));

@@ -118,29 +118,19 @@ bool Boss::init() {
 	}
 
 	//Idle animation
-	if (_fileName == "immages/Boss.png") {
+	if (_fileName != "") {
 		_idleAnimFrames.reserve(1);
-		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 961, 614)));
+		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 510, 214)));
 	}
-	else {
-		_idleAnimFrames.reserve(1);
-		_idleAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 64, 64)));
-	}
-	//Attack left animation
-	if (_fileName == "images/Boss.png") {
+	//Attack animation
+	if (_fileName != "") {
 		_attackAnimFrames.reserve(1);
-		_attackAnimFrames.pushBack(SpriteFrame::create(_animationAttackFile, Rect(0, 0, 961, 614)));
+		_attackAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 510, 214)));
 	}
 	//Move animation
-	if (_animationMoveFile != "") {
-		_moveAnimFrames.reserve(4);
-		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(0, 0, 64, 64)));
-		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(64, 0, 64, 64)));
-		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(128, 0, 64, 64)));
-		_moveAnimFrames.pushBack(SpriteFrame::create(_animationMoveFile, Rect(192, 0, 64, 64)));
-	}
-	else {
-
+	if (_fileName != "") {
+		_moveAnimFrames.reserve(1);
+		_moveAnimFrames.pushBack(SpriteFrame::create(_fileName, Rect(0, 0, 510, 214)));
 	}
 
 	return true;
@@ -158,6 +148,11 @@ void Boss::shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) {
 	}
 }
 
+void Boss::meleeInit() {
+	_hitTime = 0.5f;
+	MeleeCharacter::_damage = 2;
+}
+
 void Boss::hit() {
 	if (_meleeHit == nullptr) {
 		_isMeleeAttack = true;
@@ -168,10 +163,10 @@ void Boss::hit() {
 		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
 		_meleeHit->getFixtureDef()->filter = filter;
 		getParent()->addChild(_meleeHit);
-		_meleeHit->setPosition(getPosition().x - 64, getPosition().y);
+		_meleeHit->setPosition(getPositionX() - 64, getPositionY());
 		if (getScaleX() > 0) {
 			_meleeHit->setScaleX(getScaleX());
-			_meleeHit->setPosition(getPosition().x + 64, getPosition().y);
+			_meleeHit->setPosition(getPositionX() + 64, getPositionY());
 		}
 	}
 }

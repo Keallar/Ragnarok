@@ -55,5 +55,4 @@ private:
 
     std::list<IEnemy*> enemies;
     std::list<Trigger*> _triggers;
-    Boss* _boss;
 };

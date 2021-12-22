@@ -240,7 +240,8 @@ void MainScene::createSomeEnemy(int count, std::string type) {
 void MainScene::createBoss() {
     if (_player) {
         const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
-        _boss = Boss::create(_world, pos, new BossIdleBehaviour);
+        auto boss = Boss::create(_world, pos, new BossIdleBehaviour);
+        enemies.push_back(boss);
     }
 }
 
@@ -259,6 +260,16 @@ void MainScene::showImGui() {
             if (_player) {
                 _player->changeHp(-1);
             }   
+        }
+        if (ImGui::Button("Deathless")) {
+            if (_player) {
+                if (!_player->isDeathless()) {
+                    _player->setDeathless(true);
+                }
+                else {
+                    _player->setDeathless(false);
+                }
+            }
         }
         if (ImGui::Button("Save")) {
             if (!_player->isDied()) {
@@ -287,6 +298,14 @@ void MainScene::showImGui() {
         ImGui::Text("Position X: %f Y: %f", _player->getPosition().x, _player->getPosition().y);
         //HP
         ImGui::Text("Hp: %i", _player->getHp());
+        std::string deathless = "No";
+        if (_player->isDeathless()) {
+            deathless = "Yes";
+        }
+        else {
+            deathless = "No";
+        }
+        ImGui::Text("Deathless: %s", deathless.c_str());
         //Double jump
         ImGui::Text("Double Jump: %i",_player->getJumpCount());
         //Player jump
@@ -340,6 +359,11 @@ void MainScene::showImGui() {
                 enemies.back()->setDestroyed(true);
             }
         }
+        /*if (ImGui::Button("DeleteBoss")) {
+            if (!enemies.empty()) {
+                enemies.back()->setDestroyed(true);
+            }
+        }*/
         for (const auto& enemy : enemies) {
              ImGui::Text("%s position X: %f Y: %f", enemy->getName().c_str(), enemy->getPosition().x, enemy->getPosition().y);
         }
