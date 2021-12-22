@@ -84,7 +84,7 @@
       "attackCooldown": 0.5,
       "bulletSpeed": 10,
       "filter": "",
-      "shootingPattern": "",
+      "shootingPattern": "ShotGun",
       "agressiveZone": 1000
     },
     "components": {
