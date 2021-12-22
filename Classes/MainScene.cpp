@@ -54,6 +54,7 @@ bool MainScene::init() {
     _background1->setPosition({ 9000, 24000 });
     _background2->setPosition({ 9000, 24000 });
     _background3->setPosition({ 9000, 24000 });
+
     //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
@@ -88,6 +89,15 @@ bool MainScene::init() {
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
     _firstTileMap->TileMapObjectLayerInit(_world);
+
+    //СЛОЙ ДЛЯ ЗАДНИКА В ДВУХ СЕКРЕТКОК НЕ ТРОГАТЬ ВООБЩЕ НИКОГДА СЛАВА БОГУ ЧТО РАБОТАЕТ
+    auto Layer = _firstTileMap->getTiledMap()->getLayer("FG7");
+    _firstTileMap->getTiledMap()->removeChild(Layer);
+    Layer->setParent(nullptr);
+    addChild(Layer);
+    Layer->setZOrder(-1);
+    Layer->setPosition(Layer->getPositionX(), Layer->getPositionY()+32);
+
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -95,8 +105,12 @@ bool MainScene::init() {
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
-    _player->setPosition({ 4000, 24000 });
+    _player->setPosition({ 9000, 24000 });
     //_player->getBody()->SetBullet(true);
+    _background->setZOrder(_player->getZOrder() - 5);
+    _background1->setZOrder(_player->getZOrder() - 4);
+    _background2->setZOrder(_player->getZOrder() - 3);
+    _background3->setZOrder(_player->getZOrder() - 2);
 
     save();
     _deathCount = 0;
