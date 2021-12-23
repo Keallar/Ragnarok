@@ -54,6 +54,7 @@ bool MainScene::init() {
     _background1->setPosition({ 9000, 24000 });
     _background2->setPosition({ 9000, 24000 });
     _background3->setPosition({ 9000, 24000 });
+
     //DrawNode* background = DrawNode::create();
     //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
     //addChild(background);
@@ -88,6 +89,15 @@ bool MainScene::init() {
     _firstTileMap->addLayer("ObjectLayer", "ObjectLayer");
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
     _firstTileMap->TileMapObjectLayerInit(_world);
+
+    //СЛОЙ ДЛЯ ЗАДНИКА В ДВУХ СЕКРЕТКАХ НЕ ТРОГАТЬ ВООБЩЕ НИКОГДА СЛАВА БОГУ ЧТО РАБОТАЕТ
+    auto Layer = _firstTileMap->getTiledMap()->getLayer("FG7");
+    _firstTileMap->getTiledMap()->removeChild(Layer);
+    Layer->setParent(nullptr);
+    addChild(Layer);
+    Layer->setZOrder(-1);
+    Layer->setPosition(Layer->getPositionX(), Layer->getPositionY()+32);
+
     //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
 
     //Creating player
@@ -97,6 +107,10 @@ bool MainScene::init() {
     _player->getBody()->SetFixedRotation(true);
     _player->setPosition({ 9000, 24000 });
     //_player->getBody()->SetBullet(true);
+    _background->setZOrder(_player->getZOrder() - 5);
+    _background1->setZOrder(_player->getZOrder() - 4);
+    _background2->setZOrder(_player->getZOrder() - 3);
+    _background3->setZOrder(_player->getZOrder() - 2);
 
     save();
     _deathCount = 0;
@@ -126,7 +140,7 @@ bool MainScene::init() {
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background.mp3", true);
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/background.mp3", true);
 
     CCIMGUI::getInstance()->addImGUI([=]() {
         showImGui(); }, "Function ID");
@@ -161,10 +175,20 @@ void MainScene::restart() {
     
     _player->restart();
 
-    _player->setPosition({ 9000, 24000 });
+    _player->setPosition({ 4000, 24000 });
 
     save();
     _deathCount = 0;
+
+    removeChild(_background4);
+    _background->setTexture("images/Sky1.png");
+    _background1->setTexture("images/Sky2.png");
+    _background1->setScaleX(1.2);
+    _background2->setTexture("images/Mounts1.png");
+    _background2->setScaleX(1.35);
+    _background3->setTexture("images/Mounts2.png");
+    _background3->setScaleX(1.5);
+    _background4 = nullptr;
 
     const auto playerHp = _player->getHp();
     const auto playerMana = _player->getMana();

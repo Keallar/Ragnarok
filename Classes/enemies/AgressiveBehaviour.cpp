@@ -3,6 +3,7 @@
 #include "IBulletTypeCreator.h"
 #include <random>
 #define MOVE_COOLDOWN 2.0f;
+#define BOSS_MOVE_COOLDOWN 5.f
 
 SimpleAgressiveBehaviour::SimpleAgressiveBehaviour() {
 	_stateCooldown = 0;
@@ -15,6 +16,14 @@ void SimpleAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) 
 	}
 	if (_stateCooldown <= 0) {
 		if (_state == static_cast<int>(eAgressiveState::Run)) {
+			if (enemy->getShootTarget().x > enemy->getPositionX() && enemy->getScaleX() > 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
+			else if (enemy->getShootTarget().x < enemy->getPositionX() && enemy->getScaleX() < 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
 			Vec2 pos = enemy->getPosition();
 			Vec2 dest = targetPos - pos;
 			dest.y = 0;
@@ -27,6 +36,14 @@ void SimpleAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) 
 			enemy->runAction(spawn);
 		}
 		else if (_state == static_cast<int>(eAgressiveState::Jump)) {
+			if (enemy->getShootTarget().x > enemy->getPositionX() && enemy->getScaleX() > 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
+			else if (enemy->getShootTarget().x < enemy->getPositionX() && enemy->getScaleX() < 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
 			Vec2 pos = enemy->getPosition();
 			Vec2 dest = targetPos - pos;
 			auto moveAction = JumpBy::create(1.5f, dest, 200, 1);
@@ -95,6 +112,10 @@ void AbobaAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 			auto scale = enemy->getScaleX();
 			enemy->setScaleX(-scale);
 		}
+		else if (enemy->getShootTarget().x < enemy->getPositionX() && enemy->getScaleX() < 0) {
+			auto scale = enemy->getScaleX();
+			enemy->setScaleX(-scale);
+		}
 		Vec2 pos = enemy->getPosition();
 		Vec2 dest = targetPos - pos;
 		dest.y = 0;
@@ -125,6 +146,14 @@ void WolfAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 	}
 	if (_stateCooldown <= 0) {
 		_stateCooldown = MOVE_COOLDOWN;
+		if (enemy->getShootTarget().x > enemy->getPositionX() && enemy->getScaleX() > 0) {
+			auto scale = enemy->getScaleX();
+			enemy->setScaleX(-scale);
+		}
+		else if (enemy->getShootTarget().x < enemy->getPositionX() && enemy->getScaleX() < 0) {
+			auto scale = enemy->getScaleX();
+			enemy->setScaleX(-scale);
+		}
 		Vec2 pos = enemy->getPosition();
 		Vec2 dest = targetPos - pos;
 		auto moveAction = JumpBy::create(1.5f, dest, 200, 1);
@@ -149,20 +178,53 @@ void BossAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		return;
 	}
 	if (_stateCooldown <= 0) {
-		_stateCooldown = MOVE_COOLDOWN;
-		Vec2 pos = enemy->getPosition();
-		Vec2 dest = targetPos - pos;
-		dest.y = 0;
-		auto moveAction = MoveBy::create(1.5f, dest);
-		Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.15f);
-		Animate* attackAnim = Animate::create(attackAnimation);
-		auto attackActionAnim = Repeat::create(attackAnim, 3);
-		Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
+		if (_state == static_cast<int>(eAgressiveState::Run)) {
+			if (enemy->getShootTarget().x > enemy->getPositionX() && enemy->getScaleX() > 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
+			else if (enemy->getShootTarget().x < enemy->getPositionX() && enemy->getScaleX() < 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
+			Vec2 pos = enemy->getPosition();
+			Vec2 dest = targetPos - pos;
+			dest.y = 0;
+			auto moveAction = MoveBy::create(1.5f, dest);
+			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.15f);
+			Animate* attackAnim = Animate::create(attackAnimation);
+			auto attackActionAnim = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
 
-		enemy->runAction(spawn);
+			enemy->runAction(spawn);
+		}
+		else if (_state == static_cast<int>(eAgressiveState::Jump)) {
+			if (enemy->getShootTarget().x > enemy->getPositionX() && enemy->getScaleX() > 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
+			else if (enemy->getShootTarget().x < enemy->getPositionX() && enemy->getScaleX() < 0) {
+				auto scale = enemy->getScaleX();
+				enemy->setScaleX(-scale);
+			}
+			Vec2 pos = enemy->getPosition();
+			Vec2 dest = targetPos - pos;
+			auto moveAction = JumpBy::create(1.5f, dest, 200, 1);
+			Animation* attackAnimation = Animation::createWithSpriteFrames(enemy->getAttackFrames(), 0.15f);
+			Animate* attackAnim = Animate::create(attackAnimation);
+			auto attackActionAnim = Repeat::create(attackAnim, 3);
+			Action* spawn = Spawn::createWithTwoActions(moveAction, attackActionAnim);
+
+			enemy->runAction(spawn);
+		}
+		std::random_device rd;
+		std::uniform_int_distribution<int> dist(0, 1);
+		_state = static_cast<int>(dist(rd));
+		_stateCooldown = BOSS_MOVE_COOLDOWN;
 	}
 	_stateCooldown -= dt;
-	enemy->shoot(enemy->getShootTarget(), new FireBulletCreator(enemy->enemyPhysMask(),enemy));
+
+	enemy->shoot(enemy->getShootTarget(), new FireBulletCreator(enemy->enemyPhysMask(), enemy));
 	enemy->hit();
 }
 

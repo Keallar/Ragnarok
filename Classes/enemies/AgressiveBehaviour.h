@@ -44,4 +44,9 @@ public:
 	~BossAgressiveBehaviour() {}
 	void perform(IEnemy* enemy, Vec2 targetPos, float dt) override;
 	std::string getBehaviourName() const override;
+private:
+	enum eAgressiveState {
+		Run,
+		Jump
+	};
 };
