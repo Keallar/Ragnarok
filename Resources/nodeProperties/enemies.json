@@ -6,7 +6,7 @@
       "speed": 10.0,
       "damage": 1,
       "attackCooldown": 0.5,
-      "bulletSpeed": 10,
+      "bulletSpeed": 15,
       "filter": "",
       "shootingPattern": "Idle",
       "agressiveZone": 1000
@@ -25,7 +25,7 @@
       "damage": 1,
       "speed": 20.0,
       "attackCooldown": 1.0,
-      "bulletSpeed": 10,
+      "bulletSpeed": 15,
       "filter": "",
       "shootingPattern": "Triple",
       "agressiveZone": 1000
@@ -44,7 +44,7 @@
       "damage": 1,
       "speed": 10.0,
       "attackCooldown": 0.5,
-      "bulletSpeed": 10,
+      "bulletSpeed": 15,
       "filter": "",
       "shootingPattern": "",
       "agressiveZone": 1000
@@ -63,7 +63,7 @@
       "damage": 1,
       "speed": 10.0,
       "attackCooldown": 0.5,
-      "bulletSpeed": 10,
+      "bulletSpeed": 15,
       "filter": "",
       "shootingPattern": "ShotGun",
       "agressiveZone": 1000
@@ -79,10 +79,10 @@
     "name": "Boss",
     "specifications": {
       "hp": 5000,
-      "damage": 10,
+      "damage": 20,
       "speed": 10.0,
       "attackCooldown": 0.5,
-      "bulletSpeed": 10,
+      "bulletSpeed": 15,
       "filter": "",
       "shootingPattern": "ShotGun",
       "agressiveZone": 1000

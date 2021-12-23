@@ -64,7 +64,7 @@ void IEnemy::hit() {
 	if (_meleeHit == nullptr) {
 		_isMeleeAttack = true;
 		MeleeCharacter::_time = 0;
-		_meleeHit = b2Sprite::create("images/melee.png");
+		_meleeHit = MeleeHit::create(_damage);
 		b2Filter filter;
 		filter.categoryBits = static_cast<int>(eColCategory::enemyMelee);
 		filter.maskBits = static_cast<int>(eColMask::enemyMelee);

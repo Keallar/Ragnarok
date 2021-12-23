@@ -5,10 +5,12 @@
 #include "IShootingPattern.h"
 #include "MainMenu.h"
 #include "MainScene.h"
+#include "MeleeCharacter.h"
 
 Boss::Boss() : 
 	IEnemy(new BossIdleBehaviour) {
 	init();
+	_bulletDamage = _damage;
 	meleeInit();
 }
 Boss::~Boss() {
@@ -16,6 +18,7 @@ Boss::~Boss() {
 }
 
 void Boss::setOnRemove() {
+	getWorldNode()->setOnRemoveList(this);
 	cleanHit();
 	if (_hp <= 0) {
 		getWorldNode()->setOnRemoveList(this);
@@ -171,12 +174,13 @@ void Boss::hit() {
 	if (_meleeHit == nullptr) {
 		_isMeleeAttack = true;
 		MeleeCharacter::_time = 0;
-		_meleeHit = b2Sprite::create("images/melee.png");
+		_meleeHit = MeleeHit::create(_damage);
 		b2Filter filter;
 		filter.categoryBits = static_cast<int>(eColCategory::enemyMelee);
 		filter.maskBits = static_cast<int>(eColMask::enemyMelee);
 		_meleeHit->getFixtureDef()->filter = filter;
 		getParent()->addChild(_meleeHit);
+		
 		_meleeHit->setScaleX(_meleeHit->getScaleX() * -1);
 		_meleeHit->setScaleX(_meleeHit->getScaleX() * -1);
 		_meleeHit->setPosition(getPositionX() - /*510*3*/ - 64, getPositionY());

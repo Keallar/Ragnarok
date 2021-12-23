@@ -2,6 +2,15 @@
 #include "cocos2d.h"
 #include "box2d/b2dSprite.h"
 
+class MeleeHit : public b2Sprite {
+public:
+	static MeleeHit* create(int damage);
+
+	int getDamage();
+private:
+	int _damage;
+};
+
 class MeleeCharacter {
 public:
 	MeleeCharacter();
@@ -14,7 +23,7 @@ public:
 
 	int getMeleeDamage() const;
 protected:
-	b2Sprite* _meleeHit;
+	MeleeHit* _meleeHit;
 	bool _isMeleeAttack;
 	float _hitTime; 
 	float _time;

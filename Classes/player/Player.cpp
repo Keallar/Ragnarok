@@ -577,7 +577,7 @@ void Player::hit() {
 		_isMeleeAttack = true;
 		move(0);
 		MeleeCharacter::_time = 0;
-		_meleeHit = b2Sprite::create("images/melee.png");
+		_meleeHit = MeleeHit::create(_damage);
 		b2Filter filter;
 		filter.categoryBits = static_cast<int>(eColCategory::playerMelee);
 		filter.maskBits = static_cast<int>(eColMask::playerMelee);

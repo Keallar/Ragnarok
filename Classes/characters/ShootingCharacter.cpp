@@ -4,7 +4,7 @@
 const float ShootingCharacter::PLAYER_ATTACK_COOLDOWN = 0.35f;
 const float ShootingCharacter::PLAYER_BIG_ATTACK_COOLDOWN = 1;
 const float ShootingCharacter::ENEMY_ATTACK_COOLDOWN = 0.5f;
-const int ShootingCharacter::PLAYER_BULLET_SPEED = 10;
+const int ShootingCharacter::PLAYER_BULLET_SPEED = 15;
 const int ShootingCharacter::PLAYER_HOOK_SPEED = 15;
 
 b2Filter ShootingCharacter::playerPhysMask() {

@@ -70,8 +70,8 @@ void ContactListener::BeginContact(b2Contact* contact) {
 				SpriteB->getFixtureDef()->filter.maskBits == static_cast<uint16>(eColMask::enemyMelee) &&
 				SpriteB->getFixtureDef()->filter.categoryBits == static_cast<uint16>(eColCategory::enemyMelee)) {
 				auto player = scp(SpriteA);
-				auto enemy = sce(SpriteB);
-				player->changeHp(-enemy->getMeleeDamage());
+				auto enemyMelee = static_cast<MeleeHit*>(SpriteB);
+				player->changeHp(-enemyMelee->getDamage());
 			}
 		};
 

@@ -25,3 +25,21 @@ void MeleeCharacter::meleeInit() {
 	_hitTime = 0.2f;
 	_damage = 100;
 }
+
+int MeleeHit::getDamage() {
+	return _damage;
+}
+
+MeleeHit* MeleeHit::create(int damage) {
+	MeleeHit* meleeHit = new (std::nothrow) MeleeHit();
+	meleeHit->init();
+	if (meleeHit && meleeHit->initWithFile("images/melee.png")) {
+		meleeHit->initBody(b2BodyType::b2_dynamicBody, 0.f, 0);
+		meleeHit->autorelease();
+		//bullet->init();
+		meleeHit->_damage = damage;
+		return meleeHit;
+	}
+	CC_SAFE_DELETE(meleeHit);
+	return nullptr;
+}

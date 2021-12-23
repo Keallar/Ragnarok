@@ -491,7 +491,7 @@ void MainScene::showImGui() {
             createSomeEnemy(countOfEnemy, eType);
         }
         if (ImGui::Button("CreateBoss")) {
-            createBoss();
+            setBossCreate();
         }
         if (ImGui::Button("DeleteLastEnemy")) {
             if (!enemies.empty()) {
