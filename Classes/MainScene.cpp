@@ -142,6 +142,8 @@ bool MainScene::init() {
     _hud->beginLife(playerHp, playerMana);
     addChild(_hud);
 
+    _hud->messageOpen("AD - walking \n W, SPACE - jump \n RMB - hookshot \n LMB - shoot \n In the twilight battle, everyone will fight: the living against the dead,\n aces against jotuns, baths against chthonic monsters.\n The battle will go on for days and nights,\n gods and jotuns will die one after another,\n but there will be no end to it until the strongest wins.\n This is the current world. The world of RAGNAROK.");
+
     //HandleEvents init
     auto keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyPressed = CC_CALLBACK_2(MainScene::onKeyPressed, this);

@@ -21,7 +21,7 @@ void NoticeBox::printText(std::string text) {
     textConfig.fontSize = 18;
     _textLabel->setTTFConfig(textConfig);
 
-    _paper->setScale(_textLabel->getContentSize().width / 160, _textLabel->getContentSize().height / 180);
+    _paper->setScale(_textLabel->getContentSize().width / 250, _textLabel->getContentSize().height / 160);
 
     addChild(_paper);
 

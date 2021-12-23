@@ -56,7 +56,7 @@ void HUD::messageOpen(std::string text) {
     message->printText(text);
     button->setVisible(true);
 
-    button->setPosition({ origin.x + visibleSize.width / 2 + message->getSize().x, origin.y + visibleSize.height / 2 + message->getSize().y });
+    button->setPosition({ visibleSize.width / 2, visibleSize.height / 3 });
 }
 
 void HUD::messageClose() {
