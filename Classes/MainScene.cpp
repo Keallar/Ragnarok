@@ -127,6 +127,8 @@ bool MainScene::init() {
     save();
     _deathCount = 0;
 
+    _bossCreate = false;
+
     //bullet json loading
     Bullet::loadJson();
 
@@ -282,6 +284,8 @@ void MainScene::update(float dt) {
 
     }
 
+    createBoss();
+
     for (auto enemy : enemies) {
         if (_player) {
             const auto targetPos = _player->getPosition();
@@ -343,10 +347,17 @@ void MainScene::createSomeEnemy(int count, std::string type) {
 
 void MainScene::createBoss() {
     if (_player) {
-        const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
-        auto boss = Boss::create(_world, pos, new BossIdleBehaviour);
-        enemies.push_back(boss);
+        if (_bossCreate) {
+            const Vec2 pos = { _player->getPosition().x + 300, _player->getPosition().y + 100 };
+            auto boss = Boss::create(_world, pos, new BossIdleBehaviour);
+            enemies.push_back(boss);
+            _bossCreate = false;
+        }
     }
+}
+
+void MainScene::setBossCreate() {
+    _bossCreate = true;
 }
 
 void MainScene::createEnemyByTrigger(std::string type, Vec2 pos) {

@@ -17,10 +17,12 @@ Boss::~Boss() {
 
 void Boss::setOnRemove() {
 	cleanHit();
-	getWorldNode()->setOnRemoveList(this);
-	//static_cast<MainScene*>(Director::getInstance()->getRunningScene())->cleanAll();
-	auto scene = WinScene::create();
-	Director::getInstance()->replaceScene(scene);
+	if (_hp <= 0) {
+		getWorldNode()->setOnRemoveList(this);
+		//static_cast<MainScene*>(Director::getInstance()->getRunningScene())->cleanAll();
+		auto scene = WinScene::create();
+		Director::getInstance()->replaceScene(scene);
+	}
 }
 
 Boss* Boss::create(Node* node, Vec2 pos, IEnemyBehaviour* behaviour) {

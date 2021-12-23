@@ -29,6 +29,7 @@ public:
     void createEnemyByTrigger(std::string type, Vec2 pos);
     void createSomeEnemy(int count, std::string type);
     void createBoss();
+    void setBossCreate();
     void showImGui();
 
     void tileMapInit();
@@ -47,6 +48,8 @@ public:
 
     CREATE_FUNC(MainScene);
 private:
+    bool _bossCreate;
+
     Player* _player;
     Save _save;
 
