@@ -43,3 +43,13 @@ void ParalRevShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bul
 	_parent->createBulletOnParent(bulletCreator, pos1, dest);
 	_parent->createBulletOnParent(bulletCreator, pos2, dest);
 }
+
+
+void FiveShootingPattern::shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) {
+	float a = -1.256;
+	for (int i = -2; i < 3; i++) {
+		Vec2 newDest = dest;
+		newDest.rotate(Vec2(), a * i);
+		_parent->createBulletOnParent(bulletCreator, pos, newDest);
+	}
+}

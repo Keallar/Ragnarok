@@ -41,3 +41,8 @@ private:
 	int _distance;
 };
 
+class FiveShootingPattern : public IShootingPattern {
+public:
+	FiveShootingPattern(ShootingCharacter* parent) : IShootingPattern(parent) {};
+	void shoot(Vec2 pos, Vec2 dest, IBulletTypeCreator* bulletCreator) override;
+};

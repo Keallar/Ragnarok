@@ -194,6 +194,9 @@ void IEnemy::setShootingPattern(std::string shootingPatternInfo) {
 	else if (shootingPatternInfo == "ParalRev") {
 		//_shootingPattern = new ParalRevShootingPattern(this);
 	}
+	else if (shootingPatternInfo == "Five") {
+		_shootingPattern = new FiveShootingPattern(this);
+	}
 	else {
 		_shootingPattern = nullptr;
 	}
