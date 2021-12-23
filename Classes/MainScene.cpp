@@ -118,7 +118,7 @@ bool MainScene::init() {
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
-    _player->setPosition({ 9000, 24000 });
+    _player->setPosition({ 4000, 24000 });
     _background->setZOrder(_player->getZOrder() - 5);
     _background1->setZOrder(_player->getZOrder() - 4);
     _background2->setZOrder(_player->getZOrder() - 3);
