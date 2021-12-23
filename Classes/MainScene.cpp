@@ -13,6 +13,30 @@
 #include "imgui/CCIMGUI.h"
 USING_NS_CC;
 
+void MainScene::cleanAll() {
+    _world->removeChild(_player);
+    BulletFactory::cleanAll();
+    for (auto enemy : enemies) {
+        _world->removeChild(enemy);
+    }
+    enemies.clear();
+    removeChild(_firstTileMap);
+
+    removeChild(_background);
+    removeChild(_background1);
+    removeChild(_background2);
+    removeChild(_background3);
+    removeChild(_background4);
+
+    removeChild(_hud);
+
+    removeChild(_world);
+    CC_SAFE_DELETE(_world);
+}
+
+MainScene::~MainScene() {
+}
+
 Player* MainScene::getPlayer() {
     return _player;
 }
@@ -55,15 +79,6 @@ bool MainScene::init() {
     _background2->setPosition({ 9000, 24000 });
     _background3->setPosition({ 9000, 24000 });
 
-    //DrawNode* background = DrawNode::create();
-    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(1, 1, 1, 1));
-    //addChild(background);
-
-    //DrawNode* background = DrawNode::create();
-    //const Vec2 backSize{ 5000, 5000 };
-    //background->drawSolidRect(origin-backSize, Director::getInstance()->getVisibleSize() + Size(backSize), Color4F(0, 0, 0, 1));
-    //addChild(background);
-
     //World init
     _world = b2WorldNode::create(0, -98, 20);
     addChild(_world);
@@ -98,15 +113,12 @@ bool MainScene::init() {
     Layer->setZOrder(-1);
     Layer->setPosition(Layer->getPositionX(), Layer->getPositionY()+32);
 
-    //_firstTileMap->TileMapBackgroundLayerInit(smth, _firstTileMap->getLayerByName("FG"));
-
     //Creating player
     _player = Player::create();
     const Vec2 playerOrigin { Director::getInstance()->getWinSize() / 2 };
     _world->addChild(_player);
     _player->getBody()->SetFixedRotation(true);
     _player->setPosition({ 9000, 24000 });
-    //_player->getBody()->SetBullet(true);
     _background->setZOrder(_player->getZOrder() - 5);
     _background1->setZOrder(_player->getZOrder() - 4);
     _background2->setZOrder(_player->getZOrder() - 3);
@@ -120,8 +132,6 @@ bool MainScene::init() {
 
     //Camera setup
     _cameraTarget = getDefaultCamera();
-    
-    //_background->setPosition(_cameraTarget->getPosition());
 
     //Creating UI
     _hud = HUD::create();
@@ -290,10 +300,6 @@ void MainScene::update(float dt) {
         enemies.end());
 
     _hud->setPosition(_cameraTarget->getPosition() - Director::getInstance()->getVisibleSize()/2);
-
-    //_rayCastManager->castAllRaysOfTileMapManager(_firstTileMap->getCallbacks(), _firstTileMap->getRays(),
-    //    _world, _player, _firstTileMap->getTiledMap());
-
 }
 
 void MainScene::mousePressed(cocos2d::Event* event) {
@@ -346,6 +352,25 @@ void MainScene::createBoss() {
 void MainScene::createEnemyByTrigger(std::string type, Vec2 pos) {
     auto enemy = Enemy::create(_world, pos, type);
     enemies.push_back(enemy);
+}
+
+void MainScene::addTrigger(Trigger* trigger) {
+    _triggers.push_back(trigger);
+}
+
+void MainScene::setCaveBG() {
+    _background->setTexture("images/cave0.png");
+    _background1->setTexture("images/cave1.png");
+    _background2->setTexture("images/cave2.png");
+    _background3->setTexture("images/cave3.png");
+    _background4 = Sprite::create("images/cave4.png");
+    _background4->setScaleX(1.6);
+    addChild(_background4);
+    _background->setZOrder(_player->getZOrder() - 5);
+    _background1->setZOrder(_player->getZOrder() - 4);
+    _background2->setZOrder(_player->getZOrder() - 3);
+    _background3->setZOrder(_player->getZOrder() - 2);
+    _background4->setZOrder(_player->getZOrder() - 1);
 }
 
 void MainScene::showImGui() {
@@ -462,11 +487,6 @@ void MainScene::showImGui() {
                 enemies.back()->setDestroyed(true);
             }
         }
-        /*if (ImGui::Button("DeleteBoss")) {
-            if (!enemies.empty()) {
-                enemies.back()->setDestroyed(true);
-            }
-        }*/
         for (const auto& enemy : enemies) {
              ImGui::Text("%s position X: %f Y: %f", enemy->getName().c_str(), enemy->getPosition().x, enemy->getPosition().y);
         }
@@ -512,50 +532,5 @@ void MainScene::showImGui() {
         ImGui::ShowStyleEditor();
     }
     ImGui::End();
-}
-
-void MainScene::addTrigger(Trigger* trigger) {
-    _triggers.push_back(trigger);
-}
-
-void MainScene::setCaveBG() {
-    _background->setTexture("images/cave0.png");
-    _background1->setTexture("images/cave1.png");
-    _background2->setTexture("images/cave2.png");
-    _background3->setTexture("images/cave3.png");
-    _background4 = Sprite::create("images/cave4.png");
-    _background4->setScaleX(1.6);
-    addChild(_background4);
-    _background->setZOrder(_player->getZOrder() - 5);
-    _background1->setZOrder(_player->getZOrder() - 4);
-    _background2->setZOrder(_player->getZOrder() - 3);
-    _background3->setZOrder(_player->getZOrder() - 2);
-    _background4->setZOrder(_player->getZOrder() - 1);
-}
-
-void MainScene::cleanAll() {
-    _world->removeChild(_player);
-    BulletFactory::cleanAll();
-    for (auto enemy : enemies) {
-        _world->removeChild(enemy);
-    }
-    enemies.clear();
-    removeChild(_firstTileMap);
-    //removeChild(_test);
-
-    removeChild(_background);
-    removeChild(_background1);
-    removeChild(_background2);
-    removeChild(_background3);
-    removeChild(_background4);
-
-    removeChild(_hud);
-
-    removeChild(_world);
-    CC_SAFE_DELETE(_world);
-}
-
-MainScene::~MainScene() {
-    //cleanAll();
 }
 
