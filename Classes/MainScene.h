@@ -19,6 +19,7 @@ public:
     static cocos2d::Scene* createScene();
 
     ~MainScene();
+    void cleanAll();
     bool init() override;
     void update(float dt) override;
     void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
