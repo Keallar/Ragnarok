@@ -221,3 +221,17 @@ void HUD::gameOverCreate() {
 
     restartButton->setVisible(false);
 }
+
+void HUD::cleanAll() {
+    removeChild(hpChange);
+    removeChild(hpImgBase);
+    removeChild(hpImgLife);
+    removeChild(text);
+    removeChild(imgManaBase);
+    removeChild(imgMana);
+
+    removeChild(message);
+    removeChild(button);
+    removeChild(gameOverScreen);
+    removeChild(restartButton);
+}

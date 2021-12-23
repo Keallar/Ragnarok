@@ -223,6 +223,7 @@ void BossAgressiveBehaviour::perform(IEnemy* enemy, Vec2 targetPos, float dt) {
 		_stateCooldown = BOSS_MOVE_COOLDOWN;
 	}
 	_stateCooldown -= dt;
+
 	enemy->shoot(enemy->getShootTarget(), new FireBulletCreator(enemy->enemyPhysMask(), enemy));
 	enemy->hit();
 }

@@ -532,3 +532,30 @@ void MainScene::setCaveBG() {
     _background3->setZOrder(_player->getZOrder() - 2);
     _background4->setZOrder(_player->getZOrder() - 1);
 }
+
+void MainScene::cleanAll() {
+    _world->removeChild(_player);
+    BulletFactory::cleanAll();
+    for (auto enemy : enemies) {
+        _world->removeChild(enemy);
+    }
+    enemies.clear();
+    removeChild(_firstTileMap);
+    //removeChild(_test);
+
+    removeChild(_background);
+    removeChild(_background1);
+    removeChild(_background2);
+    removeChild(_background3);
+    removeChild(_background4);
+
+    removeChild(_hud);
+
+    removeChild(_world);
+    CC_SAFE_DELETE(_world);
+}
+
+MainScene::~MainScene() {
+    //cleanAll();
+}
+

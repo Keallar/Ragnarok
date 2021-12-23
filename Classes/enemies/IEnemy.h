@@ -55,7 +55,7 @@ public:
 	void hit() override;
 	void cleanHit() override;
 	void meleeInit() override;
-	void meleeUpdate(float dt);
+	virtual void meleeUpdate(float dt);
 protected:
 	std::string _type;
 	IEnemyBehaviour* _behaviour;
@@ -68,7 +68,7 @@ protected:
 	cocos2d::Vector<SpriteFrame*> _moveAnimFrames;
 	int _bulletSpeed;
 	int _agressiveZone;
-private:
+
 	Vec2 _shootTarget;
 	int _hp;
 	float _speed;

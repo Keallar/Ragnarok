@@ -22,6 +22,9 @@ b2WorldNode::b2WorldNode()
 b2WorldNode::~b2WorldNode()
 {
 	delete _world;
+	_onRemoveList.clear();
+	_dynamicChild.erase(_dynamicChild.begin(), _dynamicChild.end());
+
 	_world = nullptr;
 #if (CC_BOX2D_DEBUG)
 	delete _customCommand;

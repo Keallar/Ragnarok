@@ -4,7 +4,11 @@
 class Boss : public IEnemy {
 public:
 	Boss();
-	~Boss() {}
+	~Boss();
+	void setOnRemove() override;
+	void update(float dt) override;
+	void meleeUpdate(float dt) override;
+
 	static Boss* create(Node* node, Vec2 pos, IEnemyBehaviour* behaviour = nullptr);
 	bool init();
 	virtual void shoot(Vec2 targetPos, IBulletTypeCreator* bulletCreator) override final;

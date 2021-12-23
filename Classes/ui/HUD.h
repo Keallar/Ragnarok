@@ -13,6 +13,7 @@ public:
     void gameOver(bool player);
     void messageOpen(std::string text);
     void messageClose();
+    void cleanAll();
     CREATE_FUNC(HUD);
 private:
     void gameOverCreate();
