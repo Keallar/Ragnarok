@@ -60,6 +60,10 @@ void Trigger::onCollision() {
 	case 8:
 		isActivated = true;
 		scene->setCaveBG();
+		break;
+	case 9:
+		scene->createBoss();
+		break;
 	}
 }
 

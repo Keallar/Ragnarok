@@ -90,7 +90,7 @@ bool MainScene::init() {
     _firstTileMap->CollidableLayerInit(_world, _firstTileMap->getLayerByName("Collidable"));
     _firstTileMap->TileMapObjectLayerInit(_world);
 
-    //СЛОЙ ДЛЯ ЗАДНИКА В ДВУХ СЕКРЕТКОК НЕ ТРОГАТЬ ВООБЩЕ НИКОГДА СЛАВА БОГУ ЧТО РАБОТАЕТ
+    //СЛОЙ ДЛЯ ЗАДНИКА В ДВУХ СЕКРЕТКАХ НЕ ТРОГАТЬ ВООБЩЕ НИКОГДА СЛАВА БОГУ ЧТО РАБОТАЕТ
     auto Layer = _firstTileMap->getTiledMap()->getLayer("FG7");
     _firstTileMap->getTiledMap()->removeChild(Layer);
     Layer->setParent(nullptr);
