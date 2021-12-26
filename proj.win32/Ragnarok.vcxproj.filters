@@ -397,6 +397,57 @@
     <Image Include="..\Resources\images\Boss_attack_anim.png">
       <Filter>Resources\images</Filter>
     </Image>
+    <Image Include="..\Resources\images\cave0.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\cave1.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\cave2.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\cave3.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\cave4.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\FireAltar.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Flying_enemy_idle_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Flying_enemy_move_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\fonk.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Mounts1.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Mounts2.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\PAPAABOBA_attack_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Sky1.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Sky2.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Tur_attack_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\Turtle_attack_anim.png">
+      <Filter>Resources\images</Filter>
+    </Image>
+    <Image Include="..\Resources\images\win.png">
+      <Filter>Resources\images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\nodeProperties\bullets.json">
@@ -407,6 +458,9 @@
     </None>
     <None Include="..\Resources\nodeProperties\player.json">
       <Filter>Resources\nodeProperties</Filter>
+    </None>
+    <None Include="..\Resources\images\maximum.tmx">
+      <Filter>Resources\images</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
