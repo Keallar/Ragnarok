@@ -2,6 +2,8 @@
 Thumbs.db
 cocos2d
 other
+.rar
+.zip
 # Ignore files build by Visual Studio
 *.obj
 *.exe
